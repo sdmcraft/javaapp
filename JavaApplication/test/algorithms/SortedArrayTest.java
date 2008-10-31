@@ -162,8 +162,44 @@ public class SortedArrayTest extends TestCase {
     {
         SortedArray instance = new SortedArray(new int[]{1,1,2,3});
         instance.removeDups();
-        boolean expResult = instance.equals(new int[]{1,2,3,-1});
-        assertEquals(expResult,true);
+        boolean result = instance.equals(new SortedArray(new int[]{1,2,3,-1}));
+        assertEquals(true,result);
+        
+        instance = new SortedArray(new int[]{1,2,2,3,4});
+        instance.removeDups();
+        result = instance.equals(new SortedArray(new int[]{1,2,3,4,-1}));
+        assertEquals(true,result);
+        
+        instance = new SortedArray(new int[]{1,2,2,3,3,4});
+        instance.removeDups();
+        result = instance.equals(new SortedArray(new int[]{1,2,3,4,-1,-1}));
+        assertEquals(true,result);
+        
+        instance = new SortedArray(new int[]{1,1});
+        instance.removeDups();
+        result = instance.equals(new SortedArray(new int[]{1,-1}));
+        assertEquals(true,result);
+        
+        instance = new SortedArray(new int[]{1});
+        instance.removeDups();
+        result = instance.equals(new SortedArray(new int[]{1}));
+        assertEquals(true,result);
+        
+        instance = new SortedArray(new int[]{1,2,3,4});
+        instance.removeDups();
+        result = instance.equals(new SortedArray(new int[]{1,2,3,4}));
+        assertEquals(true,result);
+        
+        instance = new SortedArray(new int[]{1,1,1,1,1});
+        instance.removeDups();
+        result = instance.equals(new SortedArray(new int[]{1,-1,-1,-1,-1}));
+        assertEquals(true,result);
+
+        instance = new SortedArray(new int[]{1,2,2,3,4,4,4,5,6,6,7,7});
+        instance.removeDups();
+        result = instance.equals(new SortedArray(new int[]{1,2,3,4,5,6,7,-1,-1,-1,-1,-1}));
+        assertEquals(true,result);
+        
     }
     
     /**
