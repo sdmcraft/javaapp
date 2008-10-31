@@ -33,7 +33,7 @@ public class SortedArray implements Array {
     public SortedArray(int[] elements) {
         this.elements = elements;
     }
-    
+
     public static void main(String[] args) {
         SortedArray arr = new SortedArray();
         System.out.println("Unsorted Array:");
@@ -42,7 +42,7 @@ public class SortedArray implements Array {
         System.out.println("\nSorted Array:");
         arr.insertionSort();
         arr.display();
-        System.out.println("Median:"+arr.median());
+        System.out.println("Median:" + arr.median());
 //        
 //        //arr.elements = new int[]{9,4,1,3,8,8,4,9,5,6};
 //        arr.display();
@@ -180,58 +180,54 @@ public class SortedArray implements Array {
         this.insertionSort();
         double median = 0;
         if ((elements.length % 2) == 0) {
-            median = (double)(elements[(int)(elements.length / 2 - 1)] + elements[(int)(elements.length / 2)]) / 2;
+            median = (double) (elements[(int) (elements.length / 2 - 1)] + elements[(int) (elements.length / 2)]) / 2;
         } else {
             median = elements[(int) elements.length / 2];
         }
         return median;
     }
-    
+
     /**
      * Remove duplicates from an array after sorting it. The shortened array has
      * -1 substituted for the removed duplicates. E.g. 1,2,2,3 becomes 1,2,3,-1
      * @author Satya Deep
      */
-    public void removeDups()
-    {
+    public void removeDups() {
         this.insertionSort();
         int marker = 0;
-        for(int i=1;i<elements.length;i++)
-        {
-            if(elements[marker] == elements[i])
+        for (int i = 1; i < elements.length; i++) {
+            if (elements[marker] == elements[i]) {
                 continue;
-            else
-            {
+            } else {
                 marker++;
-                elements[marker] = elements[i];                
+                elements[marker] = elements[i];
             }
         }
-        for(int i=marker+1;i<elements.length;i++)
-        {
+        for (int i = marker + 1; i < elements.length; i++) {
             elements[i] = -1;
         }
     }
-    
+
     @Override
-    public boolean equals(Object arr)
-    {
+    public boolean equals(Object arr) {
         boolean result = false;
-        if(this == arr)
+        if (this == arr) {
             result = true;
-        else if((arr != null) && (arr instanceof SortedArray))
-        {
-            if(((SortedArray)arr).elements == this.elements)
+        } else if ((arr != null) && (arr instanceof SortedArray)) {
+            if (((SortedArray) arr).elements == this.elements) {
                 result = true;
-            else if(((SortedArray)arr).elements.length != this.elements.length)
+            } else if (((SortedArray) arr).elements.length != this.elements.length) {
                 result = false;
-            else 
-            {
-                int i=0;
-                for(;i<this.elements.length;i++)
-                    if(this.elements[i]!= ((SortedArray)arr).elements[i])
+            } else {
+                int i = 0;
+                for (; i < this.elements.length; i++) {
+                    if (this.elements[i] != ((SortedArray) arr).elements[i]) {
                         break;
-                if(i == this.elements.length)
+                    }
+                }
+                if (i == this.elements.length) {
                     result = true;
+                }
             }
         }
         return result;
@@ -270,6 +266,41 @@ public class SortedArray implements Array {
 //            elements[start++] = i;
 //        }
 //    }
+    /**
+     * A variation of bubble sort. The elements are sorted in 2 exclusive 
+     * odd and even partitions. For eg. (0,1),(2,3) ... is one partition of 
+     * indexes and (1,2),(3,4)... is the other partition. Both these cover the
+     * entire array. This is repeated for n times where n is length of array 
+     * divided by 2 as in each pass, each element has been compared twice. This
+     * gives a time complexity of n*n/2 which is same as bubble sort. The partitions
+     * can be operated upon in parallel in a multi-threaded environment
+     */
+    public void oddEvenSort() {
+        int outer1;
+        if (elements.length % 2 == 0) {
+            outer1 = elements.length / 2 - 1;
+        } else {
+            outer1 = elements.length / 2;
+        }
+        for (int outer = elements.length/2; outer >= 0; outer--) {
+            for (int j = 0, k = 0; k < elements.length / 2; j += 2, k++) {
+                if (elements[j] > elements[j + 1]) {
+                    swap(j, j + 1);
+                }
+            }
+            for (int j = 1, k = 0; k < outer1; j += 2, k++) {
+                if (elements[j] > elements[j + 1]) {
+                    swap(j, j + 1);
+                }
+            }
+        }
+    }
+
+    public void swap(int i, int j) {
+        int temp = elements[i];
+        elements[i] = elements[j];
+        elements[j] = temp;
+    }
 
     public void shellSort() {
         int h = 1;
