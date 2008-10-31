@@ -187,20 +187,26 @@ public class SortedArray implements Array {
         return median;
     }
     
+    /**
+     * Remove duplicates from an array after sorting it. The shortened array has
+     * -1 substituted for the removed duplicates. E.g. 1,2,2,3 becomes 1,2,3,-1
+     * @author Satya Deep
+     */
     public void removeDups()
     {
         this.insertionSort();
         int marker = 0;
-        for(int i=0;i<elements.length-1;i++)
+        for(int i=1;i<elements.length;i++)
         {
-            if(elements[i] != elements[i+1])
+            if(elements[marker] == elements[i])
+                continue;
+            else
             {
-                if(marker != i)
-                    elements[marker] = elements[i];
                 marker++;
+                elements[marker] = elements[i];                
             }
         }
-        for(int i=marker;i<elements.length;i++)
+        for(int i=marker+1;i<elements.length;i++)
         {
             elements[i] = -1;
         }
