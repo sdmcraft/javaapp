@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package algorithms;
 
 import junit.framework.TestCase;
@@ -12,10 +11,10 @@ import junit.framework.TestCase;
  * @author satyam
  */
 public class SortedArrayTest extends TestCase {
-    
+
     public SortedArrayTest(String testName) {
         super(testName);
-    }            
+    }
 
     @Override
     protected void setUp() throws Exception {
@@ -37,7 +36,6 @@ public class SortedArrayTest extends TestCase {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
-
     /**
      * Test of analyze method, of class SortedArray.
      */
@@ -122,16 +120,16 @@ public class SortedArrayTest extends TestCase {
      */
     public void testMedian() {
         System.out.println("median");
-        SortedArray instance = new SortedArray(new int[]{1,2,3});
+        SortedArray instance = new SortedArray(new int[]{1, 2, 3});
         long expResult = 2;
         long result = Math.round(instance.median());
         assertEquals(expResult, result);
-        
-        instance = new SortedArray(new int[]{1,2});
+
+        instance = new SortedArray(new int[]{1, 2});
         double expResult1 = 1.5;
         double result1 = instance.median();
         assertEquals(expResult1, result1);
-        
+
         instance = new SortedArray(new int[]{1});
         expResult = 1;
         result = Math.round(instance.median());
@@ -141,99 +139,97 @@ public class SortedArrayTest extends TestCase {
         expResult = -1;
         result = Math.round(instance.median());
         assertEquals(expResult, result);
-        
-        instance = new SortedArray(new int[]{-1,-2});
+
+        instance = new SortedArray(new int[]{-1, -2});
         expResult1 = -1.5;
         result1 = instance.median();
         assertEquals(expResult1, result1);
-        
-        instance = new SortedArray(new int[]{-1,-2,-3});
+
+        instance = new SortedArray(new int[]{-1, -2, -3});
         expResult = -2;
         result = Math.round(instance.median());
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+    // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
     }
-    
+
     /**
      * Test removeDups
      */
-    public void testRemoveDups()
-    {
-        SortedArray instance = new SortedArray(new int[]{1,1,2,3});
+    public void testRemoveDups() {
+        SortedArray instance = new SortedArray(new int[]{1, 1, 2, 3});
         instance.removeDups();
-        boolean result = instance.equals(new SortedArray(new int[]{1,2,3,-1}));
-        assertEquals(true,result);
-        
-        instance = new SortedArray(new int[]{1,2,2,3,4});
+        boolean result = instance.equals(new SortedArray(new int[]{1, 2, 3, -1}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 2, 2, 3, 4});
         instance.removeDups();
-        result = instance.equals(new SortedArray(new int[]{1,2,3,4,-1}));
-        assertEquals(true,result);
-        
-        instance = new SortedArray(new int[]{1,2,2,3,3,4});
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4, -1}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 2, 2, 3, 3, 4});
         instance.removeDups();
-        result = instance.equals(new SortedArray(new int[]{1,2,3,4,-1,-1}));
-        assertEquals(true,result);
-        
-        instance = new SortedArray(new int[]{1,1});
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4, -1, -1}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 1});
         instance.removeDups();
-        result = instance.equals(new SortedArray(new int[]{1,-1}));
-        assertEquals(true,result);
-        
+        result = instance.equals(new SortedArray(new int[]{1, -1}));
+        assertEquals(true, result);
+
         instance = new SortedArray(new int[]{1});
         instance.removeDups();
         result = instance.equals(new SortedArray(new int[]{1}));
-        assertEquals(true,result);
-        
-        instance = new SortedArray(new int[]{1,2,3,4});
-        instance.removeDups();
-        result = instance.equals(new SortedArray(new int[]{1,2,3,4}));
-        assertEquals(true,result);
-        
-        instance = new SortedArray(new int[]{1,1,1,1,1});
-        instance.removeDups();
-        result = instance.equals(new SortedArray(new int[]{1,-1,-1,-1,-1}));
-        assertEquals(true,result);
+        assertEquals(true, result);
 
-        instance = new SortedArray(new int[]{1,2,2,3,4,4,4,5,6,6,7,7});
+        instance = new SortedArray(new int[]{1, 2, 3, 4});
         instance.removeDups();
-        result = instance.equals(new SortedArray(new int[]{1,2,3,4,5,6,7,-1,-1,-1,-1,-1}));
-        assertEquals(true,result);
-        
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 1, 1, 1, 1});
+        instance.removeDups();
+        result = instance.equals(new SortedArray(new int[]{1, -1, -1, -1, -1}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 2, 2, 3, 4, 4, 4, 5, 6, 6, 7, 7});
+        instance.removeDups();
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4, 5, 6, 7, -1, -1, -1, -1, -1}));
+        assertEquals(true, result);
+
     }
-    
+
     /**
      * Test equals
      */
-    public void testEquals()
-    {
-        SortedArray instance = new SortedArray(new int[]{1,2,3});
+    public void testEquals() {
+        SortedArray instance = new SortedArray(new int[]{1, 2, 3});
         boolean expResult = true;
         boolean result = instance.equals(instance);
         assertEquals(expResult, result);
-                
+
         expResult = true;
-        result = instance.equals(new SortedArray(new int[]{1,2,3}));
-        assertEquals(expResult, result);
-        
-        expResult = false;
-        result = instance.equals(null);
-        assertEquals(expResult, result);        
-        
-        expResult = false;
-        result = instance.equals("abc");
-        assertEquals(expResult, result); 
-        
-        expResult = false;
-        result = instance.equals(new SortedArray(new int[]{1,2,3,4}));
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3}));
         assertEquals(expResult, result);
 
         expResult = false;
-        result = instance.equals(new SortedArray(new int[]{1,2,4}));
+        result = instance.equals(null);
         assertEquals(expResult, result);
-        
+
+        expResult = false;
+        result = instance.equals("abc");
+        assertEquals(expResult, result);
+
+        expResult = false;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4}));
+        assertEquals(expResult, result);
+
+        expResult = false;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 4}));
+        assertEquals(expResult, result);
+
         expResult = true;
-        int[] arr = new int[]{1,2,3};
+        int[] arr = new int[]{1, 2, 3};
         instance = new SortedArray(arr);
         result = instance.equals(new SortedArray(arr));
         assertEquals(expResult, result);
@@ -242,6 +238,57 @@ public class SortedArrayTest extends TestCase {
         arr = null;
         instance = new SortedArray(arr);
         result = instance.equals(new SortedArray(arr));
+        assertEquals(expResult, result);
+
+    }
+
+    public void testOddEvenSort() {
+        SortedArray instance = new SortedArray(new int[]{3, 2, 1});
+        instance.oddEvenSort();
+        boolean expResult = true;
+        boolean result = instance.equals(new SortedArray(new int[]{1, 2, 3}));
+        assertEquals(expResult, result);
+        
+        instance = new SortedArray(new int[]{1, 2, 3});
+        instance.oddEvenSort();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3}));
+        assertEquals(expResult, result);
+        
+        instance = new SortedArray(new int[]{1});
+        instance.oddEvenSort();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{2,1});
+        instance.oddEvenSort();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1,2}));
+        assertEquals(expResult, result);
+        
+        instance = new SortedArray(new int[]{1,4,3,7,9,2,4,6,0,1});
+        instance.oddEvenSort();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{0,1,1,2,3,4,4,6,7,9}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{5,4,3,2,1});
+        instance.oddEvenSort();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1,2,3,4,5}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{6,5,4,3,2,1});
+        instance.oddEvenSort();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1,2,3,4,5,6}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{1,1,2,2,3,3});
+        instance.oddEvenSort();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1,1,2,2,3,3}));
         assertEquals(expResult, result);
         
     }
@@ -337,5 +384,4 @@ public class SortedArrayTest extends TestCase {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
-
 }
