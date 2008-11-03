@@ -199,6 +199,110 @@ public class SortedArrayTest extends TestCase {
 
     }
 
+    public void testInsertionSortremoveDups() {
+        SortedArray instance = new SortedArray(new int[]{1, 1, 2, 3});
+        instance.insertionSortremoveDups();
+        boolean result = instance.equals(new SortedArray(new int[]{-1,1, 2, 3}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 2, 2, 3, 4});
+        instance.insertionSortremoveDups();
+        result = instance.equals(new SortedArray(new int[]{-1,1, 2, 3, 4}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 2, 2, 3, 3, 4});
+        instance.insertionSortremoveDups();
+        result = instance.equals(new SortedArray(new int[]{-1,-1,1, 2, 3, 4}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 1});
+        instance.insertionSortremoveDups();
+        result = instance.equals(new SortedArray(new int[]{-1, 1}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1});
+        instance.insertionSortremoveDups();
+        result = instance.equals(new SortedArray(new int[]{1}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 2, 3, 4});
+        instance.insertionSortremoveDups();
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 1, 1, 1, 1});
+        instance.insertionSortremoveDups();
+        result = instance.equals(new SortedArray(new int[]{-1, -1, -1, -1, 1}));
+        assertEquals(true, result);
+
+        instance = new SortedArray(new int[]{1, 2, 2, 3, 4, 4, 4, 5, 6, 6, 7, 7});
+        instance.insertionSortremoveDups();
+        result = instance.equals(new SortedArray(new int[]{-1, -1, -1, -1, -1,1, 2, 3, 4, 5, 6, 7}));
+        assertEquals(true, result);
+        
+        instance = new SortedArray(new int[]{3, 2, 1});
+        instance.insertionSortremoveDups();
+        boolean expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{1, 2, 3});
+        instance.insertionSortremoveDups();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{1});
+        instance.insertionSortremoveDups();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{2, 1});
+        instance.insertionSortremoveDups();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{1, 4, 3, 7, 9, 2, 4, 6, 0, 1});
+        instance.insertionSortremoveDups();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{-1,-1, 0, 1, 2, 3, 4,6, 7, 9}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{5, 4, 3, 2, 1});
+        instance.insertionSortremoveDups();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4, 5}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{6, 5, 4, 3, 2, 1});
+        instance.insertionSortremoveDups();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4, 5, 6}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{1, 1, 2, 2, 3, 3});
+        instance.insertionSortremoveDups();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{-1,-1,-1, 1, 2, 3}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{3, 3, 2, 2, 1, 1});
+        instance.insertionSortremoveDups();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{-1,-1,-1, 1, 2, 3}));
+        assertEquals(expResult, result);
+        
+        instance = new SortedArray(new int[]{2,2,2,2,2,2,1});
+        instance.insertionSortremoveDups();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{-1,-1,-1,-1,-1, 1, 2}));
+        assertEquals(expResult, result);        
+        
+
+    }
+    
     /**
      * Test equals
      */
@@ -248,50 +352,114 @@ public class SortedArrayTest extends TestCase {
         boolean expResult = true;
         boolean result = instance.equals(new SortedArray(new int[]{1, 2, 3}));
         assertEquals(expResult, result);
-        
+
         instance = new SortedArray(new int[]{1, 2, 3});
         instance.oddEvenSort();
         expResult = true;
         result = instance.equals(new SortedArray(new int[]{1, 2, 3}));
         assertEquals(expResult, result);
-        
+
         instance = new SortedArray(new int[]{1});
         instance.oddEvenSort();
         expResult = true;
         result = instance.equals(new SortedArray(new int[]{1}));
         assertEquals(expResult, result);
 
-        instance = new SortedArray(new int[]{2,1});
+        instance = new SortedArray(new int[]{2, 1});
         instance.oddEvenSort();
         expResult = true;
-        result = instance.equals(new SortedArray(new int[]{1,2}));
-        assertEquals(expResult, result);
-        
-        instance = new SortedArray(new int[]{1,4,3,7,9,2,4,6,0,1});
-        instance.oddEvenSort();
-        expResult = true;
-        result = instance.equals(new SortedArray(new int[]{0,1,1,2,3,4,4,6,7,9}));
+        result = instance.equals(new SortedArray(new int[]{1, 2}));
         assertEquals(expResult, result);
 
-        instance = new SortedArray(new int[]{5,4,3,2,1});
+        instance = new SortedArray(new int[]{1, 4, 3, 7, 9, 2, 4, 6, 0, 1});
         instance.oddEvenSort();
         expResult = true;
-        result = instance.equals(new SortedArray(new int[]{1,2,3,4,5}));
+        result = instance.equals(new SortedArray(new int[]{0, 1, 1, 2, 3, 4, 4, 6, 7, 9}));
         assertEquals(expResult, result);
 
-        instance = new SortedArray(new int[]{6,5,4,3,2,1});
+        instance = new SortedArray(new int[]{5, 4, 3, 2, 1});
         instance.oddEvenSort();
         expResult = true;
-        result = instance.equals(new SortedArray(new int[]{1,2,3,4,5,6}));
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4, 5}));
         assertEquals(expResult, result);
 
-        instance = new SortedArray(new int[]{1,1,2,2,3,3});
+        instance = new SortedArray(new int[]{6, 5, 4, 3, 2, 1});
         instance.oddEvenSort();
         expResult = true;
-        result = instance.equals(new SortedArray(new int[]{1,1,2,2,3,3}));
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4, 5, 6}));
         assertEquals(expResult, result);
-        
+
+        instance = new SortedArray(new int[]{1, 1, 2, 2, 3, 3});
+        instance.oddEvenSort();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 1, 2, 2, 3, 3}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{3, 3, 2, 2, 1, 1});
+        instance.oddEvenSort();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 1, 2, 2, 3, 3}));
+        assertEquals(expResult, result);
+
     }
+    
+    public void testInsertionSort1() {
+        SortedArray instance = new SortedArray(new int[]{3, 2, 1});
+        instance.insertionSort1();
+        boolean expResult = true;
+        boolean result = instance.equals(new SortedArray(new int[]{1, 2, 3}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{1, 2, 3});
+        instance.insertionSort1();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{1});
+        instance.insertionSort1();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{2, 1});
+        instance.insertionSort1();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{1, 4, 3, 7, 9, 2, 4, 6, 0, 1});
+        instance.insertionSort1();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{0, 1, 1, 2, 3, 4, 4, 6, 7, 9}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{5, 4, 3, 2, 1});
+        instance.insertionSort1();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4, 5}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{6, 5, 4, 3, 2, 1});
+        instance.insertionSort1();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 2, 3, 4, 5, 6}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{1, 1, 2, 2, 3, 3});
+        instance.insertionSort1();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 1, 2, 2, 3, 3}));
+        assertEquals(expResult, result);
+
+        instance = new SortedArray(new int[]{3, 3, 2, 2, 1, 1});
+        instance.insertionSort1();
+        expResult = true;
+        result = instance.equals(new SortedArray(new int[]{1, 1, 2, 2, 3, 3}));
+        assertEquals(expResult, result);
+
+    }
+    
 //
 //    /**
 //     * Test of mergeSort method, of class SortedArray.
