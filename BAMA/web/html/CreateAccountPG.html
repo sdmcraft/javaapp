@@ -1,0 +1,70 @@
+<!-- 
+    Document   : CreateAccountPG
+    Created on : Sep 23, 2008, 1:40:51 PM
+    Author     : satyam
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Create Account</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <form action="/BAMA/BaseServlet">
+            <table border="0">
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text" name="name" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td>Domain Name</td>
+                        <td><input type="text" name="domain-name" value="<name>.corp.adobe.com" /></td>
+                    </tr>
+                    <tr>
+                        <td>Schema Version</td>
+                        <td><input type="text" name="schema-version" value="4" /></td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td><input type="text" name="type" value="0" /></td>
+                    </tr>
+                    <tr>
+                        <td>Zone ID</td>
+                        <td><input type="text" name="zone-id" value="0" /></td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td><input type="text" name="status" value="A" /></td>
+                    </tr>
+                    <tr>
+                        <td>Creation Date</td>
+                        <td><input type="text" name="date-created" value="2008-06-17" /></td>
+                    </tr>
+                    <tr>
+                        <td>Modification Date</td>
+                        <td><input type="text" name="date-modified" value="2008-07-01" /></td>
+                    </tr>
+                    <tr>
+                        <td>Expiration Date</td>
+                        <td><input type="text" name="date-expired" value="2018-06-18" /></td>
+                    </tr>
+                    <tr>
+                        <td>Comments</td>
+                        <td><textarea name="comments" rows="4" cols="20">
+                        </textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Template ID</td>
+                        <td><input type="text" name="template-id" value="-51" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Create Account" /></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="hidden" name="accesskey" value="1"/>
+            <input type="hidden" name="action" value="account-create"/>            
+        </form>
+    </body>
+</html>
