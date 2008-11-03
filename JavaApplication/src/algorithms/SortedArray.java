@@ -108,7 +108,7 @@ public class SortedArray implements Array {
     }
 
     public void display() {
-        System.out.println("");
+        //System.out.println("");
         for (int element : elements) {
             System.out.print(element + " ");
         }
@@ -164,7 +164,7 @@ public class SortedArray implements Array {
         }
     }
 
-    public void insertionSort() {
+    public void insertionSort() {        
         for (int outer = 1; outer < elements.length; outer++) {
             int temp = elements[outer];
             int inner = outer;
@@ -176,6 +176,62 @@ public class SortedArray implements Array {
         }
     }
 
+    /** This is same as insertionSort() with the only difference, that it calculates
+     * the number of comparisions and copies done. For a nearly sorted array, the
+     * copies are very less, and 0 for a sorted array. For a reverse sorted array, 
+     * the time complexity approaches n^2 as the number of copies and comparisons
+     * become n(n-1)/2
+     */
+    public void insertionSort1() {   
+        int comparisons = 0;
+        int copies = 0;
+        System.out.println("Unsorted Array:");
+        this.display();
+        for (int outer = 1; outer < elements.length; outer++) {
+            int temp = elements[outer];
+            int inner = outer;
+            while (inner > 0) {
+                comparisons++;
+                if(temp >= elements[inner - 1])
+                    break;
+                elements[inner] = elements[inner - 1];
+                copies++;
+                inner--;
+            }
+            elements[inner] = temp;
+        }
+        System.out.println("n:"+elements.length);        
+        System.out.println("Comparisons:"+comparisons);
+        System.out.println("Copies:"+copies);
+    }
+    
+    /**
+     * A variation of insertion sort to remove duplicates from an unsorted array
+     * while sorting the array. It is assumed that -1 will never be an array entry.
+     * Insertion sort is called twice, once to replace duplicates with -1 and again
+     * to gather all -1 to the left side
+     */
+    public void insertionSortremoveDups() { 
+        this.display();
+        for (int outer = 1; outer < elements.length; outer++) {
+            int temp = elements[outer];
+            int inner = outer;
+            while (inner > 0 && (temp <= elements[inner - 1] || elements[inner - 1]==-1)) {
+                if(temp == elements[inner - 1])
+                {
+                    elements[inner - 1] = -1;
+                    //continue;
+                }
+                elements[inner] = elements[inner - 1];
+                inner--;
+            }
+            elements[inner] = temp;
+        }
+        this.display();
+        this.insertionSort();
+        this.display();
+        System.out.println("");
+    }
     public double median() {
         this.insertionSort();
         double median = 0;
