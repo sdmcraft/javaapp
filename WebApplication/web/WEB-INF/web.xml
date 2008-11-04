@@ -4,10 +4,26 @@
         <servlet-name>DemoServlet</servlet-name>
         <servlet-class>servlets.DemoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RealPathDemoServlet</servlet-name>
+        <servlet-class>servlets.RealPathDemoServlet</servlet-class>
+    </servlet>
+    <!--servlet>
+        <servlet-name>RealPathDemoHelperPG</servlet-name>
+        <jsp-file>/jsp/RealPathDemoHelperPG.jsp</jsp-file>
+    </servlet-->
     <servlet-mapping>
         <servlet-name>DemoServlet</servlet-name>
         <url-pattern>/DemoServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RealPathDemoServlet</servlet-name>
+        <url-pattern>/jsp/RealPathDemoServlet</url-pattern>
+    </servlet-mapping>
+    <!--servlet-mapping>
+        <servlet-name>RealPathDemoHelperPG</servlet-name>
+        <url-pattern>/jsp/RealPathDemoHelperPG</url-pattern>
+    </servlet-mapping-->
     <session-config>
         <session-timeout>
             30
