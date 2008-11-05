@@ -6,6 +6,8 @@
 package com.folderdiff;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,4 +51,26 @@ public class DiffEngine {
         }
         return diffFileList;
     }
+    
+    public static void writeToHtml(List<DiffFile> list,String path)
+    {
+        File html = new File(path);
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(html);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        out.write("<HTML>");
+        out.write("<BODY>");
+        for(DiffFile f : list)
+        {
+            out.write("<BR>");
+            out.write(f.toString());
+        }        
+        out.write("</BODY>");
+        out.write("</HTML>");
+        out.close();
+    }
+    
 }
