@@ -12,6 +12,10 @@
         <servlet-name>RealPathDemoHelperPG</servlet-name>
         <jsp-file>/jsp/RealPathDemoHelperPG.jsp</jsp-file>
     </servlet-->
+    <servlet>
+        <servlet-name>MappedSuperClassDemo</servlet-name>
+        <servlet-class>servlets.MappedSuperClassDemo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DemoServlet</servlet-name>
         <url-pattern>/DemoServlet</url-pattern>
@@ -24,6 +28,10 @@
         <servlet-name>RealPathDemoHelperPG</servlet-name>
         <url-pattern>/jsp/RealPathDemoHelperPG</url-pattern>
     </servlet-mapping-->
+    <servlet-mapping>
+        <servlet-name>MappedSuperClassDemo</servlet-name>
+        <url-pattern>/MappedSuperClassDemo</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
