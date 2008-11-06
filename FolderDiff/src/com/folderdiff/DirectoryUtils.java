@@ -40,6 +40,20 @@ public class DirectoryUtils {
         return name;
     }
     
+    public static int[] chooseRoot(File f,String[] roots)
+    {
+        int result[] = new int[roots.length];        
+        for(int i=0; i<roots.length;i++)
+        {
+            String root = roots[i];
+            if(f.toString().startsWith(root))
+            {
+                result[i] = 1;                
+            }
+        }
+        return result;
+    }
+    
     public static void main(String[] args) {
         List<File> list = listContents("C:\\setup");
         for(File f : list)

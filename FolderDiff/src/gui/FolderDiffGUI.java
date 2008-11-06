@@ -38,13 +38,12 @@ public class FolderDiffGUI extends javax.swing.JFrame {
         root2Field = new javax.swing.JTextField();
         chooseRoot1Button = new javax.swing.JButton();
         chooseRoot2Button = new javax.swing.JButton();
-        resultFileLabel = new javax.swing.JLabel();
-        resultFileField = new javax.swing.JTextField();
-        resultFileButton = new javax.swing.JButton();
         resultMsgLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Folder Diff"); // NOI18N
+
+        root1Field.setEditable(false);
 
         root1Label.setText("Root1:");
 
@@ -56,6 +55,8 @@ public class FolderDiffGUI extends javax.swing.JFrame {
         });
 
         root2Label.setText("Root2:");
+
+        root2Field.setEditable(false);
 
         chooseRoot1Button.setText("Browse");
         chooseRoot1Button.addActionListener(new java.awt.event.ActionListener() {
@@ -71,15 +72,6 @@ public class FolderDiffGUI extends javax.swing.JFrame {
             }
         });
 
-        resultFileLabel.setText("Generate Diff Result Here:");
-
-        resultFileButton.setText("Browse");
-        resultFileButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resultFileButtonActionPerformed(evt);
-            }
-        });
-
         resultMsgLabel.setForeground(new java.awt.Color(0, 153, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -89,35 +81,28 @@ public class FolderDiffGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(211, 211, 211)
+                        .addComponent(resultMsgLabel))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(root1Label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(root1Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chooseRoot1Button)
-                        .addGap(26, 26, 26)
-                        .addComponent(root2Label)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(doDiffButton)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(root1Label)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(root1Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(chooseRoot1Button)
+                                .addGap(26, 26, 26)
+                                .addComponent(root2Label)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(root2Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chooseRoot2Button))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(resultFileLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resultFileField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resultFileButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(192, 192, 192)
-                        .addComponent(doDiffButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(211, 211, 211)
-                        .addComponent(resultMsgLabel)))
+                        .addComponent(chooseRoot2Button)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {chooseRoot1Button, chooseRoot2Button, doDiffButton, resultFileButton, resultFileField, root1Field, root2Field});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {chooseRoot1Button, chooseRoot2Button, doDiffButton, root1Field, root2Field});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,16 +115,11 @@ public class FolderDiffGUI extends javax.swing.JFrame {
                     .addComponent(root2Label)
                     .addComponent(chooseRoot1Button)
                     .addComponent(chooseRoot2Button))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(resultFileField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(resultFileButton)
-                    .addComponent(resultFileLabel))
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(doDiffButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(38, 38, 38)
                 .addComponent(resultMsgLabel)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -147,7 +127,9 @@ public class FolderDiffGUI extends javax.swing.JFrame {
 
 private void doDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doDiffButtonActionPerformed
     List<DiffFile> list = DiffEngine.doDiff(new String[]{root1Field.getText(), root2Field.getText()});
-    DiffEngine.writeToHtml(list, resultFileField.getText());    
+    File html = DiffEngine.writeToHtml(list, new String[]{root1Field.getText(), root2Field.getText()});    
+    BrowserControl.displayURL(html.toString());
+    //html.delete();
 }//GEN-LAST:event_doDiffButtonActionPerformed
 
 private void chooseRoot1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot1ButtonActionPerformed
@@ -156,7 +138,7 @@ private void chooseRoot1ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
-        root1Field.setText(file.toString());
+        root1Field.setText(file.toString()+file.separator);
     }
 }//GEN-LAST:event_chooseRoot1ButtonActionPerformed
 
@@ -166,19 +148,9 @@ private void chooseRoot2ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
-        root2Field.setText(file.toString());
+        root2Field.setText(file.toString()+file.separator);
     }
 }//GEN-LAST:event_chooseRoot2ButtonActionPerformed
-
-private void resultFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultFileButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    int returnVal = fc.showOpenDialog(rootPane);
-    if (returnVal == JFileChooser.APPROVE_OPTION) {
-        File file = fc.getSelectedFile();
-        resultFileField.setText(file.toString());
-    }
-}//GEN-LAST:event_resultFileButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -195,9 +167,6 @@ private void resultFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//
     private javax.swing.JButton chooseRoot1Button;
     private javax.swing.JButton chooseRoot2Button;
     private javax.swing.JButton doDiffButton;
-    private javax.swing.JButton resultFileButton;
-    private javax.swing.JTextField resultFileField;
-    private javax.swing.JLabel resultFileLabel;
     private javax.swing.JLabel resultMsgLabel;
     private javax.swing.JTextField root1Field;
     private javax.swing.JLabel root1Label;
