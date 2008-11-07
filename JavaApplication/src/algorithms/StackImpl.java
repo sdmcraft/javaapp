@@ -35,7 +35,7 @@ public class StackImpl implements Stack {
     }
 
     public void push(int item) throws Exception {
-        if (top == elements.length - 1) {
+        if (top >= elements.length - 1) {
             throw new Exception("Stack full. Cannot push!!!");
         }
         elements[++top] = item;
