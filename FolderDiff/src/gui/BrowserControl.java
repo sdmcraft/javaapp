@@ -87,7 +87,7 @@ public class BrowserControl {
     // The flag to display a url.
     private static final String WIN_FLAG = "url.dll,FileProtocolHandler";
     // The default browser under unix.
-    private static final String UNIX_PATH = "netscape";
+    private static final String UNIX_PATH = "firefox";
     // The flag to display a url.
     private static final String UNIX_FLAG = "-remote openURL";
 }

@@ -18,7 +18,7 @@ public class DirectoryUtils {
         List<File> list = new ArrayList<File>();
         if (node.isFile()) {
             list.add(node);
-        } else if(node.isDirectory()){
+        } else if(node.isDirectory() && (node.list() != null)){             
             File[] contents = node.listFiles();
             for (File f : contents)
             {

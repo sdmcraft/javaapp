@@ -39,6 +39,7 @@ public class FolderDiffGUI extends javax.swing.JFrame {
         chooseRoot1Button = new javax.swing.JButton();
         chooseRoot2Button = new javax.swing.JButton();
         resultMsgLabel = new javax.swing.JLabel();
+        exitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("Folder Diff"); // NOI18N
@@ -74,6 +75,13 @@ public class FolderDiffGUI extends javax.swing.JFrame {
 
         resultMsgLabel.setForeground(new java.awt.Color(0, 153, 0));
 
+        exitButton.setText("Exit");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,24 +93,27 @@ public class FolderDiffGUI extends javax.swing.JFrame {
                         .addComponent(resultMsgLabel))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(doDiffButton)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(root1Label)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(root1Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(chooseRoot1Button)
-                                .addGap(26, 26, 26)
-                                .addComponent(root2Label)))
+                        .addComponent(root1Label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(root1Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chooseRoot1Button)
+                        .addGap(26, 26, 26)
+                        .addComponent(root2Label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(root2Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chooseRoot2Button)))
                 .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(201, Short.MAX_VALUE)
+                .addComponent(doDiffButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exitButton)
+                .addGap(177, 177, 177))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {chooseRoot1Button, chooseRoot2Button, doDiffButton, root1Field, root2Field});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {chooseRoot1Button, chooseRoot2Button, doDiffButton, exitButton, root1Field, root2Field});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,9 +126,11 @@ public class FolderDiffGUI extends javax.swing.JFrame {
                     .addComponent(root2Label)
                     .addComponent(chooseRoot1Button)
                     .addComponent(chooseRoot2Button))
-                .addGap(32, 32, 32)
-                .addComponent(doDiffButton)
-                .addGap(38, 38, 38)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(doDiffButton)
+                    .addComponent(exitButton))
+                .addGap(39, 39, 39)
                 .addComponent(resultMsgLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -152,6 +165,10 @@ private void chooseRoot2ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     }
 }//GEN-LAST:event_chooseRoot2ButtonActionPerformed
 
+private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+    System.exit(0);
+}//GEN-LAST:event_exitButtonActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -167,6 +184,7 @@ private void chooseRoot2ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     private javax.swing.JButton chooseRoot1Button;
     private javax.swing.JButton chooseRoot2Button;
     private javax.swing.JButton doDiffButton;
+    private javax.swing.JButton exitButton;
     private javax.swing.JLabel resultMsgLabel;
     private javax.swing.JTextField root1Field;
     private javax.swing.JLabel root1Label;
