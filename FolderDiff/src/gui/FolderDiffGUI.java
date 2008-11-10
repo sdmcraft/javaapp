@@ -9,7 +9,10 @@ import com.folderdiff.DiffEngine;
 import com.folderdiff.DiffFile;
 import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -139,10 +142,18 @@ public class FolderDiffGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void doDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doDiffButtonActionPerformed
-    List<DiffFile> list = DiffEngine.doDiff(new String[]{root1Field.getText(), root2Field.getText()});
-    File html = DiffEngine.writeToHtml(list, new String[]{root1Field.getText(), root2Field.getText()});    
-    BrowserControl.displayURL(html.toString());
-    //html.delete();
+    if (root1Field.getText() == null || "".equals(root1Field.getText()) || root2Field.getText() == null || "".equals(root2Field.getText())) {
+        JOptionPane.showMessageDialog(rootPane, "Root folder cannot be null", "Error", JOptionPane.ERROR_MESSAGE);
+    } else {
+        try {
+            List<DiffFile> list = DiffEngine.doDiff(new String[]{root1Field.getText(), root2Field.getText()});
+            File html = DiffEngine.writeToHtml(list, new String[]{root1Field.getText(), root2Field.getText()});
+            BrowserControl.displayURL(html.toString());
+        } catch (Exception ex) {
+            Logger.getLogger(FolderDiffGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+//html.delete();
 }//GEN-LAST:event_doDiffButtonActionPerformed
 
 private void chooseRoot1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot1ButtonActionPerformed
@@ -151,7 +162,7 @@ private void chooseRoot1ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
-        root1Field.setText(file.toString()+file.separator);
+        root1Field.setText(file.toString() + file.separator);
     }
 }//GEN-LAST:event_chooseRoot1ButtonActionPerformed
 
@@ -161,7 +172,7 @@ private void chooseRoot2ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
-        root2Field.setText(file.toString()+file.separator);
+        root2Field.setText(file.toString() + file.separator);
     }
 }//GEN-LAST:event_chooseRoot2ButtonActionPerformed
 

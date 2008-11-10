@@ -12,7 +12,7 @@ import java.util.List;
  * @author satyam
  */
 public class Demo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         List<DiffFile> list = DiffEngine.doDiff(new String[]{"C:\\shared","C:\\shared1"});
         for(DiffFile f : list)
             System.out.println(f);

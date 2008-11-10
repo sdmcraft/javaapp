@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class DiffEngine {
 
-    public static List<DiffFile> doDiff(String[] roots) {
+    public static List<DiffFile> doDiff(String[] roots) throws Exception {
         List[] fileLists = new ArrayList[roots.length];
         List<DiffFile> diffFileList = new ArrayList<DiffFile>();
         int counter = 0;
