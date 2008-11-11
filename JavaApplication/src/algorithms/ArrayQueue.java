@@ -25,7 +25,13 @@ public class ArrayQueue implements Queue {
         rear = -1;
         front = -1;
     }
-    
+
+    public ArrayQueue(Object[] elements) {
+        this.elements = elements;
+        rear = -1;
+        front = -1;
+    }
+
     @Override
     public boolean equals(Object obj) {
         boolean result = true;
@@ -47,8 +53,9 @@ public class ArrayQueue implements Queue {
                 result = false;
             } else {
                 for (int i = 0; i < this.elements.length; i++) {
-                    if (this.elements[i] == other.elements[i]) 
+                    if (this.elements[i] == other.elements[i]) {
                         continue;
+                    }
                     if (!(this.elements[i].equals(other.elements[i]))) {
                         result = false;
                         break;
@@ -131,12 +138,11 @@ public class ArrayQueue implements Queue {
         }
         return new String(sb);
     }
-    
-    public void flush()
-    {
+
+    public void flush() {
         elements = new Object[this.elements.length];
         rear = -1;
-        front = -1;        
+        front = -1;
     }
 }
 
