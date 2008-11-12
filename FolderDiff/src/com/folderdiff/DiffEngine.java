@@ -6,6 +6,7 @@ package com.folderdiff;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,31 @@ public class DiffEngine {
             counter++;
         }
         return diffFileList;
+    }
+    
+    public static boolean diffFile(String f1,String f2) throws Exception
+    {
+        return diffFile(new File(f1),new File(f2));
+    }
+    public static boolean diffFile(File f1,File f2) throws Exception
+    {
+        boolean result = true;
+        FileReader reader1 = new FileReader(f1);
+        FileReader reader2 = new FileReader(f2);
+        int c1 = -1;
+        int c2 = -1;
+        while(((c1 = reader1.read()) != -1) & ((c2 = reader2.read()) != -1))
+        {
+            if(c1 != c2)
+            {
+                result = false;
+                break;
+            }
+        }
+        if(c1 != c2)
+            result = false;
+
+        return result;
     }
 
     public static File writeToHtml(List<DiffFile> list, String[] roots) {
