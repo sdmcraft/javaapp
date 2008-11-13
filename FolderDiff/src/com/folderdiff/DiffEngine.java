@@ -37,7 +37,7 @@ public class DiffEngine {
                     }
                 }
                 if (!found) {
-                    diffFileList.add(new DiffFile(strippedName, f));
+                    diffFileList.add(new DiffFile(strippedName, f, roots[counter]));
                 }
             }
             counter++;

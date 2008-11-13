@@ -7,7 +7,9 @@ package com.folderdiff;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,11 +18,28 @@ import java.util.List;
 public class DiffFile {
     public String name;
     public List<File> copies;
+    public List<String> presentInRoots;
+    public Map<Long,List<String>> timeBuckets;
+    public List<List<File>> textBuckets;
 
-    public DiffFile(String stippedName,File f) {
+    public DiffFile(String stippedName,File f, String root) {
         copies = new ArrayList<File>();
         copies.add(f);
-        this.name = stippedName;
+        
+        presentInRoots = new ArrayList<String>();        
+        presentInRoots.add(root);
+
+        timeBuckets = new HashMap<Long,List<String>>();        
+        List<String> list = new ArrayList<String>();
+        list.add(f.toString());
+        timeBuckets.put(new Long(f.lastModified()), list);
+        
+        textBuckets = new ArrayList<List<File>>();
+        List<File> list2 = new ArrayList<File>();
+        list2.add(f);
+        textBuckets.add(list2);        
+        
+        this.name = stippedName;                
     }
     
     @Override
