@@ -5,8 +5,13 @@
 package com.folderdiff;
 
 import java.io.File;
+<<<<<<< .mine
+import java.util.ArrayList;
+import java.util.List;
+=======
 import java.util.logging.Level;
 import java.util.logging.Logger;
+>>>>>>> .r33
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,16 +43,42 @@ public class DirectoryUtilsTest {
     @After
     public void tearDown() {
     }
+<<<<<<< .mine
+    
+    public void setup1ListContents()
+    {
+=======
 
     public void setupListContents() {
+>>>>>>> .r33
         String curDir = System.getProperty("user.dir");
+<<<<<<< .mine
+        System.out.println("Current Directory:"+curDir);
+        new File(curDir+File.separator+"testDir").mkdir();
+=======
         System.out.println("Current Directory:" + curDir);
         new File(curDir + File.pathSeparator + "testDir").mkdir();
+>>>>>>> .r33
     }
 
+    public void tearDown11ListContents()
+    {
+        String curDir = System.getProperty("user.dir");        
+        new File(curDir+File.separator+"testDir").delete();
+    }
+    
     /**
      * Test of listContents method, of class DirectoryUtils.
      */
+<<<<<<< .mine
+    @Test
+    public void listContents() {
+        setup1ListContents();
+        String curDir = System.getProperty("user.dir");
+        List<File> result = DirectoryUtils.listContents(curDir+File.separator+"testDir");
+        assertEquals(0,result.size());  
+        tearDown11ListContents();
+=======
 //    @Test
 //    public void listContents() {
 //        setupListContents();
@@ -57,6 +88,7 @@ public class DirectoryUtilsTest {
 //        assertEquals(expResult, result);
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
+>>>>>>> .r33
 //    }
     /**
      * Test of stripRoot method, of class DirectoryUtils.
