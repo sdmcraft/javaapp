@@ -5,11 +5,20 @@
 package com.folderdiff;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  *
@@ -31,7 +40,7 @@ public class DiffEngine {
                 boolean found = false;
                 for (DiffFile diffFile : diffFileList) {
                     if (strippedName.equals(diffFile.name)) {
-                        diffFile.copies.add(f);
+                        diffFile.add(f, roots[counter]);
                         found = true;
                         break;
                     }
@@ -42,35 +51,75 @@ public class DiffEngine {
             }
             counter++;
         }
+        for (DiffFile diffFile : diffFileList) {
+            diffFile.buildTextBuckets();
+        }
         return diffFileList;
     }
-    
-    public static boolean diffFile(String f1,String f2) throws Exception
-    {
-        return diffFile(new File(f1),new File(f2));
+
+    public static boolean diffFile(String f1, String f2) throws Exception {
+        return diffFile(new File(f1), new File(f2));
     }
-    public static boolean diffFile(File f1,File f2) throws Exception
-    {
+
+    public static boolean diffFile(File f1, File f2) throws Exception {
         boolean result = true;
         FileReader reader1 = new FileReader(f1);
         FileReader reader2 = new FileReader(f2);
         int c1 = -1;
         int c2 = -1;
-        while(((c1 = reader1.read()) != -1) & ((c2 = reader2.read()) != -1))
-        {
-            if(c1 != c2)
-            {
+        while (((c1 = reader1.read()) != -1) & ((c2 = reader2.read()) != -1)) {
+            if (c1 != c2) {
                 result = false;
                 break;
             }
         }
-        if(c1 != c2)
+        if (c1 != c2) {
             result = false;
+        }
 
         return result;
     }
 
-    public static File writeToHtml(List<DiffFile> list, String[] roots) {
+    public static Map<String, List<File>> diffFileMD5(List<File> list) throws Exception {
+
+        Map<String, List<File>> map = new HashMap<String, List<File>>();
+        for (File f : list) {
+            String key = md5Digester(f);
+            List<File> sameTextList = map.get(key);
+            if (sameTextList == null) {
+                sameTextList = new ArrayList<File>();
+            }
+            sameTextList.add(f);
+        }
+        return map;
+    }
+
+    public static String md5Digester(File f) throws Exception {
+        MessageDigest digest = MessageDigest.getInstance("MD5");
+        InputStream is = new FileInputStream(f);
+        byte[] buffer = new byte[8192];
+        int read = 0;
+        String output = "";
+        try {
+            while ((read = is.read(buffer)) > 0) {
+                digest.update(buffer, 0, read);
+            }
+            byte[] md5sum = digest.digest();
+            BigInteger bigInt = new BigInteger(1, md5sum);
+            output = bigInt.toString(16);
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to process file for MD5", e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                throw new RuntimeException("Unable to close input stream for MD5 calculation", e);
+            }
+        }
+        return output;
+    }
+
+    public static File writeToHtml(List<DiffFile> list) {
         File html = new File("temp.html");
         PrintWriter out = null;
         try {
@@ -80,43 +129,45 @@ public class DiffEngine {
         }
         out.write("<HTML>");
         out.write("<BODY>");
-        out.write("<TABLE BORDER=\"2\"");
-        out.write("<THEAD>");
-        out.write("<TR BGCOLOR=\"GREY\"");
-        for (String root : roots) {
-            out.write("<TD>");
-            out.write("<H4>"+root+"</H4>");
-            out.write("</TD>");
-        }
-        out.write("</TR>");
-        out.write("</THEAD>");
-        out.write("<TBODY>");
         for (DiffFile diffFile : list) {
-            if(diffFile.isNew(roots.length))
-                out.write("<TR BGCOLOR=FF0000>");
-            else if(diffFile.isModified())
-                out.write("<TR BGCOLOR=FFFF00>");
-            else
-                out.write("<TR BGCOLOR=99FF00>");
-            File[] fileList = new File[roots.length];
-            for (File f : diffFile.copies) {
-                int[] columns = DirectoryUtils.chooseRoot(f, roots);
-                for(int i=0;i<columns.length;i++)
-                {
-                    if(columns[i]==1)
-                    fileList[i] = f;
-                }
-            }
-            for (int i = 0; i < fileList.length; i++) {
-                out.write("<TD>");
-                if(fileList[i] != null)
-                    out.write("<B>"+fileList[i].toString()+"</B>");
-                out.write("</TD>");
-            }
+            out.write("<H2>" + diffFile.name + "</H2>");
+            out.write("<TABLE BORDER=\"2\"");
+            out.write("<THEAD>");
+            out.write("<TR BGCOLOR=\"GREY\"");
+            out.write("<TD>");
+            out.write("<H4>Present In</H4>");
+            out.write("</TD>");
             out.write("</TR>");
-        }
-        out.write("</TBODY>");
-        out.write("</TABLE>");
+            out.write("</THEAD>");
+            out.write("<TBODY>");
+            for (String root : diffFile.roots) {
+                out.write("<TR>");
+                out.write("<TD>");
+                out.write(root);
+                out.write("</TD>");
+                out.write("</TR>");
+            }
+            out.write("</TBODY>");
+            out.write("</TABLE>");
+            out.write("<H2>Same file groups</H2>");
+            Set<Entry<String, List<File>>> entrySet = diffFile.textBuckets.entrySet();
+            for (Entry<String, List<File>> entry : entrySet) {
+                out.write("<TABLE BORDER=\"2\"");
+                out.write("<TBODY>");
+                for (File f : entry.getValue()) {
+                    out.write("<TR>");
+                    out.write("<TD>");
+                    out.write(f.toString());
+                    out.write("</TD>");
+                    out.write("</TR>");
+
+                }
+                out.write("</TBODY>");
+                out.write("</TABLE>");
+
+            }
+
+        }        
         out.write("</BODY>");
         out.write("</HTML>");
         out.close();

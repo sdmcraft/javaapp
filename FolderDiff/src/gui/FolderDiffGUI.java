@@ -147,7 +147,7 @@ private void doDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     } else {
         try {
             List<DiffFile> list = DiffEngine.doDiff(new String[]{root1Field.getText(), root2Field.getText()});
-            File html = DiffEngine.writeToHtml(list, new String[]{root1Field.getText(), root2Field.getText()});
+            File html = DiffEngine.writeToHtml(list);
             BrowserControl.displayURL(html.toString());
         } catch (Exception ex) {
             Logger.getLogger(FolderDiffGUI.class.getName()).log(Level.SEVERE, null, ex);
