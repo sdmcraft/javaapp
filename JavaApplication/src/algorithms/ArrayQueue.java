@@ -17,6 +17,7 @@ public class ArrayQueue implements Queue {
     private Object[] elements;
     private int rear;
     private int front;
+
     /**
      * Creates a new instance of ArrayQueue
      */
@@ -30,6 +31,37 @@ public class ArrayQueue implements Queue {
         this.elements = elements;
         rear = -1;
         front = -1;
+        if ((elements.length == 1) && (elements[0] != null)) {
+            front = rear = 0;
+        }
+        else if ((elements.length == 1) && (elements[0] == null)) {
+            ;
+        }
+        else {
+            boolean nullFound = false;
+            boolean allNulls = true;
+            for (int i = 0; i < elements.length; i++) {
+                if ((elements[i] != null) && (elements[(i + 1) % elements.length] == null)) {
+                    rear = i;
+                    nullFound = true;
+                }
+                if ((elements[i] != null) && (elements[(i - 1 + elements.length) % elements.length] == null)) {
+                    front = i;
+                    nullFound = true;
+                }
+                if((allNulls)&&(elements[i] != null))
+                    allNulls = false;
+            }
+            if(allNulls)
+            {
+                ;
+            }
+            else if(!nullFound)
+            {
+                front = 0;
+                rear = elements.length-1;
+            }
+        }
     }
 
     @Override
@@ -94,13 +126,13 @@ public class ArrayQueue implements Queue {
         if (rear == -1 && front == -1) {
             throw new BusinessException("Queue empty!!!");
         } else {
+            returnItem = elements[front];
+            elements[front] = null;
             /*one item in the queue - special case*/
             if (rear == front) {
-                returnItem = elements[front];
                 rear = -1;
                 front = -1;
             } else {
-                returnItem = elements[front];
                 front = (front + 1) % elements.length;
             }
         }
