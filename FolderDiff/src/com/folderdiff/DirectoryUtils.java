@@ -38,28 +38,28 @@ public class DirectoryUtils {
     public static String stripRoot(String f, String root) throws Exception {
         String name = null;
         if (f.substring(0, root.length()).equals(root)) {
-            name = f.substring(root.length());            
-        }
-        else
+            name = f.substring(root.length());
+        } else {
             throw new Exception("Incorrect root for this file. Cannot be stripped!!!");
+        }
         return name;
     }
 
-    public static int[] chooseRoot(File f, String[] roots) {
-        int result[] = new int[roots.length];
-        for (int i = 0; i < roots.length; i++) {
-            String root = roots[i];
-            if (f.toString().startsWith(root)) {
-                result[i] = 1;
-            }
-        }
-        return result;
-    }
+//    public static int[] chooseRoot(File f, String[] roots) {
+//        int result[] = new int[roots.length];
+//        for (int i = 0; i < roots.length; i++) {
+//            String root = roots[i];
+//            if (f.toString().startsWith(root)) {
+//                result[i] = 1;
+//            }
+//        }
+//        return result;
+//    }
 
-    public static void main(String[] args) {
-        List<File> list = listContents("C:\\setup");
-        for (File f : list) {
-            System.out.println(f.toString());
-        }
-    }
+//    public static void main(String[] args) {
+//        List<File> list = listContents("C:\\setup");
+//        for (File f : list) {
+//            System.out.println(f.toString());
+//        }
+//    }
 }

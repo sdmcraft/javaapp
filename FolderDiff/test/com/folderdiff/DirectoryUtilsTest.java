@@ -37,31 +37,24 @@ public class DirectoryUtilsTest {
     @After
     public void tearDown() {
     }
-    
-    public void setupListContents() {
-        String curDir = System.getProperty("user.dir");
-        System.out.println("Current Directory:"+curDir);
-        new File(curDir+File.separator+"testDir").mkdir();
-        System.out.println("Current Directory:" + curDir);
-        new File(curDir + File.pathSeparator + "testDir").mkdir();
-    }
 
-    public void tearDown11ListContents()
-    {
-        String curDir = System.getProperty("user.dir");        
-        new File(curDir+File.separator+"testDir").delete();
-    }
-    
     /**
      * Test of listContents method, of class DirectoryUtils.
      */
     @Test
-    public void listContents() {
-        setupListContents();
+    public void listContents() throws Exception {
         String curDir = System.getProperty("user.dir");
-        List<File> result = DirectoryUtils.listContents(curDir+File.separator+"testDir");
-        assertEquals(0,result.size());  
-        tearDown11ListContents();
+        new File(curDir + File.separator + "testDir").mkdir();
+        List<File> result = DirectoryUtils.listContents(curDir + File.separator + "testDir");
+        assertEquals(0, result.size());
+        (new File(curDir + File.separator + "testDir" + File.separator + "testFile")).createNewFile();
+        result = DirectoryUtils.listContents(curDir + File.separator + "testDir");
+        assertEquals(1, result.size());
+        (new File(curDir + File.separator + "testDir" + File.separator + "testFile")).delete();
+        new File(curDir + File.separator + "testDir").delete();
+//        result = DirectoryUtils.listContents("C:\\Documents and Settings");
+//        for(File f : result)
+//            System.out.println(f);
     }
 //    @Test
 //    public void listContents() {
@@ -85,8 +78,8 @@ public class DirectoryUtilsTest {
         try {
             result = DirectoryUtils.stripRoot(f, root);
         } catch (Exception ex) {
-            fail("The test case is a prototype.");
             ex.printStackTrace();
+            fail();
         }
         assertEquals(expResult, "test".equals(result));
 
@@ -97,8 +90,8 @@ public class DirectoryUtilsTest {
         try {
             result = DirectoryUtils.stripRoot(f, root);
         } catch (Exception ex) {
-            fail("The test case is a prototype.");
             ex.printStackTrace();
+            fail();
         }
         assertEquals(expResult, "test".equals(result));
 
@@ -109,8 +102,8 @@ public class DirectoryUtilsTest {
         try {
             result = DirectoryUtils.stripRoot(f, root);
         } catch (Exception ex) {
-            fail("The test case is a prototype.");
             ex.printStackTrace();
+            fail();
         }
         assertEquals(expResult, "test".equals(result));
 
@@ -122,8 +115,44 @@ public class DirectoryUtilsTest {
             result = DirectoryUtils.stripRoot(f, root);
         } catch (Exception ex) {
             assertEquals(true, "Incorrect root for this file. Cannot be stripped!!!".equals(ex.getMessage()));
+            //ex.printStackTrace();
         }
 
+        root = "";
+        f = "/root1/test";
+        expResult = true;
+        result = null;
+        try {
+            result = DirectoryUtils.stripRoot(f, root);
+            assertEquals(true, result.equals("/root1/test"));
+        } catch (Exception ex) {            
+            ex.printStackTrace();
+            fail();
+        }
+
+        root = "";
+        f = "/root1/test";
+        expResult = true;
+        result = null;
+        try {
+            result = DirectoryUtils.stripRoot(f, root);
+            assertEquals(true, result.equals("/root1/test"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            fail();
+        }
+
+        root = "";
+        f = "";
+        expResult = true;
+        result = null;
+        try {
+            result = DirectoryUtils.stripRoot(f, root);
+            assertEquals(true, result.equals(""));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            fail();
+        }
         
     }
 //
@@ -142,5 +171,4 @@ public class DirectoryUtilsTest {
 //        fail("The test case is a prototype.");
 //    }
 //
-
 }
