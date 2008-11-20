@@ -88,6 +88,7 @@ public class DiffEngine {
             List<File> sameTextList = map.get(key);
             if (sameTextList == null) {
                 sameTextList = new ArrayList<File>();
+                map.put(key, sameTextList);
             }
             sameTextList.add(f);
         }
@@ -122,6 +123,7 @@ public class DiffEngine {
     public static File writeToHtml(List<DiffFile> list) {
         File html = new File("temp.html");
         PrintWriter out = null;
+        String[] colorlist = new String[]{"00FFFF","FFFFCC","3300CC","660099","CC0099"};
         try {
             out = new PrintWriter(html);
         } catch (FileNotFoundException ex) {
@@ -130,44 +132,45 @@ public class DiffEngine {
         out.write("<HTML>");
         out.write("<BODY>");
         for (DiffFile diffFile : list) {
-            out.write("<H2>" + diffFile.name + "</H2>");
-            out.write("<TABLE BORDER=\"2\"");
-            out.write("<THEAD>");
-            out.write("<TR BGCOLOR=\"GREY\"");
-            out.write("<TD>");
-            out.write("<H4>Present In</H4>");
-            out.write("</TD>");
-            out.write("</TR>");
-            out.write("</THEAD>");
-            out.write("<TBODY>");
-            for (String root : diffFile.roots) {
-                out.write("<TR>");
-                out.write("<TD>");
-                out.write(root);
-                out.write("</TD>");
-                out.write("</TR>");
-            }
-            out.write("</TBODY>");
-            out.write("</TABLE>");
-            out.write("<H2>Same file groups</H2>");
+//            out.write("<H2>" + diffFile.name + "</H2>");
+//            out.write("<TABLE BORDER=\"2\"");
+//            out.write("<THEAD>");
+//            out.write("<TR BGCOLOR=\"GREY\"");
+//            out.write("<TD>");
+//            out.write("<B>Present In</B>");
+//            out.write("</TD>");
+//            out.write("</TR>");
+//            out.write("</THEAD>");
+//            out.write("<TBODY>");
+//            for (String root : diffFile.roots) {
+//                out.write("<TR>");
+//                out.write("<TD>");
+//                out.write(root);
+//                out.write("</TD>");
+//                out.write("</TR>");
+//            }
+//            out.write("</TBODY>");
+//            out.write("</TABLE>");
             Set<Entry<String, List<File>>> entrySet = diffFile.textBuckets.entrySet();
+            out.write("<TABLE BORDER=\"2\"");
+            out.write("<TBODY>");
+            int i=0;
             for (Entry<String, List<File>> entry : entrySet) {
-                out.write("<TABLE BORDER=\"2\"");
-                out.write("<TBODY>");
+                String color = colorlist[(i++)%colorlist.length];
                 for (File f : entry.getValue()) {
-                    out.write("<TR>");
+                    out.write("<TR BGCOLOR=\""+color+"\">");
                     out.write("<TD>");
                     out.write(f.toString());
                     out.write("</TD>");
                     out.write("</TR>");
-
                 }
-                out.write("</TBODY>");
-                out.write("</TABLE>");
-
             }
-
-        }        
+            out.write("</TBODY>");
+            out.write("</TABLE>");
+            out.write("<BR>");
+            out.write("<HR width=\"500\" color=\"black\" size=\"2\" align=\"left\">");
+            out.write("<BR>");
+        }
         out.write("</BODY>");
         out.write("</HTML>");
         out.close();
