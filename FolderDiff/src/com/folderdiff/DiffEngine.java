@@ -56,6 +56,13 @@ public class DiffEngine {
         }
         return diffFileList;
     }
+    
+    List<String> summarizeDiff(List<DiffFile> list)
+    {
+        List<String> summary = new ArrayList<String>();
+        summary.add("Total number of files compared: "+list.size());
+        return summary;
+    }
 
     public static boolean diffFile(String f1, String f2) throws Exception {
         return diffFile(new File(f1), new File(f2));
@@ -131,26 +138,9 @@ public class DiffEngine {
         }
         out.write("<HTML>");
         out.write("<BODY>");
+        out.write("<H2><FONT COLOR=\"FF0000\">Files in same color have no difference</FONT></H2>");
+        out.write("<HR width=\"1000\" color=\"black\" size=\"2\" align=\"left\">");
         for (DiffFile diffFile : list) {
-//            out.write("<H2>" + diffFile.name + "</H2>");
-//            out.write("<TABLE BORDER=\"2\"");
-//            out.write("<THEAD>");
-//            out.write("<TR BGCOLOR=\"GREY\"");
-//            out.write("<TD>");
-//            out.write("<B>Present In</B>");
-//            out.write("</TD>");
-//            out.write("</TR>");
-//            out.write("</THEAD>");
-//            out.write("<TBODY>");
-//            for (String root : diffFile.roots) {
-//                out.write("<TR>");
-//                out.write("<TD>");
-//                out.write(root);
-//                out.write("</TD>");
-//                out.write("</TR>");
-//            }
-//            out.write("</TBODY>");
-//            out.write("</TABLE>");
             Set<Entry<String, List<File>>> entrySet = diffFile.textBuckets.entrySet();
             out.write("<TABLE BORDER=\"2\"");
             out.write("<TBODY>");
@@ -168,7 +158,7 @@ public class DiffEngine {
             out.write("</TBODY>");
             out.write("</TABLE>");
             out.write("<BR>");
-            out.write("<HR width=\"500\" color=\"black\" size=\"2\" align=\"left\">");
+            out.write("<HR width=\"1000\" color=\"black\" size=\"2\" align=\"left\">");
             out.write("<BR>");
         }
         out.write("</BODY>");
