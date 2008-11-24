@@ -27,35 +27,51 @@ public class ArrayQueue implements Queue {
         front = -1;
     }
 
+    /**
+     * Creates a queue from the passes object array.The rear and front are 
+     * deduced from the array
+     * @param elements
+     */
     public ArrayQueue(Object[] elements) {
         this.elements = elements;
         rear = -1;
         front = -1;
+        /*A single element array which happens to be full*/
         if ((elements.length == 1) && (elements[0] != null)) {
             front = rear = 0;
         }
+        /*Single element empty array*/
         else if ((elements.length == 1) && (elements[0] == null)) {
             ;
         }
         else {
             boolean nullFound = false;
             boolean allNulls = true;
+            /*Scan the array and find front and ear*/
             for (int i = 0; i < elements.length; i++) {
+                /*If this element is not null and the next one is null, this is the rear*/
                 if ((elements[i] != null) && (elements[(i + 1) % elements.length] == null)) {
                     rear = i;
                     nullFound = true;
                 }
+
+                /*If this element is not null and the previous one is null, this is the front*/
                 if ((elements[i] != null) && (elements[(i - 1 + elements.length) % elements.length] == null)) {
                     front = i;
                     nullFound = true;
                 }
+                
+                /*If this elements is not null, it can't be an all empty array*/
                 if((allNulls)&&(elements[i] != null))
                     allNulls = false;
             }
+
+            /*This is an empty array, rear=front=-1 is already set. Do nothing*/
             if(allNulls)
             {
                 ;
             }
+            /*No nulls were found, this array is full. rear and front are set as start and end points of the array*/
             else if(!nullFound)
             {
                 front = 0;
@@ -121,6 +137,25 @@ public class ArrayQueue implements Queue {
         }
     }
 
+    public void priorityInsert(Integer item) {
+        int newRear = (rear + 1) % elements.length;
+        if (((rear + 1) % elements.length) == front) {
+            throw new BusinessException("Queue full!!!");
+        } else {
+            while((Integer)(elements[rear]) > item)
+            {
+                elements[(rear + 1) % elements.length] = elements[rear];
+                rear = (rear-1+elements.length)%elements.length;
+            }
+            elements[(rear + 1) % elements.length] = item;
+            rear = newRear;
+            /*Queue was empty - special case*/
+            if (front == -1) {
+                front = rear;
+            }
+        }
+    }
+    
     public Object remove() {
         Object returnItem = null;
         if (rear == -1 && front == -1) {

@@ -2,6 +2,11 @@ package algorithms;
 
 import java.util.Calendar;
 
+/**
+ * Repersents a sorted array. Its name is somewhat misleading as the encapsulated
+ * array elements are not sorted by default and need to be explicitely sorted
+ * @author satyam
+ */
 public class SortedArray implements Array {
 
     public int elements[];

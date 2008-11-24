@@ -124,11 +124,43 @@ public class ArrayQueueTest {
         instance2.insert("x");
         instance2.insert("a");
         instance2.remove();
-        instance.display();
-        instance2.display();        
+        //instance.display();
+        //instance2.display();        
         assertEquals(true, instance.equals(instance2));         
         
         //instance.display();        
+    }
+    
+    @Test
+    public void testPriorityInsert()
+    {
+        ArrayQueue instance = new ArrayQueue(new Integer[]{1,2,3,5,6,null});
+        instance.priorityInsert(4);
+        assertEquals(true, instance.equals(new ArrayQueue(new Integer[]{1,2,3,4,5,6})));         
+        
+        instance = new ArrayQueue(new Integer[]{null,1,2,3,5,6});
+        //instance.display();
+        instance.priorityInsert(4);
+        //instance.display();
+        ArrayQueue instance2 = new ArrayQueue(new Integer[]{0,1,2,3,4,5});
+        instance2.remove();
+        instance2.priorityInsert(6);
+        //instance2.display();
+        assertEquals(true, instance.equals(instance2));          
+        
+        instance = new ArrayQueue(new Integer[]{5,6,null,1,2,3});  
+        instance.priorityInsert(4);
+        //instance.display();
+        instance2 = new ArrayQueue(new Integer[]{-2,-1,0,1,2,3});
+        instance2.remove();
+        instance2.remove();
+        instance2.remove();
+        instance2.priorityInsert(6);
+        instance2.priorityInsert(5);
+        instance2.priorityInsert(4);
+        //instance2.display();
+        assertEquals(true, instance.equals(instance2));          
+        
     }
     /**
      * Test of insert method, of class ArrayQueue.
