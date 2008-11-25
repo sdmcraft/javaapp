@@ -5,7 +5,7 @@
 
 package servlets;
 
-import entities.Customer;
+import entities.Cust;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -30,21 +30,24 @@ public class ManageBeanDemoServlet extends HttpServlet {
     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        Customer cust = new Customer();
-        customerServiceBean.createCustomer(cust);
+        Cust cust = new Cust(new Integer(1006), "94000",new Character('N'));        
+        cust = customerServiceBean.createCustomer(cust);
+        cust = customerServiceBean.updateNameAndCity( new Integer(1006),"bbb", "San Bruno");        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here
+            
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet ManageBeanDemoServlet</title>");  
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ManageBeanDemoServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Name: " + cust.getName() + "</h1>");
+            out.println("<h1>City: " + cust.getCity() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-            */
+            
         } finally { 
             out.close();
         }

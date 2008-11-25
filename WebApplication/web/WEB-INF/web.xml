@@ -20,6 +20,10 @@
         <servlet-name>JNDIdemoServlet</servlet-name>
         <servlet-class>servlets.JNDIdemoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManagedBeanDemoServlet</servlet-name>
+        <servlet-class>servlets.ManageBeanDemoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DemoServlet</servlet-name>
         <url-pattern>/DemoServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>JNDIdemoServlet</servlet-name>
         <url-pattern>/JNDIdemoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagedBeanDemoServlet</servlet-name>
+        <url-pattern>/ManagedBeanDemoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

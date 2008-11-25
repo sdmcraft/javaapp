@@ -369,14 +369,8 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
     <!--
                 COMPILATION SECTION
             -->
-    <target depends="init" if="no.dist.ear.dir" name="deps-module-jar" unless="no.deps">
-        <ant antfile="${project.EJBModule}/build.xml" inheritall="false" target="dist"/>
-    </target>
-    <target depends="init" if="dist.ear.dir" name="deps-ear-jar" unless="no.deps">
-        <ant antfile="${project.EJBModule}/build.xml" inheritall="false" target="dist-ear">
-            <property location="${build.dir}" name="dist.ear.dir"/>
-        </ant>
-    </target>
+    <target depends="init" if="no.dist.ear.dir" name="deps-module-jar" unless="no.deps"/>
+    <target depends="init" if="dist.ear.dir" name="deps-ear-jar" unless="no.deps"/>
     <target depends="init, deps-module-jar, deps-ear-jar" name="deps-jar" unless="no.deps"/>
     <target depends="init,deps-jar" name="-pre-pre-compile">
         <mkdir dir="${build.classes.dir}"/>
@@ -527,11 +521,9 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
         <copy-ear-war file="${libs.JAVADB_DRIVER_LABEL.classpath.libfile.1}" propname="included.lib.libs.JAVADB_DRIVER_LABEL.classpath.1.X"/>
         <basename file="${file.reference.EJBModule.jar}" property="included.lib.file.reference.EJBModule.jar"/>
         <copy-ear-war file="${file.reference.EJBModule.jar}" propname="included.lib.file.reference.EJBModule.jar.X"/>
-        <basename file="${reference.EJBModule.dist}" property="included.lib.reference.EJBModule.dist"/>
-        <copy-ear-war file="${reference.EJBModule.dist}" propname="included.lib.reference.EJBModule.dist.X"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${included.lib.libs.toplink.classpath.1.X} ${included.lib.libs.toplink.classpath.2.X} ${included.lib.libs.JAVADB_DRIVER_LABEL.classpath.1.X} ${included.lib.libs.JAVADB_DRIVER_LABEL.classpath.2.X} ${included.lib.libs.JAVADB_DRIVER_LABEL.classpath.3.X} ${included.lib.file.reference.EJBModule.jar} ${included.lib.reference.EJBModule.dist} "/>
+            <attribute name="Class-Path" value="${included.lib.libs.toplink.classpath.1.X} ${included.lib.libs.toplink.classpath.2.X} ${included.lib.libs.JAVADB_DRIVER_LABEL.classpath.1.X} ${included.lib.libs.JAVADB_DRIVER_LABEL.classpath.2.X} ${included.lib.libs.JAVADB_DRIVER_LABEL.classpath.3.X} ${included.lib.file.reference.EJBModule.jar} "/>
         </manifest>
         <delete dir="${dist.ear.dir}/temp"/>
     </target>
@@ -542,7 +534,6 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
         <copy file="${libs.JAVADB_DRIVER_LABEL.classpath.libfile.2}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copy file="${libs.JAVADB_DRIVER_LABEL.classpath.libfile.1}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copy file="${file.reference.EJBModule.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copy file="${reference.EJBModule.dist}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init,compile,compile-jsps,-pre-dist,library-inclusion-in-manifest" name="do-ear-dist">
         <dirname file="${dist.ear.war}" property="dist.jar.dir"/>
@@ -825,9 +816,7 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
                 
                 CLEANUP SECTION
             -->
-    <target depends="init" if="no.dist.ear.dir" name="deps-clean" unless="no.deps">
-        <ant antfile="${project.EJBModule}/build.xml" inheritall="false" target="clean"/>
-    </target>
+    <target depends="init" if="no.dist.ear.dir" name="deps-clean" unless="no.deps"/>
     <target depends="init" name="do-clean">
         <condition property="build.dir.to.clean" value="${build.web.dir}">
             <isset property="dist.ear.dir"/>
