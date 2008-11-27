@@ -25,11 +25,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="211" max="-2" attributes="0"/>
-                      <Component id="resultMsgLabel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="root1Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -68,54 +64,61 @@
                               <Component id="chooseRoot6Button" linkSize="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="root2Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="root7Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="root8Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="root9Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="root10Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="resultMsgLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="root10Field" linkSize="1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="root2Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="root7Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="root8Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="root9Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="root10Label" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="chooseRoot10Button" linkSize="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="root9Field" linkSize="1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="chooseRoot9Button" linkSize="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="root8Field" linkSize="1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="chooseRoot8Button" linkSize="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="root7Field" linkSize="1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="chooseRoot7Button" linkSize="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="root2Field" linkSize="1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="chooseRoot2Button" linkSize="1" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="root10Field" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="chooseRoot10Button" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="root9Field" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="chooseRoot9Button" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="root8Field" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="chooseRoot8Button" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="root7Field" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="chooseRoot7Button" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="root2Field" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="chooseRoot2Button" linkSize="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+                      <Component id="resetButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="doDiffButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="exitButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="helpButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="183" max="32767" attributes="0"/>
-              <Component id="resetButton" linkSize="1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="doDiffButton" linkSize="1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="exitButton" linkSize="1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
+              <EmptySpace pref="48" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -123,57 +126,78 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="root1Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root2Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root1Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root2Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot1Button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot2Button" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root1Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root1Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot1Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root3Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root3Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot3Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root4Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root4Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot4Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root5Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot5Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root5Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root6Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot6Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root6Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                      <Component id="resultMsgLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root2Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root2Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot2Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root7Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root7Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot7Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root8Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root8Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot8Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root9Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root9Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot9Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="root10Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="root10Field" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chooseRoot10Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="root3Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root7Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root3Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root7Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot3Button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot7Button" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="root4Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root8Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root4Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root8Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot4Button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot8Button" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="root5Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root9Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root9Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot5Button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root5Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot9Button" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="root6Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root10Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root10Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot6Button" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="root6Field" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chooseRoot10Button" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-              <Component id="resultMsgLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="exitButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="doDiffButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="resetButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="doDiffButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="exitButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="helpButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -390,6 +414,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="helpButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Help"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="helpButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
