@@ -554,8 +554,7 @@ private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_resetButtonActionPerformed
 
 private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
-    //File html = new File("..\\..\\bin\\Help.html");    
-    BrowserControl.displayURL(System.getProperty("user.dir")+File.separator+"bin"+File.separator+"Help.html");
+    BrowserControl.displayURL(System.getProperty("user.dir") + File.separator + "bin" + File.separator + "Help.html");
 }//GEN-LAST:event_helpButtonActionPerformed
 
     /**
