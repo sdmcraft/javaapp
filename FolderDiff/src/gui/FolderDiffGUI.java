@@ -10,10 +10,10 @@ import com.folderdiff.DiffFile;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -70,6 +70,7 @@ public class FolderDiffGUI extends javax.swing.JFrame {
         chooseRoot10Button = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
         helpButton = new javax.swing.JButton();
+        progressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Folder Diff - By Satya Deep Maheshwari");
@@ -288,11 +289,14 @@ public class FolderDiffGUI extends javax.swing.JFrame {
                                         .addComponent(chooseRoot2Button))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(113, 113, 113)
-                        .addComponent(resetButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(doDiffButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(exitButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(resetButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(doDiffButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(exitButton)))
                         .addGap(18, 18, 18)
                         .addComponent(helpButton)))
                 .addContainerGap(48, Short.MAX_VALUE))
@@ -359,73 +363,35 @@ public class FolderDiffGUI extends javax.swing.JFrame {
                             .addComponent(root10Label)
                             .addComponent(root10Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(chooseRoot10Button))))
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(resetButton)
                     .addComponent(doDiffButton)
                     .addComponent(exitButton)
                     .addComponent(helpButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 private void doDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doDiffButtonActionPerformed
-    List<String> rootList = new ArrayList<String>();
-    if (root1Field.getText() != null && !("".equals(root1Field.getText()))) {
-        rootList.add(root1Field.getText());
-    }
-    if (root2Field.getText() != null && !("".equals(root2Field.getText()))) {
-        rootList.add(root2Field.getText());
-    }
-    if (root3Field.getText() != null && !("".equals(root3Field.getText()))) {
-        rootList.add(root3Field.getText());
-    }
-    if (root4Field.getText() != null && !("".equals(root4Field.getText()))) {
-        rootList.add(root4Field.getText());
-    }
-    if (root5Field.getText() != null && !("".equals(root5Field.getText()))) {
-        rootList.add(root5Field.getText());
-    }
-    if (root6Field.getText() != null && !("".equals(root6Field.getText()))) {
-        rootList.add(root6Field.getText());
-    }
-    if (root7Field.getText() != null && !("".equals(root7Field.getText()))) {
-        rootList.add(root7Field.getText());
-    }
-    if (root8Field.getText() != null && !("".equals(root8Field.getText()))) {
-        rootList.add(root8Field.getText());
-    }
-    if (root9Field.getText() != null && !("".equals(root9Field.getText()))) {
-        rootList.add(root9Field.getText());
-    }
-    if (root10Field.getText() != null && !("".equals(root10Field.getText()))) {
-        rootList.add(root10Field.getText());
-    }
-    String[] rootArray = new String[rootList.size()];
-    rootArray = rootList.toArray(rootArray);
+    //progressBar.setVisible(true);
+    progressBar.setIndeterminate(true);
     try {
-        List<DiffFile> list = DiffEngine.doDiff(rootArray);
-        File html = DiffEngine.writeToHtml(list);
-        BrowserControl.displayURL(html.toString());
+        List<DiffFile> list = null;
+        Task task = new Task();
+        task.execute();
+        try {
+            task.get(1, TimeUnit.MILLISECONDS);
+        } catch (TimeoutException ex) {
+        }
     } catch (Exception ex) {
         ex.printStackTrace();
     }
-
-
-//    if (root1Field.getText() == null || "".equals(root1Field.getText()) || root2Field.getText() == null || "".equals(root2Field.getText())) {
-//        JOptionPane.showMessageDialog(rootPane, "Root folder cannot be null", "Error", JOptionPane.ERROR_MESSAGE);
-//    } else {
-//        try {
-//            List<DiffFile> list = DiffEngine.doDiff(rootList.toArray(String[] str));
-//            File html = DiffEngine.writeToHtml(list);
-//            BrowserControl.displayURL(html.toString());
-//        } catch (Exception ex) {
-//            Logger.getLogger(FolderDiffGUI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//html.delete();
+//progressBar.setVisible(false);
 }//GEN-LAST:event_doDiffButtonActionPerformed
 
 private void chooseRoot1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot1ButtonActionPerformed
@@ -567,6 +533,56 @@ private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
             }
         });
     }
+    
+    class Task extends SwingWorker<Void, Void> {
+        @Override
+        public Void doInBackground() throws Exception{    
+            List<String> rootList = new ArrayList<String>();
+            if (root1Field.getText() != null && !("".equals(root1Field.getText()))) {
+                rootList.add(root1Field.getText());
+            }
+            if (root2Field.getText() != null && !("".equals(root2Field.getText()))) {
+                rootList.add(root2Field.getText());
+            }
+            if (root3Field.getText() != null && !("".equals(root3Field.getText()))) {
+                rootList.add(root3Field.getText());
+            }
+            if (root4Field.getText() != null && !("".equals(root4Field.getText()))) {
+                rootList.add(root4Field.getText());
+            }
+            if (root5Field.getText() != null && !("".equals(root5Field.getText()))) {
+                rootList.add(root5Field.getText());
+            }
+            if (root6Field.getText() != null && !("".equals(root6Field.getText()))) {
+                rootList.add(root6Field.getText());
+            }
+            if (root7Field.getText() != null && !("".equals(root7Field.getText()))) {
+                rootList.add(root7Field.getText());
+            }
+            if (root8Field.getText() != null && !("".equals(root8Field.getText()))) {
+                rootList.add(root8Field.getText());
+            }
+            if (root9Field.getText() != null && !("".equals(root9Field.getText()))) {
+                rootList.add(root9Field.getText());
+            }
+            if (root10Field.getText() != null && !("".equals(root10Field.getText()))) {
+                rootList.add(root10Field.getText());
+            }
+            String[] rootArray = new String[rootList.size()];
+            rootArray = rootList.toArray(rootArray);
+            
+            List<DiffFile> list = DiffEngine.doDiff(rootArray);
+            File html = DiffEngine.writeToHtml(list);
+            BrowserControl.displayURL(html.toString());            
+            return null;
+        }
+
+        @Override
+        public void done() {
+                progressBar.setIndeterminate(false);
+    }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chooseRoot10Button;
@@ -582,6 +598,7 @@ private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JButton doDiffButton;
     private javax.swing.JButton exitButton;
     private javax.swing.JButton helpButton;
+    private javax.swing.JProgressBar progressBar;
     private javax.swing.JButton resetButton;
     private javax.swing.JLabel resultMsgLabel;
     private javax.swing.JTextField root10Field;
