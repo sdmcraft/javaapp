@@ -56,11 +56,10 @@ public class DiffEngine {
         }
         return diffFileList;
     }
-    
-    List<String> summarizeDiff(List<DiffFile> list)
-    {
+
+    List<String> summarizeDiff(List<DiffFile> list) {
         List<String> summary = new ArrayList<String>();
-        summary.add("Total number of files compared: "+list.size());
+        summary.add("Total number of files compared: " + list.size());
         return summary;
     }
 
@@ -130,25 +129,37 @@ public class DiffEngine {
     public static File writeToHtml(List<DiffFile> list) {
         File html = new File("temp.html");
         PrintWriter out = null;
-        String[] colorlist = new String[]{"00FFFF","FFFFCC","3300CC","660099","CC0099"};
+        String[] colorlist = new String[]{"00FFFF", "FFFFCC", "3300CC", "660099", "CC0099"};
         try {
             out = new PrintWriter(html);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
         out.write("<HTML>");
+        out.write("<HEAD>");
+        out.write("</HEAD>");
         out.write("<BODY>");
-        out.write("<H2><FONT COLOR=\"FF0000\">Files in same color have no difference</FONT></H2>");
+        out.write("<H2><FONT COLOR=\"FF0000\">Files in same color have no difference.</FONT></H2>");        
+        out.write("<script TYPE=\"text/javascript\">\n");
+        out.write("<!--\n");
+        out.write("function myPopup() {\n");
+        out.write("window.open( \"Help.html#understandingOutput\" )\n");
+        out.write("}\n");
+        out.write("//-->\n");
+        out.write("</script>\n");
+        out.write("<form>\n");
+        out.write("<INPUT  TYPE=\"button\" ONCLICK=\"myPopup()\" VALUE=\"Click me to understand output!\"/>\n");
+        out.write("</form>\n");
         out.write("<HR width=\"1000\" color=\"black\" size=\"2\" align=\"left\">");
         for (DiffFile diffFile : list) {
             Set<Entry<String, List<File>>> entrySet = diffFile.textBuckets.entrySet();
             out.write("<TABLE BORDER=\"2\"");
             out.write("<TBODY>");
-            int i=0;
+            int i = 0;
             for (Entry<String, List<File>> entry : entrySet) {
-                String color = colorlist[(i++)%colorlist.length];
+                String color = colorlist[(i++) % colorlist.length];
                 for (File f : entry.getValue()) {
-                    out.write("<TR BGCOLOR=\""+color+"\">");
+                    out.write("<TR BGCOLOR=\"" + color + "\">");
                     out.write("<TD>");
                     out.write(f.toString());
                     out.write("</TD>");
