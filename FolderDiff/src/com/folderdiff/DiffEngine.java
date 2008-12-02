@@ -139,7 +139,7 @@ public class DiffEngine {
         out.write("<HEAD>");
         out.write("</HEAD>");
         out.write("<BODY>");
-        out.write("<H2><FONT COLOR=\"FF0000\">Files in same color have no difference.</FONT></H2>");        
+        out.write("<H2><FONT COLOR=\"FF0000\">Files in same color have no difference.</FONT></H2>");
         out.write("<script TYPE=\"text/javascript\">\n");
         out.write("<!--\n");
         out.write("function myPopup() {\n");
@@ -172,6 +172,9 @@ public class DiffEngine {
             out.write("<HR width=\"1000\" color=\"black\" size=\"2\" align=\"left\">");
             out.write("<BR>");
         }
+        out.write("<form>\n");
+        out.write("<INPUT  TYPE=\"button\" ONCLICK=\"myPopup()\" VALUE=\"Click me to understand output!\"/>\n");
+        out.write("</form>\n");
         out.write("</BODY>");
         out.write("</HTML>");
         out.close();
