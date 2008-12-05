@@ -25,36 +25,56 @@ import java.util.Set;
  * @author satyam
  */
 public class DiffEngine {
+    
+    private static final int BATCH_SIZE = 50;
 
     public static List<DiffFile> doDiff(String[] roots) throws Exception {
-        List[] fileLists = new ArrayList[roots.length];
         List<DiffFile> diffFileList = new ArrayList<DiffFile>();
-        int counter = 0;
-        for (String root : roots) {
-            fileLists[counter++] = DirectoryUtils.listContents(root);
+        Thread[] threadList = new Thread[roots.length];
+        int i=0;
+        for(String root : roots)
+        {
+            threadList[i] = new Thread(new CollateRootTask(root, diffFileList));
+            threadList[i].start();
+            i++;            
         }
-        counter = 0;
-        for (List<File> fileList : fileLists) {
-            for (File f : fileList) {
-                String strippedName = DirectoryUtils.stripRoot(f, roots[counter]);
-                boolean found = false;
-                for (DiffFile diffFile : diffFileList) {
-                    if (strippedName.equals(diffFile.name)) {
-                        diffFile.add(f, roots[counter]);
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    diffFileList.add(new DiffFile(strippedName, f, roots[counter]));
-                }
-            }
-            counter++;
+        for(i=0;i<threadList.length;i++)
+            threadList[i].join();
+                  
+        List<DiffFile[]> batches = buildBatches(diffFileList);
+        threadList = new Thread[batches.size()];              
+        i=0;
+        for (DiffFile[] batch : batches) {
+            threadList[i] = new Thread(new BuildTextBucketsTask(batch));
+            threadList[i].start();
+            i++;            
         }
-        for (DiffFile diffFile : diffFileList) {
-            diffFile.buildTextBuckets();
-        }
+        for(i=0;i<threadList.length;i++)
+            threadList[i].join();
+        
         return diffFileList;
+    }
+    
+    private static List<DiffFile[]> buildBatches(List<DiffFile> diffFileList)
+    {
+        List<DiffFile[]> batches = new ArrayList<DiffFile[]>();
+        DiffFile[] diffFileArray = diffFileList.toArray(new DiffFile[0]);
+        DiffFile[] batch = new DiffFile[BATCH_SIZE];
+        int count = 0, count1 = 0;
+        while(count < diffFileArray.length)
+        {
+            batch[count1] = diffFileArray[count];
+            count++;
+            count1++;
+            if(count1 == BATCH_SIZE)
+            {
+                batches.add(batch);
+                count1 = 0;
+                batch = new DiffFile[BATCH_SIZE];
+            }
+        }
+        batches.add(batch);
+        return batches;
     }
 
     List<String> summarizeDiff(List<DiffFile> list) {
