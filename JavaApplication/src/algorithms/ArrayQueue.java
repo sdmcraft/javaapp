@@ -39,12 +39,9 @@ public class ArrayQueue implements Queue {
         /*A single element array which happens to be full*/
         if ((elements.length == 1) && (elements[0] != null)) {
             front = rear = 0;
-        }
-        /*Single element empty array*/
-        else if ((elements.length == 1) && (elements[0] == null)) {
+        } /*Single element empty array*/ else if ((elements.length == 1) && (elements[0] == null)) {
             ;
-        }
-        else {
+        } else {
             boolean nullFound = false;
             boolean allNulls = true;
             /*Scan the array and find front and ear*/
@@ -60,22 +57,19 @@ public class ArrayQueue implements Queue {
                     front = i;
                     nullFound = true;
                 }
-                
+
                 /*If this elements is not null, it can't be an all empty array*/
-                if((allNulls)&&(elements[i] != null))
+                if ((allNulls) && (elements[i] != null)) {
                     allNulls = false;
+                }
             }
 
             /*This is an empty array, rear=front=-1 is already set. Do nothing*/
-            if(allNulls)
-            {
+            if (allNulls) {
                 ;
-            }
-            /*No nulls were found, this array is full. rear and front are set as start and end points of the array*/
-            else if(!nullFound)
-            {
+            } /*No nulls were found, this array is full. rear and front are set as start and end points of the array*/ else if (!nullFound) {
                 front = 0;
-                rear = elements.length-1;
+                rear = elements.length - 1;
             }
         }
     }
@@ -141,21 +135,27 @@ public class ArrayQueue implements Queue {
         int newRear = (rear + 1) % elements.length;
         if (((rear + 1) % elements.length) == front) {
             throw new BusinessException("Queue full!!!");
-        } else {
-            while((Integer)(elements[rear]) > item)
-            {
-                elements[(rear + 1) % elements.length] = elements[rear];
-                rear = (rear-1+elements.length)%elements.length;
-            }
-            elements[(rear + 1) % elements.length] = item;
-            rear = newRear;
-            /*Queue was empty - special case*/
-            if (front == -1) {
-                front = rear;
-            }
         }
+        /*Queue was empty - special case*/ 
+        else if (front == -1) {
+            front = newRear;
+            elements[newRear] = item;
+            rear = newRear;
+        } else {
+            if ((Integer) (elements[front]) > item) {
+                elements[(front - 1 + elements.length) % elements.length] = item;
+                front = (front - 1 + elements.length) % elements.length;
+            } else {
+                while ((Integer) (elements[rear]) > item) {
+                    elements[(rear + 1) % elements.length] = elements[rear];
+                    rear = (rear - 1 + elements.length) % elements.length;
+                }
+                elements[(rear + 1) % elements.length] = item;                
+                rear = newRear;
+            }
+        }        
     }
-    
+
     public Object remove() {
         Object returnItem = null;
         if (rear == -1 && front == -1) {

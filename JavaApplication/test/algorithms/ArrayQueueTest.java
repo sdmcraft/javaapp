@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package algorithms;
 
 import org.junit.After;
@@ -38,39 +37,38 @@ public class ArrayQueueTest {
     }
 
     @Test
-    public void testEquals()
-    {
+    public void testEquals() {
         ArrayQueue instance = new ArrayQueue(10);
         ArrayQueue instance2 = new ArrayQueue(10);
-        assertEquals(false,instance.equals(null));        
-        assertEquals(true,instance.equals(instance));
-        assertEquals(true,instance.equals(instance2));
-        assertEquals(false,instance.equals("a"));     
+        assertEquals(false, instance.equals(null));
+        assertEquals(true, instance.equals(instance));
+        assertEquals(true, instance.equals(instance2));
+        assertEquals(false, instance.equals("a"));
         instance.insert("a");
         instance.insert("b");
         instance.insert("c");
         instance.remove();
         instance2.insert("a");
-        instance2.insert("a1");        
+        instance2.insert("a1");
         instance2.insert("b");
         instance2.insert("c");
         instance2.remove();
         instance2.remove();
-        assertEquals(false,instance.equals(instance2));     
+        assertEquals(false, instance.equals(instance2));
         instance.flush();
         instance2.flush();
         instance.insert("a");
         instance.insert("b");
         instance.insert("c");
         instance.remove();
-        instance2.insert("a");        
+        instance2.insert("a");
         instance2.insert("b");
-        instance2.insert("c");        
-        instance2.remove();        
-        assertEquals(true,instance.equals(instance2));             
+        instance2.insert("c");
+        instance2.remove();
+        assertEquals(true, instance.equals(instance2));
         instance.flush();
         instance2.flush();
-        instance = new ArrayQueue(new Object[]{null,null,"a","b",null});
+        instance = new ArrayQueue(new Object[]{null, null, "a", "b", null});
         //instance.display();
         instance2 = new ArrayQueue(5);
         instance2.insert("x");
@@ -81,77 +79,76 @@ public class ArrayQueueTest {
         instance2.remove();
         //instance2.display();
         assertEquals(true, instance.equals(instance2));
-        instance = new ArrayQueue(new Object[]{"a",null,"b"});
+        instance = new ArrayQueue(new Object[]{"a", null, "b"});
         instance2 = new ArrayQueue(3);
         instance2.insert("x");
         instance2.insert("x");
         instance2.insert("b");
         instance2.remove();
         instance2.remove();
-        instance2.insert("a");        
-        assertEquals(true, instance.equals(instance2));        
-        
+        instance2.insert("a");
+        assertEquals(true, instance.equals(instance2));
+
         instance2 = new ArrayQueue(3);
         instance2.insert("x");
         instance2.insert("x");
         instance2.insert("b");
-        instance2.remove();        
-        instance2.insert("a");        
         instance2.remove();
-        assertEquals(true, instance.equals(instance2));      
-        
+        instance2.insert("a");
+        instance2.remove();
+        assertEquals(true, instance.equals(instance2));
+
         instance = new ArrayQueue(new Object[]{"a"});
         instance2 = new ArrayQueue(1);
         instance2.insert("a");
-        assertEquals(true, instance.equals(instance2));         
+        assertEquals(true, instance.equals(instance2));
 
-        instance = new ArrayQueue(new Object[]{"a","b"});
+        instance = new ArrayQueue(new Object[]{"a", "b"});
         instance2 = new ArrayQueue(2);
         instance2.insert("a");
         instance2.insert("b");
-        assertEquals(true, instance.equals(instance2));         
+        assertEquals(true, instance.equals(instance2));
 
         instance = new ArrayQueue(new Object[]{null});
         instance2 = new ArrayQueue(1);
-        assertEquals(true, instance.equals(instance2));         
+        assertEquals(true, instance.equals(instance2));
 
-        instance = new ArrayQueue(new Object[]{null,null});
+        instance = new ArrayQueue(new Object[]{null, null});
         instance2 = new ArrayQueue(2);
-        assertEquals(true, instance.equals(instance2));         
+        assertEquals(true, instance.equals(instance2));
 
-        instance = new ArrayQueue(new Object[]{null,"a",null});
+        instance = new ArrayQueue(new Object[]{null, "a", null});
         instance2 = new ArrayQueue(3);
         instance2.insert("x");
         instance2.insert("a");
         instance2.remove();
         //instance.display();
         //instance2.display();        
-        assertEquals(true, instance.equals(instance2));         
-        
-        //instance.display();        
+        assertEquals(true, instance.equals(instance2));
+
+    //instance.display();        
     }
-    
+
     @Test
-    public void testPriorityInsert()
-    {
-        ArrayQueue instance = new ArrayQueue(new Integer[]{1,2,3,5,6,null});
+    public void testPriorityInsert() {
+        ArrayQueue instance = new ArrayQueue(new Integer[]{1, 2, 3, 5, 6, null});
         instance.priorityInsert(4);
-        assertEquals(true, instance.equals(new ArrayQueue(new Integer[]{1,2,3,4,5,6})));         
-        
-        instance = new ArrayQueue(new Integer[]{null,1,2,3,5,6});
+        assertEquals(true, instance.equals(new ArrayQueue(new Integer[]{1, 2, 3, 4, 5, 6})));
+
+        instance = new ArrayQueue(new Integer[]{null, 1, 2, 3, 5, 6});
         //instance.display();
         instance.priorityInsert(4);
         //instance.display();
-        ArrayQueue instance2 = new ArrayQueue(new Integer[]{0,1,2,3,4,5});
+        ArrayQueue instance2 = new ArrayQueue(new Integer[]{0, 1, 2, 3, 4, 5});
         instance2.remove();
         instance2.priorityInsert(6);
         //instance2.display();
-        assertEquals(true, instance.equals(instance2));          
-        
-        instance = new ArrayQueue(new Integer[]{5,6,null,1,2,3});  
+        assertEquals(true, instance.equals(instance2));
+
+        instance = new ArrayQueue(new Integer[]{5, 6, null, 1, 2, 3});
         instance.priorityInsert(4);
         //instance.display();
-        instance2 = new ArrayQueue(new Integer[]{-2,-1,0,1,2,3});
+        instance2 = new ArrayQueue(new Integer[]{-2, -1, 0, 1, 2, 3});
         instance2.remove();
         instance2.remove();
         instance2.remove();
@@ -159,8 +156,58 @@ public class ArrayQueueTest {
         instance2.priorityInsert(5);
         instance2.priorityInsert(4);
         //instance2.display();
-        assertEquals(true, instance.equals(instance2));          
-        
+        assertEquals(true, instance.equals(instance2));
+
+        instance = new ArrayQueue(new Integer[]{5, 6, null, 1, 2, 3});
+        instance.priorityInsert(4);
+        //instance.display();
+        instance2 = new ArrayQueue(new Integer[]{-2, -1, 0, 1, 2, 3});
+        instance2.remove();
+        instance2.remove();
+        instance2.remove();
+        instance2.priorityInsert(5);
+        instance2.priorityInsert(6);
+        instance2.priorityInsert(4);
+        //instance2.display();
+        assertEquals(true, instance.equals(instance2));
+
+        instance = new ArrayQueue(new Integer[]{null, 1, 2, 3});
+        //instance.display();
+        instance.priorityInsert(0);
+        //instance.display();
+        instance2 = new ArrayQueue(new Integer[]{0, 1, 2, 3});
+        assertEquals(true, instance.equals(instance2));
+
+        instance = new ArrayQueue(new Integer[]{null});
+        //instance.display();
+        instance.priorityInsert(0);
+        //instance.display();
+        instance2 = new ArrayQueue(new Integer[]{0});
+        assertEquals(true, instance.equals(instance2));
+
+        instance = new ArrayQueue(new Integer[]{null, null, null});
+        //instance.display();
+        instance.priorityInsert(0);
+        //instance.display();
+        instance2 = new ArrayQueue(new Integer[]{0, null, null});
+        assertEquals(true, instance.equals(instance2));
+
+        instance = new ArrayQueue(new Integer[]{null, 0, null});
+        //instance.display();
+        instance.priorityInsert(0);
+        //instance.display();
+        instance2 = new ArrayQueue(new Integer[]{null, 0, 0});
+        assertEquals(true, instance.equals(instance2));
+
+        instance = new ArrayQueue(new Integer[]{0});
+        //instance.display();
+        try {
+            instance.priorityInsert(0);
+        } catch (Exception ex) {
+            assertEquals("Queue full!!!", ex.getMessage());
+        }
+
+
     }
     /**
      * Test of insert method, of class ArrayQueue.
@@ -227,5 +274,4 @@ public class ArrayQueueTest {
 //        // TODO review the generated test code and remove the default call to fail.
 //        fail("The test case is a prototype.");
 //    }
-
 }
