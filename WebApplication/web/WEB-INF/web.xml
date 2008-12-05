@@ -24,6 +24,14 @@
         <servlet-name>ManagedBeanDemoServlet</servlet-name>
         <servlet-class>servlets.ManageBeanDemoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>JMSProducerServlet</servlet-name>
+        <servlet-class>servlets.JMSProducerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JMSConsumerServlet</servlet-name>
+        <servlet-class>servlets.JMSConsumerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DemoServlet</servlet-name>
         <url-pattern>/DemoServlet</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>ManagedBeanDemoServlet</servlet-name>
         <url-pattern>/ManagedBeanDemoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JMSProducerServlet</servlet-name>
+        <url-pattern>/JMSProducerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JMSConsumerServlet</servlet-name>
+        <url-pattern>/JMSConsumerServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
