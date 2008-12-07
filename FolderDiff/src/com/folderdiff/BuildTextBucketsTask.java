@@ -20,9 +20,12 @@ public class BuildTextBucketsTask implements Runnable {
     public void run() {
         try {
             for (DiffFile f : batch) {
+                if(f == null)
+                    break;
                 f.buildTextBuckets();
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new RuntimeException(ex);
         }
     }

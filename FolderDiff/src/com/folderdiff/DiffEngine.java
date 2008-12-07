@@ -7,7 +7,6 @@ package com.folderdiff;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -83,28 +82,28 @@ public class DiffEngine {
         return summary;
     }
 
-    public static boolean diffFile(String f1, String f2) throws Exception {
-        return diffFile(new File(f1), new File(f2));
-    }
-
-    public static boolean diffFile(File f1, File f2) throws Exception {
-        boolean result = true;
-        FileReader reader1 = new FileReader(f1);
-        FileReader reader2 = new FileReader(f2);
-        int c1 = -1;
-        int c2 = -1;
-        while (((c1 = reader1.read()) != -1) & ((c2 = reader2.read()) != -1)) {
-            if (c1 != c2) {
-                result = false;
-                break;
-            }
-        }
-        if (c1 != c2) {
-            result = false;
-        }
-
-        return result;
-    }
+//    public static boolean diffFile(String f1, String f2) throws Exception {
+//        return diffFile(new File(f1), new File(f2));
+//    }
+//
+//    public static boolean diffFile(File f1, File f2) throws Exception {
+//        boolean result = true;
+//        FileReader reader1 = new FileReader(f1);
+//        FileReader reader2 = new FileReader(f2);
+//        int c1 = -1;
+//        int c2 = -1;
+//        while (((c1 = reader1.read()) != -1) & ((c2 = reader2.read()) != -1)) {
+//            if (c1 != c2) {
+//                result = false;
+//                break;
+//            }
+//        }
+//        if (c1 != c2) {
+//            result = false;
+//        }
+//
+//        return result;
+//    }
 
     public static Map<String, List<File>> diffFileMD5(List<File> list) throws Exception {
 
@@ -149,53 +148,62 @@ public class DiffEngine {
     public static File writeToHtml(List<DiffFile> list) {
         File html = new File("temp.html");
         PrintWriter out = null;
-        String[] colorlist = new String[]{"00FFFF", "FFFFCC", "3300CC", "660099", "CC0099"};
+        String[] colorlist = new String[]{"00FFFF",
+                                          "CCFF33",
+                                          "FF99FF",
+                                          "66FF66",
+                                          "CCFFFF",
+                                          "99FF00",
+                                          "FFFF66",
+                                          "FFFFFF",
+                                          "CCCCCC",
+                                          "FFFF00"};                                          
         try {
             out = new PrintWriter(html);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
-        out.write("<HTML>");
-        out.write("<HEAD>");
-        out.write("</HEAD>");
-        out.write("<BODY>");
-        out.write("<H2><FONT COLOR=\"FF0000\">Files in same color have no difference.</FONT></H2>");
-        out.write("<script TYPE=\"text/javascript\">\n");
-        out.write("<!--\n");
-        out.write("function myPopup() {\n");
-        out.write("window.open( \"Help.html#understandingOutput\" )\n");
-        out.write("}\n");
-        out.write("//-->\n");
-        out.write("</script>\n");
-        out.write("<form>\n");
-        out.write("<INPUT  TYPE=\"button\" ONCLICK=\"myPopup()\" VALUE=\"Click me to understand output!\"/>\n");
-        out.write("</form>\n");
-        out.write("<HR width=\"1000\" color=\"black\" size=\"2\" align=\"left\">");
+        out.write("<HTML>\n");
+        out.write("\t<HEAD>\n");
+        out.write("\t</HEAD>\n");
+        out.write("\t<BODY>\n");
+        out.write("\t\t<H2><FONT COLOR=\"FF0000\">Files in same color have no difference.</FONT></H2>\n");
+        out.write("\t\t<script TYPE=\"text/javascript\">\n");
+        out.write("\t\t<!--\n");
+        out.write("\t\tfunction myPopup() {\n");
+        out.write("\t\t\twindow.open( \"Help.html#understandingOutput\" )\n");
+        out.write("\t\t}\n");
+        out.write("\t\t//-->\n");
+        out.write("\t\t</script>\n");
+        out.write("\t\t<form>\n");
+        out.write("\t\t\t<INPUT  TYPE=\"button\" ONCLICK=\"myPopup()\" VALUE=\"Click me to understand output!\"/>\n");
+        out.write("\t\t</form>\n");
+        out.write("\t\t<HR width=\"1000\" color=\"black\" size=\"2\" align=\"left\">\n");
         for (DiffFile diffFile : list) {
             Set<Entry<String, List<File>>> entrySet = diffFile.textBuckets.entrySet();
-            out.write("<TABLE BORDER=\"2\"");
-            out.write("<TBODY>");
+            out.write("\t\t<TABLE BORDER=\"2\">\n");
+            out.write("\t\t\t<TBODY>\n");
             int i = 0;
             for (Entry<String, List<File>> entry : entrySet) {
                 String color = colorlist[(i++) % colorlist.length];
                 for (File f : entry.getValue()) {
-                    out.write("<TR BGCOLOR=\"" + color + "\">");
-                    out.write("<TD>");
-                    out.write(f.toString());
-                    out.write("</TD>");
-                    out.write("</TR>");
+                    out.write("\t\t\t\t<TR BGCOLOR=\"" + color + "\">\n");
+                    out.write("\t\t\t\t\t<TD>\n");
+                    out.write("\t\t\t\t\t\t"+f.toString()+"\n");
+                    out.write("\t\t\t\t\t</TD>\n");
+                    out.write("\t\t\t\t</TR>\n");
                 }
             }
-            out.write("</TBODY>");
-            out.write("</TABLE>");
-            out.write("<BR>");
-            out.write("<HR width=\"1000\" color=\"black\" size=\"2\" align=\"left\">");
-            out.write("<BR>");
+            out.write("\t\t\t</TBODY>\n");
+            out.write("\t\t</TABLE>\n");
+            out.write("\t\t<BR>\n");
+            out.write("\t\t<HR width=\"1000\" color=\"black\" size=\"2\" align=\"left\">\n");
+            out.write("\t\t<BR>\n");
         }
-        out.write("<form>\n");
-        out.write("<INPUT  TYPE=\"button\" ONCLICK=\"myPopup()\" VALUE=\"Click me to understand output!\"/>\n");
-        out.write("</form>\n");
-        out.write("</BODY>");
+        out.write("\t\t<form>\n");
+        out.write("\t\t\t<INPUT  TYPE=\"button\" ONCLICK=\"myPopup()\" VALUE=\"Click me to understand output!\"/>\n");
+        out.write("\t\t</form>\n");
+        out.write("\t</BODY>\n");
         out.write("</HTML>");
         out.close();
         return html;

@@ -381,7 +381,7 @@ private void doDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     //progressBar.setVisible(true);
     progressBar.setIndeterminate(true);
     try {
-        List<DiffFile> list = null;
+        //List<DiffFile> list = null;
         Task task = new Task();
         task.execute();
         try {
@@ -395,8 +395,6 @@ private void doDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 }//GEN-LAST:event_doDiffButtonActionPerformed
 
 private void chooseRoot1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot1ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -405,8 +403,6 @@ private void chooseRoot1ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 }//GEN-LAST:event_chooseRoot1ButtonActionPerformed
 
 private void chooseRoot2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot2ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -419,8 +415,6 @@ private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_exitButtonActionPerformed
 
 private void chooseRoot3ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot3ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -430,8 +424,6 @@ private void chooseRoot3ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 }//GEN-LAST:event_chooseRoot3ButtonActionPerformed
 
 private void chooseRoot4ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot4ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -441,8 +433,6 @@ private void chooseRoot4ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 }//GEN-LAST:event_chooseRoot4ButtonActionPerformed
 
 private void chooseRoot5ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot5ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -452,8 +442,6 @@ private void chooseRoot5ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 }//GEN-LAST:event_chooseRoot5ButtonActionPerformed
 
 private void chooseRoot6ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot6ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -463,8 +451,6 @@ private void chooseRoot6ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 }//GEN-LAST:event_chooseRoot6ButtonActionPerformed
 
 private void chooseRoot8ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot8ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -474,8 +460,6 @@ private void chooseRoot8ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 }//GEN-LAST:event_chooseRoot8ButtonActionPerformed
 
 private void chooseRoot9ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot9ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -485,8 +469,6 @@ private void chooseRoot9ButtonActionPerformed(java.awt.event.ActionEvent evt) {/
 }//GEN-LAST:event_chooseRoot9ButtonActionPerformed
 
 private void chooseRoot10ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot10ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -496,8 +478,6 @@ private void chooseRoot10ButtonActionPerformed(java.awt.event.ActionEvent evt) {
 }//GEN-LAST:event_chooseRoot10ButtonActionPerformed
 
 private void chooseRoot7ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseRoot7ButtonActionPerformed
-    final JFileChooser fc = new JFileChooser();
-    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     int returnVal = fc.showOpenDialog(rootPane);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fc.getSelectedFile();
@@ -529,7 +509,8 @@ private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FolderDiffGUI().setVisible(true);
+                new FolderDiffGUI().setVisible(true);   
+                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             }
         });
     }
@@ -622,5 +603,6 @@ private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JTextField root9Field;
     private javax.swing.JLabel root9Label;
     // End of variables declaration//GEN-END:variables
+    private static final JFileChooser fc = new JFileChooser();    
 
 }

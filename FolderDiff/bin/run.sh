@@ -1,1 +1,1 @@
-java -jar "FolderDiff.jar" 
+java -jar "FolderDiff.jar"
