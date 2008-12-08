@@ -1,0 +1,73 @@
+<project name="n-wayfolderdiff" default="all" basedir=".">
+	<!-- Project directories -->
+	<property name="src.dir" value="src"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="bin.dir" value="bin"/>
+
+	<!-- Temporary build directory names -->
+	<property name="build.dir" value="build"/>
+	<property name="build.classes" value="${build.dir}/classes"/>
+	<property name="build.lib" value="${build.dir}/lib"/>
+
+	<!-- Temporary directory names -->
+	<property name="temp.dir" value="temp"/>
+
+	<!-- Global settings -->
+	<property name="javac.debug" value="on"/>
+	
+	<!-- Global "magic" property for <javac> -->
+	<property name="build.compiler" value="modern"/>
+
+	<!-- Target to create the build directories prior to a compile target-->
+	<!-- We also mark the start time of the build, for the log. -->
+	<target name="prepare" >
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.classes}"/>
+		<mkdir dir="${build.lib}"/>
+		<mkdir dir="${temp.dir}"/>
+		<tstamp/>
+		<echo message="${TSTAMP}"/>
+	</target>
+
+	<!-- Build the application -->
+	<target name="build" depends="prepare">
+		<!-- Compile the application classes, not the module classes -->
+		<javac destdir="${build.classes}"
+		debug="${debug.flag}"
+		deprecation="on">
+			<!-- We could have used javac's srcdir attribute -->
+			<src path="${src.dir}"/>
+		</javac>
+		
+		<!-- Package the application into a JAR -->
+		<jar jarfile="${build.lib}/n-wayfolderdiff.jar" manifest="manifest.mf" basedir="${build.classes}" >
+		</jar>
+	</target>
+	
+	<target name="all" depends="deploy"/>
+	<!-- Delete class files built during previous builds. Leave directories -->
+	<target name="clean">
+		<delete>
+			<fileset dir="${build.classes}" includes="**/*.class"/>
+			<fileset dir="${temp.dir}" includes="**/*"/>
+			<fileset dir="${lib.dir}" includes="**/*"/>
+		</delete>
+	</target>
+	<!-- Delete any created directories and their contents -->
+	<target name="cleanall" depends="clean">
+		<delete dir="${build.dir}"/>
+		<delete dir="${dist.dir}"/>
+		<delete dir="${temp.dir}"/>
+		<delete dir="${lib.dir}"/>
+	</target>
+	<!-- Deploy the application in a "ready-to-run" state -->
+	<target name="deploy" depends="build">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${lib.dir}"/>		
+
+		<!-- Copy the primary program and modules -->
+		<copy todir="${lib.dir}">
+			<fileset dir="${build.lib}" includes="n-wayfolderdiff.jar"/>
+		</copy>
+	</target>
+</project>
