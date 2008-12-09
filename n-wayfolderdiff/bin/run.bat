@@ -1,1 +1,1 @@
-java -jar ..\lib\FolderDiff.jar
+java -jar ..\dist\n-wayfolderdiff.jar
