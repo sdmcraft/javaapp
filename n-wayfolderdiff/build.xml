@@ -59,14 +59,12 @@
 	<target name="clean">
 		<delete>
 			<fileset dir="${build.classes}" includes="**/*.class"/>
-			<fileset dir="${temp.dir}" includes="**/*"/>
-			<fileset dir="${dist.dir}" includes="**/*"/>
+			<fileset dir="${temp.dir}" includes="**/*"/>			
 		</delete>
 	</target>
 	<!-- Delete any created directories and their contents -->
 	<target name="cleanall" depends="clean">
-		<delete dir="${build.dir}"/>
-		<delete dir="${dist.dir}"/>
+		<delete dir="${build.dir}"/>		
 		<delete dir="${temp.dir}"/>
 	</target>
 	<!-- Deploy the application in a "ready-to-run" state -->
