@@ -2,6 +2,7 @@
 	<!-- Project directories -->
 	<property name="src.dir" value="src"/>
 	<property name="bin.dir" value="bin"/>
+        <property name="dist.dir" value="dist"/>
 
 	<!-- Temporary build directory names -->
 	<property name="build.dir" value="build"/>
@@ -9,8 +10,7 @@
 	<property name="build.lib" value="${build.dir}/lib"/>
 
 	<!-- Temporary directory names -->
-	<property name="temp.dir" value="temp"/>
-	<property name="dist.dir" value="dist"/>
+	<property name="temp.dir" value="temp"/>	
 
 	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
 
@@ -59,7 +59,7 @@
 	<target name="clean">
 		<delete>
 			<fileset dir="${build.classes}" includes="**/*.class"/>
-			<fileset dir="${temp.dir}" includes="**/*"/>			
+			<fileset dir="${temp.dir}" includes="**/*"/>	                        
 		</delete>
 	</target>
 	<!-- Delete any created directories and their contents -->
@@ -69,9 +69,6 @@
 	</target>
 	<!-- Deploy the application in a "ready-to-run" state -->
 	<target name="deploy" depends="build">
-		<!-- Create the distribution directory -->
-		<mkdir dir="${dist.dir}"/>
-
 		<!-- Copy the primary program and modules -->
 		<copy todir="${dist.dir}">
 			<fileset dir="${build.lib}" includes="n-wayfolderdiff.jar"/>
