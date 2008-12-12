@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author satyam
@@ -26,8 +28,10 @@ import java.util.Set;
 public class DiffEngine {
     
     private static final int BATCH_SIZE = 50;
-
+    private static final Logger  logger = Logger.getLogger(com.folderdiff.core.DiffEngine.class);
+    
     public static List<DiffFile> doDiff(String[] roots) throws Exception {
+    	logger.info("(+)doDiff(+)");
         List<DiffFile> diffFileList = new ArrayList<DiffFile>();
         Thread[] threadList = new Thread[roots.length];
         int i=0;
@@ -50,8 +54,8 @@ public class DiffEngine {
         }
         for(i=0;i<threadList.length;i++)
             threadList[i].join();
-        
-        return diffFileList;
+        logger.info("(-)doDiff(-)");
+        return diffFileList;        
     }
     
     private static List<DiffFile[]> buildBatches(List<DiffFile> diffFileList)

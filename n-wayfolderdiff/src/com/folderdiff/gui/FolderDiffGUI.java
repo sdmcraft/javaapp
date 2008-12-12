@@ -15,12 +15,14 @@ import java.util.concurrent.TimeoutException;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author  satyam
  */
 public class FolderDiffGUI extends javax.swing.JFrame {
-
+	private static final Logger  logger = Logger.getLogger(com.folderdiff.gui.FolderDiffGUI.class);
     /** Creates new form FolderDiffGUI */
     public FolderDiffGUI() {
         initComponents();
@@ -378,6 +380,7 @@ public class FolderDiffGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void doDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doDiffButtonActionPerformed
+	logger.info("(+)doDiffButtonActionPerformed(+)");
     //progressBar.setVisible(true);
     progressBar.setIndeterminate(true);
     try {
@@ -391,6 +394,7 @@ private void doDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     } catch (Exception ex) {
         ex.printStackTrace();
     }
+	logger.info("(-)doDiffButtonActionPerformed(-)");
 //progressBar.setVisible(false);
 }//GEN-LAST:event_doDiffButtonActionPerformed
 

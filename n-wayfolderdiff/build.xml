@@ -2,7 +2,9 @@
 	<!-- Project directories -->
 	<property name="src.dir" value="src"/>
 	<property name="bin.dir" value="bin"/>
-        <property name="dist.dir" value="dist"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="conf.dir" value="conf"/>
 
 	<!-- Temporary build directory names -->
 	<property name="build.dir" value="build"/>
@@ -50,8 +52,8 @@
 		</javac>
 
 		<!-- Package the application into a JAR -->
-		<jar jarfile="${build.lib}/n-wayfolderdiff.jar" manifest="manifest.mf" basedir="${build.classes}" >
-		</jar>
+		<jar jarfile="${build.lib}/n-wayfolderdiff.jar" manifest="manifest.mf" basedir="${build.classes}" />
+		<jar jarfile="${build.lib}/n-wayfolderdiff.jar" manifest="manifest.mf" basedir="${conf.dir}" update="true"/>
 	</target>
 
 	<target name="all" depends="deploy"/>
