@@ -45,7 +45,8 @@
 		<javac 
 		classpathref="mylibs"
 		destdir="${build.classes}"
-		debug="${debug.flag}"
+		debug="on"
+		debuglevel="lines,vars,source"
 		deprecation="on">
 			<!-- We could have used javac's srcdir attribute -->
 			<src path="${src.dir}"/>

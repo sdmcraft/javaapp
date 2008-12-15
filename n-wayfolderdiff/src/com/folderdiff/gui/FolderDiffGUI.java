@@ -504,7 +504,9 @@ private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_resetButtonActionPerformed
 
 private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
+	logger.info("(+)helpButtonActionPerformed(+)");
     BrowserControl.displayURL(System.getProperty("user.dir") + File.separator + "bin" + File.separator + "Help.html");
+    logger.info("(-)helpButtonActionPerformed(-)");
 }//GEN-LAST:event_helpButtonActionPerformed
 
     /**
@@ -519,7 +521,7 @@ private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         });
     }
     
-    class Task extends SwingWorker<Void, Void> {
+    class Task extends  SwingWorker<Void, Void> {
         @Override
         public Void doInBackground() throws Exception{    
             List<String> rootList = new ArrayList<String>();
