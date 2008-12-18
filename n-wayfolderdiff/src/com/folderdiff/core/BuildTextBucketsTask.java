@@ -19,7 +19,11 @@ public class BuildTextBucketsTask implements Runnable {
     @Override
     public void run() {
         try {
+        	if(batch == null)
+        		return;
             for (DiffFile f : batch) {
+            	if(f==null)
+            		continue;
                 f.buildTextBuckets();
             }
         } catch (Exception ex) {
