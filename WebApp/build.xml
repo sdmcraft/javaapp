@@ -1,0 +1,70 @@
+<project name="WebApp" default="all" basedir=".">
+
+	<property environment="env"/>
+	<property name="deploy.dir" value="${env.JBOSS_HOME}/server/default/deploy" />	
+	<property name="jboss.default" value="${env.JBOSS_HOME}/server/default" />	
+	
+	<property name="src.dir" value="src" />
+	<property name="dist.dir" value="dist" />	
+	<property name="conf.dir" value="conf" />
+
+	<property name="build.dir" value="build" />
+	<property name="build.classes" value="${build.dir}/WEB-INF/classes" />
+	
+	<property name="temp.dir" value="temp" />
+
+	<property name="javac.debug" value="on" />
+
+	<property name="build.compiler" value="modern" />
+	
+	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
+	
+	<path id="mylibs">
+		<fileset dir="${jboss.default}/lib">
+			<patternset refid="java.libs" />
+		</fileset>
+	</path>
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${temp.dir}" />
+	</target>
+
+	<target name="build" depends="prepare">
+		<javac classpathref="mylibs"
+		       destdir="${build.classes}"
+			   debug="on"
+			   debuglevel="lines,vars,source" deprecation="on">
+			<src path="${src.dir}" />
+		</javac>
+
+		<copy todir="${build.dir}/WEB-INF">
+			<fileset dir="${conf.dir}" includes="**/*" />
+		</copy>		
+
+		<jar jarfile="${dist.dir}/WebApp.war"
+			manifest="manifest.mf" basedir="${build.dir}" />
+	</target>
+
+	<target name="all" depends="deploy" />
+
+	<target name="clean">
+		<delete>
+			<fileset dir="${build.classes}" includes="**/*" />
+			<fileset dir="${temp.dir}" includes="**/*" />
+		</delete>
+	</target>
+
+	<target name="cleanall" depends="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${temp.dir}" />
+	</target>
+
+	<target name="deploy">
+		<copy todir="${deploy.dir}">
+			<fileset dir="${dist.dir}" includes="WebApp.war" />
+		</copy>		
+	</target>
+
+</project>
