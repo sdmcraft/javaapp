@@ -150,10 +150,8 @@ public class DiffEngine {
     }
 
     public static File writeToHtml(List<DiffFile> list) {
-    	logger.info("(+)writeToHtml(+)");
-    	logger.info(System.getProperty("user.dir"));
-    	logger.info((new DiffEngine().getClass().getResource("/../temp")).toString());
-        File html = new File("temp.html");
+    	logger.info("(+)writeToHtml(+)");    	    	
+        File html = new File(DirectoryUtils.getInstallDir()+ "temp/temp.html");
         PrintWriter out = null;
         String[] colorlist = new String[]{"00FFFF",
                                           "CCFF33",
