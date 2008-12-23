@@ -17,9 +17,13 @@
 	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
 
 	<path id="mylibs">
-		<fileset dir="${basedir}/lib">
+		<fileset dir="${lib.dir}">
 			<patternset refid="java.libs" />
 		</fileset>
+		<fileset dir="${dist.dir}">
+			<patternset refid="java.libs" />
+		</fileset>
+		
 	</path>
 
 	<!-- Global settings -->
@@ -83,4 +87,16 @@
 				value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000" />
 		</java>
 	</target>
+	
+	<target name="run">
+		<java jar="dist/n-wayfolderdiff.jar" fork="true" />
+	</target>
+
+	<target name="test">
+		<java classpathref="mylibs" classname="org.junit.runner.JUnitCore" fork="true" >			
+			<arg value="com.folderdiff.test.DirectoryUtilsTest" />
+			<arg value="com.folderdiff.test.DiffEngineTest" />		
+		</java>
+	</target>
+	
 </project>

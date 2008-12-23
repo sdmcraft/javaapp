@@ -66,8 +66,8 @@ public class DirectoryUtils {
 		if ((path.startsWith("file:/")) && path.endsWith("dist/")) {
 			path = path.substring(6, path.lastIndexOf("dist/"));
 		}
-		else if ((path.startsWith("file:/")) && path.endsWith("/build/classes/com/folderdiff/core/")) {
-			path = path.substring(6, path.lastIndexOf("/build/classes/com/folderdiff/core/"));
+		else if ((path.startsWith("file:/")) && path.endsWith("conf/")) {
+			path = path.substring(6, path.lastIndexOf("conf/"));
 		}
 		//logger.info(path);
 		logger.info("(-)getInstallDir(-)");
