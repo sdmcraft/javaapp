@@ -149,9 +149,10 @@ public class DiffEngine {
         return output;
     }
 
-    public static File writeToHtml(List<DiffFile> list) {
+    public static File writeToHtml(List<DiffFile> list) throws IOException {
     	logger.info("(+)writeToHtml(+)");    	    	
         File html = new File(DirectoryUtils.getInstallDir()+ "temp/temp.html");
+        html.createNewFile();
         PrintWriter out = null;
         String[] colorlist = new String[]{"00FFFF",
                                           "CCFF33",
