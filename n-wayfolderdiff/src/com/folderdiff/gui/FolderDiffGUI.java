@@ -7,6 +7,7 @@ package com.folderdiff.gui;
 
 import com.folderdiff.core.DiffEngine;
 import com.folderdiff.core.DiffFile;
+import com.folderdiff.core.DirectoryUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -504,8 +505,8 @@ private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_resetButtonActionPerformed
 
 private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
-	logger.info("(+)helpButtonActionPerformed(+)");
-    BrowserControl.displayURL(System.getProperty("user.dir") + File.separator + "bin" + File.separator + "Help.html");
+    logger.info("(+)helpButtonActionPerformed(+)");
+    BrowserControl.displayURL(DirectoryUtils.getInstallDir() + "docs" + File.separator + "Help.html");
     logger.info("(-)helpButtonActionPerformed(-)");
 }//GEN-LAST:event_helpButtonActionPerformed
 

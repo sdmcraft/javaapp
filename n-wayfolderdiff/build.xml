@@ -6,14 +6,12 @@
 	<property name="lib.dir" value="lib" />
 	<property name="conf.dir" value="conf" />
         <property name="log.dir" value="log" />
+        <property name="temp.dir" value="temp" />
 
 	<!-- Temporary build directory names -->
 	<property name="build.dir" value="build" />
 	<property name="build.classes" value="${build.dir}/classes" />
-	<property name="build.lib" value="${build.dir}/lib" />
-
-	<!-- Temporary directory names -->
-	<property name="temp.dir" value="temp" />
+	<property name="build.lib" value="${build.dir}/lib" />	
 
 	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
 
@@ -38,8 +36,7 @@
 	<target name="prepare">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.classes}" />
-		<mkdir dir="${build.lib}" />
-		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${build.lib}" />		
 		<tstamp />
 		<echo message="${TSTAMP}" />
 	</target>
@@ -71,8 +68,7 @@
 	</target>
 	<!-- Delete any created directories and their contents -->
 	<target name="cleanall" depends="clean">
-		<delete dir="${build.dir}" />
-		<delete dir="${temp.dir}" />
+		<delete dir="${build.dir}" />		
                 <delete dir="${log.dir}" />
 	</target>
 	<!-- Deploy the application in a "ready-to-run" state -->
