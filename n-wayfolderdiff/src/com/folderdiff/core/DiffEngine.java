@@ -26,51 +26,49 @@ import org.apache.log4j.Logger;
  * @author satyam
  */
 public class DiffEngine {
-    
+
     private static final int BATCH_SIZE = 50;
-    private static final Logger  logger = Logger.getLogger(com.folderdiff.core.DiffEngine.class);
-    
+    private static final Logger logger = Logger.getLogger(com.folderdiff.core.DiffEngine.class);
+
     public static List<DiffFile> doDiff(String[] roots) throws Exception {
-    	logger.info("(+)doDiff(+)");
+        logger.info("(+)doDiff(+)");
         List<DiffFile> diffFileList = new ArrayList<DiffFile>();
         Thread[] threadList = new Thread[roots.length];
-        int i=0;
-        for(String root : roots)
-        {
+        int i = 0;
+        for (String root : roots) {
             threadList[i] = new Thread(new CollateRootTask(root, diffFileList));
             threadList[i].start();
-            i++;            
+            i++;
         }
-        for(i=0;i<threadList.length;i++)
+        for (i = 0; i < threadList.length; i++) {
             threadList[i].join();
-                  
+        }
+
         List<DiffFile[]> batches = buildBatches(diffFileList);
-        threadList = new Thread[batches.size()];              
-        i=0;
+        threadList = new Thread[batches.size()];
+        i = 0;
         for (DiffFile[] batch : batches) {
             threadList[i] = new Thread(new BuildTextBucketsTask(batch));
             threadList[i].start();
-            i++;            
+            i++;
         }
-        for(i=0;i<threadList.length;i++)
+        for (i = 0; i < threadList.length; i++) {
             threadList[i].join();
+        }
         logger.info("(-)doDiff(-)");
-        return diffFileList;        
+        return diffFileList;
     }
-    
-    private static List<DiffFile[]> buildBatches(List<DiffFile> diffFileList)
-    {
+
+    private static List<DiffFile[]> buildBatches(List<DiffFile> diffFileList) {
         List<DiffFile[]> batches = new ArrayList<DiffFile[]>();
         DiffFile[] diffFileArray = diffFileList.toArray(new DiffFile[0]);
         DiffFile[] batch = new DiffFile[BATCH_SIZE];
         int count = 0, count1 = 0;
-        while(count < diffFileArray.length)
-        {
+        while (count < diffFileArray.length) {
             batch[count1] = diffFileArray[count];
             count++;
             count1++;
-            if(count1 == BATCH_SIZE)
-            {
+            if (count1 == BATCH_SIZE) {
                 batches.add(batch);
                 count1 = 0;
                 batch = new DiffFile[BATCH_SIZE];
@@ -108,7 +106,6 @@ public class DiffEngine {
 //
 //        return result;
 //    }
-
     public static Map<String, List<File>> diffFileMD5(List<File> list) throws Exception {
 
         Map<String, List<File>> map = new HashMap<String, List<File>>();
@@ -150,20 +147,26 @@ public class DiffEngine {
     }
 
     public static File writeToHtml(List<DiffFile> list) throws IOException {
-    	logger.info("(+)writeToHtml(+)");    	    	
-        File html = new File(DirectoryUtils.getInstallDir()+ "temp/temp.html");
-        html.createNewFile();
+        logger.info("(+)writeToHtml(+)");
+        File html = null;
+        try {
+            html = new File(DirectoryUtils.getInstallDir() + "temp/temp.html");
+            html.createNewFile();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         PrintWriter out = null;
         String[] colorlist = new String[]{"00FFFF",
-                                          "CCFF33",
-                                          "FF99FF",
-                                          "66FF66",
-                                          "CCFFFF",
-                                          "99FF00",
-                                          "FFFF66",
-                                          "FFFFFF",
-                                          "CCCCCC",
-                                          "FFFF00"};                                          
+            "CCFF33",
+            "FF99FF",
+            "66FF66",
+            "CCFFFF",
+            "99FF00",
+            "FFFF66",
+            "FFFFFF",
+            "CCCCCC",
+            "FFFF00"
+        };
         try {
             out = new PrintWriter(html);
         } catch (FileNotFoundException ex) {
@@ -177,7 +180,7 @@ public class DiffEngine {
         out.write("\t\t<script TYPE=\"text/javascript\">\n");
         out.write("\t\t<!--\n");
         out.write("\t\tfunction myPopup() {\n");
-        out.write("\t\t\twindow.open( \""+ DirectoryUtils.getHelpUrl()+"#understandingOutput\" )\n");
+        out.write("\t\t\twindow.open( \"" + DirectoryUtils.getHelpUrl() + "#understandingOutput\" )\n");
         out.write("\t\t}\n");
         out.write("\t\t//-->\n");
         out.write("\t\t</script>\n");
@@ -195,7 +198,7 @@ public class DiffEngine {
                 for (File f : entry.getValue()) {
                     out.write("\t\t\t\t<TR BGCOLOR=\"" + color + "\">\n");
                     out.write("\t\t\t\t\t<TD>\n");
-                    out.write("\t\t\t\t\t\t"+f.toString()+"\n");
+                    out.write("\t\t\t\t\t\t" + f.toString() + "\n");
                     out.write("\t\t\t\t\t</TD>\n");
                     out.write("\t\t\t\t</TR>\n");
                 }

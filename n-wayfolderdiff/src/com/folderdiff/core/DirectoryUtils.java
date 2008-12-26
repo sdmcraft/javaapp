@@ -63,11 +63,17 @@ public class DirectoryUtils {
 	public static String getInstallDir() {
 		logger.info("(+)getInstallDir(+)");
 		String path = DirectoryUtils.class.getResource("/").toString();
-		if ((path.startsWith("file:/")) && path.endsWith("dist/")) {
+		if ((path.startsWith("file://")) && path.endsWith("dist/")) {
 			path = path.substring(6, path.lastIndexOf("dist/"));
+		}                
+                else if ((path.startsWith("file:/")) && path.endsWith("dist/")) {
+			path = path.substring(5, path.lastIndexOf("dist/"));
 		}
-		else if ((path.startsWith("file:/")) && path.endsWith("conf/")) {
+		else if ((path.startsWith("file://")) && path.endsWith("conf/")) {
 			path = path.substring(6, path.lastIndexOf("conf/"));
+		}
+                else if ((path.startsWith("file:/")) && path.endsWith("conf/")) {
+			path = path.substring(5, path.lastIndexOf("conf/"));
 		}
 		//logger.info(path);
 		logger.info("(-)getInstallDir(-)");
