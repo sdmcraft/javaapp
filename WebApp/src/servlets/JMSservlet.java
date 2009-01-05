@@ -127,34 +127,44 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 						.createConsumer(testQueue);
 				MyListener listener = new MyListener();
 				consumer.setMessageListener(listener);
-				synchronized (pojo.Globals.list) {
-					while (pojo.Globals.list.size() == 0) {
-						pojo.Globals.list.wait();
+				while (true) {
+					boolean flag = false;
+					synchronized (pojo.Globals.list) {
+						while (pojo.Globals.list.size() == 0) {
+							pojo.Globals.list.wait();
+						}
+						for (String s : pojo.Globals.list) {
+							out.write("<BR>");
+							out.write(s);
+							System.out.println(s);
+							if(s.contains("5"))
+							{
+								flag = true;
+								break;
+							}
+						}
+						pojo.Globals.list.clear();
+						if(flag)
+							break;
 					}
-					for (String s : pojo.Globals.list) {
-						out.write("<BR>");
-						out.write(s);
-					}
-					pojo.Globals.list.clear();
 				}
 				out.write("<BR>");
-				out.write("That's it. No more messages.");
+				//out.write("That's it. No more messages.");
 				consumer.close();
-			}
-			else if ("browse".equals(request.getParameter("action"))) {
+			} else if ("browse".equals(request.getParameter("action"))) {
 				QueueBrowser browser = queueSession.createBrowser(testQueue);
-	            Enumeration msgs = browser.getEnumeration();
+				Enumeration msgs = browser.getEnumeration();
 
-	            if (!msgs.hasMoreElements()) {
-	                out.write("<BR>");
-	            	out.write("No messages in queue");
-	            } else {
-	                while (msgs.hasMoreElements()) {
-	                    Message tempMsg = (Message) msgs.nextElement();
-	                    out.write("<BR>");
-	                    out.write("Message: " + tempMsg);
-	                }
-	            }
+				if (!msgs.hasMoreElements()) {
+					out.write("<BR>");
+					out.write("No messages in queue");
+				} else {
+					while (msgs.hasMoreElements()) {
+						Message tempMsg = (Message) msgs.nextElement();
+						out.write("<BR>");
+						out.write("Message: " + tempMsg);
+					}
+				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
