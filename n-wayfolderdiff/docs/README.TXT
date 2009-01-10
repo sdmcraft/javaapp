@@ -18,35 +18,29 @@ multiple builds of a code, with each builder residing in a separate folder.
 How to use
 ----------
 For Windows:
-Execute run.bat. FolderDiff.jar should be in the same folder.
+Execute run.bat.
 
 For *nix:
-Execute run.sh. FolderDiff.jar should be in the same folder.
+Execute run.sh.
+If run.sh is not executable, do `chmod 555 run.sh` , to make it executable.
 
 Software Requirements
 ---------------------
 1.Java5 or higher
 2.Web browser
 
-Release Notes
--------------
-What's new?
-1.run.sh is added for using the application in *nix
-2.Source is added in src folder
-3.Licence is added
-
 ===================
 Support
 ===================
  
 Any problem with this release can be reported to m.satyadeep@gmail.com.
-If you are sending an email make sure to add the [FolderDiff] prefix to the
-subject.
+If you are sending an email make sure to add the [n-wayfolderdiff]
+prefix to the subject.
 
 ===================
 License
 ===================
-Copyright (C) <2008>  <Satya Deep Maheshwari>
+Copyright (C) <2008-09>  <Satya Deep Maheshwari>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
