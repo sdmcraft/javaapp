@@ -7,9 +7,19 @@
 		<servlet-class>servlets.JMSservlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>DBServlet</servlet-name>
+		<servlet-class>servlets.DBServlet</servlet-class>
+	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>JMSservlet</servlet-name>
 		<url-pattern>/JMSservlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>DBServlet</servlet-name>
+		<url-pattern>/DBServlet</url-pattern>
 	</servlet-mapping>
 
 </web-app>

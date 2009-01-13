@@ -64,6 +64,7 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 
 			QueueConnection queueConnection = queueConnectionFactory
 					.createQueueConnection();
+			queueConnection.start();
 			getServletContext()
 					.setAttribute("queueConnection", queueConnection);
 
@@ -98,7 +99,7 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 		out.write("<HTML>");
 		out.write("<BODY>");
 		try {
-			queueConnection.start();
+			//queueConnection.start();
 			QueueSession queueSession = queueConnection.createQueueSession(
 					false, Session.AUTO_ACKNOWLEDGE);
 
@@ -190,5 +191,5 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
-	}
+	}	
 }
