@@ -1,0 +1,59 @@
+<project name="JavaApp" default="all" basedir=".">
+
+	<property name="src.dir" value="src" />
+	<property name="dist.dir" value="dist" />
+	<property name="conf.dir" value="conf" />
+	<property name="lib.dir" value="lib" />
+	<property name="build.dir" value="build" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="temp.dir" value="temp" />
+
+	<property name="javac.debug" value="on" />
+	<property name="build.compiler" value="modern" />
+
+	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
+
+	<path id="mylibs">
+		<fileset dir="${lib.dir}">
+			<patternset refid="java.libs" />
+		</fileset>
+	</path>
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${temp.dir}" />
+	</target>
+
+	<target name="build" depends="prepare">
+		<javac classpathref="mylibs" destdir="${build.classes}"
+			debug="on" debuglevel="lines,vars,source" deprecation="on">
+			<src path="${src.dir}" />
+		</javac>
+
+		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf"
+			basedir="${build.classes}" />
+
+		<jar jarfile="${dist.dir}/JavaApp.jar"
+			manifest="manifest.mf" basedir="${conf.dir}" update="true" />
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="${build.classes}" includes="**/*" />
+			<fileset dir="${temp.dir}" includes="**/*" />
+		</delete>
+	</target>
+
+	<target name="cleanall" depends="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${temp.dir}" />
+	</target>
+
+	<target name="run">
+		<java jar="dist/JavaApp.jar" fork="true">
+			<sysproperty key="logFile" value="C:/my.log" />
+		</java>
+	</target>
+
+</project>
