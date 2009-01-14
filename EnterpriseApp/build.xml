@@ -51,7 +51,7 @@
 		</copy>
 
 		<copy todir="${build.dir}/web/WEB-INF">
-			<fileset dir="${conf.dir}" includes="**/web.xml" />
+			<fileset dir="${conf.dir}" includes="**/web.xml,**/jboss-web.xml" />
 		</copy>		
 
 		<jar jarfile="${build.dir}/jar/web.war"
