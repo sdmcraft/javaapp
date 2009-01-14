@@ -109,6 +109,7 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 				textMessage.setText("Message: " + (hits++));
 				getServletContext().setAttribute("hits", hits);
 				queueSender.send(textMessage);
+				System.out.println("producer sent the message");
 				out.write("<BR>");
 				out.write("Sent " + textMessage.getText());
 			} else if ("consume".equals(request.getParameter("action"))) {
@@ -131,8 +132,11 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 				while (true) {
 					boolean flag = false;
 					synchronized (pojo.Globals.list) {
+						System.out.println("async-consume got the lock");
 						while (pojo.Globals.list.size() == 0) {
+							System.out.println("async-consume gone to wait");
 							pojo.Globals.list.wait();
+							System.out.println("async-consume wait is over");
 						}
 						for (String s : pojo.Globals.list) {
 							out.write("<BR>");
@@ -148,6 +152,7 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 						if(flag)
 							break;
 					}
+					System.out.println("async-consume released the lock");
 				}
 				out.write("<BR>");
 				//out.write("That's it. No more messages.");

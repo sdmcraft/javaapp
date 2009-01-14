@@ -7,18 +7,20 @@ import javax.jms.TextMessage;
 
 public class MyListener implements MessageListener {
 
-	public void onMessage(Message msg) {
+	public void onMessage(Message msg) {		
+		System.out.println("(+)onMessage(+)");
 		synchronized (Globals.list) {
 			try {
-				System.out.println("(+)onMessage(+)");
+				System.out.println("onMessage got the lock");				
 				Globals.list.add("Received message: " + ((TextMessage)msg).getText());
+				System.out.println("onMessage notified all");
 				Globals.list.notifyAll();
-				System.out.println("(-)onMessage(-)");
 			} catch (JMSException e) { 
 				e.printStackTrace();
 			}
 		}
-
+		System.out.println("onMessage released the lock");
+		System.out.println("(-)onMessage(-)");
 	}
 
 }
