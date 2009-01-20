@@ -1,4 +1,4 @@
-<project name="JavaApp" default="all" basedir=".">
+<project name="JavaApp" default="build" basedir=".">
     
     <property name="src.dir" value="src" />
     <property name="dist.dir" value="dist" />
