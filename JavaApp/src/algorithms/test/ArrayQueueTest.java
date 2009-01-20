@@ -136,6 +136,10 @@ public class ArrayQueueTest {
         instance.priorityInsert(4);
         assertEquals(true, instance.equals(new ArrayQueue(new Integer[]{1, 2, 3, 4, 5, 6})));
 
+        instance = new ArrayQueue(new Integer[]{null,null});
+        instance.priorityInsert(4);
+        assertEquals(true, instance.equals(new ArrayQueue(new Integer[]{4,null})));
+        
         instance = new ArrayQueue(new Integer[]{null, 1, 2, 3, 5, 6});
         //instance.display();
         instance.priorityInsert(4);
