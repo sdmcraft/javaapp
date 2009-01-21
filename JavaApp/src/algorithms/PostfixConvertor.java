@@ -1,8 +1,5 @@
 package algorithms;
 
-import algorithms.test.PostfixConvertorTest;
-import org.apache.log4j.Logger;
-
 public class PostfixConvertor {    
     public PostfixConvertor() {
     }
