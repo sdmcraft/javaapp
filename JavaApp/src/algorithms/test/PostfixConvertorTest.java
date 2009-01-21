@@ -27,6 +27,9 @@ public class PostfixConvertorTest {
         assertEquals("a",PostfixConvertor.convert("(a)"));
         assertEquals("ab*c*",PostfixConvertor.convert("a*b*c"));
         assertEquals("abc-d-+",PostfixConvertor.convert("a+((b-c)-d)"));
+        assertEquals("",PostfixConvertor.convert("()"));
+        assertEquals("",PostfixConvertor.convert("(()())"));
+        assertEquals("ab+c/defg+/+*h-",PostfixConvertor.convert("(a+b)/c*(d+e/(f+g))-h"));
     }
 
 }

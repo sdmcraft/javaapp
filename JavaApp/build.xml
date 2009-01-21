@@ -43,15 +43,15 @@ manifest="manifest.mf" basedir="${conf.dir}" update="true" />
     </target>
     
     <target name="clean">
-        <delete>
+        <delete quiet="true">
             <fileset dir="${build.classes}" includes="**/*" />
             <fileset dir="${temp.dir}" includes="**/*" />
         </delete>
     </target>
     
     <target name="cleanall" depends="clean">
-        <delete dir="${build.dir}" />
-        <delete dir="${temp.dir}" />
+        <delete quiet="true" dir="${build.dir}" />
+        <delete quiet="true" dir="${temp.dir}" />
     </target>
     
     <target name="run">
