@@ -76,7 +76,7 @@ public class FolderDiffGUI extends javax.swing.JFrame {
         progressBar = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Folder Diff - By Satya Deep Maheshwari");
+        setTitle("N-Way Folder Diff");
         setName("Folder Diff"); // NOI18N
 
         root1Field.setEditable(false);
