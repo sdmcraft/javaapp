@@ -12,6 +12,26 @@
 		<servlet-class>servlets.DBServlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<servlet-name>ServletA</servlet-name>
+		<servlet-class>servlets.ServletA</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ServletB</servlet-name>
+		<servlet-class>servlets.ServletB</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ServletC</servlet-name>
+		<servlet-class>servlets.pkg.ServletC</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>PageA</servlet-name>
+		<jsp-file>/web/PageA.jsp</jsp-file>
+	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>JMSservlet</servlet-name>
 		<url-pattern>/JMSservlet</url-pattern>
@@ -20,6 +40,26 @@
 	<servlet-mapping>
 		<servlet-name>DBServlet</servlet-name>
 		<url-pattern>/DBServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ServletA</servlet-name>
+		<url-pattern>/ServletA</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ServletB</servlet-name>
+		<url-pattern>/ServletB</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ServletC</servlet-name>
+		<url-pattern>/ServletC</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>PageA</servlet-name>
+		<url-pattern>/PageA</url-pattern>
 	</servlet-mapping>
 
 </web-app>

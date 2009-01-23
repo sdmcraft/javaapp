@@ -1,24 +1,26 @@
 <project name="WebApp" default="all" basedir=".">
 
-	<property environment="env"/>
-	<property name="deploy.dir" value="${env.JBOSS_HOME}/server/default/deploy" />	
-	<property name="jboss.default" value="${env.JBOSS_HOME}/server/default" />	
-	
+	<property environment="env" />
+	<property name="deploy.dir" value="${env.JBOSS_HOME}/server/default/deploy" />
+	<property name="jboss.default" value="${env.JBOSS_HOME}/server/default" />
+
 	<property name="src.dir" value="src" />
-	<property name="dist.dir" value="dist" />	
+	<property name="dist.dir" value="dist" />
 	<property name="conf.dir" value="conf" />
+	<property name="web.dir" value="web" />
 
 	<property name="build.dir" value="build" />
 	<property name="build.classes" value="${build.dir}/WEB-INF/classes" />
-	
+	<property name="build.web.dir" value="${build.dir}/web" />
+
 	<property name="temp.dir" value="temp" />
 
 	<property name="javac.debug" value="on" />
 
 	<property name="build.compiler" value="modern" />
-	
+
 	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
-	
+
 	<path id="mylibs">
 		<fileset dir="${jboss.default}/lib">
 			<patternset refid="java.libs" />
@@ -29,22 +31,23 @@
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.classes}" />
 		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${build.web.dir}" />
 	</target>
 
 	<target name="build" depends="prepare">
-		<javac classpathref="mylibs"
-		       destdir="${build.classes}"
-			   debug="on"
-			   debuglevel="lines,vars,source" deprecation="on">
+		<javac classpathref="mylibs" destdir="${build.classes}" debug="on" debuglevel="lines,vars,source" deprecation="on">
 			<src path="${src.dir}" />
 		</javac>
 
 		<copy todir="${build.dir}/WEB-INF">
 			<fileset dir="${conf.dir}" includes="**/*" />
-		</copy>		
+		</copy>
 
-		<jar jarfile="${dist.dir}/WebApp.war"
-			manifest="manifest.mf" basedir="${build.dir}" />
+		<copy todir="${build.web.dir}">
+			<fileset dir="${web.dir}" includes="**/*" />
+		</copy>
+
+		<jar jarfile="${dist.dir}/WebApp.war" manifest="manifest.mf" basedir="${build.dir}" />
 	</target>
 
 	<target name="all" depends="deploy" />
@@ -61,10 +64,10 @@
 		<delete dir="${temp.dir}" />
 	</target>
 
-	<target name="deploy">
+	<target name="deploy" depends="cleanall,build">
 		<copy todir="${deploy.dir}">
 			<fileset dir="${dist.dir}" includes="WebApp.war" />
-		</copy>		
+		</copy>
 	</target>
 
 </project>
