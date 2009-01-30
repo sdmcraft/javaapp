@@ -610,6 +610,6 @@ private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JTextField root9Field;
     private javax.swing.JLabel root9Label;
     // End of variables declaration//GEN-END:variables
-    private static final JFileChooser fc = new JFileChooser();    
+    private static JFileChooser fc = new JFileChooser();    
 
 }

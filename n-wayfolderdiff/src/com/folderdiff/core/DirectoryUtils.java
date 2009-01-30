@@ -64,18 +64,18 @@ public class DirectoryUtils {
 		logger.info("(+)getInstallDir(+)");
 		String path = DirectoryUtils.class.getResource("/").toString();
 		if ((path.startsWith("file://")) && path.endsWith("dist/")) {
+			path = path.substring(7, path.lastIndexOf("dist/"));
+		} else if ((path.startsWith("file:/")) && path.endsWith("dist/")) {
 			path = path.substring(6, path.lastIndexOf("dist/"));
-		}                
-                else if ((path.startsWith("file:/")) && path.endsWith("dist/")) {
-			path = path.substring(5, path.lastIndexOf("dist/"));
-		}
-		else if ((path.startsWith("file://")) && path.endsWith("conf/")) {
+		} else if ((path.startsWith("file://")) && path.endsWith("conf/")) {
+			path = path.substring(7, path.lastIndexOf("conf/"));
+		} else if ((path.startsWith("file:/")) && path.endsWith("conf/")) {
 			path = path.substring(6, path.lastIndexOf("conf/"));
 		}
-                else if ((path.startsWith("file:/")) && path.endsWith("conf/")) {
-			path = path.substring(5, path.lastIndexOf("conf/"));
-		}
-		//logger.info(path);
+		String os = System.getProperty("os.name");
+		if (os.toUpperCase().contains("WINDOW"))
+			path = path.replace("%20", " ");
+		// logger.info(path);
 		logger.info("(-)getInstallDir(-)");
 		return path;
 	}

@@ -60,7 +60,7 @@ manifest="manifest.mf" basedir="${conf.dir}" update="true" />
     <target name="all" depends="deploy" />
     <!-- Delete class files built during previous builds. Leave directories -->
     <target name="clean">
-        <delete>
+        <delete quiet="true">
             <fileset dir="${build.classes}" includes="**/*.class" />
             <fileset dir="${temp.dir}" includes="**/*" />
             <fileset dir="${log.dir}" includes="**/*" />
@@ -68,11 +68,11 @@ manifest="manifest.mf" basedir="${conf.dir}" update="true" />
     </target>
     <!-- Delete any created directories and their contents -->
     <target name="cleanall" depends="clean">
-        <delete dir="${build.dir}" />		
-        <delete dir="${log.dir}" />
+        <delete quiet="true" dir="${build.dir}" />		
+        <delete quiet="true" dir="${log.dir}" />
     </target>
     <!-- Deploy the application in a "ready-to-run" state -->
-    <target name="deploy" depends="build">
+    <target name="deploy" depends="cleanall,build">
         <!-- Copy the primary program and modules -->
         <copy todir="${dist.dir}">
             <fileset dir="${build.lib}" includes="n-wayfolderdiff.jar" />
