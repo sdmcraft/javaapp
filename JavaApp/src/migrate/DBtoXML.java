@@ -1,5 +1,6 @@
 package migrate;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +18,9 @@ import org.jdom.output.XMLOutputter;
 public class DBtoXML {
 
 	final static String connectionUrl = "jdbc:sqlserver://satyam-xp:1433;databaseName=breeze750;user=sa;password=breeze";
-	final static int ACCOUNT_ID = 16401;
+	//final static String connectionUrl = "jdbc:sqlserver://satyam-lt:1433;databaseName=breezeDB1;user=sa;password=breeze";
+	final static int ACCOUNT_ID = 16896;
+	//final static int ACCOUNT_ID = 7;
 	static Connection con;
 
 	public static void main(String[] args) {
@@ -32,7 +35,10 @@ public class DBtoXML {
 			}
 			destroy();
 			XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-			outputter.output(doc, new FileOutputStream("result.xml"));
+			File result = new File("C:/temp/result.xml");
+			result.createNewFile();
+			FileOutputStream fout = new FileOutputStream(result);
+			outputter.output(doc, fout);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

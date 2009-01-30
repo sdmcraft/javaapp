@@ -39,9 +39,9 @@ public class XMLtoDB {
 		try {
 			//init();
 			SAXBuilder builder = new SAXBuilder();
-			Document doc = builder.build(new FileInputStream("result.xml"));
+			Document doc = builder.build(new FileInputStream("C:/temp/transformedResult.xml"));
 			Element accElement = doc.getRootElement();
-			File script = new File("script.sql");
+			File script = new File("C:/temp/script.sql");
 			script.createNewFile();
 			out = new PrintWriter(script);
 			List<Element> tableList = accElement.getChildren();
