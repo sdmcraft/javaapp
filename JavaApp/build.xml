@@ -30,13 +30,16 @@
 	</target>
 
 	<target name="build" depends="prepare">
-		<javac classpathref="mylibs" destdir="${build.classes}" debug="on" debuglevel="lines,vars,source" deprecation="on">
+		<javac classpathref="mylibs" destdir="${build.classes}"
+			debug="on" debuglevel="lines,vars,source" deprecation="on">
 			<src path="${src.dir}" />
 		</javac>
 
-		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf" basedir="${build.classes}" />
+		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf"
+			basedir="${build.classes}" />
 
-		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf" basedir="${conf.dir}" update="true" />
+		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf"
+			basedir="${conf.dir}" update="true" />
 	</target>
 
 	<target name="clean">
@@ -57,8 +60,19 @@
 		</java>
 	</target>
 
+	<target name="debug" depends="cleanall,build">
+		<java jar="dist/JavaApp.jar" fork="true">
+			<sysproperty key="DEBUG" value="true" />
+			<sysproperty key="logFile" value="C:/my.log" />
+			<jvmarg
+				value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000" />
+		</java>
+	</target>
+
+
 	<target name="test" depends="cleanall,build">
-		<java classpathref="mylibs" classname="org.junit.runner.JUnitCore" fork="true">
+		<java classpathref="mylibs"
+			classname="org.junit.runner.JUnitCore" fork="true">
 			<arg value="algorithms.test.PostfixConvertorTest" />
 			<arg value="algorithms.test.ExpressionEvaluatorTest" />
 		</java>

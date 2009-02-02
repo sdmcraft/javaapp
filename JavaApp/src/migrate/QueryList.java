@@ -102,7 +102,7 @@ public class QueryList {
 				                  "where sco_id in (select sco_id " +
 				                                   "from pps_scos " +
 				                                   "where account_id = ?))");
-		/*What about hostID??*/
+		/*What about hostID?? - No need to migrate this*/
 		queryMap.put("pps_asset_hosts",
 				"select * " +
 				"from pps_asset_hosts " +
@@ -140,7 +140,11 @@ public class QueryList {
 				                                   "from pps_scos " +
 				                                   "where account_id = ?))");
 
-
+		/*Need to figure out the field_ids for the for system and group account
+		 * and the corresponding mapping in the new cluster. If they are different
+		 * across clusters, the pps_acl_field entries for this account would need
+		 *  to be changed to the new entries
+		 */
 		queryMap.put("pps_fields",
 				"select * " +
 				"from pps_fields " +
@@ -340,15 +344,15 @@ public class QueryList {
 		tableList.add("pps_trees");				
 	}
 	
-	public static final List<String> idList = new ArrayList<String>();
+	public static final List<String> idGroups = new ArrayList<String>();
 	static
 	{		
-		idList.add("ACL_ID");
-		idList.add("HISTORY_ID");
-		idList.add("ACTION_ID");
-		idList.add("ASSET_ID");
-		idList.add("ACTIVITY_ID");
-		idList.add("SESSION_ID");
-		idList.add("TRANSCRIPT_ID");
+		idGroups.add("//table[@name='pps_acls']/row/data[@name='ACL_ID']");
+		idGroups.add("//table[@name='pps_account_history']/row/data[@name='HISTORY_ID']");
+//		idGroups.add("//table[@name='pps_actions']/row/data[@name='ACTION_ID']");
+		idGroups.add("//table[@name='pps_assets']/row/data[@name='ASSET_ID']");
+		idGroups.add("//table[@name='pps_permission_activities']/row/data[@name='ACTIVITY_ID']");
+		idGroups.add("//table[@name='pps_user_sessions']/row/data[@name='SESSION_ID']");
+		idGroups.add("//table[@name='pps_transcripts']/row/data[@name='TRANSCRIPT_ID']");		
 	}
 }
