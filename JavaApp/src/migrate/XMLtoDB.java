@@ -12,36 +12,37 @@ import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
 public class XMLtoDB {
-
-	final static String connectionUrl = "jdbc:sqlserver://satyam-lt:1433;databaseName=breeze750;user=sa;password=breeze";
+	
 	static Connection con;
 
-	private static void init() {
+	private static void init(String connectionUrl) throws Exception {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			con = DriverManager.getConnection(connectionUrl);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 	}
 
-	private static void destroy() {
+	private static void destroy() throws Exception {
 		try {
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void service(String connectionUrl,String targetXML, String sqlScript) throws Exception {
 		PrintWriter out = null;
 		try {
-			//init();
+			//init(connectionUrl);
 			SAXBuilder builder = new SAXBuilder();
-			Document doc = builder.build(new FileInputStream("C:/temp/transformedResult.xml"));
+			Document doc = builder.build(new FileInputStream(targetXML));
 			Element accElement = doc.getRootElement();
-			File script = new File("C:/temp/script.sql");
+			File script = new File(sqlScript);
 			script.createNewFile();
 			out = new PrintWriter(script);
 			List<Element> tableList = accElement.getChildren();
@@ -74,6 +75,7 @@ public class XMLtoDB {
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			throw ex;
 		} finally {
 			out.flush();
 			out.close();
@@ -91,6 +93,7 @@ public class XMLtoDB {
 		query.deleteCharAt(query.lastIndexOf(","));
 		query.append(") VALUES (");
 		for (int i = 0; i < count; i++) {
+			columnValues[i] = columnValues[i].replace("'", "''");
 			if ("int".equals(columnTypes[i]))
 				query.append(columnValues[i] + ",");
 			else

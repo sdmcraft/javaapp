@@ -22,29 +22,27 @@ public class TransformXML {
 
 	private static Document doc = null;
 	private static Document idMapDoc = null;
-	private static SAXBuilder builder = new SAXBuilder();
-	// private final static String connectionUrl =
-	// "jdbc:sqlserver://satyam-xp:1433;databaseName=breeze750;user=sa;password=breeze";
-	private final static String connectionUrl = "jdbc:sqlserver://satyam-lt:1433;databaseName=breezeDB1;user=sa;password=breeze";
+	private static SAXBuilder builder = new SAXBuilder();	
 	private static Connection con;
 
-	public static void main(String[] args) {
-		init();
-		buildIDMap();
+	public static void service(String sourceXML, String idMapXML, String targetXML, String connectionUrl) throws Exception {
+		init(sourceXML, idMapXML);
+		buildIDMap(idMapXML, connectionUrl);
 		replaceIDs();
-		writeXML("C:/temp/transformedResult.xml",doc);
+		writeXML(targetXML,doc);
 	}
 
-	private static void init() {
+	private static void init(String sourceXML, String idMapXML) throws Exception {
 		try {
-			doc = builder.build(new FileInputStream("C:/temp/result.xml"));
-			idMapDoc = builder.build(new FileInputStream("C:/temp/idMap.xml"));
+			doc = builder.build(new FileInputStream(sourceXML));
+			idMapDoc = builder.build(new FileInputStream(idMapXML));
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			throw ex;
 		}
 	}
 
-	private static void buildIDMap() {
+	private static void buildIDMap(String idMapXML, String connectionUrl) throws Exception {
 		try {
 			Element rootElement = idMapDoc.getRootElement();
 			int idCount = 0;
@@ -65,7 +63,7 @@ public class TransformXML {
 					}
 				}
 			}
-			long startId = blockNewIDs(idCount);
+			long startId = blockNewIDs(idCount, connectionUrl);
 			if (startId == -1)
 				throw new Exception("Error while blocking IDs");
 			else {
@@ -79,13 +77,14 @@ public class TransformXML {
 								.toString(startId++)));
 				}
 			}
-			writeXML("C:/temp/idMap.xml", idMapDoc);
+			writeXML(idMapXML, idMapDoc);
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			throw ex;
 		}
 	}
 
-	private static long blockNewIDs(int blockSize) {
+	private static long blockNewIDs(int blockSize, String connectionUrl) throws Exception {
 		long startId = -1;
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -117,8 +116,9 @@ public class TransformXML {
 				stmt = con
 						.prepareStatement("UPDATE pps_sequences "
 								+ "SET start_value = (SELECT MAX(end_value) FROM pps_sequences), "
-								+ "end_value = (SELECT MAX(end_value) FROM pps_sequences) "
+								+ "end_value = (SELECT MAX(end_value) FROM pps_sequences) + "
 								+ blockSize + " " + "WHERE host_id = 1000");
+				stmt.executeUpdate();
 				con.commit();
 			}
 			stmt = con.prepareStatement("SELECT start_value "
@@ -128,17 +128,19 @@ public class TransformXML {
 				startId = rs.getLong("start_value");
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			throw ex;
 		} finally {
 			try {
 				con.close();
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				throw ex;
 			}
 		}
 		return startId;
 	}
 
-	private static void replaceIDs() {
+	private static void replaceIDs() throws Exception {
 		try {
 			Element rootElement = idMapDoc.getRootElement();
 			List<Element> idList = rootElement.getChildren();
@@ -157,10 +159,11 @@ public class TransformXML {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
-	private static void writeXML(String outFile, Document doc) {
+	public static void writeXML(String outFile, Document doc) throws Exception {
 		try {
 			XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
 			File result = new File(outFile);
@@ -169,6 +172,7 @@ public class TransformXML {
 			outputter.output(doc, fout);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 }

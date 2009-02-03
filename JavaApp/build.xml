@@ -57,11 +57,13 @@
 	<target name="run" depends="cleanall,build">
 		<java jar="dist/JavaApp.jar" fork="true">
 			<sysproperty key="logFile" value="C:/my.log" />
+			<arg value="C:/temp/config.xml" />
 		</java>
 	</target>
 
 	<target name="debug" depends="cleanall,build">
 		<java jar="dist/JavaApp.jar" fork="true">
+			<arg value="C:/temp/config.xml" />
 			<sysproperty key="DEBUG" value="true" />
 			<sysproperty key="logFile" value="C:/my.log" />
 			<jvmarg

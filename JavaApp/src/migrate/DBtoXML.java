@@ -17,53 +17,52 @@ import org.jdom.output.XMLOutputter;
 
 public class DBtoXML {
 
-	final static String connectionUrl = "jdbc:sqlserver://satyam-xp:1433;databaseName=breeze750;user=sa;password=breeze";
-	//final static String connectionUrl = "jdbc:sqlserver://satyam-lt:1433;databaseName=breezeDB1;user=sa;password=breeze";
-	final static int ACCOUNT_ID = 16896;
-	//final static int ACCOUNT_ID = 7;
 	static Connection con;
 
-	public static void main(String[] args) {
+	public static void service(String connectionUrl, String resultFile, int account_id) throws Exception {
 		try {
-			init();
+			init(connectionUrl);
 			Element accElement = new Element("account");
-			accElement.setAttribute(new Attribute("account_id",Integer.toString(ACCOUNT_ID)));
+			accElement.setAttribute(new Attribute("account_id",Integer.toString(account_id)));
 			Document doc = new Document(accElement);
 			for (String table : QueryList.tableList) {
 				String query = QueryList.queryMap.get(table);
-				accElement.addContent(executeQuery(table, query));
+				accElement.addContent(executeQuery(table, query, account_id));
 			}
 			destroy();
 			XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-			File result = new File("C:/temp/result.xml");
+			File result = new File(resultFile);
 			result.createNewFile();
 			FileOutputStream fout = new FileOutputStream(result);
 			outputter.output(doc, fout);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 	}
 
-	private static void init() {
+	private static void init(String connectionUrl) throws Exception {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			con = DriverManager.getConnection(connectionUrl);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 	}
 
-	private static void destroy() {
+	private static void destroy() throws Exception {
 		try {
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
-	private static Element executeQuery(String table, String query) {
+	private static Element executeQuery(String table, String query, int account_id) throws Exception {
 		Element tableElement = new Element("table");
 		tableElement.setAttribute(new Attribute("name", table));
 		PreparedStatement stmt = null;
@@ -71,7 +70,7 @@ public class DBtoXML {
 
 		try {
 			stmt = con.prepareStatement(query);
-			stmt.setInt(1, ACCOUNT_ID);
+			stmt.setInt(1, account_id);
 			rs = stmt.executeQuery();
 			ResultSetMetaData metaData = rs.getMetaData();
 			int columnCount = metaData.getColumnCount();
@@ -93,18 +92,21 @@ public class DBtoXML {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			if (rs != null)
 				try {
 					rs.close();
 				} catch (Exception e) {
 					e.printStackTrace();
+					throw e;
 				}
 			if (stmt != null)
 				try {
 					stmt.close();
 				} catch (Exception e) {
 					e.printStackTrace();
+					throw e;
 				}
 		}
 		return tableElement;
