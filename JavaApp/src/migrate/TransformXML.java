@@ -7,8 +7,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -22,27 +25,43 @@ public class TransformXML {
 
 	private static Document doc = null;
 	private static Document idMapDoc = null;
-	private static SAXBuilder builder = new SAXBuilder();	
+	private static SAXBuilder builder = new SAXBuilder();
 	private static Connection con;
 
-	public static void service(String sourceXML, String idMapXML, String targetXML, String connectionUrl) throws Exception {
-		init(sourceXML, idMapXML);
-		buildIDMap(idMapXML, connectionUrl);
+	public static void service(String sourceXML, String idMapXML,
+			String targetXML, String connectionUrl) throws Exception {
+		init(sourceXML, idMapXML, connectionUrl);
+		handleFields();
+		buildIDMap(idMapXML);
 		replaceIDs();
-		writeXML(targetXML,doc);
+		writeXML(targetXML, doc);
+		destroy();
 	}
 
-	private static void init(String sourceXML, String idMapXML) throws Exception {
+	private static void init(String sourceXML, String idMapXML,
+			String connectionUrl) throws Exception {
 		try {
 			doc = builder.build(new FileInputStream(sourceXML));
 			idMapDoc = builder.build(new FileInputStream(idMapXML));
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			con = DriverManager.getConnection(connectionUrl);
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw ex;
 		}
 	}
 
-	private static void buildIDMap(String idMapXML, String connectionUrl) throws Exception {
+	private static void destroy() throws Exception {
+		try {
+			con.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+	}
+
+	private static void buildIDMap(String idMapXML) throws Exception {
 		try {
 			Element rootElement = idMapDoc.getRootElement();
 			int idCount = 0;
@@ -63,7 +82,7 @@ public class TransformXML {
 					}
 				}
 			}
-			long startId = blockNewIDs(idCount, connectionUrl);
+			long startId = blockNewIDs(idCount);
 			if (startId == -1)
 				throw new Exception("Error while blocking IDs");
 			else {
@@ -84,11 +103,9 @@ public class TransformXML {
 		}
 	}
 
-	private static long blockNewIDs(int blockSize, String connectionUrl) throws Exception {
+	private static long blockNewIDs(int blockSize) throws Exception {
 		long startId = -1;
 		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			con = DriverManager.getConnection(connectionUrl);
 			PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) "
 					+ "FROM pps_enum_data_hosts " + "WHERE host_id=1000");
 			ResultSet rs = stmt.executeQuery();
@@ -129,13 +146,6 @@ public class TransformXML {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw ex;
-		} finally {
-			try {
-				con.close();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				throw ex;
-			}
 		}
 		return startId;
 	}
@@ -174,5 +184,79 @@ public class TransformXML {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+
+	private static void handleFields() throws Exception {
+		PreparedStatement stmt = con
+				.prepareStatement("SELECT field_id, xml_name "
+						+ "FROM pps_field_names ");
+		ResultSet rs = stmt.executeQuery();
+		Map<String, List<Long>> fieldNamesMap = new HashMap<String, List<Long>>();
+		while (rs.next()) {
+			String xmlName = rs.getString("xml_name");
+			List<Long> idList = fieldNamesMap.get(xmlName);
+			if (idList == null) {
+				idList = new ArrayList<Long>();
+				fieldNamesMap.put(xmlName, idList);
+			}
+			idList.add(rs.getLong("field_id"));
+		}
+
+		List<Element> ppsFieldsRows = XPath.newInstance(
+				"//table[@name='pps_fields']/row").selectNodes(
+				doc.getRootElement());
+
+		Element tableElement = new Element("table");
+		tableElement.setAttribute(new Attribute("name", "pps_field_names"));
+
+		for (Element ppsFieldElement : ppsFieldsRows) {
+
+			Element ppsFieldNameElement = (Element) (XPath
+					.newInstance("./data[@name='NAME']")
+					.selectSingleNode(ppsFieldElement));
+
+			Element ppsFieldIdElement = (Element) (XPath
+					.newInstance("./data[@name='FIELD_ID']")
+					.selectSingleNode(ppsFieldElement));
+
+			Long fieldId = new Long(ppsFieldIdElement
+					.getAttributeValue("value"));
+			String xmlName = ppsFieldNameElement.getAttributeValue("value");
+			xmlName = xmlName.replace("{", "").replace("}", "");
+
+			List<Long> idList = fieldNamesMap.get(xmlName);
+
+			if (idList == null) {
+				if (XPath.newInstance(
+						"./row/data[(@name='XML_NAME') and (@value='" + xmlName + "')]")
+						.selectSingleNode(tableElement) != null)
+					continue;
+
+				Element rowElement = new Element("row");
+
+				Element dataElement = new Element("data");
+				dataElement.setAttribute(new Attribute("name", "FIELD_ID"));
+				dataElement.setAttribute(new Attribute("value", fieldId
+						.toString()));
+				rowElement.addContent(dataElement);
+
+				dataElement = new Element("data");
+				dataElement.setAttribute(new Attribute("name", "XML_NAME"));
+				dataElement.setAttribute(new Attribute("value", xmlName));
+				rowElement.addContent(dataElement);
+
+				tableElement.addContent(rowElement);
+			} else if ((idList != null) && (!(idList.contains(fieldId)))) {
+				Element rootElement = idMapDoc.getRootElement();
+				Element idElement = new Element("id");
+				idElement.setAttribute("old", fieldId.toString());
+				idElement.setAttribute("new", idList.get(0).toString());
+				rootElement.addContent(idElement);
+			}
+
+		}
+		Element accountElement = doc.getRootElement();
+		accountElement.addContent(tableElement);
+
 	}
 }

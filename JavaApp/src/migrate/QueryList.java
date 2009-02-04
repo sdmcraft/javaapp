@@ -349,10 +349,37 @@ public class QueryList {
 	{		
 		idGroups.add("//table[@name='pps_acls']/row/data[@name='ACL_ID']");
 		idGroups.add("//table[@name='pps_account_history']/row/data[@name='HISTORY_ID']");
-//		idGroups.add("//table[@name='pps_actions']/row/data[@name='ACTION_ID']");
 		idGroups.add("//table[@name='pps_assets']/row/data[@name='ASSET_ID']");
 		idGroups.add("//table[@name='pps_permission_activities']/row/data[@name='ACTIVITY_ID']");
 		idGroups.add("//table[@name='pps_user_sessions']/row/data[@name='SESSION_ID']");
-		idGroups.add("//table[@name='pps_transcripts']/row/data[@name='TRANSCRIPT_ID']");		
+		idGroups.add("//table[@name='pps_transcripts']/row/data[@name='TRANSCRIPT_ID']");
+		idGroups.add("//table[@name='pps_field_names']/row/data[@name='FIELD_ID']");
+		
+//		idGroups.add("//table[@name='pps_actions']/row/data[@name='ACTION_ID']");
+	}
+	
+	public static final List<String> allIdCollections = new ArrayList<String>();
+	static
+	{		
+		allIdCollections.add("//table[@name='pps_access_keys']/row/data[@name='ACL_ID']");
+		allIdCollections.add("//table[@name='pps_access_keys']/row/data[@name='PARENT_ACL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_account_features']/row/data[@name='ACCOUNT_ID']");
+		
+		allIdCollections.add("//table[@name='pps_account_history']/row/data[@name='HISTORY_ID']");
+		allIdCollections.add("//table[@name='pps_account_history']/row/data[@name='ACCOUNT_ID']");
+		allIdCollections.add("//table[@name='pps_account_history']/row/data[@name='PRINCIPAL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_account_permissions']/row/data[@name='ACCOUNT_ID']");
+		
+		allIdCollections.add("//table[@name='pps_accounts']/row/data[@name='ACCOUNT_ID']");
+		allIdCollections.add("//table[@name='pps_accounts']/row/data[@name='SALES_CONTACT_ID']");
+		
+		allIdCollections.add("//table[@name='pps_acl_entries']/row/data[@name='ACL_ENTRY_ID']");
+		allIdCollections.add("//table[@name='pps_acl_entries']/row/data[@name='ACL_ID']");
+		allIdCollections.add("//table[@name='pps_acl_entries']/row/data[@name='PRINCIPAL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_acl_fields']/row/data[@name='ACL_ID']");
+		
 	}
 }
