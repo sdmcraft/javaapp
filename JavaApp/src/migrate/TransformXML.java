@@ -16,6 +16,7 @@ import java.util.Map;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -32,6 +33,7 @@ public class TransformXML {
 			String targetXML, String connectionUrl) throws Exception {
 		init(sourceXML, idMapXML, connectionUrl);
 		handleFields();
+		removeIgnoredRows();
 		buildIDMap(idMapXML);
 		replaceIDs();
 		writeXML(targetXML, doc);
@@ -202,61 +204,58 @@ public class TransformXML {
 			idList.add(rs.getLong("field_id"));
 		}
 
-		List<Element> ppsFieldsRows = XPath.newInstance(
-				"//table[@name='pps_fields']/row").selectNodes(
+		List<Element> ppsFieldNamesRows = XPath.newInstance(
+				"//table[@name='pps_field_names']/row").selectNodes(
 				doc.getRootElement());
 
-		Element tableElement = new Element("table");
-		tableElement.setAttribute(new Attribute("name", "pps_field_names"));
+		for (Element ppsFieldNameRow : ppsFieldNamesRows) {
 
-		for (Element ppsFieldElement : ppsFieldsRows) {
-
-			Element ppsFieldNameElement = (Element) (XPath
-					.newInstance("./data[@name='NAME']")
-					.selectSingleNode(ppsFieldElement));
+			Element ppsXmlNameElement = (Element) (XPath
+					.newInstance("./data[@name='XML_NAME']")
+					.selectSingleNode(ppsFieldNameRow));
 
 			Element ppsFieldIdElement = (Element) (XPath
 					.newInstance("./data[@name='FIELD_ID']")
-					.selectSingleNode(ppsFieldElement));
+					.selectSingleNode(ppsFieldNameRow));
 
 			Long fieldId = new Long(ppsFieldIdElement
 					.getAttributeValue("value"));
-			String xmlName = ppsFieldNameElement.getAttributeValue("value");
-			xmlName = xmlName.replace("{", "").replace("}", "");
+
+			String xmlName = ppsXmlNameElement.getAttributeValue("value");
 
 			List<Long> idList = fieldNamesMap.get(xmlName);
 
-			if (idList == null) {
-				if (XPath.newInstance(
-						"./row/data[(@name='XML_NAME') and (@value='" + xmlName + "')]")
-						.selectSingleNode(tableElement) != null)
-					continue;
-
-				Element rowElement = new Element("row");
-
-				Element dataElement = new Element("data");
-				dataElement.setAttribute(new Attribute("name", "FIELD_ID"));
-				dataElement.setAttribute(new Attribute("value", fieldId
-						.toString()));
-				rowElement.addContent(dataElement);
-
-				dataElement = new Element("data");
-				dataElement.setAttribute(new Attribute("name", "XML_NAME"));
-				dataElement.setAttribute(new Attribute("value", xmlName));
-				rowElement.addContent(dataElement);
-
-				tableElement.addContent(rowElement);
-			} else if ((idList != null) && (!(idList.contains(fieldId)))) {
-				Element rootElement = idMapDoc.getRootElement();
-				Element idElement = new Element("id");
-				idElement.setAttribute("old", fieldId.toString());
-				idElement.setAttribute("new", idList.get(0).toString());
-				rootElement.addContent(idElement);
+			if (idList != null) {
+				if (!(idList.contains(fieldId))) {
+					Element rootElement = idMapDoc.getRootElement();
+					if (XPath.newInstance("//id[@old=" + fieldId + "]")
+							.selectSingleNode(rootElement) == null) {
+						Element idEntryElement = new Element("id");
+						idEntryElement.setAttribute(new Attribute("old",
+								fieldId.toString()));
+						idEntryElement.setAttribute("new", idList.get(0)
+								.toString());
+						rootElement.addContent(idEntryElement);
+					} else {
+						System.out.println("WARNING--Attempt to remap "
+								+ fieldId);
+						continue;
+					}
+				}
+				ppsFieldNameRow.setAttribute(new Attribute("ignore", "true"));
 			}
-
 		}
-		Element accountElement = doc.getRootElement();
-		accountElement.addContent(tableElement);
+	}
 
+	private static void removeIgnoredRows() throws Exception {
+		List<Element> tableElementList = XPath.newInstance("//table")
+				.selectNodes(doc.getRootElement());
+		for (Element tableElement : tableElementList) {
+			List<Element> rowList = XPath.newInstance("./row[@ignore='true']")
+					.selectNodes(tableElement);
+			for (Element row : rowList) {
+				tableElement.removeContent(row);
+			}
+		}
 	}
 }

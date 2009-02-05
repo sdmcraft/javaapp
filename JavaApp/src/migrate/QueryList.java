@@ -70,7 +70,9 @@ public class QueryList {
 				"from pps_acls " +
 				"where acl_id in (select acl_id " +
 				                 "from pps_acl_rollup " +
-				                 "where parent_acl_id = ?)");
+				                 "where parent_acl_id = ?) " +
+				"order by acl_id");
+		
 		queryMap.put("pps_action_principal_status",
 				"select * " +
 				"from pps_action_principal_status " +
@@ -140,11 +142,6 @@ public class QueryList {
 				                                   "from pps_scos " +
 				                                   "where account_id = ?))");
 
-		/*Need to figure out the field_ids for the for system and group account
-		 * and the corresponding mapping in the new cluster. If they are different
-		 * across clusters, the pps_acl_field entries for this account would need
-		 *  to be changed to the new entries
-		 */
 		queryMap.put("pps_fields",
 				"select * " +
 				"from pps_fields " +
@@ -295,6 +292,33 @@ public class QueryList {
 				                  "from pps_principals " +
 				                  "where account_id = ?)");
 		
+
+		queryMap.put("pps_acl_quotas_history",
+				"select * " +
+				"from pps_acl_quotas_history " +
+				"where acl_id in (select acl_id " +
+				                 "from pps_acl_rollup " +
+				                 "where parent_acl_id = ?)");
+
+		queryMap.put("pps_field_names", 
+				"select pf.field_id as FIELD_ID,pfn.xml_name as XML_NAME " +
+                "from pps_fields pf, pps_field_names pfn " +
+                "where pf.field_id = pfn.field_id " +
+                "and pf.account_id = ? " +
+                "UNION " +
+                "select pamf.field_id as FIELD_ID,pfn.xml_name as XML_NAME " +
+                "from pps_acl_multi_fields pamf, pps_field_names pfn " +
+                "where pamf.field_id = pfn.field_id " +
+                "and pamf.acl_id in (select acl_id " +
+				            	    "from pps_acl_rollup par " +
+					                "where par.parent_acl_id = ?) " +
+                "UNION " +
+                "select paf.field_id as FIELD_ID,pfn.xml_name as XML_NAME " +
+                "from pps_acl_fields paf, pps_field_names pfn " +
+                "where paf.field_id = pfn.field_id " +
+                "and paf.acl_id in (select acl_id " +
+	    		                   "from pps_acl_rollup par " +
+				                   "where par.parent_acl_id = ?)");
 		
 	}
 	
@@ -302,6 +326,7 @@ public class QueryList {
 	static
 	{		
 		tableList.add("pps_acls");
+		tableList.add("pps_acl_rollup");	
 		tableList.add("pps_accounts");
 		tableList.add("pps_principals");
 		tableList.add("pps_access_keys");
@@ -313,8 +338,9 @@ public class QueryList {
 		tableList.add("pps_acl_multi_fields");
 		tableList.add("pps_acl_preferences");
 		tableList.add("pps_acl_quotas");
-		tableList.add("pps_acl_rollup");		
+		tableList.add("pps_acl_quotas_history");			
 		tableList.add("pps_actions");
+		tableList.add("pps_action_principal_status");
 		tableList.add("pps_assets");
 		tableList.add("pps_asset_annotations");
 		tableList.add("pps_asset_entries");
@@ -341,7 +367,8 @@ public class QueryList {
 		tableList.add("pps_transcripts");
 		tableList.add("pps_transcript_counts");
 		tableList.add("pps_transcript_details");		
-		tableList.add("pps_trees");				
+		tableList.add("pps_trees");	
+		tableList.add("pps_field_names");	
 	}
 	
 	public static final List<String> idGroups = new ArrayList<String>();
@@ -354,8 +381,9 @@ public class QueryList {
 		idGroups.add("//table[@name='pps_user_sessions']/row/data[@name='SESSION_ID']");
 		idGroups.add("//table[@name='pps_transcripts']/row/data[@name='TRANSCRIPT_ID']");
 		idGroups.add("//table[@name='pps_field_names']/row/data[@name='FIELD_ID']");
-		
-//		idGroups.add("//table[@name='pps_actions']/row/data[@name='ACTION_ID']");
+		idGroups.add("//table[@name='pps_acl_multi_fields']/row/data[@name='DF_ID']");
+		idGroups.add("//table[@name='pps_acl_quotas_history']/row/data[@name='HISTORY_ID']");
+				
 	}
 	
 	public static final List<String> allIdCollections = new ArrayList<String>();
@@ -381,5 +409,27 @@ public class QueryList {
 		
 		allIdCollections.add("//table[@name='pps_acl_fields']/row/data[@name='ACL_ID']");
 		
+		allIdCollections.add("//table[@name='pps_acl_multi_fields']/row/data[@name='ACL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_acl_preferences']/row/data[@name='ACL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_acl_quotas']/row/data[@name='ACL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_acl_quotas_history']/row/data[@name='ACL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_acl_rollup']/row/data[@name='ACL_ID']");
+		allIdCollections.add("//table[@name='pps_acl_rollup']/row/data[@name='PARENT_ACL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_acls']/row/data[@name='PARENT_ACL_ID']");
+		allIdCollections.add("//table[@name='pps_acls']/row/data[@name='OWNER_PRINCIPAL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_action_principal_status']/row/data[@name='ACTION_ID']");
+		allIdCollections.add("//table[@name='pps_action_principal_status']/row/data[@name='PRINCIPAL_ID']");
+		
+		allIdCollections.add("//table[@name='pps_actions']/row/data[@name='TARGET_ACL_ID']");
+		allIdCollections.add("//table[@name='pps_actions']/row/data[@name='ACTION_ID']");
+		
+		allIdCollections.add("//table[@name='pps_asset_annotations']/row/data[@name='ASSET_ID']");
+		allIdCollections.add("//table[@name='pps_asset_annotations']/row/data[@name='PRINCIPAL_ID']");
 	}
 }

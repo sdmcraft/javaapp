@@ -71,6 +71,11 @@ public class DBtoXML {
 		try {
 			stmt = con.prepareStatement(query);
 			stmt.setInt(1, account_id);
+			if("pps_field_names".equals(table))
+			{
+				stmt.setInt(2, account_id);
+				stmt.setInt(3, account_id);
+			}
 			rs = stmt.executeQuery();
 			ResultSetMetaData metaData = rs.getMetaData();
 			int columnCount = metaData.getColumnCount();
