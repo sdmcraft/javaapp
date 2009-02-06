@@ -178,19 +178,22 @@ public class ArrayQueue implements Queue {
         return (rear == -1 && front == -1);
     }
 
-    public void display() {
+    public String display() {
         int i = front;
-        System.out.println("Front:" + front);
-        System.out.println("Rear:" + rear);
+        StringBuffer sb = new StringBuffer();
+        sb.append("Front:" + front + "\n");
+        sb.append("Rear:" + rear + "\n");
         while (i != rear) {
-            System.out.print(elements[i] + " ");
+            sb.append(elements[i] + " ");
             i = (i + 1) % elements.length;
         }
         /*Single item in queue - special case*/
         if (i == rear && i != -1) {
-            System.out.print(elements[i] + " ");
+            sb.append(elements[i] + " ");
         }
-        System.out.println("");
+        sb.append("\n");
+        System.out.println(sb.toString());
+        return sb.toString();
     }
 
     public String getQueue() {

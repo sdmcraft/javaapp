@@ -254,17 +254,39 @@ public class ArrayQueueTest {
 //        fail("The test case is a prototype.");
 //    }
 //
-//    /**
-//     * Test of display method, of class ArrayQueue.
-//     */
-//    @Test
-//    public void testDisplay() {
-//        System.out.println("display");
-//        ArrayQueue instance = null;
-//        instance.display();
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    /**
+     * Test of display method, of class ArrayQueue.
+     */
+    @Test
+    public void testDisplay() {
+        System.out.println("display");
+        ArrayQueue instance = new ArrayQueue(0);
+        assertEquals("Front:-1\nRear:-1\n\n", instance.display());
+        
+        instance = new ArrayQueue(1);
+        assertEquals("Front:-1\nRear:-1\n\n", instance.display());
+        
+        instance = new ArrayQueue(100);
+        assertEquals("Front:-1\nRear:-1\n\n", instance.display());
+        
+        instance = new ArrayQueue(1);
+        instance.insert(new Integer(10));        
+        assertEquals("Front:0\nRear:0\n10 \n", instance.display());
+        
+        instance = new ArrayQueue(10);
+        instance.insert(new Integer(10));        
+        assertEquals("Front:0\nRear:0\n10 \n", instance.display());
+        
+        instance = new ArrayQueue(3);
+        instance.insert(new Integer(10));
+        instance.insert(new Integer(20));
+        instance.insert(new Integer(30));
+        instance.remove();
+        instance.insert(new Integer(40));
+        assertEquals("Front:1\nRear:0\n20 30 40 \n", instance.display());
+        
+        
+    }
 //
 //    /**
 //     * Test of getQueue method, of class ArrayQueue.

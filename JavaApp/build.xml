@@ -75,6 +75,7 @@
 	<target name="test" depends="cleanall,build">
 		<java classpathref="mylibs"
 			classname="org.junit.runner.JUnitCore" fork="true">
+			<arg value="algorithms.test.ArrayQueueTest" />
 			<arg value="algorithms.test.PostfixConvertorTest" />
 			<arg value="algorithms.test.ExpressionEvaluatorTest" />
 		</java>
