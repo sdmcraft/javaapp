@@ -69,6 +69,7 @@ public class DBtoXML {
 		ResultSet rs = null;
 
 		try {
+			System.out.println(query);
 			stmt = con.prepareStatement(query);
 			stmt.setInt(1, account_id);
 			if("pps_field_names".equals(table))
