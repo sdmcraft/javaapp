@@ -44,7 +44,7 @@ public class ArrayQueue implements Queue {
         } else {
             boolean nullFound = false;
             boolean allNulls = true;
-            /*Scan the array and find front and ear*/
+            /*Scan the array and find front and rear*/
             for (int i = 0; i < elements.length; i++) {
                 /*If this element is not null and the next one is null, this is the rear*/
                 if ((elements[i] != null) && (elements[(i + 1) % elements.length] == null)) {
