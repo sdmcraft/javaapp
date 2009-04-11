@@ -1,12 +1,13 @@
 package algorithms.test;
 
 import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
 import algorithms.ExpressionEvaluator;
 
-public class ExpressionEvaluatorTest {
+public class ExpressionEvaluatorTest extends TestCase{
 
 	@Test
 	public void testEvaluate() throws Exception {

@@ -4,6 +4,7 @@
  */
 package algorithms.test;
 
+import junit.framework.TestCase;
 import algorithms.StackImpl;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,7 +17,7 @@ import static org.junit.Assert.*;
  *
  * @author satyam
  */
-public class StackImplTest {
+public class StackImplTest extends TestCase{
 
     public StackImplTest() {
     }

@@ -7,6 +7,7 @@
 	<property name="build.dir" value="build" />
 	<property name="build.classes" value="${build.dir}/classes" />
 	<property name="temp.dir" value="temp" />
+	<property name="coverage.dir" value="coverage" />
 
 	<property name="javac.debug" value="on" />
 	<property name="build.compiler" value="modern" />
@@ -20,8 +21,18 @@
 		<fileset dir="${dist.dir}">
 			<patternset refid="java.libs" />
 		</fileset>
-
 	</path>
+
+	<path id="emma.lib">
+		<pathelement location="${lib.dir}/emma.jar" />
+		<pathelement location="${lib.dir}/emma_ant.jar" />
+	</path>
+
+	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+
+	<target name="emma" description="turns on EMMA's on-the-fly instrumentation mode">
+		<property name="emma.enabled" value="true" />
+	</target>
 
 	<target name="prepare">
 		<mkdir dir="${build.dir}" />
@@ -30,22 +41,20 @@
 	</target>
 
 	<target name="build" depends="prepare">
-		<javac classpathref="mylibs" destdir="${build.classes}"
-			debug="on" debuglevel="lines,vars,source" deprecation="on">
+		<javac classpathref="mylibs" destdir="${build.classes}" debug="on" debuglevel="lines,vars,source" deprecation="on">
 			<src path="${src.dir}" />
 		</javac>
 
-		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf"
-			basedir="${build.classes}" />
+		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf" basedir="${build.classes}" />
 
-		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf"
-			basedir="${conf.dir}" update="true" />
+		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf" basedir="${conf.dir}" update="true" />
 	</target>
 
 	<target name="clean">
 		<delete quiet="true">
 			<fileset dir="${build.classes}" includes="**/*" />
 			<fileset dir="${temp.dir}" includes="**/*" />
+			<fileset dir="${coverage.dir}" includes="**/*" />
 		</delete>
 	</target>
 
@@ -66,19 +75,21 @@
 			<arg value="C:/temp/config.xml" />
 			<sysproperty key="DEBUG" value="true" />
 			<sysproperty key="logFile" value="C:/my.log" />
-			<jvmarg
-				value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000" />
 		</java>
 	</target>
 
 
-	<target name="test" depends="cleanall,build">
-		<java classpathref="mylibs"
-			classname="org.junit.runner.JUnitCore" fork="true">
-			<arg value="algorithms.test.ArrayQueueTest" />
-			<arg value="algorithms.test.PostfixConvertorTest" />
-			<arg value="algorithms.test.ExpressionEvaluatorTest" />
-		</java>
+	<target name="test" depends="cleanall,build,emma">
+		<emmajava enabled="${emma.enabled}" 
+			libclasspathref="emma.lib"			
+			sourcepath="${src.dir}"
+			classpathref="mylibs" 
+			classname="org.junit.runner.JUnitCore" >				
+			<arg value="algorithms.test.AlgorithmsTestSuite" />	
+			<html outfile="${coverage.dir}/coverage.html"  />
+			<filter includes="algorithms.test.*, algorithms.*" />
+		</emmajava>
 	</target>
 
 </project>

@@ -22,6 +22,8 @@ public class ArrayDequeue implements Dequeue {
 		this.elements = elements;
 		rear = -1;
 		front = -1;
+		if (elements == null)
+			return;
 		/* A single element array which happens to be full */
 		if ((elements.length == 1) && (elements[0] != null)) {
 			front = rear = 0;
@@ -110,8 +112,13 @@ public class ArrayDequeue implements Dequeue {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 79 * hash
-				+ (this.elements != null ? this.elements.hashCode() : 0);
+		hash = 79 * hash;
+		if (this.elements != null) {
+			for (Object o : this.elements) {
+				if (o != null)
+					hash += o.hashCode();
+			}
+		}
 		hash = 79 * hash + this.rear;
 		hash = 79 * hash + this.front;
 		return hash;

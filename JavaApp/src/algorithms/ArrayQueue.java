@@ -192,7 +192,7 @@ public class ArrayQueue implements Queue {
             sb.append(elements[i] + " ");
         }
         sb.append("\n");
-        System.out.println(sb.toString());
+//        System.out.println(sb.toString());
         return sb.toString();
     }
 

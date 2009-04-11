@@ -120,7 +120,7 @@ public class SortedArrayTest extends TestCase {
      * Test of median method, of class SortedArray.
      */
     public void testMedian() {
-        System.out.println("median");
+//        System.out.println("median");
         SortedArray instance = new SortedArray(new int[]{1, 2, 3});
         long expResult = 2;
         long result = Math.round(instance.median());

@@ -4,6 +4,7 @@
  */
 package algorithms.test;
 
+import junit.framework.TestCase;
 import algorithms.PostfixConvertor;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -12,7 +13,7 @@ import static org.junit.Assert.*;
  *
  * @author satyam
  */
-public class PostfixConvertorTest {        
+public class PostfixConvertorTest extends TestCase{        
 
     public PostfixConvertorTest() {
     }

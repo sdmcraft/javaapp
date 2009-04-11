@@ -75,6 +75,6 @@ public class PostfixConvertor {
     }
     
     public static void main(String... args) throws Exception {
-        System.out.println(PostfixConvertor.convert("(a+b)/c*(d+e/(f+g))-h"));
+        //System.out.println(PostfixConvertor.convert("(a+b)/c*(d+e/(f+g))-h"));
     }
 }

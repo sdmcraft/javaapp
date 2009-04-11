@@ -4,6 +4,7 @@
  */
 package algorithms.test;
 
+import junit.framework.TestCase;
 import algorithms.ArrayQueue;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,7 +17,7 @@ import static org.junit.Assert.*;
  *
  * @author satyam
  */
-public class ArrayQueueTest {
+public class ArrayQueueTest extends TestCase{
 
     public ArrayQueueTest() {
     }
@@ -259,7 +260,7 @@ public class ArrayQueueTest {
      */
     @Test
     public void testDisplay() {
-        System.out.println("display");
+//        System.out.println("display");
         ArrayQueue instance = new ArrayQueue(0);
         assertEquals("Front:-1\nRear:-1\n\n", instance.display());
         
