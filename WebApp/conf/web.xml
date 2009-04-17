@@ -31,7 +31,12 @@
 		<servlet-name>PageA</servlet-name>
 		<jsp-file>/web/PageA.jsp</jsp-file>
 	</servlet>
-	
+
+	<servlet>
+		<servlet-name>SecureServlet</servlet-name>
+		<servlet-class>servlets.SecureServlet</servlet-class>
+	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>JMSservlet</servlet-name>
 		<url-pattern>/JMSservlet</url-pattern>
@@ -41,7 +46,7 @@
 		<servlet-name>DBServlet</servlet-name>
 		<url-pattern>/DBServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>ServletA</servlet-name>
 		<url-pattern>/ServletA</url-pattern>
@@ -56,10 +61,34 @@
 		<servlet-name>ServletC</servlet-name>
 		<url-pattern>/ServletC</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>PageA</servlet-name>
 		<url-pattern>/PageA</url-pattern>
 	</servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>SecureServlet</servlet-name>
+		<url-pattern>/SecureServlet</url-pattern>
+	</servlet-mapping>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+	<security-role>
+		<role-name>admin</role-name>
+	</security-role>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>SecureServlet</web-resource-name>
+			<url-pattern>/SecureServlet</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
 </web-app>

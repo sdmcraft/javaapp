@@ -40,7 +40,11 @@
 		</javac>
 
 		<copy todir="${build.dir}/WEB-INF">
-			<fileset dir="${conf.dir}" includes="**/*" />
+			<fileset dir="${conf.dir}" includes="**/*.xml" />
+		</copy>
+
+		<copy todir="${build.classes}">
+			<fileset dir="${conf.dir}" includes="**/*.properties" />
 		</copy>
 
 		<copy todir="${build.web.dir}">
