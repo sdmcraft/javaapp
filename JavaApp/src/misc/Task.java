@@ -10,13 +10,13 @@ package misc;
  */
 public class Task implements Runnable {
 
-    Integer race = 0;
+    static Integer race = 0;
     /* safeRace is a thread local member. It is a wrapper over race. If race is
      * set or get using this wrapper, the changes will be visible in the thread 
      * only. Basically safeRace makes sure each thread has its own working copy 
      * of race
      */
-    ThreadLocal<Integer> safeRace = new ThreadLocal<Integer>() {
+    static ThreadLocal<Integer> safeRace = new ThreadLocal<Integer>() {
         @Override
         protected Integer initialValue() {
             return race;
