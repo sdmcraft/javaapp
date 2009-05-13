@@ -14,9 +14,9 @@ package algorithms;
  */
 public class ArrayQueue implements Queue {
 
-    private Object[] elements;
-    private int rear;
-    private int front;
+    protected Object[] elements;
+    protected int rear;
+    protected int front;
 
     /**
      * Creates a new instance of ArrayQueue

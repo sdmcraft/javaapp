@@ -124,7 +124,10 @@ public class ArrayDequeue implements Dequeue {
 		return hash;
 	}
 
+	@Override
 	public void frontInsert(Object item) {
+		if(elements.length < 1)
+			throw new BusinessException("Queue full!!!");
 		if (rear == -1 && front == -1) {
 			rear = front = 0;
 			elements[front] = item;
@@ -139,7 +142,7 @@ public class ArrayDequeue implements Dequeue {
 		}
 	}
 
-
+	@Override
 	public Object frontRemove() {
 		Object returnItem = null;
 		if (rear == -1 && front == -1) {
@@ -158,7 +161,7 @@ public class ArrayDequeue implements Dequeue {
 		return returnItem;
 	}
 
-
+	@Override
 	public void rearInsert(Object item) {
 		int newRear = (rear + 1) % elements.length;
 		if (newRear == front) {
@@ -173,7 +176,7 @@ public class ArrayDequeue implements Dequeue {
 		}
 	}
 
-
+	@Override
 	public Object rearRemove() {
 		Object returnItem = null;
 		if (rear == -1 && front == -1) {
