@@ -10,7 +10,7 @@ public class AlgorithmsTestSuite {
 		suite.addTestSuite(ArrayDequeueTest.class);
 		suite.addTestSuite(ArrayQueueTest.class);
 		suite.addTestSuite(ExpressionEvaluatorTest.class);
-		//suite.addTestSuite(PostfixConvertorTest.class);
+		suite.addTestSuite(DequeueAsStackTest.class);
 		
 		return suite;
 	}
