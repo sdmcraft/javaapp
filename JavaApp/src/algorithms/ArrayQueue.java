@@ -191,8 +191,8 @@ public class ArrayQueue implements Queue {
 					front = (front + 1) % elements.length;
 					break;
 				}
-				elements[ptr] = elements[(ptr + 1) % elements.length];
-				ptr = (ptr + 1) % elements.length;
+				elements[ptr] = elements[(ptr - 1 + elements.length) % elements.length];
+				ptr = (ptr - 1 + elements.length) % elements.length;				
 			}
 		}
 		return returnItem;

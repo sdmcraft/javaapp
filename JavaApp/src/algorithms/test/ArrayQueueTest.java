@@ -138,6 +138,10 @@ public class ArrayQueueTest extends TestCase {
 		ArrayQueue instance = new ArrayQueue(new Integer[] { 1, 2, 3, 5, 6,
 				null });
 		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(2), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(3), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(5), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(6), (Integer) instance.priorityRemove());
 
 		instance = new ArrayQueue(new Integer[] { 6, 5, 4, 3, 2, 1 });
 		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
@@ -167,6 +171,10 @@ public class ArrayQueueTest extends TestCase {
 		}
 		instance = new ArrayQueue(new Integer[] { 1, 1, 1, 1, 1 });
 		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
 
 		try {
 			instance = new ArrayQueue(new Integer[] { null, null, null });
@@ -177,6 +185,10 @@ public class ArrayQueueTest extends TestCase {
 
 		instance = new ArrayQueue(new Integer[] { -1, 1, -1, 1, -1 });
 		assertEquals(new Integer(-1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(-1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(-1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
 
 		instance = new ArrayQueue(new Integer[] { 6, 5, 4, 3, 2, 1 });
 		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
@@ -185,6 +197,12 @@ public class ArrayQueueTest extends TestCase {
 		assertEquals(new Integer(4), (Integer) instance.priorityRemove());
 		assertEquals(new Integer(5), (Integer) instance.priorityRemove());
 		assertEquals(new Integer(6), (Integer) instance.priorityRemove());
+
+		instance = new ArrayQueue(new Integer[] { null, 5, 3, 1 });
+		System.out.println(instance.display());
+		assertEquals(new Integer(1), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(3), (Integer) instance.priorityRemove());
+		assertEquals(new Integer(5), (Integer) instance.priorityRemove());
 	}
 
 	@Test
