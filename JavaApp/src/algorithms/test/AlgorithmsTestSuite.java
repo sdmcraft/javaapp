@@ -11,7 +11,7 @@ public class AlgorithmsTestSuite {
 		suite.addTestSuite(ArrayQueueTest.class);
 		suite.addTestSuite(ExpressionEvaluatorTest.class);
 		suite.addTestSuite(DequeueAsStackTest.class);
-		
+		suite.addTestSuite(LinkedListTest.class);
 		return suite;
 	}
 }

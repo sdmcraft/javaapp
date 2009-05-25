@@ -23,6 +23,31 @@ public class LinkedList implements Serializable {
 		first = item;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((first == null) ? 0 : first.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof LinkedList))
+			return false;
+		LinkedList other = (LinkedList) obj;
+		if (first == null) {
+			if (other.first != null)
+				return false;
+		} else if (!first.equals(other.first))
+			return false;
+		return true;
+	}
+
 	public LinkedListNode deleteFirst() {
 		LinkedListNode temp = first;
 		first = first.next;
