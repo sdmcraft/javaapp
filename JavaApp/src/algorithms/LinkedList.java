@@ -19,6 +19,8 @@ public class LinkedList implements Serializable {
 	}
 
 	public void insertFirst(LinkedListNode item) {
+		if(item == first)
+			return;
 		item.next = first;
 		first = item;
 	}
