@@ -86,8 +86,92 @@ public class LinkedListTest extends TestCase {
 		LinkedListNode node = new LinkedListNode();
 		list.insertFirst(node);
 		assertEquals(false, list.isEmpty());
-		list.deleteFirst();
+		assertEquals(true,node.equals(list.deleteFirst()));
 		assertEquals(true, list.isEmpty());
-	}
+		
+		list = new LinkedList();
+		list.insertFirst(new LinkedListNode(1));		
+		list.insertFirst(new LinkedListNode(2));	
+		list.insertFirst(new LinkedListNode(3));
+		list.insertFirst(new LinkedListNode(4));
+		list.insertFirst(new LinkedListNode(5));
 
+		assertEquals(true,(new Integer(5).equals(list.deleteFirst().data)));
+		LinkedList list2 = new LinkedList();
+		list2.insertFirst(new LinkedListNode(1));		
+		list2.insertFirst(new LinkedListNode(2));	
+		list2.insertFirst(new LinkedListNode(3));
+		list2.insertFirst(new LinkedListNode(4));
+		assertEquals(true,list2.equals(list));
+		
+		assertEquals(true,(new Integer(4).equals(list.deleteFirst().data)));
+		list2 = new LinkedList();
+		list2.insertFirst(new LinkedListNode(1));		
+		list2.insertFirst(new LinkedListNode(2));	
+		list2.insertFirst(new LinkedListNode(3));
+		assertEquals(true,list2.equals(list));
+		
+		assertEquals(true,(new Integer(3).equals(list.deleteFirst().data)));
+		list2 = new LinkedList();
+		list2.insertFirst(new LinkedListNode(1));		
+		list2.insertFirst(new LinkedListNode(2));	
+		assertEquals(true,list2.equals(list));
+		
+		assertEquals(true,(new Integer(2).equals(list.deleteFirst().data)));
+		list2 = new LinkedList();		
+		list2.insertFirst(new LinkedListNode(1));	
+		assertEquals(true,list2.equals(list));
+
+		assertEquals(true,(new Integer(1).equals(list.deleteFirst().data)));
+		list2 = new LinkedList();
+		assertEquals(true,list2.equals(list));
+		
+		assertEquals(true,null == (list.deleteFirst()));
+		list2 = new LinkedList();
+		assertEquals(true,list2.equals(list));
+		
+	}
+	
+	@Test
+	public void testDelete() {
+		LinkedList list = new LinkedList();
+		list.insertFirst(new LinkedListNode(1));		
+		list.insertFirst(new LinkedListNode(2));	
+		list.insertFirst(new LinkedListNode(3));
+		list.insertFirst(new LinkedListNode(4));
+		list.insertFirst(new LinkedListNode(5));
+
+		assertEquals(true,(null == (list.delete(200))));
+		assertEquals(true,(new Integer(3).equals(list.delete(3).data)));
+		LinkedList list2 = new LinkedList();
+		list2.insertFirst(new LinkedListNode(1));		
+		list2.insertFirst(new LinkedListNode(2));	
+		list2.insertFirst(new LinkedListNode(4));
+		list2.insertFirst(new LinkedListNode(5));
+		assertEquals(true,list2.equals(list));
+		
+		assertEquals(true,(new Integer(4).equals(list.delete(4).data)));
+		list2 = new LinkedList();
+		list2.insertFirst(new LinkedListNode(1));		
+		list2.insertFirst(new LinkedListNode(2));	
+		list2.insertFirst(new LinkedListNode(5));
+		assertEquals(true,list2.equals(list));
+		
+		assertEquals(true,(new Integer(5).equals(list.delete(5).data)));
+		list2 = new LinkedList();
+		list2.insertFirst(new LinkedListNode(1));		
+		list2.insertFirst(new LinkedListNode(2));	
+		assertEquals(true,list2.equals(list));
+		
+		assertEquals(true,(new Integer(1).equals(list.delete(1).data)));
+		list2 = new LinkedList();		
+		list2.insertFirst(new LinkedListNode(2));	
+		assertEquals(true,list2.equals(list));
+
+		assertEquals(true,(new Integer(2).equals(list.delete(2).data)));
+		list2 = new LinkedList();
+		assertEquals(true,list2.equals(list));
+		
+		assertEquals(true,(null == (list.delete(200))));
+	}
 }

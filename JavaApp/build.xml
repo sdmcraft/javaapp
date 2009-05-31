@@ -79,7 +79,14 @@
 		</java>
 	</target>
 
+	<target name="debugTest" depends="cleanall,build">
+		<java classname="org.junit.runner.JUnitCore" classpathref="mylibs" fork="true">								
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000" />
+			<arg value="algorithms.test.AlgorithmsTestSuite" />				
+		</java>
+	</target>
 
+	
 	<target name="test" depends="cleanall,build,emma">
 		<emmajava enabled="${emma.enabled}" 
 			libclasspathref="emma.lib"			

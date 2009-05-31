@@ -19,7 +19,7 @@ public class LinkedList implements Serializable {
 	}
 
 	public void insertFirst(LinkedListNode item) {
-		if(item == first)
+		if (item == first)
 			return;
 		item.next = first;
 		first = item;
@@ -52,22 +52,30 @@ public class LinkedList implements Serializable {
 
 	public LinkedListNode deleteFirst() {
 		LinkedListNode temp = first;
-		first = first.next;
+		if (first != null)
+			first = first.next;
 		return temp;
 	}
 
 	public LinkedListNode delete(Object key) {
-		LinkedListNode current = first;
-		LinkedListNode previous = first;
-		while ((current != null) && (!current.data.equals(key))) {
-			previous = current;
-			current = current.next;
+		LinkedListNode deletedNode = null;
+		if(first == null)
+			deletedNode = first;
+		else if (first.data.equals(key)) {
+			deletedNode = first;
+			first = first.next;
+		} else {
+			LinkedListNode current = first;
+			LinkedListNode previous = first;
+			while ((current != null) && (!current.data.equals(key))) {
+				previous = current;
+				current = current.next;
+			}
+			if (current != null)
+				previous.next = current.next;
+			deletedNode = current;
 		}
-		if (current == null)
-			System.out.println("Delete failed!!!Key not found!!!");
-		LinkedListNode temp = current;
-		previous.next = current.next;
-		return temp;
+		return deletedNode;
 	}
 
 	public void displayList() {
