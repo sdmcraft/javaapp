@@ -59,7 +59,7 @@ public class LinkedList implements Serializable {
 
 	public LinkedListNode delete(Object key) {
 		LinkedListNode deletedNode = null;
-		if(first == null)
+		if (first == null)
 			deletedNode = first;
 		else if (first.data.equals(key)) {
 			deletedNode = first;
@@ -78,18 +78,19 @@ public class LinkedList implements Serializable {
 		return deletedNode;
 	}
 
-	public void displayList() {
+	public String displayList() {
 		LinkedListNode current = first;
+		String result = "";
 		if (current == null) {
-			System.out.println("Empty");
+			result = "Empty";
 		} else {
 			while (current != null) {
-				System.out.print(current.data + "-->");
+				result = current.data + "-->";
 				current = current.next;
 			}
-			System.out.println("");
+			System.out.println(result.substring(0, result.lastIndexOf("-->")));
 		}
-
+		return result;
 	}
 
 	public LinkedListNode find(Object key) {

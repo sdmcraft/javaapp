@@ -174,4 +174,10 @@ public class LinkedListTest extends TestCase {
 		
 		assertEquals(true,(null == (list.delete(200))));
 	}
+	
+	@Test
+	public void testDisplayList()
+	{
+		
+	}
 }
