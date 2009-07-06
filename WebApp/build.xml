@@ -1,13 +1,12 @@
 <project name="WebApp" default="all" basedir=".">
 
 	<property environment="env" />
-	<property name="deploy.dir" value="${env.JBOSS_HOME}/server/default/deploy" />
-	<property name="jboss.default" value="${env.JBOSS_HOME}/server/default" />
 
 	<property name="src.dir" value="src" />
 	<property name="dist.dir" value="dist" />
 	<property name="conf.dir" value="conf" />
 	<property name="web.dir" value="web" />
+	<property name="lib.dir" value="lib" />
 
 	<property name="build.dir" value="build" />
 	<property name="build.classes" value="${build.dir}/WEB-INF/classes" />
@@ -22,7 +21,7 @@
 	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
 
 	<path id="mylibs">
-		<fileset dir="${jboss.default}/lib">
+		<fileset dir="${lib.dir}">
 			<patternset refid="java.libs" />
 		</fileset>
 	</path>
@@ -40,7 +39,11 @@
 		</javac>
 
 		<copy todir="${build.dir}/WEB-INF">
-			<fileset dir="${conf.dir}" includes="**/*.xml" />
+			<fileset dir="${conf.dir}" includes="web.xml,jboss-web.xml" />
+		</copy>
+
+		<copy todir="${build.dir}/META-INF">
+			<fileset dir="${conf.dir}" includes="context.xml" />
 		</copy>
 
 		<copy todir="${build.classes}">
@@ -69,7 +72,7 @@
 	</target>
 
 	<target name="deploy" depends="cleanall,build">
-		<copy todir="${deploy.dir}">
+		<copy todir="${deploy}">
 			<fileset dir="${dist.dir}" includes="WebApp.war" />
 		</copy>
 	</target>
