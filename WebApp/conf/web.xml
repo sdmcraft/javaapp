@@ -51,6 +51,16 @@
 		<url-pattern>/CtxParamDemoServlet</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>FileUploadDemoServlet</servlet-name>
+		<servlet-class>servlets.FileUploadDemoServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FileUploadDemoServlet</servlet-name>
+		<url-pattern>/FileUploadDemoServlet</url-pattern>
+	</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>JMSservlet</servlet-name>
 		<url-pattern>/JMSservlet</url-pattern>

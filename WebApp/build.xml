@@ -50,6 +50,10 @@
 			<fileset dir="${conf.dir}" includes="**/*.properties" />
 		</copy>
 
+		<copy todir="${build.dir}/WEB-INF/lib">
+			<fileset dir="${lib.dir}" includes="*.jar" excludes="servlet-api.jar" />
+		</copy>
+
 		<copy todir="${build.web.dir}">
 			<fileset dir="${web.dir}" includes="**/*" />
 		</copy>
@@ -59,16 +63,16 @@
 
 	<target name="all" depends="deploy" />
 
-	<target name="clean">
-		<delete>
+	<target name="clean" >
+		<delete quiet="true">
 			<fileset dir="${build.classes}" includes="**/*" />
 			<fileset dir="${temp.dir}" includes="**/*" />
 		</delete>
 	</target>
 
 	<target name="cleanall" depends="clean">
-		<delete dir="${build.dir}" />
-		<delete dir="${temp.dir}" />
+		<delete dir="${build.dir}" quiet="true"/>
+		<delete dir="${temp.dir}" quiet="true"/>
 	</target>
 
 	<target name="deploy" depends="cleanall,build">
