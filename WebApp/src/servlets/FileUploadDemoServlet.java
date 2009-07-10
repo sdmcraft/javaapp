@@ -1,5 +1,9 @@
 package servlets;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.Writer;
 import java.util.List;
 
@@ -18,6 +22,8 @@ public class FileUploadDemoServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException {
 		Writer out = null;
+		BufferedOutputStream fileOut = null;
+		BufferedInputStream fileIn = null;
 		try {
 			out = resp.getWriter();
 			out.write("<HTML>");
@@ -29,8 +35,24 @@ public class FileUploadDemoServlet extends HttpServlet {
 				ServletFileUpload upload = new ServletFileUpload(factory);
 				List<FileItem> items = upload.parseRequest(req);
 				out.write("<BR>Uploaded items count:" + items.size());
-				for (FileItem item : items)
+				for (FileItem item : items) {
+					File uploadFile = new File(getServletContext().getRealPath(
+							"/web/content/" + item.getName()));
+					if (uploadFile.exists())
+						uploadFile.delete();
+					uploadFile.createNewFile();
+					out.write("<BR>Uploading to " + uploadFile);
+					fileOut = new BufferedOutputStream(new FileOutputStream(
+							uploadFile), 8192);
+
+					fileIn = new BufferedInputStream(item.getInputStream(),
+							8192);
+					byte[] buffer = new byte[8192];
+					while (fileIn.read(buffer) != -1) {
+						fileOut.write(buffer);
+					}
 					out.write("<BR>Uploaded:" + item.getName());
+				}
 			}
 			out.write("</BODY>");
 			out.write("</HTML>");
@@ -40,6 +62,18 @@ public class FileUploadDemoServlet extends HttpServlet {
 			if (out != null)
 				try {
 					out.close();
+				} catch (Exception ex) {
+					throw new ServletException(ex);
+				}
+			if (fileIn != null)
+				try {
+					fileIn.close();
+				} catch (Exception ex) {
+					throw new ServletException(ex);
+				}
+			if (fileOut != null)
+				try {
+					fileOut.close();
 				} catch (Exception ex) {
 					throw new ServletException(ex);
 				}
