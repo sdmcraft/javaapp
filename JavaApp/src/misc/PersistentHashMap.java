@@ -17,63 +17,105 @@ public class PersistentHashMap<K, V> implements Serializable {
 
 	public static final long serialVersionUID = 1L;
 	private long maxEntries = 1000000L;
-	private long currentEntries = 0L;
-	private Map<File, Long> backupFilesMap = new HashMap<File, Long>();
-	private Map<K, V> currentMap = new HashMap<K, V>();
 	private File backupDir = null;
+	private Map<File, Long> backupFilesMap = new HashMap<File, Long>();
+
+	private long currentEntries = 0L;
+	private Map<K, V> currentMap = new HashMap<K, V>();
+	private File currentMapFile = null;
+	private boolean currentMapChanged = false;
 
 	public PersistentHashMap(File backupDir, long maxEntries) {
 		this.backupDir = backupDir;
 		this.maxEntries = maxEntries;
 	}
 
+	private void createCurrentMap() {
+		currentEntries = 0L;
+		currentMap = new HashMap<K, V>();
+		currentMapFile = null;
+		currentMapChanged = false;
+	}
+
+	public V get(Object key) throws Exception {
+		V returnValue = null;
+		if (currentMap.get(key) != null)
+			returnValue = currentMap.get(key);
+		else {
+			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
+			for (Entry<File, Long> entry : entrySet) {
+				switchCurrentMap(entry.getKey());
+				if (currentMap.get(key) != null) {
+					returnValue = currentMap.get(key);
+					break;
+				}
+			}
+		}
+		return returnValue;
+	}
+
+	private void switchCurrentMap(File mapFile) throws Exception {
+		writeCurrentMap();
+		readCurrentMap(mapFile);
+	}
+
+	private void readCurrentMap(File mapFile) throws Exception {
+		currentMapFile = mapFile;
+		currentEntries = backupFilesMap.get(currentMapFile);
+		currentMap = readMap(mapFile);
+		currentMapChanged = false;
+
+	}
+
+	private Map<K, V> readMap(File mapFile) throws Exception {
+		ObjectInputStream in = null;
+		try {
+			in = new ObjectInputStream(new FileInputStream(mapFile));
+			return (Map<K, V>) in.readObject();
+		} finally {
+			if (in != null)
+				in.close();
+		}
+	}
+
+	private void writeMap(Map<K, V> map, File mapFile) throws Exception {
+		ObjectOutput out = null;
+		try {
+			out = new ObjectOutputStream(new FileOutputStream(mapFile));
+			out.writeObject(map);
+
+		} finally {
+			if (out != null)
+				out.close();
+		}
+	}
+
+	private void writeCurrentMap() throws Exception {
+		if (currentMapChanged) {
+			if (currentMapFile == null || !currentMapFile.exists()) {
+				currentMapFile = new File(backupDir, Calendar.getInstance()
+						.getTimeInMillis()
+						+ ".ser");
+			}
+			writeMap(currentMap, currentMapFile);
+			backupFilesMap.put(currentMapFile, currentEntries);
+		}
+	}
+
 	public V put(K key, V value) throws Exception {
 
 		V returnValue = null;
-		if (currentEntries < maxEntries) {
-			returnValue = currentMap.put(key, value);
+		if (this.get(key) != null) {
+			;/* To ensure that map containing this key becomes current map */
+		} else if (currentEntries < maxEntries) {
 			currentEntries++;
 		} else {
-			File currentBkpFile = null;
-			ObjectOutput out = null;
-			ObjectInputStream in = null;
-			try {
-				currentBkpFile = new File(backupDir, Calendar.getInstance()
-						.getTimeInMillis()
-						+ ".ser");
-				out = new ObjectOutputStream(new FileOutputStream(
-						currentBkpFile));
-				out.writeObject(currentMap);
-				backupFilesMap.put(currentBkpFile, currentEntries);
-
-				Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
-				boolean createNew = true;
-				for (Entry<File, Long> entry : entrySet) {
-					if (entry.getValue() < maxEntries) {
-						createNew = false;
-						in = new ObjectInputStream(new FileInputStream(entry
-								.getKey()));
-						currentMap = (Map<K, V>) in.readObject();
-						currentEntries = entry.getValue();
-						returnValue = currentMap.put(key, value);
-						currentEntries++;
-						break;
-					}
-				}
-				if (createNew) {
-					currentMap = new HashMap<K, V>();
-					currentEntries = 0;
-					returnValue = currentMap.put(key, value);
-					currentEntries++;
-				}
-
-			} finally {
-				if (out != null)
-					out.close();
-				if (in != null)
-					in.close();
-			}
+			writeCurrentMap();
+			createCurrentMap();
+			currentEntries++;
 		}
+		returnValue = currentMap.put(key, value);
+		currentMapChanged = true;
 		return returnValue;
 	}
 }
