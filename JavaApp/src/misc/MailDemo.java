@@ -25,11 +25,8 @@ public class MailDemo {
         message.setFrom(new InternetAddress("shahrukh.khan@gmail.com"));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress("supriya.chhabra@gmail.com"));
         message.setSubject("Hi");
-        message.setText("Hi Supriya!!\n It was nice hearing from you. Of course I" +
-                " realize that you have your doubts, if am the real one. To sort" +
-                " this out, I'll see if I can do something. I am eagerly " +
-                "looking forward to any feedback good or bad from my fans. \n" +
-                "Take care.");
+        message.setText("Hi Dear Fans!!Hope you all are doing well!! \n" +
+                "Best Wishes.");
         Transport.send(message);
 //        long end = System.currentTimeMillis();
 //        stats[0] = end - start;

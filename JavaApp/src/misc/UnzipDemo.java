@@ -27,32 +27,32 @@ public class UnzipDemo {
 		Enumeration entries;
 		ZipFile zipFile;
 
-		if (args.length != 1) {
-			System.err.println("Usage: Unzip zipfile");
-			return;
-		}
+//		if (args.length != 1) {
+//			System.err.println("Usage: Unzip zipfile");
+//			return;
+//		}
 
 		try {
-			zipFile = new ZipFile(args[0]);
+			zipFile = new ZipFile("C:\\shared\\output");
 
 			entries = zipFile.entries();
 
 			while (entries.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) entries.nextElement();
-
-				if (entry.isDirectory()) {
-					// Assume directories are stored parents first then
-					// children.
-					System.err.println("Extracting directory: "
-							+ entry.getName());
-					// This is not robust, just for demonstration purposes.
-					(new File(entry.getName())).mkdir();
-					continue;
-				}
-				System.err.println("Extracting file: " + entry.getName());
-				copyInputStream(zipFile.getInputStream(entry),
-						new BufferedOutputStream(new FileOutputStream(entry
-								.getName())));
+				System.out.println(entry.getName());
+				// if (entry.isDirectory()) {
+				// // Assume directories are stored parents first then
+				// // children.
+				// System.err.println("Extracting directory: "
+				// + entry.getName());
+				// // This is not robust, just for demonstration purposes.
+				// (new File(entry.getName())).mkdir();
+				// continue;
+				// }
+				// System.err.println("Extracting file: " + entry.getName());
+				// copyInputStream(zipFile.getInputStream(entry),
+				// new BufferedOutputStream(new FileOutputStream(entry
+				// .getName())));
 			}
 
 			zipFile.close();
