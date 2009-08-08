@@ -13,7 +13,7 @@ public class AlgorithmsTestSuite {
 		suite.addTestSuite(DequeueAsStackTest.class);
 		suite.addTestSuite(LinkedListTest.class);
 		suite.addTestSuite(LinkedListNodeTest.class);
-		suite.addTestSuite(misc.test.TestPersistentHashMap.class);
+		//suite.addTestSuite(misc.test.TestPersistentHashMap.class);
 		return suite;
 	}
 }

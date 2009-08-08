@@ -94,7 +94,7 @@
 			classpathref="mylibs" 
 			classname="org.junit.runner.JUnitCore" >		
 			<sysproperty key="logFile" value="C:/my.log" />		
-			<arg value="algorithms.test.AlgorithmsTestSuite" />	
+			<arg value="misc.test.TestPersistentHashMap" />	
 			<html outfile="${coverage.dir}/coverage.html"  />
 			<filter includes="algorithms.test.*, algorithms.*, misc.*, misc.test.*" />
 		</emmajava>

@@ -42,6 +42,17 @@ public class PersistentHashMap<K, V> implements Serializable {
 		logger.debug("(-)PersistentHashMap(-)");
 	}
 
+	public void clear() throws Exception {
+		logger.debug("(+)clear(+)");
+		Utils.deleteFolder(backupDir);
+		backupFilesMap = new HashMap<File, Long>();
+		currentEntries = 0L;
+		currentMap = new HashMap<K, V>();
+		currentMapFile = null;
+		currentMapChanged = false;
+		logger.debug("(-)clear(-)");
+	}
+
 	private void createCurrentMap() {
 		logger.debug("(+)createCurrentMap(+)");
 		currentEntries = 0L;
@@ -57,12 +68,10 @@ public class PersistentHashMap<K, V> implements Serializable {
 		writeCurrentMap();
 		V returnValue = null;
 		if (currentMap.get(key) != null) {
-			logger.debug(key + " found in current map");
 			returnValue = currentMap.get(key);
 		} else {
 			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 			for (Entry<File, Long> entry : entrySet) {
-				logger.debug("Switching map");
 				switchCurrentMap(entry.getKey());
 				if (currentMap.get(key) != null) {
 					returnValue = currentMap.get(key);
@@ -180,25 +189,33 @@ public class PersistentHashMap<K, V> implements Serializable {
 
 	public String toString() {
 		logger.debug("(+)toString(+)");
-		StringBuffer result = new StringBuffer("{");
+		String prefix = "{";
+		String suffix = "}";
+		StringBuffer result = new StringBuffer();
+		String string = "";
 		try {
-			writeCurrentMap();			
+			writeCurrentMap();
 			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 			for (Entry<File, Long> entry : entrySet) {
 				Map<K, V> map = readMap(entry.getKey());
 				String mapString = map.toString();
-				mapString = mapString.substring(mapString.indexOf("{")+1, mapString.indexOf("}"));
+				mapString = mapString.substring(mapString.indexOf("{") + 1,
+						mapString.indexOf("}"));
 				result.append(mapString);
 				result.append(", ");
 			}
-			result.deleteCharAt(result.lastIndexOf(" "));
-			result.deleteCharAt(result.lastIndexOf(","));
-			result.append("}");
+			if (result.lastIndexOf(" ") >= 0)
+				result.deleteCharAt(result.lastIndexOf(" "));
+			if (result.lastIndexOf(",") >= 0)
+				result.deleteCharAt(result.lastIndexOf(","));
+			if (result.length() > 0)
+				string = "[" + result + "]";
+			string = prefix + string + suffix;
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
 		logger.debug("(-)toString(-)");
-		return result.toString();
+		return string;
 	}
 
 	@Override
@@ -256,5 +273,16 @@ public class PersistentHashMap<K, V> implements Serializable {
 		if (maxEntries != other.maxEntries)
 			return false;
 		return true;
+	}
+
+	public HashMap<K, V> toHashMap() throws Exception {
+		logger.debug("(+)toMap(+)");
+		writeCurrentMap();
+		Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
+		HashMap<K, V> resultMap = new HashMap<K, V>();
+		for (Entry<File, Long> entry : entrySet)
+			resultMap.putAll(readMap(entry.getKey()));
+		logger.debug("(-)toMap(-)");
+		return resultMap;
 	}
 }
