@@ -11,7 +11,7 @@ import misc.PersistentHashMap;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TestPersistentHashMap  {
+public class TestPersistentHashMap {
 
 	static PersistentHashMap<Long, Long> persistentHashMap;
 	static HashMap<Long, Long> map;
@@ -50,16 +50,25 @@ public class TestPersistentHashMap  {
 	public void testGet() throws Exception {
 		Set<Entry<Long, Long>> entrySet = map.entrySet();
 		for (Entry<Long, Long> entry : entrySet) {
-			junit.framework.Assert.assertEquals(entry.getValue(), persistentHashMap
-					.get(entry.getKey()));
+			junit.framework.Assert.assertEquals(entry.getValue(),
+					persistentHashMap.get(entry.getKey()));
 		}
-	}	
-	
+	}
+
 	@Test
 	public void testClear() throws Exception {
 		persistentHashMap.clear();
 		map.clear();
-		Assert.assertEquals(map.toString(),persistentHashMap.toString());
-		Assert.assertEquals(map,persistentHashMap.toHashMap());
+		Assert.assertEquals(map.toString(), persistentHashMap.toString());
+		Assert.assertEquals(map, persistentHashMap.toHashMap());
+	}
+
+	@Test
+	public void testContainsKey() throws Exception {
+		Set<Entry<Long, Long>> entrySet = map.entrySet();
+		for (Entry<Long, Long> entry : entrySet) {
+			Assert.assertEquals(true, persistentHashMap.containsKey(entry
+					.getKey()));
+		}
 	}
 }

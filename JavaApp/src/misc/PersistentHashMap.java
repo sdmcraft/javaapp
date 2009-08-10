@@ -285,4 +285,20 @@ public class PersistentHashMap<K, V> implements Serializable {
 		logger.debug("(-)toMap(-)");
 		return resultMap;
 	}
+
+	public boolean containsKey(Object key) throws Exception {
+		boolean result = false;
+		logger.debug("(+)containsKey(+)");
+		result = currentMap.containsKey(key);
+		if (!result) {
+			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
+			for (Entry<File, Long> entry : entrySet) {
+				result = readMap(entry.getKey()).containsKey(key);
+				if (result)
+					break;
+			}
+		}
+		logger.debug("(-)containsKey(-)");
+		return result;
+	}
 }
