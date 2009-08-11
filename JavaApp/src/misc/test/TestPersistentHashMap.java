@@ -18,8 +18,8 @@ public class TestPersistentHashMap {
 
 	@BeforeClass
 	public static void oneTimeSetUp() {
-		long mapCapacity = Math.round((Math.random() * 1000));
-		long entries = Math.round((Math.random() * 1000));
+		long mapCapacity = Math.round((Math.random() * 100));
+		long entries = Math.round((Math.random() * 100));
 		System.out.println("Map Capacity:" + mapCapacity);
 		System.out.println("Entries:" + entries);
 		try {
@@ -53,14 +53,10 @@ public class TestPersistentHashMap {
 			junit.framework.Assert.assertEquals(entry.getValue(),
 					persistentHashMap.get(entry.getKey()));
 		}
-	}
-
-	@Test
-	public void testClear() throws Exception {
-		persistentHashMap.clear();
-		map.clear();
-		Assert.assertEquals(map.toString(), persistentHashMap.toString());
-		Assert.assertEquals(map, persistentHashMap.toHashMap());
+		for (int i = 0; i < 10000; i++) {
+			Long key = Math.round((Math.random() * 10000));
+			Assert.assertEquals(map.get(key), persistentHashMap.get(key));
+		}
 	}
 
 	@Test
@@ -70,5 +66,49 @@ public class TestPersistentHashMap {
 			Assert.assertEquals(true, persistentHashMap.containsKey(entry
 					.getKey()));
 		}
+		for (int i = 0; i < 10000; i++) {
+			Long key = Math.round((Math.random() * 10000));
+			Assert.assertEquals(map.containsValue(key), persistentHashMap
+					.containsValue(key));
+		}
 	}
+
+	@Test
+	public void testContainsValue() throws Exception {
+		Set<Entry<Long, Long>> entrySet = map.entrySet();
+		for (Entry<Long, Long> entry : entrySet) {
+			Assert.assertEquals(true, persistentHashMap.containsValue(entry
+					.getValue()));
+		}
+		for (int i = 0; i < 10000; i++) {
+			Long value = Math.round((Math.random() * 10000));
+			Assert.assertEquals(map.containsValue(value), persistentHashMap
+					.containsValue(value));
+		}
+	}
+
+	@Test
+	public void testEntrySet() throws Exception {
+		Assert.assertEquals(map.entrySet(), persistentHashMap.entrySet());
+	}
+
+	@Test
+	public void testClear() throws Exception {
+		persistentHashMap.clear();
+		map.clear();
+		Assert.assertEquals(map.toString(), persistentHashMap.toString());
+		Assert.assertEquals(map, persistentHashMap.toHashMap());
+		Assert.assertEquals(map.entrySet(), persistentHashMap.entrySet());
+		for (int i = 0; i < 10; i++) {
+			Long value = Math.round((Math.random() * 10000));
+			Long key = Math.round((Math.random() * 10000));
+			Assert.assertEquals(map.containsValue(value), persistentHashMap
+					.containsValue(value));
+			Assert.assertEquals(map.containsValue(key), persistentHashMap
+					.containsValue(key));
+			Assert.assertEquals(map.get(key), persistentHashMap.get(key));
+		}
+
+	}
+
 }

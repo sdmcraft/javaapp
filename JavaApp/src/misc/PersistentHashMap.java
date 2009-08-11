@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -170,13 +171,10 @@ public class PersistentHashMap<K, V> implements Serializable {
 		if (this.get(key) != null) {
 			;/* To ensure that map containing this key becomes current map */
 		} else if (currentEntries < maxEntries) {
-			logger.debug("currentEntries" + currentEntries);
 			currentEntries++;
 		} else {
-			logger.debug("currentEntries" + currentEntries);
 			if (!switchToVacantMap()) {
 				writeCurrentMap();
-				logger.debug("Creating a new current map");
 				createCurrentMap();
 			}
 			currentEntries++;
@@ -194,15 +192,22 @@ public class PersistentHashMap<K, V> implements Serializable {
 		StringBuffer result = new StringBuffer();
 		String string = "";
 		try {
-			writeCurrentMap();
+			String mapString = currentMap.toString();
+			mapString = mapString.substring(mapString.indexOf("{") + 1,
+					mapString.indexOf("}"));
+			result.append(mapString);
+			result.append(", ");
 			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 			for (Entry<File, Long> entry : entrySet) {
-				Map<K, V> map = readMap(entry.getKey());
-				String mapString = map.toString();
-				mapString = mapString.substring(mapString.indexOf("{") + 1,
-						mapString.indexOf("}"));
-				result.append(mapString);
-				result.append(", ");
+				if (!entry.getKey().getAbsolutePath().equals(
+						currentMapFile.getAbsolutePath())) {
+					Map<K, V> map = readMap(entry.getKey());
+					mapString = map.toString();
+					mapString = mapString.substring(mapString.indexOf("{") + 1,
+							mapString.indexOf("}"));
+					result.append(mapString);
+					result.append(", ");
+				}
 			}
 			if (result.lastIndexOf(" ") >= 0)
 				result.deleteCharAt(result.lastIndexOf(" "));
@@ -277,18 +282,20 @@ public class PersistentHashMap<K, V> implements Serializable {
 
 	public HashMap<K, V> toHashMap() throws Exception {
 		logger.debug("(+)toMap(+)");
-		writeCurrentMap();
 		Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 		HashMap<K, V> resultMap = new HashMap<K, V>();
+		resultMap.putAll(currentMap);
 		for (Entry<File, Long> entry : entrySet)
-			resultMap.putAll(readMap(entry.getKey()));
+			if (!entry.getKey().getAbsolutePath().equals(
+					currentMapFile.getAbsolutePath()))
+				resultMap.putAll(readMap(entry.getKey()));
 		logger.debug("(-)toMap(-)");
 		return resultMap;
 	}
 
 	public boolean containsKey(Object key) throws Exception {
-		boolean result = false;
 		logger.debug("(+)containsKey(+)");
+		boolean result = false;
 		result = currentMap.containsKey(key);
 		if (!result) {
 			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
@@ -301,4 +308,35 @@ public class PersistentHashMap<K, V> implements Serializable {
 		logger.debug("(-)containsKey(-)");
 		return result;
 	}
+
+	public boolean containsValue(Object value) throws Exception {
+		logger.debug("(+)containsValue(+)");
+		boolean result = false;
+		result = currentMap.containsValue(value);
+		if (!result) {
+			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
+			for (Entry<File, Long> entry : entrySet) {
+				result = readMap(entry.getKey()).containsValue(value);
+				if (result)
+					break;
+			}
+		}
+		logger.debug("(-)containsValue(-)");
+		return result;
+	}
+
+	public Set<Map.Entry<K, V>> entrySet() throws Exception {
+		logger.debug("(+)entrySet(+)");
+		Set<Map.Entry<K, V>> resultSet = new HashSet<Map.Entry<K, V>>();
+		resultSet.addAll(currentMap.entrySet());
+		Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
+		for (Entry<File, Long> entry : entrySet) {
+			if (!entry.getKey().getAbsolutePath().equals(
+					currentMapFile.getAbsolutePath()))
+				resultSet.addAll(readMap(entry.getKey()).entrySet());
+		}
+		logger.debug("(-)entrySet(-)");
+		return resultSet;
+	}
+
 }
