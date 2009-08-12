@@ -339,4 +339,23 @@ public class PersistentHashMap<K, V> implements Serializable {
 		return resultSet;
 	}
 
+	public boolean isEmpty() throws Exception {
+		logger.debug("(+)isEmpty(+)");
+		boolean empty = true;
+		if (!currentMap.isEmpty())
+			empty = false;
+		else {
+			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
+			for (Entry<File, Long> entry : entrySet) {
+				if (!entry.getKey().getAbsolutePath().equals(
+						currentMapFile.getAbsolutePath())) {
+					empty = empty && readMap(entry.getKey()).isEmpty();
+				}
+				if (!empty)
+					break;
+			}
+		}
+		logger.debug("(-)isEmpty(-)");
+		return empty;
+	}
 }
