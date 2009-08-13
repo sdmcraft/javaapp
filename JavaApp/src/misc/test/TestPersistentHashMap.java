@@ -45,11 +45,21 @@ public class TestPersistentHashMap {
 	}
 
 	@Test
+	public void testPersistentHashMap() throws Exception {
+		PersistentHashMap<Long, Long> pmap = new PersistentHashMap<Long, Long>(
+				sameMap, new File("C:\\mapBackup2"), Math.round((Math.random() * 100)));
+		Assert.assertEquals(sameMap, pmap.toHashMap());
+		
+		pmap = new PersistentHashMap<Long, Long>(
+				otherMap, new File("C:\\mapBackup2"), Math.round((Math.random() * 100)));
+		Assert.assertEquals(otherMap, pmap.toHashMap());
+	}
+
+	@Test
 	public void testToHashMap() throws Exception {
-		junit.framework.Assert.assertEquals(sameMap, persistentHashMap
-				.toHashMap());
-		junit.framework.Assert.assertEquals(false, persistentHashMap
-				.toHashMap().equals(otherMap));
+		Assert.assertEquals(sameMap, persistentHashMap.toHashMap());
+		Assert.assertEquals(false, persistentHashMap.toHashMap().equals(
+				otherMap));
 	}
 
 	@Test
@@ -66,7 +76,7 @@ public class TestPersistentHashMap {
 
 		entrySet = otherMap.entrySet();
 		for (Entry<Long, Long> entry : entrySet) {
-			if (sameMap.containsKey(entry.getKey()))
+			if (!sameMap.containsKey(entry.getKey()))
 				Assert.assertEquals(false, entry.getValue().equals(
 						persistentHashMap.get(entry.getKey())));
 
@@ -88,7 +98,7 @@ public class TestPersistentHashMap {
 
 		entrySet = otherMap.entrySet();
 		for (Entry<Long, Long> entry : entrySet) {
-			if (sameMap.containsKey(entry.getKey()))
+			if (!sameMap.containsKey(entry.getKey()))
 				Assert.assertEquals(false, persistentHashMap.containsKey(entry
 						.getKey()));
 		}
@@ -106,12 +116,12 @@ public class TestPersistentHashMap {
 			Assert.assertEquals(sameMap.containsValue(value), persistentHashMap
 					.containsValue(value));
 		}
-		
+
 		entrySet = otherMap.entrySet();
 		for (Entry<Long, Long> entry : entrySet) {
-			if (sameMap.containsKey(entry.getKey()))
-				Assert.assertEquals(false, persistentHashMap.containsValue(entry
-						.getValue()));
+			if (!sameMap.containsValue(entry.getValue()))
+				Assert.assertEquals(false, persistentHashMap
+						.containsValue(entry.getValue()));
 		}
 
 	}

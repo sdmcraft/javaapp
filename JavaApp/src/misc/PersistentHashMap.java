@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import junit.framework.Assert;
+
 import org.apache.log4j.Logger;
 
 public class PersistentHashMap<K, V> implements Serializable {
@@ -40,6 +42,23 @@ public class PersistentHashMap<K, V> implements Serializable {
 		if (backupDir.exists())
 			Utils.deleteFolder(backupDir);
 		backupDir.mkdir();
+		logger.debug("(-)PersistentHashMap(-)");
+	}
+
+	public PersistentHashMap(HashMap<K, V> map, File backupDir, long maxEntries)
+			throws Exception {
+		logger.debug("(+)PersistentHashMap(+)");
+		logger.debug("Args:backupDir->" + backupDir);
+		logger.debug("Args:maxEntries->" + maxEntries);
+		logger.debug("Args:map->" + map);
+		this.backupDir = backupDir;
+		this.maxEntries = maxEntries;
+		if (backupDir.exists())
+			Utils.deleteFolder(backupDir);
+		backupDir.mkdir();
+		Set<Entry<K, V>> entrySet = map.entrySet();
+		for (Entry<K, V> entry : entrySet)
+			this.put(entry.getKey(), entry.getValue());
 		logger.debug("(-)PersistentHashMap(-)");
 	}
 
@@ -357,5 +376,17 @@ public class PersistentHashMap<K, V> implements Serializable {
 		}
 		logger.debug("(-)isEmpty(-)");
 		return empty;
+	}
+
+	public void putAll(Map map) throws Exception {
+		logger.debug("(+)putAll(+)");
+		if (map == null)
+			throw new NullPointerException("Specified map is null!!");
+		else {
+			Set<Entry<K, V>> entrySet = map.entrySet();
+			for (Entry<K, V> entry : entrySet)
+				this.put(entry.getKey(), entry.getValue());
+		}
+		logger.debug("(-)putAll(-)");
 	}
 }
