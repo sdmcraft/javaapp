@@ -218,8 +218,10 @@ public class PersistentHashMap<K, V> implements Serializable {
 			result.append(", ");
 			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 			for (Entry<File, Long> entry : entrySet) {
-				if (!entry.getKey().getAbsolutePath().equals(
-						currentMapFile.getAbsolutePath())) {
+				if ((currentMapFile != null && currentMapFile.exists() && !entry
+						.getKey().getAbsolutePath().equals(
+								currentMapFile.getAbsolutePath()))
+						|| (currentMapFile == null)) {
 					Map<K, V> map = readMap(entry.getKey());
 					mapString = map.toString();
 					mapString = mapString.substring(mapString.indexOf("{") + 1,
@@ -304,10 +306,14 @@ public class PersistentHashMap<K, V> implements Serializable {
 		Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 		HashMap<K, V> resultMap = new HashMap<K, V>();
 		resultMap.putAll(currentMap);
-		for (Entry<File, Long> entry : entrySet)
-			if (!entry.getKey().getAbsolutePath().equals(
-					currentMapFile.getAbsolutePath()))
+		for (Entry<File, Long> entry : entrySet) {
+//			System.out.println(entry.getKey());
+			if ((currentMapFile != null && currentMapFile.exists() && !entry
+					.getKey().getAbsolutePath().equals(
+							currentMapFile.getAbsolutePath()))
+					|| (currentMapFile == null))
 				resultMap.putAll(readMap(entry.getKey()));
+		}
 		logger.debug("(-)toMap(-)");
 		return resultMap;
 	}
@@ -319,7 +325,11 @@ public class PersistentHashMap<K, V> implements Serializable {
 		if (!result) {
 			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 			for (Entry<File, Long> entry : entrySet) {
-				result = readMap(entry.getKey()).containsKey(key);
+				if ((currentMapFile != null && currentMapFile.exists() && !entry
+						.getKey().getAbsolutePath().equals(
+								currentMapFile.getAbsolutePath()))
+						|| (currentMapFile == null))
+					result = readMap(entry.getKey()).containsKey(key);
 				if (result)
 					break;
 			}
@@ -335,7 +345,11 @@ public class PersistentHashMap<K, V> implements Serializable {
 		if (!result) {
 			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 			for (Entry<File, Long> entry : entrySet) {
-				result = readMap(entry.getKey()).containsValue(value);
+				if ((currentMapFile != null && currentMapFile.exists() && !entry
+						.getKey().getAbsolutePath().equals(
+								currentMapFile.getAbsolutePath()))
+						|| (currentMapFile == null))
+					result = readMap(entry.getKey()).containsValue(value);
 				if (result)
 					break;
 			}
@@ -344,14 +358,16 @@ public class PersistentHashMap<K, V> implements Serializable {
 		return result;
 	}
 
-	public Set<Map.Entry<K, V>> entrySet() throws Exception {
+	private Set<Map.Entry<K, V>> entrySet() throws Exception {
 		logger.debug("(+)entrySet(+)");
 		Set<Map.Entry<K, V>> resultSet = new HashSet<Map.Entry<K, V>>();
 		resultSet.addAll(currentMap.entrySet());
 		Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 		for (Entry<File, Long> entry : entrySet) {
-			if (!entry.getKey().getAbsolutePath().equals(
-					currentMapFile.getAbsolutePath()))
+			if ((currentMapFile != null && currentMapFile.exists() && !entry
+					.getKey().getAbsolutePath().equals(
+							currentMapFile.getAbsolutePath()))
+					|| (currentMapFile == null))
 				resultSet.addAll(readMap(entry.getKey()).entrySet());
 		}
 		logger.debug("(-)entrySet(-)");
@@ -366,8 +382,10 @@ public class PersistentHashMap<K, V> implements Serializable {
 		else {
 			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 			for (Entry<File, Long> entry : entrySet) {
-				if (!entry.getKey().getAbsolutePath().equals(
-						currentMapFile.getAbsolutePath())) {
+				if ((currentMapFile != null && currentMapFile.exists() && !entry
+						.getKey().getAbsolutePath().equals(
+								currentMapFile.getAbsolutePath()))
+						|| (currentMapFile == null)) {
 					empty = empty && readMap(entry.getKey()).isEmpty();
 				}
 				if (!empty)
@@ -388,5 +406,20 @@ public class PersistentHashMap<K, V> implements Serializable {
 				this.put(entry.getKey(), entry.getValue());
 		}
 		logger.debug("(-)putAll(-)");
+	}
+
+	public int size() throws Exception {
+		logger.debug("(+)size(+)");
+		int size = currentMap.size();
+		Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
+		for (Entry<File, Long> entry : entrySet) {
+			if ((currentMapFile != null && currentMapFile.exists() && !entry
+					.getKey().getAbsolutePath().equals(
+							currentMapFile.getAbsolutePath()))
+					|| (currentMapFile == null))
+				size += readMap(entry.getKey()).size();
+		}
+		logger.debug("(-)size(-)");
+		return size;
 	}
 }
