@@ -18,6 +18,28 @@ import org.apache.log4j.Logger;
 
 import com.sdm.support.Tools;
 
+/**
+ * A file system backed HashMap. The PersistentHashMap, is an extension for
+ * HashMap, which can spill over to the file system. It is particularly suitable
+ * for large sized HashMaps which cannot be completely retained in memory. Since
+ * PersistentHashMap is file system backed, any excess entries, over the
+ * specified number of maximum entries allowed in map, are written to the
+ * backing files.
+ * <p>
+ * Internally, the PersistentHashMap maintains list of backing files, each one
+ * of those is a serialized HashMap written onto a backing file. So in a way, a
+ * PersistentHashMap is a container for multiple HashMaps.
+ * </p>
+ * 
+ * @author Satya Deep Maheshwari
+ * 
+ * @param <K>
+ *            the type of keys maintained by this map
+ * @param <V>
+ *            the type of mapped values
+ * @see <a
+ *      href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/HashMap.html">HashMap</a>
+ */
 public class PersistentHashMap<K, V> implements Serializable {
 
 	public static final long serialVersionUID = 1L;
@@ -68,6 +90,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 * as well.
 	 * 
 	 * @throws Exception
+	 *             if an internal error occurred
 	 */
 	public void clear() throws Exception {
 		logger.debug("(+)clear(+)");
