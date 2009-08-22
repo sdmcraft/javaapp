@@ -61,6 +61,16 @@
 		<url-pattern>/FileUploadDemoServlet</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>JSTLDemoPG</servlet-name>
+		<jsp-file>/web/JSTLdemoPG.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>JSTLDemoPG</servlet-name>
+		<url-pattern>/JSTLDemoPG</url-pattern>
+	</servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>JMSservlet</servlet-name>
 		<url-pattern>/JMSservlet</url-pattern>
@@ -115,4 +125,21 @@
 			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
+
+	<filter>
+		<filter-name>DemoFilter</filter-name>
+		<filter-class>filters.DemoFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>DemoFilter</filter-name>
+		<servlet-name>FilteredServlet</servlet-name>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>FilteredServlet</servlet-name>
+		<servlet-class>servlets.FilteredServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FilteredServlet</servlet-name>
+		<url-pattern>/FilteredServlet</url-pattern>
+	</servlet-mapping>
 </web-app>
