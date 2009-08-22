@@ -2,6 +2,7 @@ package misc.test;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -27,7 +28,7 @@ public class TestPersistentHashMap {
 			long mapCapacity = Math.round((Math.random() * 100));
 			System.out.println("Map Capacity:" + mapCapacity);
 			persistentHashMap = new PersistentHashMap<Long, Long>(sameMap,
-					new File("C:\\mapBackup"), mapCapacity);
+					new File("temp" + File.separator + "mapBackup"), mapCapacity);
 
 		} catch (Exception ex) {
 			throw new RuntimeException();
@@ -49,12 +50,12 @@ public class TestPersistentHashMap {
 	@Test
 	public void testPersistentHashMap() throws Exception {
 		PersistentHashMap<Long, Long> pmap = new PersistentHashMap<Long, Long>(
-				sameMap, new File("C:\\mapBackup2"), Math
+				sameMap, new File("temp" + File.separator + "mapBackup2"), Math
 						.round((Math.random() * 100)));
 		Assert.assertEquals(sameMap, pmap.toHashMap());
 
 		pmap = new PersistentHashMap<Long, Long>(otherMap, new File(
-				"C:\\mapBackup2"), Math.round((Math.random() * 100)));
+				"temp" + File.separator + "mapBackup2"), Math.round((Math.random() * 100)));
 		Assert.assertEquals(otherMap, pmap.toHashMap());
 	}
 
@@ -129,12 +130,12 @@ public class TestPersistentHashMap {
 
 	}
 
-//	@Test
-//	public void testEntrySet() throws Exception {
-//		Assert.assertEquals(sameMap.entrySet(), persistentHashMap.entrySet());
-//		Assert.assertEquals(false, otherMap.entrySet().equals(
-//				persistentHashMap.entrySet()));
-//	}
+	// @Test
+	// public void testEntrySet() throws Exception {
+	// Assert.assertEquals(sameMap.entrySet(), persistentHashMap.entrySet());
+	// Assert.assertEquals(false, otherMap.entrySet().equals(
+	// persistentHashMap.entrySet()));
+	// }
 
 	@Test
 	public void testIsEmpty() throws Exception {
@@ -153,11 +154,32 @@ public class TestPersistentHashMap {
 					.toHashMap()));
 		}
 	}
-	
+
 	@Test
 	public void testSize() throws Exception {
 		Assert.assertEquals(sameMap.size(), persistentHashMap.size());
 		Assert.assertEquals(false, otherMap.size() == persistentHashMap.size());
+	}
+
+	@Test
+	public void testRemove() throws Exception {
+
+		for (int i = 0; i < 10000; i++) {
+			Long key = Math.round((Math.random() * 10000));
+			Assert.assertEquals(sameMap.remove(key), persistentHashMap
+					.remove(key));
+			Assert.assertEquals(sameMap, persistentHashMap.toHashMap());
+		}
+
+		Set<Entry<Long, Long>> entrySet = sameMap.entrySet();
+		Set<Entry<Long, Long>> lclEntrySet = new HashSet<Entry<Long, Long>>(
+				entrySet);
+		for (Entry<Long, Long> entry : lclEntrySet) {
+			Assert.assertEquals(sameMap.remove(entry.getKey()),
+					persistentHashMap.remove(entry.getKey()));
+			Assert.assertEquals(sameMap, persistentHashMap.toHashMap());
+		}
+
 	}
 
 	@Test
@@ -175,7 +197,6 @@ public class TestPersistentHashMap {
 					.containsKey(key));
 			Assert.assertEquals(sameMap.get(key), persistentHashMap.get(key));
 		}
-
 	}
 
 }

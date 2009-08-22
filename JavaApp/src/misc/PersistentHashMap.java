@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import junit.framework.Assert;
-
 import org.apache.log4j.Logger;
 
 public class PersistentHashMap<K, V> implements Serializable {
@@ -62,6 +60,10 @@ public class PersistentHashMap<K, V> implements Serializable {
 		logger.debug("(-)PersistentHashMap(-)");
 	}
 
+	/**
+	 * Removes all of the mappings from this map. The map will be empty after this call returns. 
+	 * @throws Exception
+	 */
 	public void clear() throws Exception {
 		logger.debug("(+)clear(+)");
 		Utils.deleteFolder(backupDir);
@@ -307,7 +309,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 		HashMap<K, V> resultMap = new HashMap<K, V>();
 		resultMap.putAll(currentMap);
 		for (Entry<File, Long> entry : entrySet) {
-//			System.out.println(entry.getKey());
+			// System.out.println(entry.getKey());
 			if ((currentMapFile != null && currentMapFile.exists() && !entry
 					.getKey().getAbsolutePath().equals(
 							currentMapFile.getAbsolutePath()))
@@ -421,5 +423,33 @@ public class PersistentHashMap<K, V> implements Serializable {
 		}
 		logger.debug("(-)size(-)");
 		return size;
+	}
+
+	public V remove(Object key) throws Exception {
+		logger.debug("(+)remove(+)");
+		logger.debug("Arg:key->" + key);
+		V returnValue = null;
+		if (currentMap.containsKey(key)) {
+			returnValue = currentMap.remove(key);
+			currentEntries--;
+		} else {
+			Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
+			for (Entry<File, Long> entry : entrySet) {
+				if ((currentMapFile != null && currentMapFile.exists() && !entry
+						.getKey().getAbsolutePath().equals(
+								currentMapFile.getAbsolutePath()))
+						|| (currentMapFile == null)) {
+					Map<K, V> tempMap = readMap(entry.getKey());
+					if (tempMap.containsKey(key)) {
+						returnValue = tempMap.remove(key);
+						entry.setValue(entry.getValue() - 1);
+						writeMap(tempMap, entry.getKey());
+						break;
+					}
+				}
+			}
+		}
+		logger.debug("(-)remove(-)");
+		return returnValue;
 	}
 }
