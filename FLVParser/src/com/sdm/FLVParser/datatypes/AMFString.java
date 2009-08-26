@@ -1,6 +1,5 @@
 package com.sdm.FLVParser.datatypes;
 
-public class AMFString {
-	private UI16 length;
-	private UI8[] stringData;	
+public class AMFString extends AMFValue{
+	private UTF8 value;	
 }

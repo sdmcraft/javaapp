@@ -1,22 +1,22 @@
 package com.sdm.FLVParser.datatypes;
 
 public class VideoData implements TagData {
-	private UI8 videoInfo;
-	private UI8[] videoData;
+	private U8 videoInfo;
+	private U8[] videoData;
 
-	public UI8 getVideoInfo() {
+	public U8 getVideoInfo() {
 		return videoInfo;
 	}
 
-	public void setVideoInfo(UI8 videoInfo) {
+	public void setVideoInfo(U8 videoInfo) {
 		this.videoInfo = videoInfo;
 	}
 
-	public UI8[] getVideoData() {
+	public U8[] getVideoData() {
 		return videoData;
 	}
 
-	public void setVideoData(UI8[] videoData) {
+	public void setVideoData(U8[] videoData) {
 		this.videoData = videoData;
 	}
 

@@ -1,9 +1,9 @@
 package com.sdm.FLVParser.datatypes;
 
-public class UI8 {
+public class U8 {
 	private byte b;
 
-	public UI8(byte b) throws Exception {
+	public U8(byte b) throws Exception {
 			this.b = b;
 	}
 }

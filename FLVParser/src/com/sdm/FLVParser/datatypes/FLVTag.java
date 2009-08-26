@@ -1,41 +1,41 @@
 package com.sdm.FLVParser.datatypes;
 
 public class FLVTag implements FLVBodyComponent {
-	private UI8 tagType;
-	private UI24 dataSize;
-	private UI24 timeStamp;
-	private UI8 timeStampExtended;
-	private UI24 streamID;
+	private U8 tagType;
+	private U24 dataSize;
+	private U24 timeStamp;
+	private U8 timeStampExtended;
+	private U24 streamID;
 	private TagData data;
 	
-	public UI8 getTagType() {
+	public U8 getTagType() {
 		return tagType;
 	}
-	public void setTagType(UI8 tagType) {
+	public void setTagType(U8 tagType) {
 		this.tagType = tagType;
 	}
-	public UI24 getDataSize() {
+	public U24 getDataSize() {
 		return dataSize;
 	}
-	public void setDataSize(UI24 dataSize) {
+	public void setDataSize(U24 dataSize) {
 		this.dataSize = dataSize;
 	}
-	public UI24 getTimeStamp() {
+	public U24 getTimeStamp() {
 		return timeStamp;
 	}
-	public void setTimeStamp(UI24 timeStamp) {
+	public void setTimeStamp(U24 timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-	public UI8 getTimeStampExtended() {
+	public U8 getTimeStampExtended() {
 		return timeStampExtended;
 	}
-	public void setTimeStampExtended(UI8 timeStampExtended) {
+	public void setTimeStampExtended(U8 timeStampExtended) {
 		this.timeStampExtended = timeStampExtended;
 	}
-	public UI24 getStreamID() {
+	public U24 getStreamID() {
 		return streamID;
 	}
-	public void setStreamID(UI24 streamID) {
+	public void setStreamID(U24 streamID) {
 		this.streamID = streamID;
 	}
 	public TagData getData() {

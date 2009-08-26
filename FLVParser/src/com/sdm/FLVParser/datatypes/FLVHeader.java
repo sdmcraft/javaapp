@@ -1,42 +1,42 @@
 package com.sdm.FLVParser.datatypes;
 
 public class FLVHeader {
-	private UI8[] signature;
-	private UI8 version;
-	private UI8 flags;
-	private UI32 dataoffset;
+	private U8[] signature;
+	private U8 version;
+	private U8 flags;
+	private U32 dataoffset;
 
-	public UI8[] getSignature() {
+	public U8[] getSignature() {
 		return signature;
 	}
 
-	public void setSignature(UI8[] signature) throws Exception {
+	public void setSignature(U8[] signature) throws Exception {
 		if (signature.length != 3)
 			throw new Exception("Signature must be a 3 bytes long!!!");
 		this.signature = signature;
 	}
 
-	public UI8 getVersion() {
+	public U8 getVersion() {
 		return version;
 	}
 
-	public void setVersion(UI8 version) {
+	public void setVersion(U8 version) {
 		this.version = version;
 	}
 
-	public UI8 getFlags() {
+	public U8 getFlags() {
 		return flags;
 	}
 
-	public void setFlags(UI8 flags) {
+	public void setFlags(U8 flags) {
 		this.flags = flags;
 	}
 
-	public UI32 getDataoffset() {
+	public U32 getDataoffset() {
 		return dataoffset;
 	}
 
-	public void setDataoffset(UI32 dataoffset) {
+	public void setDataoffset(U32 dataoffset) {
 		this.dataoffset = dataoffset;
 	}
 
