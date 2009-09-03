@@ -9,16 +9,10 @@ public class UTF8 {
 	private U8[] utfData;
 
 	public UTF8(InputStream in) throws Exception {
-		byte[] lengthBytes = new byte[2];
-		if (2 != in.read(lengthBytes))
-			throw new Exception("Error reading from input stream");
-		this.length = new U16(lengthBytes);
-		
+		this.length = new U16(in);
 		int decLength = Tools.U16toInt(this.length);
-		byte[] utfDataBytes = new byte[decLength];
-
-		if (decLength != in.read(utfDataBytes))
-			throw new Exception("Error reading from input stream");
-		this.utfData = Tools.byteArrToU8Arr(utfDataBytes);
+		utfData = new U8[decLength];
+		for (int i = 0; i < decLength; i++)
+			utfData[i] = new U8(in);
 	}
 }

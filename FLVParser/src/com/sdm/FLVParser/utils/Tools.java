@@ -1,6 +1,7 @@
 package com.sdm.FLVParser.utils;
 
 import com.sdm.FLVParser.datatypes.U16;
+import com.sdm.FLVParser.datatypes.U32;
 import com.sdm.FLVParser.datatypes.U8;
 
 public class Tools {
@@ -14,6 +15,22 @@ public class Tools {
 			result = ((valueBytes[0] & 0xFF) << 8) | ((valueBytes[1] & 0xFF));
 		}
 		return result;
+	}
+
+	public static int U32toInt(U32 value) throws Exception {
+		int result = 0;
+		byte[] valueBytes = value.getValue();
+		if (valueBytes.length != 4)
+			throw new Exception("Invalid U32 value");
+		else {
+			result = (valueBytes[0] << 24) | (valueBytes[1] << 16)
+					| (valueBytes[2] << 8) | valueBytes[3];
+		}
+		return result;
+	}
+
+	public static byte U8toInt(U8 value) throws Exception {
+		return value.getValue();
 	}
 
 	public static U8[] byteArrToU8Arr(byte[] byteArr) throws Exception {
