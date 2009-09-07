@@ -8,7 +8,10 @@ public class AMFNumber extends AMFValue {
 	public AMFNumber(InputStream in) throws Exception {
 		super.marker = new Marker(in);
 		value = new AMFDouble(in);
+	}
 
+	public double getDoubleValue() {
+		return value.getValue();
 	}
 
 }

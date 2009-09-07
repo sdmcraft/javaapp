@@ -1,6 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 
 public class U24 {
 	private byte[] value;
@@ -20,6 +21,10 @@ public class U24 {
 
 	public byte[] getValue() {
 		return value;
+	}
+
+	public void write(OutputStream out) throws Exception {
+		out.write(value);
 	}
 
 }

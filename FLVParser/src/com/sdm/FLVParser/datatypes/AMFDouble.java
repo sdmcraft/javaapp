@@ -5,7 +5,7 @@ import java.io.DataInputStream;
 import java.io.InputStream;
 
 public class AMFDouble {
-	double value;
+	private double value;
 
 	public AMFDouble(InputStream in) throws Exception {
 		byte[] valueBytes = new byte[8];
@@ -19,6 +19,13 @@ public class AMFDouble {
 			if (dis != null)
 				dis.close();
 		}
+	}
 
+	public double getValue() {
+		return value;
+	}
+
+	public void setValue(double value) {
+		this.value = value;
 	}
 }

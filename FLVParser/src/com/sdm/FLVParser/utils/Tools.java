@@ -17,6 +17,13 @@ public class Tools {
 		return result;
 	}
 
+	public static U16 intToU16(int value) throws Exception {
+
+		byte byte1 = (byte) (value & 0xFF);
+		byte byte2 = (byte) ((value >>> 8) & 0xFF);
+		return new U16(new byte[] { byte1, byte2 });
+	}
+
 	public static int U32toInt(U32 value) throws Exception {
 		int result = 0;
 		byte[] valueBytes = value.getValue();
@@ -29,8 +36,8 @@ public class Tools {
 		return result;
 	}
 
-	public static byte U8toInt(U8 value) throws Exception {
-		return value.getValue();
+	public static int U8toInt(U8 value) throws Exception {
+		return value.getValue() & 0xFF;
 	}
 
 	public static U8[] byteArrToU8Arr(byte[] byteArr) throws Exception {
@@ -38,6 +45,40 @@ public class Tools {
 		for (int i = 0; i < byteArr.length; i++)
 			result[i] = new U8(byteArr[i]);
 		return result;
+	}
+
+	public static long byteArrToInt(byte[] byteArr) throws Exception {
+		long result = 0;
+		if (byteArr.length > 4)
+			throw new Exception("Byte array too large for int!!!");
+		else {
+			switch (byteArr.length) {
+			case 4:
+				result = result + (byteArr[0] << 24) + (byteArr[1] << 16)
+						+ (byteArr[2] << 8) + byteArr[3];
+				break;
+			case 3:
+				result = result + (byteArr[0] << 16) + (byteArr[1] << 8)
+						+ byteArr[2];
+				break;
+			case 2:
+				result = result + (byteArr[0] << 8) + byteArr[1];
+				break;
+			case 1:
+				result = result + byteArr[0];
+				break;
+			default:
+				throw new Exception("Invalid byte array for int!!!");
+			}
+		}
+		return result;
+	}
+
+	public static byte[] U8ArrToByteArr(U8[] U8Arr) throws Exception {
+		byte[] byteArr = new byte[U8Arr.length];
+		for (int i = 0; i < U8Arr.length; i++)
+			byteArr[i] = U8Arr[i].getValue();
+		return byteArr;
 	}
 
 	public static void main(String[] args) throws Exception {
