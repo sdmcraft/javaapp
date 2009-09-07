@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import com.sdm.support.Tools;
 
@@ -42,8 +42,8 @@ import com.sdm.support.Tools;
 public class PersistentHashMap<K, V> implements Serializable {
 
 	public static final long serialVersionUID = 1L;
-	private static final Logger logger = Logger
-			.getLogger(com.sdm.product.PersistentHashMap.class);
+//	private static final Logger logger = Logger
+//			.getLogger(com.sdm.product.PersistentHashMap.class);
 
 	private long maxEntries = 1000000L;
 	private File backupDir = null;
@@ -67,15 +67,15 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             If an internal error occurred
 	 */
 	public PersistentHashMap(File backupDir, long maxEntries) throws Exception {
-		logger.debug("(+)PersistentHashMap(+)");
-		logger.debug("Args:backupDir->" + backupDir);
-		logger.debug("Args:maxEntries->" + maxEntries);
+		//logger.debug("(+)PersistentHashMap(+)");
+		//logger.debug("Args:backupDir->" + backupDir);
+		//logger.debug("Args:maxEntries->" + maxEntries);
 		this.backupDir = backupDir;
 		this.maxEntries = maxEntries;
 		if (backupDir.exists())
 			Tools.deleteFolder(backupDir);
 		backupDir.mkdir();
-		logger.debug("(-)PersistentHashMap(-)");
+		//logger.debug("(-)PersistentHashMap(-)");
 	}
 
 	/**
@@ -95,10 +95,10 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 */
 	public PersistentHashMap(HashMap<K, V> map, File backupDir, long maxEntries)
 			throws Exception {
-		logger.debug("(+)PersistentHashMap(+)");
-		logger.debug("Args:backupDir->" + backupDir);
-		logger.debug("Args:maxEntries->" + maxEntries);
-		logger.debug("Args:map->" + map);
+		//logger.debug("(+)PersistentHashMap(+)");
+		//logger.debug("Args:backupDir->" + backupDir);
+		//logger.debug("Args:maxEntries->" + maxEntries);
+		//logger.debug("Args:map->" + map);
 		this.backupDir = backupDir;
 		this.maxEntries = maxEntries;
 		if (backupDir.exists())
@@ -107,7 +107,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 		Set<Entry<K, V>> entrySet = map.entrySet();
 		for (Entry<K, V> entry : entrySet)
 			this.put(entry.getKey(), entry.getValue());
-		logger.debug("(-)PersistentHashMap(-)");
+		//logger.debug("(-)PersistentHashMap(-)");
 	}
 
 	/**
@@ -119,23 +119,23 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public void clear() throws Exception {
-		logger.debug("(+)clear(+)");
+		//logger.debug("(+)clear(+)");
 		Tools.deleteFolder(backupDir);
 		backupFilesMap = new HashMap<File, Long>();
 		currentEntries = 0L;
 		currentMap = new HashMap<K, V>();
 		currentMapFile = null;
 		currentMapChanged = false;
-		logger.debug("(-)clear(-)");
+		//logger.debug("(-)clear(-)");
 	}
 
 	private void createCurrentMap() {
-		logger.debug("(+)createCurrentMap(+)");
+		//logger.debug("(+)createCurrentMap(+)");
 		currentEntries = 0L;
 		currentMap = new HashMap<K, V>();
 		currentMapFile = null;
 		currentMapChanged = false;
-		logger.debug("(-)createCurrentMap(-)");
+		//logger.debug("(-)createCurrentMap(-)");
 	}
 
 	/**
@@ -158,8 +158,8 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public V get(Object key) throws Exception {
-		logger.debug("(+)get(+)");
-		logger.debug("Args:key->" + key);
+		//logger.debug("(+)get(+)");
+		//logger.debug("Args:key->" + key);
 		writeCurrentMap();
 		V returnValue = null;
 		if (currentMap.get(key) != null) {
@@ -174,35 +174,35 @@ public class PersistentHashMap<K, V> implements Serializable {
 				}
 			}
 		}
-		logger.debug("(-)get(-)");
+		//logger.debug("(-)get(-)");
 		return returnValue;
 	}
 
 	private void switchCurrentMap(File mapFile) throws Exception {
-		logger.debug("(+)switchCurrentMap(+)");
-		logger.debug("Args:mapFile->" + mapFile);
+		//logger.debug("(+)switchCurrentMap(+)");
+		//logger.debug("Args:mapFile->" + mapFile);
 		writeCurrentMap();
 		readCurrentMap(mapFile);
-		logger.debug("(-)switchCurrentMap(-)");
+		//logger.debug("(-)switchCurrentMap(-)");
 	}
 
 	private void readCurrentMap(File mapFile) throws Exception {
-		logger.debug("(+)readCurrentMap(+)");
-		logger.debug("Args:mapFile->" + mapFile);
+		//logger.debug("(+)readCurrentMap(+)");
+		//logger.debug("Args:mapFile->" + mapFile);
 		currentMapFile = mapFile;
 		currentEntries = backupFilesMap.get(currentMapFile);
 		currentMap = readMap(mapFile);
 		currentMapChanged = false;
-		logger.debug("(-)readCurrentMap(-)");
+		//logger.debug("(-)readCurrentMap(-)");
 	}
 
 	private Map<K, V> readMap(File mapFile) throws Exception {
-		logger.debug("(+)readMap(+)");
-		logger.debug("Args:mapFile->" + mapFile);
+		//logger.debug("(+)readMap(+)");
+		//logger.debug("Args:mapFile->" + mapFile);
 		ObjectInputStream in = null;
 		try {
 			in = new ObjectInputStream(new FileInputStream(mapFile));
-			logger.debug("(-)readMap(-)");
+			//logger.debug("(-)readMap(-)");
 			return (Map<K, V>) in.readObject();
 		} finally {
 			if (in != null)
@@ -211,9 +211,9 @@ public class PersistentHashMap<K, V> implements Serializable {
 	}
 
 	private void writeMap(Map<K, V> map, File mapFile) throws Exception {
-		logger.debug("(+)writeMap(+)");
-		logger.debug("Args:map->" + map);
-		logger.debug("Args:mapFile->" + mapFile);
+		//logger.debug("(+)writeMap(+)");
+		//logger.debug("Args:map->" + map);
+		//logger.debug("Args:mapFile->" + mapFile);
 		ObjectOutput out = null;
 		try {
 			out = new ObjectOutputStream(new FileOutputStream(mapFile));
@@ -223,11 +223,11 @@ public class PersistentHashMap<K, V> implements Serializable {
 			if (out != null)
 				out.close();
 		}
-		logger.debug("(-)writeMap(-)");
+		//logger.debug("(-)writeMap(-)");
 	}
 
 	private void writeCurrentMap() throws Exception {
-		logger.debug("(+)writeCurrentMap(+)");
+		//logger.debug("(+)writeCurrentMap(+)");
 		if (currentMapChanged) {
 			if (currentMapFile == null || !currentMapFile.exists()) {
 				currentMapFile = new File(backupDir, Calendar.getInstance()
@@ -238,11 +238,11 @@ public class PersistentHashMap<K, V> implements Serializable {
 			backupFilesMap.put(currentMapFile, currentEntries);
 			currentMapChanged = false;
 		}
-		logger.debug("(-)writeCurrentMap(-)");
+		//logger.debug("(-)writeCurrentMap(-)");
 	}
 
 	private boolean switchToVacantMap() throws Exception {
-		logger.debug("(+)switchToVacantMap(+)");
+		//logger.debug("(+)switchToVacantMap(+)");
 		Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 		boolean result = false;
 		for (Entry<File, Long> entry : entrySet) {
@@ -252,7 +252,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 				break;
 			}
 		}
-		logger.debug("(-)switchToVacantMap(-)");
+		//logger.debug("(-)switchToVacantMap(-)");
 		return result;
 	}
 
@@ -272,9 +272,9 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public V put(K key, V value) throws Exception {
-		logger.debug("(+)put(+)");
-		logger.debug("Args:key->" + key);
-		logger.debug("Args:value->" + value);
+		//logger.debug("(+)put(+)");
+		//logger.debug("Args:key->" + key);
+		//logger.debug("Args:value->" + value);
 		V returnValue = null;
 		writeCurrentMap();
 		if (this.get(key) != null) {
@@ -290,7 +290,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 		}
 		returnValue = currentMap.put(key, value);
 		currentMapChanged = true;
-		logger.debug("(-)put(-)");
+		//logger.debug("(-)put(-)");
 		return returnValue;
 	}
 
@@ -306,7 +306,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		logger.debug("(+)toString(+)");
+		//logger.debug("(+)toString(+)");
 		String prefix = "{";
 		String suffix = "}";
 		StringBuffer result = new StringBuffer();
@@ -341,7 +341,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
-		logger.debug("(-)toString(-)");
+		//logger.debug("(-)toString(-)");
 		return string;
 	}
 
@@ -396,7 +396,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public HashMap<K, V> toHashMap() throws Exception {
-		logger.debug("(+)toMap(+)");
+		//logger.debug("(+)toMap(+)");
 		Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
 		HashMap<K, V> resultMap = new HashMap<K, V>();
 		resultMap.putAll(currentMap);
@@ -408,7 +408,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 					|| (currentMapFile == null))
 				resultMap.putAll(readMap(entry.getKey()));
 		}
-		logger.debug("(-)toMap(-)");
+		//logger.debug("(-)toMap(-)");
 		return resultMap;
 	}
 
@@ -422,7 +422,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public boolean containsKey(Object key) throws Exception {
-		logger.debug("(+)containsKey(+)");
+		//logger.debug("(+)containsKey(+)");
 		boolean result = false;
 		result = currentMap.containsKey(key);
 		if (!result) {
@@ -437,7 +437,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 					break;
 			}
 		}
-		logger.debug("(-)containsKey(-)");
+		//logger.debug("(-)containsKey(-)");
 		return result;
 	}
 
@@ -453,7 +453,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public boolean containsValue(Object value) throws Exception {
-		logger.debug("(+)containsValue(+)");
+		//logger.debug("(+)containsValue(+)");
 		boolean result = false;
 		result = currentMap.containsValue(value);
 		if (!result) {
@@ -468,12 +468,12 @@ public class PersistentHashMap<K, V> implements Serializable {
 					break;
 			}
 		}
-		logger.debug("(-)containsValue(-)");
+		//logger.debug("(-)containsValue(-)");
 		return result;
 	}
 
 	// private Set<Map.Entry<K, V>> entrySet() throws Exception {
-	// logger.debug("(+)entrySet(+)");
+	// //logger.debug("(+)entrySet(+)");
 	// Set<Map.Entry<K, V>> resultSet = new HashSet<Map.Entry<K, V>>();
 	// resultSet.addAll(currentMap.entrySet());
 	// Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
@@ -496,7 +496,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public boolean isEmpty() throws Exception {
-		logger.debug("(+)isEmpty(+)");
+		//logger.debug("(+)isEmpty(+)");
 		boolean empty = true;
 		if (!currentMap.isEmpty())
 			empty = false;
@@ -513,7 +513,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 					break;
 			}
 		}
-		logger.debug("(-)isEmpty(-)");
+		//logger.debug("(-)isEmpty(-)");
 		return empty;
 	}
 
@@ -528,7 +528,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public void putAll(Map map) throws Exception {
-		logger.debug("(+)putAll(+)");
+		//logger.debug("(+)putAll(+)");
 		if (map == null)
 			throw new NullPointerException("Specified map is null!!");
 		else {
@@ -536,7 +536,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 			for (Entry<K, V> entry : entrySet)
 				this.put(entry.getKey(), entry.getValue());
 		}
-		logger.debug("(-)putAll(-)");
+		//logger.debug("(-)putAll(-)");
 	}
 
 	/**
@@ -548,7 +548,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public int size() throws Exception {
-		logger.debug("(+)size(+)");
+		//logger.debug("(+)size(+)");
 		int returnSize;
 		long size = currentMap.size();
 		Set<Entry<File, Long>> entrySet = backupFilesMap.entrySet();
@@ -563,7 +563,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 			returnSize = Integer.MAX_VALUE;
 		else
 			returnSize = (int) size;
-		logger.debug("(-)size(-)");
+		//logger.debug("(-)size(-)");
 		return returnSize;
 	}
 
@@ -581,8 +581,8 @@ public class PersistentHashMap<K, V> implements Serializable {
 	 *             if an internal error occurred
 	 */
 	public V remove(Object key) throws Exception {
-		logger.debug("(+)remove(+)");
-		logger.debug("Arg:key->" + key);
+		//logger.debug("(+)remove(+)");
+		//logger.debug("Arg:key->" + key);
 		V returnValue = null;
 		if (currentMap.containsKey(key)) {
 			returnValue = currentMap.remove(key);
@@ -604,7 +604,7 @@ public class PersistentHashMap<K, V> implements Serializable {
 				}
 			}
 		}
-		logger.debug("(-)remove(-)");
+		// logger.debug("(-)remove(-)");
 		return returnValue;
 	}
 }
