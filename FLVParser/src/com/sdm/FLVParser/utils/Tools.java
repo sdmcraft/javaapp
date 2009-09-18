@@ -8,7 +8,7 @@ public class Tools {
 
 	public static int U16toInt(U16 value) throws Exception {
 		int result = 0;
-		byte[] valueBytes = value.getValue();
+		byte[] valueBytes = value.getValueBytes();
 		if (valueBytes.length != 2)
 			throw new Exception("Invalid U16 value");
 		else {
@@ -26,7 +26,7 @@ public class Tools {
 
 	public static int U32toInt(U32 value) throws Exception {
 		int result = 0;
-		byte[] valueBytes = value.getValue();
+		byte[] valueBytes = value.getValueBytes();
 		if (valueBytes.length != 4)
 			throw new Exception("Invalid U32 value");
 		else {
@@ -71,6 +71,15 @@ public class Tools {
 				throw new Exception("Invalid byte array for int!!!");
 			}
 		}
+		return result;
+	}
+
+	public static byte[] intToByteArr(int value) {
+		byte[] result = new byte[4];
+		result[0] = (byte) (value & 0x000000FF);
+		result[1] = (byte) ((value >>> 8) & 0x000000FF);
+		result[2] = (byte) ((value >>> 16) & 0x000000FF);
+		result[3] = (byte) ((value >>> 24) & 0x000000FF);
 		return result;
 	}
 
