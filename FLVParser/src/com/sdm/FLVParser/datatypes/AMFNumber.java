@@ -11,7 +11,12 @@ public class AMFNumber extends AMFValue {
 	}
 
 	public double getDoubleValue() {
-		return value.getValue();
+		return value.getDoubleValue();
+	}
+
+	public void setDoubleValue(double value) throws Exception {
+		this.value.setDoubleValue(value);
+
 	}
 
 }

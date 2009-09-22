@@ -48,9 +48,19 @@ public class AMFDouble {
 	public byte[] getValueBytes() {
 		return valueBytes;
 	}
-
-	/*Incomplete*/
-	public void setValueBytes(byte[] valueBytes) {
+	
+	public void setValueBytes(byte[] valueBytes) throws Exception {
+		if (valueBytes.length != 8)
+			throw new Exception("Invalid byte array!!");
 		this.valueBytes = valueBytes;
+		DataInputStream dis = null;
+		try {
+			dis = new DataInputStream(new ByteArrayInputStream(valueBytes));
+			doubleValue = dis.readDouble();
+		} finally {
+			if (dis != null)
+				dis.close();
+		}
+
 	}
 }

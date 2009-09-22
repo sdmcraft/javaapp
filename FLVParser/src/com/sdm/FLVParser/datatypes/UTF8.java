@@ -20,6 +20,14 @@ public class UTF8 {
 		stringValue = new String(Tools.U8ArrToByteArr(utfData));
 	}
 
+	public UTF8(String stringValue) throws Exception {
+		this.stringValue = stringValue;
+		byte[] byteArr = stringValue.getBytes(Charset.forName("UTF-8"));
+		utfData = Tools.byteArrToU8Arr(byteArr);
+		int decLength = utfData.length;
+		length = Tools.intToU16(decLength);
+	}
+
 	public String getStringValue() {
 		return stringValue;
 	}
@@ -31,9 +39,11 @@ public class UTF8 {
 		int decLength = utfData.length;
 		length = Tools.intToU16(decLength);
 	}
-	
+
 	public void write(OutputStream out) throws Exception {
-		out.write(value);
+		length.write(out);
+		byte[] byteArr = stringValue.getBytes(Charset.forName("UTF-8"));
+		out.write(byteArr);
 	}
 
 }

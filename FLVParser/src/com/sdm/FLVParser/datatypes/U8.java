@@ -6,7 +6,7 @@ import java.io.OutputStream;
 public class U8 {
 	private byte value;
 
-	public U8(byte value) throws Exception {
+	public U8(byte value){
 		this.value = value;
 	}
 
@@ -28,5 +28,19 @@ public class U8 {
 
 	public void write(OutputStream out) throws Exception {
 		out.write(value & 0xFF);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final U8 other = (U8) obj;
+		if (value != other.value)
+			return false;
+		return true;
 	}
 }

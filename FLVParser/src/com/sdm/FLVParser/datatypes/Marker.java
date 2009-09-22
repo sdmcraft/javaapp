@@ -13,4 +13,17 @@ public class Marker {
 	public void write(OutputStream out) throws Exception {
 		value.write(out);
 	}
+
+	public U8 getValue() {
+		return value;
+	}
+
+	public void setValue(U8 value) {
+		this.value = value;
+	}
+
+	public byte getByteValue() {
+		return value.getValue();
+	}
+
 }

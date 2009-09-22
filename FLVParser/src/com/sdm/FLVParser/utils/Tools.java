@@ -1,5 +1,11 @@
 package com.sdm.FLVParser.utils;
 
+import java.io.InputStream;
+import java.io.PushbackInputStream;
+
+import com.sdm.FLVParser.datatypes.AMFValue;
+import com.sdm.FLVParser.datatypes.Marker;
+import com.sdm.FLVParser.datatypes.Markers;
 import com.sdm.FLVParser.datatypes.U16;
 import com.sdm.FLVParser.datatypes.U32;
 import com.sdm.FLVParser.datatypes.U8;
@@ -88,6 +94,52 @@ public class Tools {
 		for (int i = 0; i < U8Arr.length; i++)
 			byteArr[i] = U8Arr[i].getValue();
 		return byteArr;
+	}
+
+	public static AMFValue sniffer(InputStream in) throws Exception {
+		PushbackInputStream pbin = new PushbackInputStream(in);
+		Marker marker = new Marker(pbin);
+		pbin.unread(marker.getByteValue());
+		AMFValue value = null;
+		if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+
+		}
+
+		return value;
 	}
 
 	public static void main(String[] args) throws Exception {
