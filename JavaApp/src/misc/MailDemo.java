@@ -5,7 +5,10 @@
 package misc;
 
 import java.util.Properties;
-import javax.mail.*;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -18,8 +21,6 @@ public class MailDemo {
     public static void main(String[] args) throws Exception {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.sflab.macromedia.com");
-//        long[] stats = new long[10];
-//        long start = System.currentTimeMillis();
         Session mailSession = Session.getDefaultInstance(props);
         MimeMessage message = new MimeMessage(mailSession);
         message.setFrom(new InternetAddress("shahrukh.khan@gmail.com"));
