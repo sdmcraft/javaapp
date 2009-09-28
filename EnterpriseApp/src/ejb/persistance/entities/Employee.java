@@ -2,7 +2,6 @@ package ejb.persistance.entities;
 
 import java.io.Serializable;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
