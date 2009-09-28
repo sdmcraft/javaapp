@@ -106,6 +106,17 @@
 		<url-pattern>/SecureServlet</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>CookieServlet</servlet-name>
+		<servlet-class>servlets.CookieServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CookieServlet</servlet-name>
+		<url-pattern>/CookieServlet</url-pattern>
+	</servlet-mapping>
+
+
 	<login-config>
 		<auth-method>BASIC</auth-method>
 	</login-config>
