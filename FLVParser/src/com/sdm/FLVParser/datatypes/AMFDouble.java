@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.PushbackInputStream;
 
 public class AMFDouble {
 	private double doubleValue;
@@ -48,7 +49,7 @@ public class AMFDouble {
 	public byte[] getValueBytes() {
 		return valueBytes;
 	}
-	
+
 	public void setValueBytes(byte[] valueBytes) throws Exception {
 		if (valueBytes.length != 8)
 			throw new Exception("Invalid byte array!!");
@@ -62,5 +63,10 @@ public class AMFDouble {
 				dis.close();
 		}
 
+	}
+
+	public void unread(PushbackInputStream in) throws Exception {
+		if (valueBytes != null)
+			in.unread(valueBytes);
 	}
 }

@@ -1,12 +1,19 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.InputStream;
+import java.io.PushbackInputStream;
+
+import com.sdm.FLVParser.exceptions.InvalidDataException;
 
 public class AMFNumber extends AMFValue {
 	private AMFDouble value;
 
-	public AMFNumber(InputStream in) throws Exception {
+	public AMFNumber(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
+		if (!Markers.NULL_MARKER.equals(marker)) {
+			unread(in);
+			throw new InvalidDataException(
+					"Invalid marker for AMF Number type!");
+		}
 		value = new AMFDouble(in);
 	}
 
@@ -17,6 +24,13 @@ public class AMFNumber extends AMFValue {
 	public void setDoubleValue(double value) throws Exception {
 		this.value.setDoubleValue(value);
 
+	}
+
+	public void unread(PushbackInputStream in) throws Exception {
+		if (value != null)
+			value.unread(in);
+		if (marker != null)
+			marker.unread(in);
 	}
 
 }

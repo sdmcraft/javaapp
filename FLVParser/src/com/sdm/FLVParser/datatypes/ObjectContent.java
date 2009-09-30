@@ -1,11 +1,12 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.InputStream;
+import java.io.PushbackInputStream;
 
-public class ObjectContent implements ObjectProperty {
+
+public class ObjectContent extends ObjectProperty {
 	private UTF8 name;
 	private AMFValue value;
-	public void ObjectContent(InputStream in) throws Exception
+	public ObjectContent(PushbackInputStream in) throws Exception
 	{
 		name = new UTF8(in);
 		

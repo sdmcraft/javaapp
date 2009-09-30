@@ -3,9 +3,18 @@ package com.sdm.FLVParser.utils;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
 
+import com.sdm.FLVParser.datatypes.AMFBoolean;
+import com.sdm.FLVParser.datatypes.AMFNull;
+import com.sdm.FLVParser.datatypes.AMFNumber;
+import com.sdm.FLVParser.datatypes.AMFObject;
+import com.sdm.FLVParser.datatypes.AMFRef;
+import com.sdm.FLVParser.datatypes.AMFString;
+import com.sdm.FLVParser.datatypes.AMFUndef;
 import com.sdm.FLVParser.datatypes.AMFValue;
+import com.sdm.FLVParser.datatypes.ECMAArray;
 import com.sdm.FLVParser.datatypes.Marker;
 import com.sdm.FLVParser.datatypes.Markers;
+import com.sdm.FLVParser.datatypes.ObjectProperty;
 import com.sdm.FLVParser.datatypes.U16;
 import com.sdm.FLVParser.datatypes.U32;
 import com.sdm.FLVParser.datatypes.U8;
@@ -96,46 +105,37 @@ public class Tools {
 		return byteArr;
 	}
 
-	public static AMFValue sniffer(InputStream in) throws Exception {
-		PushbackInputStream pbin = new PushbackInputStream(in);
-		Marker marker = new Marker(pbin);
-		pbin.unread(marker.getByteValue());
+	public static AMFValue sniffer(PushbackInputStream in) throws Exception {
+
+		Marker marker = new Marker(in);
+		in.unread(marker.getByteValue());
 		AMFValue value = null;
+		
 		if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+			value = new AMFNumber(in);
+		} else if (marker.getValue().equals(Markers.BOOLEAN_MARKER)) {
+			value = new AMFBoolean(in);
+		} else if (marker.getValue().equals(Markers.STRING_MARKER)) {
+			value = new AMFString(in);
+		} else if (marker.getValue().equals(Markers.OBJECT_MARKER)) {
+			value = new AMFObject(in);
+		} else if (marker.getValue().equals(Markers.NULL_MARKER)) {
+			value = new AMFNull(in);
+		} else if (marker.getValue().equals(Markers.UNDEFINED_MARKER)) {
+			value = new AMFUndef(in);
+		} else if (marker.getValue().equals(Markers.REFERENCE_MARKER)) {
+			value = new AMFRef(in);
+		} else if (marker.getValue().equals(Markers.ECMA_ARRAY_MARKER)) {
+			value = new ECMAArray(in);
+		} else if (marker.getValue().equals(Markers.STRICT_ARRAY_MARKER)) {
 
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+		} else if (marker.getValue().equals(Markers.DATE_MARKER)) {
 
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+		} else if (marker.getValue().equals(Markers.LONG_STRING_MARKER)) {
 
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+		} else if (marker.getValue().equals(Markers.XML_DOCUMENT_MARKER)) {
 
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-
-		} else if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
+		} else if (marker.getValue().equals(Markers.TYPED_OBJECT_MARKER)) {
 
 		}
 

@@ -2,11 +2,12 @@ package com.sdm.FLVParser.datatypes;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PushbackInputStream;
 
 public class U8 {
 	private byte value;
 
-	public U8(byte value){
+	public U8(byte value) {
 		this.value = value;
 	}
 
@@ -42,5 +43,9 @@ public class U8 {
 		if (value != other.value)
 			return false;
 		return true;
+	}
+
+	public void unread(PushbackInputStream in) throws Exception {
+		in.unread(value);
 	}
 }
