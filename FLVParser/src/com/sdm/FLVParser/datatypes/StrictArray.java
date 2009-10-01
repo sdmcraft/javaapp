@@ -12,8 +12,7 @@ public class StrictArray extends AMFValue {
 		arrayCount = new U32(in);
 		value = new AMFValue[arrayCount.getIntValue()];
 		for (int i = 0; i < arrayCount.getIntValue(); i++) {
-			value[i] = Tools.sniffer(in);
-			
+			value[i] = Tools.sniffer(in);			
 		}
 	}
 }

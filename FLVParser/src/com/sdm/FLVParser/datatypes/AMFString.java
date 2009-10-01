@@ -1,14 +1,22 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PushbackInputStream;
+
+import com.sdm.FLVParser.exceptions.InvalidDataException;
 
 public class AMFString extends AMFValue {
 	private UTF8 value;
 	String stringValue;
 
-	public AMFString(InputStream in) throws Exception {
+	public AMFString(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
+		if (!Markers.STRING_MARKER.equals(marker)) {
+			unread(in);
+			throw new InvalidDataException(
+					"Invalid marker for AMF String type!");
+		}
+
 		value = new UTF8(in);
 		stringValue = value.getStringValue();
 	}
@@ -24,6 +32,13 @@ public class AMFString extends AMFValue {
 
 	public void write(OutputStream out) throws Exception {
 		value.write(out);
+	}
+
+	public void unread(PushbackInputStream in) throws Exception {
+		if (value != null)
+			value.unread(in);
+		if (marker != null)
+			marker.unread(in);
 	}
 
 }

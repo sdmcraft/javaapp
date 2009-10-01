@@ -2,6 +2,7 @@ package com.sdm.FLVParser.datatypes;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PushbackInputStream;
 import java.nio.charset.Charset;
 
 import com.sdm.FLVParser.utils.Tools;
@@ -44,6 +45,15 @@ public class UTF8 {
 		length.write(out);
 		byte[] byteArr = stringValue.getBytes(Charset.forName("UTF-8"));
 		out.write(byteArr);
+	}
+
+	public void unread(PushbackInputStream in) throws Exception {
+		if (utfData != null) {
+			for (U8 u8 : utfData)
+				u8.unread(in);
+		}
+		if (length != null)
+			length.unread(in);
 	}
 
 }

@@ -4,15 +4,15 @@ import java.io.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
-public class XMLDoc extends AMFValue {
+public class AMFLongString extends AMFValue {
 	private UTF8Long value;
 
-	public XMLDoc(PushbackInputStream in) throws Exception {
+	public AMFLongString(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
-		if (!Markers.XML_DOCUMENT_MARKER.equals(marker)) {
+		if (!Markers.LONG_STRING_MARKER.equals(marker)) {
 			unread(in);
 			throw new InvalidDataException(
-					"Invalid marker for AMF XML Doc type!");
+					"Invalid marker for AMF Long String type!");
 		}
 
 		value = new UTF8Long(in);
@@ -25,5 +25,4 @@ public class XMLDoc extends AMFValue {
 			marker.unread(in);
 
 	}
-
 }

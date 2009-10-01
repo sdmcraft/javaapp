@@ -9,7 +9,7 @@ public class AMFNumber extends AMFValue {
 
 	public AMFNumber(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
-		if (!Markers.NULL_MARKER.equals(marker)) {
+		if (!Markers.NUMBER_MARKER.equals(marker)) {
 			unread(in);
 			throw new InvalidDataException(
 					"Invalid marker for AMF Number type!");

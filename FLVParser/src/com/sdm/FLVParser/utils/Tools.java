@@ -1,9 +1,10 @@
 package com.sdm.FLVParser.utils;
 
-import java.io.InputStream;
 import java.io.PushbackInputStream;
 
 import com.sdm.FLVParser.datatypes.AMFBoolean;
+import com.sdm.FLVParser.datatypes.AMFDate;
+import com.sdm.FLVParser.datatypes.AMFLongString;
 import com.sdm.FLVParser.datatypes.AMFNull;
 import com.sdm.FLVParser.datatypes.AMFNumber;
 import com.sdm.FLVParser.datatypes.AMFObject;
@@ -14,10 +15,15 @@ import com.sdm.FLVParser.datatypes.AMFValue;
 import com.sdm.FLVParser.datatypes.ECMAArray;
 import com.sdm.FLVParser.datatypes.Marker;
 import com.sdm.FLVParser.datatypes.Markers;
+import com.sdm.FLVParser.datatypes.ObjectContent;
+import com.sdm.FLVParser.datatypes.ObjectEnd;
 import com.sdm.FLVParser.datatypes.ObjectProperty;
+import com.sdm.FLVParser.datatypes.StrictArray;
 import com.sdm.FLVParser.datatypes.U16;
 import com.sdm.FLVParser.datatypes.U32;
 import com.sdm.FLVParser.datatypes.U8;
+import com.sdm.FLVParser.datatypes.XMLDoc;
+import com.sdm.FLVParser.exceptions.InvalidDataException;
 
 public class Tools {
 
@@ -110,7 +116,7 @@ public class Tools {
 		Marker marker = new Marker(in);
 		in.unread(marker.getByteValue());
 		AMFValue value = null;
-		
+
 		if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
 			value = new AMFNumber(in);
 		} else if (marker.getValue().equals(Markers.BOOLEAN_MARKER)) {
@@ -128,18 +134,29 @@ public class Tools {
 		} else if (marker.getValue().equals(Markers.ECMA_ARRAY_MARKER)) {
 			value = new ECMAArray(in);
 		} else if (marker.getValue().equals(Markers.STRICT_ARRAY_MARKER)) {
-
+			value = new StrictArray(in);
 		} else if (marker.getValue().equals(Markers.DATE_MARKER)) {
-
+			value = new AMFDate(in);
 		} else if (marker.getValue().equals(Markers.LONG_STRING_MARKER)) {
-
+			value = new AMFLongString(in);
 		} else if (marker.getValue().equals(Markers.XML_DOCUMENT_MARKER)) {
-
+			value = new XMLDoc(in);
 		} else if (marker.getValue().equals(Markers.TYPED_OBJECT_MARKER)) {
 
 		}
 
 		return value;
+	}
+
+	public static ObjectProperty readObjectProperty(PushbackInputStream in)
+			throws Exception {
+		ObjectProperty objectProperty = null;
+		try {
+			objectProperty = new ObjectEnd(in);
+		} catch (InvalidDataException ex) {
+			objectProperty = new ObjectContent(in);
+		}
+		return objectProperty;
 	}
 
 	public static void main(String[] args) throws Exception {
