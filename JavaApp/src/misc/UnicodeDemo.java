@@ -43,7 +43,7 @@ public class UnicodeDemo {
 			srcCon = DriverManager
 					.getConnection("jdbc:sqlserver://satyam-xp:1433;databaseName=prodDB;user=sa;password=breeze");
 			PreparedStatement stmt = srcCon
-					.prepareStatement("insert into session(user_id) values(2)");
+					.prepareStatement("insert into pps_user_sessions values(-1,NULL,'Sbreezm6mkfu7sha5se2zg@1242655261691','2007-08-23 23:44:30.870','166.166.126.52',NULL,'Teresa',NULL,NULL)");
 //			ResultSet rs = stmt.executeQuery();
 			stmt.executeUpdate();
 
