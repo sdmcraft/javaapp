@@ -143,6 +143,9 @@ public class Tools {
 			value = new XMLDoc(in);
 		} else if (marker.getValue().equals(Markers.TYPED_OBJECT_MARKER)) {
 
+		} else {
+			marker.unread(in);
+			throw new InvalidDataException("No AMF value to read!!!");
 		}
 
 		return value;

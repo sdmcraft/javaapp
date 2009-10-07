@@ -18,7 +18,10 @@ public class ObjectEnd extends ObjectProperty {
 	}
 
 	public void unread(PushbackInputStream in) throws Exception {
-		endMarker.unread(in);
-		empty.unread(in);
+		if (empty != null)
+			empty.unread(in);
+		if (endMarker != null)
+			endMarker.unread(in);
+
 	}
 }
