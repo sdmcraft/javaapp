@@ -40,6 +40,8 @@ public class FLVTag implements FLVBodyComponent {
 		try {
 			if (tagType.getValue() == 8)
 				data = new AudioData(tagDataIn);
+			else if (tagType.getValue() == 9)
+				data = new VideoData(tagDataIn);
 		} finally {
 			if (tagDataIn != null)
 				tagDataIn.close();
