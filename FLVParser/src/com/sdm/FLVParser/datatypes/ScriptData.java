@@ -1,13 +1,21 @@
 package com.sdm.FLVParser.datatypes;
 
 import java.io.PushbackInputStream;
-import java.util.ArrayList;
 import java.util.List;
 
-public class ScriptData implements TagData {
-	private ObjectProperty[] scriptDataObjects;
+import com.sdm.FLVParser.exceptions.InvalidDataException;
 
-	public ScriptData(PushbackInputStream in) {
-		List<ObjectProperty> objPropertyList = new ArrayList<ObjectProperty>();
+public class ScriptData implements TagData {
+	private List<ScriptDataObject> scriptDataObjectList;
+	private ScriptDataObjectEnd end;
+
+	public ScriptData(PushbackInputStream in) throws Exception {
+		while (true) {
+			try {
+				scriptDataObjectList.add(new ScriptDataObject(in));
+			} catch (InvalidDataException ex) {
+				end = new ScriptDataObjectEnd(in);
+			}
+		}
 	}
 }

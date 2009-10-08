@@ -16,4 +16,11 @@ public class ScriptDataObject {
 		}
 		objectData = new ObjectContent(in);
 	}
+
+	public void unread(PushbackInputStream in) throws Exception {
+		if (objectData != null)
+			objectData.unread(in);
+		if (objectNameType != null)
+			objectNameType.unread(in);
+	}
 }

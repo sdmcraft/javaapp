@@ -12,11 +12,9 @@ public class U8 {
 	}
 
 	public U8(InputStream in) throws Exception {
-		int intValue = in.read();
-		if (intValue == -1)
+		value = (byte) in.read();
+		if (value == -1)
 			throw new Exception("Error reading from input stream");
-		else
-			value = (byte) intValue;
 	}
 
 	public byte getValue() {

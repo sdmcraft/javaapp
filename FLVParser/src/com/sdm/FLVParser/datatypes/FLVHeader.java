@@ -1,5 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
+import java.io.InputStream;
 import java.io.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
@@ -12,7 +13,7 @@ public class FLVHeader {
 	boolean audioTagPresent;
 	boolean videoTagPresent;
 
-	public FLVHeader(PushbackInputStream in) throws Exception {
+	public FLVHeader(InputStream in) throws Exception {
 		signature = new U8[3];
 		U8 byte1 = new U8(in);
 		U8 byte2 = new U8(in);
@@ -20,18 +21,18 @@ public class FLVHeader {
 		if (!byte1.equals(new U8((byte) 0x46))
 				|| !byte2.equals(new U8((byte) 0x4C))
 				|| !byte3.equals(new U8((byte) 0x56))) {
-			unread(in);
+			// unread(in);
 			throw new InvalidDataException("Invalid FLV Signature!!!");
 		}
 		version = new U8(in);
 		flags = new U8(in);
 		if (!validateFlags()) {
-			unread(in);
+			// unread(in);
 			throw new InvalidDataException("Invalid FLV flags!!!");
 		}
 		dataoffset = new U32(in);
 		if (dataoffset.getIntValue() != 9) {
-			unread(in);
+			// unread(in);
 			throw new InvalidDataException("Invalid data offset!!!");
 		}
 
@@ -41,7 +42,7 @@ public class FLVHeader {
 		boolean result = true;
 		byte flagByte = flags.getValue();
 		result = (flagByte & 0xF8) == 0;
-		result = (flagByte & 0x02) == 0;
+		result &= (flagByte & 0x02) == 0;
 		if (result) {
 			audioTagPresent = (flagByte & 0x04) != 0;
 			videoTagPresent = (flagByte & 0x01) != 0;

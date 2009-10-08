@@ -6,7 +6,7 @@ import java.io.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
-public class FLVTag implements FLVBodyComponent {
+public class FLVTag {
 	private U8 tagType;
 	private String tagTypeString;
 	private U24 dataSize;
@@ -16,7 +16,7 @@ public class FLVTag implements FLVBodyComponent {
 	private TagData data;
 	private byte[] dataBytes;
 
-	public FLVTag(PushbackInputStream in) throws Exception {
+	public FLVTag(InputStream in) throws Exception {
 		tagType = new U8(in);
 		if (tagType.getValue() == 8)
 			tagTypeString = "audio";
@@ -42,6 +42,8 @@ public class FLVTag implements FLVBodyComponent {
 				data = new AudioData(tagDataIn);
 			else if (tagType.getValue() == 9)
 				data = new VideoData(tagDataIn);
+			else if (tagType.getValue() == 18)
+				data = new ScriptData(tagDataIn);
 		} finally {
 			if (tagDataIn != null)
 				tagDataIn.close();
