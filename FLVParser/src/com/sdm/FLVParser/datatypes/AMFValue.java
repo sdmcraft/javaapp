@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 public abstract class AMFValue {
 	protected Marker marker;

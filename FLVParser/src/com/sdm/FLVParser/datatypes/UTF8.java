@@ -1,8 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 import java.nio.charset.Charset;
 
 import com.sdm.FLVParser.utils.Tools;
@@ -12,7 +11,7 @@ public class UTF8 {
 	private U8[] utfData;
 	private String stringValue;
 
-	public UTF8(InputStream in) throws Exception {
+	public UTF8(PushbackInputStream in) throws Exception {
 		this.length = new U16(in);
 		int decLength = Tools.U16toInt(this.length);
 		utfData = new U8[decLength];
@@ -55,5 +54,4 @@ public class UTF8 {
 		if (length != null)
 			length.unread(in);
 	}
-
 }

@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.InputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.utils.Tools;
 
@@ -15,7 +15,7 @@ public class U24 extends UType {
 		}
 	}
 
-	public U24(InputStream in) throws Exception {
+	public U24(PushbackInputStream in) throws Exception {
 		valueBytes = new byte[3];
 		if (3 != in.read(valueBytes))
 			throw new Exception("Error reading from input stream");

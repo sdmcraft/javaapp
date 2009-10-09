@@ -1,9 +1,9 @@
 package com.sdm.FLVParser.datatypes;
 
 import java.io.OutputStream;
-import java.io.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 import com.sdm.FLVParser.utils.Tools;
 
 public class AMFBoolean extends AMFValue {
@@ -15,7 +15,7 @@ public class AMFBoolean extends AMFValue {
 		if (!Markers.BOOLEAN_MARKER.equals(marker)) {
 			unread(in);
 			throw new InvalidDataException(
-					"Invalid marker for AMF Boolean type!");
+					"Invalid marker for AMF Boolean type!", in);
 		}
 
 		value = new U8(in);

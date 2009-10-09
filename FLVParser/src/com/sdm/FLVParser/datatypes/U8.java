@@ -1,8 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 public class U8 {
 	private byte value;
@@ -11,7 +10,7 @@ public class U8 {
 		this.value = value;
 	}
 
-	public U8(InputStream in) throws Exception {
+	public U8(PushbackInputStream in) throws Exception {
 		value = (byte) in.read();
 		if (value == -1)
 			throw new Exception("Error reading from input stream");
@@ -45,5 +44,10 @@ public class U8 {
 
 	public void unread(PushbackInputStream in) throws Exception {
 		in.unread(value);
+	}
+
+	@Override
+	public String toString() {
+		return Byte.toString(value);
 	}
 }

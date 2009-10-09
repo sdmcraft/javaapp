@@ -1,13 +1,12 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 public class Marker {
 	private U8 value;
 
-	public Marker(InputStream in) throws Exception {
+	public Marker(PushbackInputStream in) throws Exception {
 		value = new U8(in);
 	}
 

@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -9,7 +9,7 @@ public class AMFUndef extends AMFValue {
 		marker = new Marker(in);
 		if (!Markers.UNDEFINED_MARKER.equals(marker)) {
 			unread(in);
-			throw new InvalidDataException("Invalid marker for AMF Null type!");
+			throw new InvalidDataException("Invalid marker for AMF Null type!", in);
 		}
 
 	}

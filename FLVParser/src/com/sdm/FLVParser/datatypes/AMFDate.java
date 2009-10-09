@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -12,13 +12,13 @@ public class AMFDate extends AMFValue {
 		super.marker = new Marker(in);
 		if (!Markers.DATE_MARKER.equals(marker)) {
 			unread(in);
-			throw new InvalidDataException("Invalid marker for AMF Date type!");
+			throw new InvalidDataException("Invalid marker for AMF Date type!", in);
 		}
 		timeZone = new S16(in);
 		if (timeZone.getIntValue() != 0) {
 			unread(in);
 			throw new InvalidDataException(
-					"Invalid timezone for AMF Date type! Should always be 0!");
+					"Invalid timezone for AMF Date type! Should always be 0!", in);
 		}
 		value = new AMFDouble(in);
 	}

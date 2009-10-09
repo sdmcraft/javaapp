@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class AMFObject extends AMFValue {
 		super.marker = new Marker(in);
 		if (!Markers.OBJECT_MARKER.equals(marker)) {
 			throw new InvalidDataException(
-					"Invalid marker for AMF Object type!");
+					"Invalid marker for AMF Object type!", in);
 		}
 		List<ObjectProperty> propertyList = new ArrayList<ObjectProperty>();
 		ObjectProperty property = Tools.readObjectProperty(in);
@@ -25,5 +25,13 @@ public class AMFObject extends AMFValue {
 		}
 		propertyList.add(property);
 		value = (ObjectProperty[]) propertyList.toArray();
+	}
+
+	public void unread(PushbackInputStream in) throws Exception {
+		if (value != null)
+			for (int i = value.length; i >= 0; i--)
+				value[i].unread(in);
+		if (classname != null)
+			classname.unread(in);
 	}
 }

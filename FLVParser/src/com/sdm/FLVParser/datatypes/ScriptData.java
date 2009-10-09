@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 import java.util.List;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;

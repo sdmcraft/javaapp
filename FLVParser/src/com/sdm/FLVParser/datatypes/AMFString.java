@@ -1,7 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
 import java.io.OutputStream;
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -14,7 +14,7 @@ public class AMFString extends AMFValue {
 		if (!Markers.STRING_MARKER.equals(marker)) {
 			unread(in);
 			throw new InvalidDataException(
-					"Invalid marker for AMF String type!");
+					"Invalid marker for AMF String type!", in);
 		}
 
 		value = new UTF8(in);

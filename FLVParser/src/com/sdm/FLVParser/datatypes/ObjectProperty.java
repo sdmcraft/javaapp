@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 public abstract class ObjectProperty {
 	public abstract void unread(PushbackInputStream in) throws Exception;

@@ -1,7 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
 import java.io.OutputStream;
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 public abstract class UType {
 	protected byte[] valueBytes;
@@ -20,10 +20,14 @@ public abstract class UType {
 	public void write(OutputStream out) throws Exception {
 		out.write(valueBytes);
 	}
-	
-	public void unread(PushbackInputStream in) throws Exception
-	{
-		in.unread(valueBytes);		
+
+	public void unread(PushbackInputStream in) throws Exception {
+		in.unread(valueBytes);
+	}
+
+	@Override
+	public String toString() {
+		return Integer.toString(intValue);
 	}
 
 }

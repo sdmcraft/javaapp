@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -18,5 +18,13 @@ public class ECMAArray extends AMFValue {
 				value[i] = new ObjectContent(in);
 			}
 		}
+	}
+
+	public void unread(PushbackInputStream in) throws Exception {
+		if (value != null)
+			for (int i = value.length; i >= 0; i--)
+				value[i].unread(in);
+		if (associativeCount != null)
+			associativeCount.unread(in);
 	}
 }

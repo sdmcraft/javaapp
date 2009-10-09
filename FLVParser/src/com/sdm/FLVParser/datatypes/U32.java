@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.InputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.utils.Tools;
 
@@ -15,7 +15,7 @@ public class U32 extends UType {
 		}
 	}
 
-	public U32(InputStream in) throws Exception {
+	public U32(PushbackInputStream in) throws Exception {
 		valueBytes = new byte[4];
 		if (4 != in.read(valueBytes))
 			throw new Exception("Error reading from input stream");

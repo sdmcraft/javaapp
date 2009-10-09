@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.InputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +12,9 @@ public class VideoData implements TagData {
 	private String frameType;
 	private String codecId;
 
-	public VideoData(InputStream in) throws Exception {
+	public VideoData(PushbackInputStream in) throws Exception {
 		videoInfo = new U8(in);
-		validateVideoInfo();
+		validateVideoInfo(in);
 		byte b = -1;
 		List<U8> videoDataList = new ArrayList<U8>();
 		while ((b = (byte) in.read()) != -1) {
@@ -40,7 +40,7 @@ public class VideoData implements TagData {
 		this.videoData = videoData;
 	}
 
-	private void validateVideoInfo() throws Exception {
+	private void validateVideoInfo(PushbackInputStream in) throws Exception {
 		byte videoInfoByte = videoInfo.getValue();
 		switch (videoInfoByte & 0xF0) {
 		case 1:
@@ -53,7 +53,7 @@ public class VideoData implements TagData {
 			frameType = "disposable inter frame";
 			break;
 		default:
-			throw new InvalidDataException("Invalid frame type!!!");
+			throw new InvalidDataException("Invalid frame type!!!", in);
 		}
 		switch (videoInfoByte & 0x0F) {
 		case 2:
@@ -72,7 +72,7 @@ public class VideoData implements TagData {
 			codecId = "Screen video version 2";
 			break;
 		default:
-			throw new InvalidDataException("Invalid Codec ID!!!");
+			throw new InvalidDataException("Invalid Codec ID!!!", in);
 		}
 	}
 

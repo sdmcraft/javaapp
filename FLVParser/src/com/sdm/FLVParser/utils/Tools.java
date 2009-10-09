@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.utils;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.datatypes.AMFBoolean;
 import com.sdm.FLVParser.datatypes.AMFDate;
@@ -145,7 +145,7 @@ public class Tools {
 
 		} else {
 			marker.unread(in);
-			throw new InvalidDataException("No AMF value to read!!!");
+			throw new InvalidDataException("No AMF value to read!!!", in);
 		}
 
 		return value;

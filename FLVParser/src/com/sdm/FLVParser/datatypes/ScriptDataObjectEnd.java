@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -13,7 +13,7 @@ public class ScriptDataObjectEnd {
 		if (!Markers.STRING_MARKER.equals(objectNameType)) {
 			unread(in);
 			throw new InvalidDataException(
-					"Invalid object name type!! Must be 2!!");
+					"Invalid object name type!! Must be 2!!", in);
 		}
 		try {
 			objectEnd = new ObjectEnd(in);
@@ -27,6 +27,6 @@ public class ScriptDataObjectEnd {
 		if (objectEnd != null)
 			objectEnd.unread(in);
 		if (objectNameType != null)
-			objectEnd.unread(in);
+			objectNameType.unread(in);
 	}
 }

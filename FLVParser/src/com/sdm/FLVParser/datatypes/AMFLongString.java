@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -12,7 +12,7 @@ public class AMFLongString extends AMFValue {
 		if (!Markers.LONG_STRING_MARKER.equals(marker)) {
 			unread(in);
 			throw new InvalidDataException(
-					"Invalid marker for AMF Long String type!");
+					"Invalid marker for AMF Long String type!", in);
 		}
 
 		value = new UTF8Long(in);

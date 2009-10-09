@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -13,7 +13,7 @@ public class ObjectEnd extends ObjectProperty {
 		endMarker = new Marker(in);
 		if (!endMarker.equals(Markers.OBJECT_END_MARKER)) {
 			unread(in);
-			throw new InvalidDataException("Invalid object end marker!");
+			throw new InvalidDataException("Invalid object end marker!", in);
 		}
 	}
 

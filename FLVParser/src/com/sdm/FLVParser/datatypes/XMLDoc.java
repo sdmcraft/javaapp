@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -12,7 +12,7 @@ public class XMLDoc extends AMFValue {
 		if (!Markers.XML_DOCUMENT_MARKER.equals(marker)) {
 			unread(in);
 			throw new InvalidDataException(
-					"Invalid marker for AMF XML Doc type!");
+					"Invalid marker for AMF XML Doc type!", in);
 		}
 
 		value = new UTF8Long(in);

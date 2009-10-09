@@ -1,8 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -16,7 +15,7 @@ public class FLVTag {
 	private TagData data;
 	private byte[] dataBytes;
 
-	public FLVTag(InputStream in) throws Exception {
+	public FLVTag(PushbackInputStream in) throws Exception {
 		tagType = new U8(in);
 		if (tagType.getValue() == 8)
 			tagTypeString = "audio";
@@ -25,16 +24,16 @@ public class FLVTag {
 		else if (tagType.getValue() == 18)
 			tagTypeString = "scriptdata";
 		else
-			throw new InvalidDataException("Invalid tag type!");
+			throw new InvalidDataException("Invalid tag type!", in);
 		dataSize = new U24(in);
 		timeStamp = new U24(in);
 		timeStampExtended = new U8(in);
 		streamID = new U24(in);
 		if (streamID.getIntValue() != 0)
-			throw new InvalidDataException("Invalid streamId! Must be 0!!");
+			throw new InvalidDataException("Invalid streamId! Must be 0!!", in);
 		dataBytes = new byte[dataSize.getIntValue()];
 		if (in.read(dataBytes) != dataSize.getIntValue())
-			throw new InvalidDataException("Unable to read tag data!!!");
+			throw new InvalidDataException("Unable to read tag data!!!", in);
 		PushbackInputStream tagDataIn = new PushbackInputStream(
 				new ByteArrayInputStream(dataBytes));
 		try {

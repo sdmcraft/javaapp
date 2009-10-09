@@ -1,6 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,16 +16,16 @@ public class AudioData implements TagData {
 
 	public AudioData(PushbackInputStream in) throws Exception {
 		soundInfo = new U8(in);
-		validateSoundInfo();
+		validateSoundInfo(in);
 		byte b = -1;
 		List<U8> soundDataList = new ArrayList<U8>();
 		while ((b = (byte) in.read()) != -1) {
 			soundDataList.add(new U8(b));
 		}
-		soundData = (U8[])soundDataList.toArray();
+		soundData = (U8[]) soundDataList.toArray();
 	}
 
-	private void validateSoundInfo() throws Exception {
+	private void validateSoundInfo(PushbackInputStream in) throws Exception {
 		byte soundInfoByte = soundInfo.getValue();
 		switch (soundInfoByte & 0xF0) {
 		case 0:
@@ -44,7 +44,7 @@ public class AudioData implements TagData {
 			soundFormat = "Nellymoser";
 			break;
 		default:
-			throw new InvalidDataException("Invalid sound format!!!");
+			throw new InvalidDataException("Invalid sound format!!!", in);
 		}
 		switch (soundInfoByte & 0x0C) {
 		case 0:
@@ -60,7 +60,7 @@ public class AudioData implements TagData {
 			soundRate = "44kHz";
 			break;
 		default:
-			throw new InvalidDataException("Invalid sound rate!!!");
+			throw new InvalidDataException("Invalid sound rate!!!", in);
 		}
 		switch (soundInfoByte & 0x02) {
 		case 0:
@@ -70,7 +70,7 @@ public class AudioData implements TagData {
 			soundSize = "snd16bit";
 			break;
 		default:
-			throw new InvalidDataException("Invalid sound size!!!");
+			throw new InvalidDataException("Invalid sound size!!!", in);
 		}
 		switch (soundInfoByte & 0x01) {
 		case 0:
@@ -80,10 +80,10 @@ public class AudioData implements TagData {
 			soundType = "sndStereo";
 			if (soundFormat.contains("Nellymoser"))
 				throw new InvalidDataException(
-						"Steroe sound not allowed with Nellymoser!!!");
+						"Steroe sound not allowed with Nellymoser!!!", in);
 			break;
 		default:
-			throw new InvalidDataException("Invalid sound type!!!");
+			throw new InvalidDataException("Invalid sound type!!!", in);
 		}
 
 	}

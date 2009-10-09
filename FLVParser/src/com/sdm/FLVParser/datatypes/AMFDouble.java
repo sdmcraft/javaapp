@@ -4,14 +4,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.PushbackInputStream;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 
 public class AMFDouble {
 	private double doubleValue;
 	private byte[] valueBytes;
 
-	public AMFDouble(InputStream in) throws Exception {
+	public AMFDouble(PushbackInputStream in) throws Exception {
 		valueBytes = new byte[8];
 		if (8 != in.read(valueBytes))
 			throw new Exception("Error reading from input stream");
