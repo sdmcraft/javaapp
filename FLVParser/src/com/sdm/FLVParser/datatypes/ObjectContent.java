@@ -13,8 +13,7 @@ public class ObjectContent extends ObjectProperty {
 		try {
 			name = new UTF8(in);
 			value = Tools.sniffer(in);
-		} catch (InvalidDataException ex) {
-			in.tellPos();
+		} catch (InvalidDataException ex) {			
 			unread(in);
 			throw ex;
 		}

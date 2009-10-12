@@ -153,8 +153,7 @@ public class Tools {
 	public static ObjectProperty readObjectProperty(PushbackInputStream in)
 			throws Exception {
 		ObjectProperty objectProperty = null;
-		try {			
-			in.tellPos();
+		try {						
 			objectProperty = new ObjectContent(in);			
 		} catch (InvalidDataException ex) {			
 			objectProperty = new ObjectEnd(in);

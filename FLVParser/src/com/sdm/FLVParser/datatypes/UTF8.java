@@ -1,9 +1,10 @@
 package com.sdm.FLVParser.datatypes;
 
 import java.io.OutputStream;
-import com.sdm.FLVParser.utils.PushbackInputStream;
 import java.nio.charset.Charset;
 
+import com.sdm.FLVParser.exceptions.InvalidDataException;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 import com.sdm.FLVParser.utils.Tools;
 
 public class UTF8 {
@@ -14,11 +15,13 @@ public class UTF8 {
 	public UTF8(PushbackInputStream in) throws Exception {
 		this.length = new U16(in);
 		int decLength = Tools.U16toInt(this.length);
+		if (decLength <= 0)
+			throw new InvalidDataException("Invalid UTF8 as length is 0!!!", in);
 		utfData = new U8[decLength];
 		for (int i = 0; i < decLength; i++)
 			utfData[i] = new U8(in);
 		stringValue = new String(Tools.U8ArrToByteArr(utfData));
-		System.out.println("stingvalue:"+stringValue);
+		System.out.println("stingvalue:" + stringValue);
 	}
 
 	public UTF8(String stringValue) throws Exception {
