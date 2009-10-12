@@ -22,6 +22,7 @@ public abstract class UType {
 	}
 
 	public void unread(PushbackInputStream in) throws Exception {
+		in.tellPos();
 		in.unread(valueBytes);
 	}
 

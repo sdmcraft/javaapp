@@ -114,7 +114,7 @@ public class Tools {
 	public static AMFValue sniffer(PushbackInputStream in) throws Exception {
 
 		Marker marker = new Marker(in);
-		in.unread(marker.getByteValue());
+		marker.unread(in);
 		AMFValue value = null;
 
 		if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
@@ -143,8 +143,7 @@ public class Tools {
 			value = new XMLDoc(in);
 		} else if (marker.getValue().equals(Markers.TYPED_OBJECT_MARKER)) {
 
-		} else {
-			marker.unread(in);
+		} else {			
 			throw new InvalidDataException("No AMF value to read!!!", in);
 		}
 
@@ -154,10 +153,11 @@ public class Tools {
 	public static ObjectProperty readObjectProperty(PushbackInputStream in)
 			throws Exception {
 		ObjectProperty objectProperty = null;
-		try {
+		try {			
+			in.tellPos();
+			objectProperty = new ObjectContent(in);			
+		} catch (InvalidDataException ex) {			
 			objectProperty = new ObjectEnd(in);
-		} catch (InvalidDataException ex) {
-			objectProperty = new ObjectContent(in);
 		}
 		return objectProperty;
 	}

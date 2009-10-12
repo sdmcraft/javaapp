@@ -7,7 +7,7 @@ import com.sdm.FLVParser.exceptions.InvalidDataException;
 public class AMFNull extends AMFValue {
 	public AMFNull(PushbackInputStream in) throws Exception {
 		marker = new Marker(in);
-		if (!Markers.NULL_MARKER.equals(marker)) {
+		if (!Markers.NULL_MARKER.equals(marker.getValue())) {
 			unread(in);
 			throw new InvalidDataException("Invalid marker for AMF Null type!", in);
 		}

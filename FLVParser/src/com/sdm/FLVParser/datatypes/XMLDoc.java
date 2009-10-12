@@ -9,7 +9,7 @@ public class XMLDoc extends AMFValue {
 
 	public XMLDoc(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
-		if (!Markers.XML_DOCUMENT_MARKER.equals(marker)) {
+		if (!Markers.XML_DOCUMENT_MARKER.equals(marker.getValue())) {
 			unread(in);
 			throw new InvalidDataException(
 					"Invalid marker for AMF XML Doc type!", in);

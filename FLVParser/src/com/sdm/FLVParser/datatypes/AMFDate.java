@@ -10,7 +10,7 @@ public class AMFDate extends AMFValue {
 
 	public AMFDate(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
-		if (!Markers.DATE_MARKER.equals(marker)) {
+		if (!Markers.DATE_MARKER.equals(marker.getValue())) {
 			unread(in);
 			throw new InvalidDataException("Invalid marker for AMF Date type!", in);
 		}

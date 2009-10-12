@@ -9,7 +9,7 @@ public class AMFLongString extends AMFValue {
 
 	public AMFLongString(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
-		if (!Markers.LONG_STRING_MARKER.equals(marker)) {
+		if (!Markers.LONG_STRING_MARKER.equals(marker.getValue())) {
 			unread(in);
 			throw new InvalidDataException(
 					"Invalid marker for AMF Long String type!", in);

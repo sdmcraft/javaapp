@@ -10,7 +10,7 @@ public class ScriptDataObject {
 
 	public ScriptDataObject(PushbackInputStream in) throws Exception {
 		objectNameType = new Marker(in);
-		if (!Markers.STRING_MARKER.equals(objectNameType)) {
+		if (!Markers.STRING_MARKER.equals(objectNameType.getValue())) {
 			throw new InvalidDataException(
 					"Invalid object name type!! Must be 2!!", in);
 		}

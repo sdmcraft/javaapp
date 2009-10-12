@@ -10,7 +10,7 @@ public class FLV {
 	public FLV(String flvFile) throws Exception {
 		PushbackInputStream in = null;
 		try {
-			in = new PushbackInputStream(new FileInputStream(flvFile));
+			in = new PushbackInputStream(new FileInputStream(flvFile),2048);
 			header = new FLVHeader(in);
 			body = new FLVBody(in);
 		} finally {

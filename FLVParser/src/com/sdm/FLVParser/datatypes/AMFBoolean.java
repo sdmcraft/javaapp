@@ -12,7 +12,7 @@ public class AMFBoolean extends AMFValue {
 
 	public AMFBoolean(PushbackInputStream in) throws Exception {
 		marker = new Marker(in);
-		if (!Markers.BOOLEAN_MARKER.equals(marker)) {
+		if (!Markers.BOOLEAN_MARKER.equals(marker.getValue())) {
 			unread(in);
 			throw new InvalidDataException(
 					"Invalid marker for AMF Boolean type!", in);

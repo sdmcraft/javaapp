@@ -51,4 +51,8 @@ public class PushbackInputStream extends java.io.PushbackInputStream {
 		return bytesRead;
 	}
 
+	public void tellPos() {
+		System.out.println(pos);
+	}
+
 }

@@ -18,6 +18,7 @@ public class UTF8 {
 		for (int i = 0; i < decLength; i++)
 			utfData[i] = new U8(in);
 		stringValue = new String(Tools.U8ArrToByteArr(utfData));
+		System.out.println("stingvalue:"+stringValue);
 	}
 
 	public UTF8(String stringValue) throws Exception {

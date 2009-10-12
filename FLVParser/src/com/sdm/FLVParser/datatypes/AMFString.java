@@ -11,7 +11,7 @@ public class AMFString extends AMFValue {
 
 	public AMFString(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
-		if (!Markers.STRING_MARKER.equals(marker)) {
+		if (!Markers.STRING_MARKER.equals(marker.getValue())) {
 			unread(in);
 			throw new InvalidDataException(
 					"Invalid marker for AMF String type!", in);

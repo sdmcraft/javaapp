@@ -10,7 +10,7 @@ public class AMFRef extends AMFValue {
 
 	public AMFRef(PushbackInputStream in) throws Exception {
 		marker = new Marker(in);
-		if (!Markers.REFERENCE_MARKER.equals(marker)) {
+		if (!Markers.REFERENCE_MARKER.equals(marker.getValue())) {
 			unread(in);
 			throw new InvalidDataException("Invalid marker for AMF Ref type!", in);
 		}

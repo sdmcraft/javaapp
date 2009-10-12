@@ -13,7 +13,7 @@ public class AMFObject extends AMFValue {
 
 	public AMFObject(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
-		if (!Markers.OBJECT_MARKER.equals(marker)) {
+		if (!Markers.OBJECT_MARKER.equals(marker.getValue())) {
 			throw new InvalidDataException(
 					"Invalid marker for AMF Object type!", in);
 		}
