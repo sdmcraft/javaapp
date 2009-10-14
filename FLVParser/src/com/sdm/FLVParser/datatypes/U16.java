@@ -16,7 +16,7 @@ public class U16 extends UType {
 	}
 
 	public U16(PushbackInputStream in) throws Exception {
-		valueBytes = new byte[2];
+		valueBytes = new byte[2];	
 		if (2 != in.read(valueBytes))
 			throw new Exception("Error reading from input stream");
 		intValue = (int) Tools.byteArrToInt(valueBytes);

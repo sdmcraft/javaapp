@@ -15,8 +15,9 @@ public class FLVTag {
 	private TagData data;
 	private byte[] dataBytes;
 
-	public FLVTag(PushbackInputStream in) throws Exception {
+	public FLVTag(PushbackInputStream in) throws Exception {		
 		tagType = new U8(in);
+		System.out.println("Tag type:" + tagType.getValue());
 		if (tagType.getValue() == 8)
 			tagTypeString = "audio";
 		else if (tagType.getValue() == 9)
@@ -26,26 +27,35 @@ public class FLVTag {
 		else
 			throw new InvalidDataException("Invalid tag type!", in);
 		dataSize = new U24(in);
+		System.out.println("Data size:" + dataSize.getIntValue());
+		if (dataSize.getIntValue() < 0)
+			throw new InvalidDataException("Sub zero data size for the tag!!!",
+					in);
 		timeStamp = new U24(in);
 		timeStampExtended = new U8(in);
 		streamID = new U24(in);
 		if (streamID.getIntValue() != 0)
 			throw new InvalidDataException("Invalid streamId! Must be 0!!", in);
-		dataBytes = new byte[dataSize.getIntValue()];
-		if (in.read(dataBytes) != dataSize.getIntValue())
-			throw new InvalidDataException("Unable to read tag data!!!", in);
-		PushbackInputStream tagDataIn = new PushbackInputStream(
-				new ByteArrayInputStream(dataBytes));
-		try {
-			if (tagType.getValue() == 8)
-				data = new AudioData(tagDataIn);
-			else if (tagType.getValue() == 9)
-				data = new VideoData(tagDataIn);
-			else if (tagType.getValue() == 18)
-				data = new ScriptData(tagDataIn);
-		} finally {
-			if (tagDataIn != null)
-				tagDataIn.close();
+		if (dataSize.getIntValue() > 0) {
+			dataBytes = new byte[dataSize.getIntValue()];
+			if (in.read(dataBytes) != dataSize.getIntValue())
+				throw new InvalidDataException("Unable to read tag data!!!", in);
+			for (byte b : dataBytes)
+				System.out.print(b + " ");
+
+			PushbackInputStream tagDataIn = new PushbackInputStream(
+					new ByteArrayInputStream(dataBytes), 2048);
+			try {
+				if (tagType.getValue() == 8)
+					data = new AudioData(tagDataIn);
+				else if (tagType.getValue() == 9)
+					data = new VideoData(tagDataIn);
+				else if (tagType.getValue() == 18)
+					data = new ScriptData(tagDataIn);
+			} finally {
+				if (tagDataIn != null)
+					tagDataIn.close();
+			}
 		}
 	}
 

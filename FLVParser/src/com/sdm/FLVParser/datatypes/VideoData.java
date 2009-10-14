@@ -8,7 +8,7 @@ import com.sdm.FLVParser.exceptions.InvalidDataException;
 
 public class VideoData implements TagData {
 	private U8 videoInfo;
-	private U8[] videoData;
+	private List<U8> videoDataList;
 	private String frameType;
 	private String codecId;
 
@@ -16,12 +16,10 @@ public class VideoData implements TagData {
 		videoInfo = new U8(in);
 		validateVideoInfo(in);
 		byte b = -1;
-		List<U8> videoDataList = new ArrayList<U8>();
+		videoDataList = new ArrayList<U8>();
 		while ((b = (byte) in.read()) != -1) {
 			videoDataList.add(new U8(b));
 		}
-		videoData = (U8[]) videoDataList.toArray();
-
 	}
 
 	public U8 getVideoInfo() {
@@ -30,14 +28,6 @@ public class VideoData implements TagData {
 
 	public void setVideoInfo(U8 videoInfo) {
 		this.videoInfo = videoInfo;
-	}
-
-	public U8[] getVideoData() {
-		return videoData;
-	}
-
-	public void setVideoData(U8[] videoData) {
-		this.videoData = videoData;
 	}
 
 	private void validateVideoInfo(PushbackInputStream in) throws Exception {
@@ -53,7 +43,8 @@ public class VideoData implements TagData {
 			frameType = "disposable inter frame";
 			break;
 		default:
-			throw new InvalidDataException("Invalid frame type!!!", in);
+			// throw new InvalidDataException("Invalid frame type!!!", in);
+			System.out.println("WARNING-Invalid frame type!!!");
 		}
 		switch (videoInfoByte & 0x0F) {
 		case 2:

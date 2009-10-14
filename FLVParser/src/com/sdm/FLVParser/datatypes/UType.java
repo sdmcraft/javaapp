@@ -21,8 +21,8 @@ public abstract class UType {
 		out.write(valueBytes);
 	}
 
-	public void unread(PushbackInputStream in) throws Exception {
-		in.tellPos();
+	public void unread(PushbackInputStream in) throws Exception {	
+		System.out.println("Unreading " + valueBytes.length + " bytes");		
 		in.unread(valueBytes);
 	}
 

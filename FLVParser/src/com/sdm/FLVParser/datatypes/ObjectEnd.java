@@ -11,7 +11,8 @@ public class ObjectEnd extends ObjectProperty {
 	public ObjectEnd(PushbackInputStream in) throws Exception {
 		empty = new UTF8empty(in);
 		endMarker = new Marker(in);
-		if (Markers.OBJECT_END_MARKER.equals(endMarker.getValue())) {
+		System.out.println("endMarker->" + endMarker.getByteValue());
+		if (!Markers.OBJECT_END_MARKER.equals(endMarker.getValue())) {
 			unread(in);
 			throw new InvalidDataException("Invalid object end marker!", in);
 		}

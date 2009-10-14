@@ -24,7 +24,10 @@ public class AMFObject extends AMFValue {
 			property = Tools.readObjectProperty(in);
 		}
 		propertyList.add(property);
-		value = (ObjectProperty[]) propertyList.toArray();
+		value = new ObjectProperty[propertyList.size()];
+		int count = 0;
+		for(ObjectProperty prop : propertyList)
+			value[count++] = prop;
 	}
 
 	public void unread(PushbackInputStream in) throws Exception {
@@ -33,5 +36,7 @@ public class AMFObject extends AMFValue {
 				value[i].unread(in);
 		if (classname != null)
 			classname.unread(in);
+		if (marker != null)
+			marker.unread(in);
 	}
 }

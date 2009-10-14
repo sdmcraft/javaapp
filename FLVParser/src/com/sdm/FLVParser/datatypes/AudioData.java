@@ -8,7 +8,7 @@ import com.sdm.FLVParser.exceptions.InvalidDataException;
 
 public class AudioData implements TagData {
 	private U8 soundInfo;
-	private U8[] soundData;
+	private List<U8> soundDataList;
 	private String soundFormat;
 	private String soundRate;
 	private String soundSize;
@@ -21,8 +21,7 @@ public class AudioData implements TagData {
 		List<U8> soundDataList = new ArrayList<U8>();
 		while ((b = (byte) in.read()) != -1) {
 			soundDataList.add(new U8(b));
-		}
-		soundData = (U8[]) soundDataList.toArray();
+		}		
 	}
 
 	private void validateSoundInfo(PushbackInputStream in) throws Exception {
@@ -44,7 +43,8 @@ public class AudioData implements TagData {
 			soundFormat = "Nellymoser";
 			break;
 		default:
-			throw new InvalidDataException("Invalid sound format!!!", in);
+			//throw new InvalidDataException("Invalid sound format!!!", in);
+			System.out.println("WARNING-Invalid sound format!!!");
 		}
 		switch (soundInfoByte & 0x0C) {
 		case 0:
@@ -60,7 +60,8 @@ public class AudioData implements TagData {
 			soundRate = "44kHz";
 			break;
 		default:
-			throw new InvalidDataException("Invalid sound rate!!!", in);
+			//throw new InvalidDataException("Invalid sound rate!!!", in);
+			System.out.println("WARNING-Invalid sound rate!!!");
 		}
 		switch (soundInfoByte & 0x02) {
 		case 0:
@@ -70,7 +71,8 @@ public class AudioData implements TagData {
 			soundSize = "snd16bit";
 			break;
 		default:
-			throw new InvalidDataException("Invalid sound size!!!", in);
+			//throw new InvalidDataException("Invalid sound size!!!", in);
+			System.out.println("WARNING-Invalid sound size!!!");
 		}
 		switch (soundInfoByte & 0x01) {
 		case 0:
@@ -94,13 +96,5 @@ public class AudioData implements TagData {
 
 	public void setSoundInfo(U8 soundInfo) {
 		this.soundInfo = soundInfo;
-	}
-
-	public U8[] getSoundData() {
-		return soundData;
-	}
-
-	public void setSoundData(U8[] soundData) {
-		this.soundData = soundData;
 	}
 }

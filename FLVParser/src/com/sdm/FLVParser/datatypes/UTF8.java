@@ -13,10 +13,15 @@ public class UTF8 {
 	private String stringValue;
 
 	public UTF8(PushbackInputStream in) throws Exception {
-		this.length = new U16(in);
+		System.out.println("a->"+in.available());		
+		this.length = new U16(in);		
+		System.out.println("b->"+in.available());
 		int decLength = Tools.U16toInt(this.length);
-		if (decLength <= 0)
+		if (decLength <= 0) {
+			System.out.println("Invalid UTF8 as length is 0!!!");
+			unread(in);
 			throw new InvalidDataException("Invalid UTF8 as length is 0!!!", in);
+		}
 		utfData = new U8[decLength];
 		for (int i = 0; i < decLength; i++)
 			utfData[i] = new U8(in);
@@ -51,7 +56,7 @@ public class UTF8 {
 	}
 
 	public void unread(PushbackInputStream in) throws Exception {
-		if (utfData != null) {
+		if (utfData != null) {			
 			for (U8 u8 : utfData)
 				u8.unread(in);
 		}
