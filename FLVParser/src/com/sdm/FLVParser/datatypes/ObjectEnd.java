@@ -8,7 +8,7 @@ public class ObjectEnd extends ObjectProperty {
 	private UTF8empty empty;
 	private Marker endMarker;
 
-	public ObjectEnd(PushbackInputStream in) throws Exception {
+	public ObjectEnd(PushbackInputStream in) throws Exception {		
 		empty = new UTF8empty(in);
 		endMarker = new Marker(in);
 		System.out.println("endMarker->" + endMarker.getByteValue());

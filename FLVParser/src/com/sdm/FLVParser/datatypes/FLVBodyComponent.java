@@ -8,8 +8,9 @@ public class FLVBodyComponent {
 
 	public FLVBodyComponent(PushbackInputStream in) throws Exception {
 		System.out.println("Bytes read:" + in.getBytesRead());
-		prevTagSize = new U32(in);		
-		System.out.println("Prev tag size:"+prevTagSize.getIntValue());
-		tag = new FLVTag(in);
+		prevTagSize = new U32(in);
+		System.out.println("Prev tag size:" + prevTagSize.getIntValue());
+		if (in.available() > 0)
+			tag = new FLVTag(in);
 	}
 }

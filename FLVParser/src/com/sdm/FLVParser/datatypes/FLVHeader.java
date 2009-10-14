@@ -41,11 +41,12 @@ public class FLVHeader {
 	private boolean validateFlags() {
 		boolean result = true;
 		byte flagByte = flags.getValue();
-		result = (flagByte & 0xF8) == 0;
-		result &= (flagByte & 0x02) == 0;
+		int flagInt = flagByte & 0xFF;
+		result = (flagInt & 0xF8) == 0;
+		result &= (flagInt & 0x02) == 0;
 		if (result) {
-			audioTagPresent = (flagByte & 0x04) != 0;
-			videoTagPresent = (flagByte & 0x01) != 0;
+			audioTagPresent = (flagInt & 0x04) != 0;
+			videoTagPresent = (flagInt & 0x01) != 0;
 		}
 		return result;
 	}

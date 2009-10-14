@@ -17,13 +17,16 @@ public class AMFObject extends AMFValue {
 			throw new InvalidDataException(
 					"Invalid marker for AMF Object type!", in);
 		}
+		System.out.println("Starting to read an amf object");
 		List<ObjectProperty> propertyList = new ArrayList<ObjectProperty>();
 		ObjectProperty property = Tools.readObjectProperty(in);
 		while (!(property instanceof ObjectEnd)) {
 			propertyList.add(property);
 			property = Tools.readObjectProperty(in);
+			System.out.println("Done with reading an object property");
 		}
 		propertyList.add(property);
+		System.out.println("Completed reading an amf object");
 		value = new ObjectProperty[propertyList.size()];
 		int count = 0;
 		for(ObjectProperty prop : propertyList)

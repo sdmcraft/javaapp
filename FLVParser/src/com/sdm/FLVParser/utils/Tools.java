@@ -18,10 +18,8 @@ import com.sdm.FLVParser.datatypes.ObjectEnd;
 import com.sdm.FLVParser.datatypes.ObjectProperty;
 import com.sdm.FLVParser.datatypes.StrictArray;
 import com.sdm.FLVParser.datatypes.U16;
-import com.sdm.FLVParser.datatypes.U24;
 import com.sdm.FLVParser.datatypes.U32;
 import com.sdm.FLVParser.datatypes.U8;
-import com.sdm.FLVParser.datatypes.UType;
 import com.sdm.FLVParser.datatypes.XMLDoc;
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
@@ -118,49 +116,35 @@ public class Tools {
 
 		Marker marker = new Marker(in);
 		AMFValue value = null;
-
+		marker.unread(in);
 		if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
-			marker.unread(in);
 			value = new AMFNumber(in);
 		} else if (marker.getValue().equals(Markers.BOOLEAN_MARKER)) {
-			marker.unread(in);
 			value = new AMFBoolean(in);
 		} else if (marker.getValue().equals(Markers.STRING_MARKER)) {
-			marker.unread(in);
 			value = new AMFString(in);
 		} else if (marker.getValue().equals(Markers.OBJECT_MARKER)) {
-			marker.unread(in);
 			value = new AMFObject(in);
 		} else if (marker.getValue().equals(Markers.NULL_MARKER)) {
-			marker.unread(in);
 			value = new AMFNull(in);
 		} else if (marker.getValue().equals(Markers.UNDEFINED_MARKER)) {
-			marker.unread(in);
 			value = new AMFUndef(in);
 		} else if (marker.getValue().equals(Markers.REFERENCE_MARKER)) {
-			marker.unread(in);
 			value = new AMFRef(in);
 		} else if (marker.getValue().equals(Markers.ECMA_ARRAY_MARKER)) {
-			marker.unread(in);
 			value = new ECMAArray(in);
 		} else if (marker.getValue().equals(Markers.STRICT_ARRAY_MARKER)) {
-			marker.unread(in);
 			value = new StrictArray(in);
 		} else if (marker.getValue().equals(Markers.DATE_MARKER)) {
-			marker.unread(in);
 			value = new AMFDate(in);
 		} else if (marker.getValue().equals(Markers.LONG_STRING_MARKER)) {
-			marker.unread(in);
 			value = new AMFLongString(in);
 		} else if (marker.getValue().equals(Markers.XML_DOCUMENT_MARKER)) {
-			marker.unread(in);
 			value = new XMLDoc(in);
 		} else if (marker.getValue().equals(Markers.TYPED_OBJECT_MARKER)) {
-			marker.unread(in);
 		} else {
 			throw new InvalidDataException("No AMF value to read!!!", in);
 		}
-
 		return value;
 	}
 
@@ -168,10 +152,16 @@ public class Tools {
 			throws Exception {
 		ObjectProperty objectProperty = null;
 		try {
+			System.out.println("qqqqqqqqqqq->" + in.available());
+			System.out.println("Reading object content");
 			objectProperty = new ObjectContent(in);
+			System.out.println("Completed Reading object content");
 		} catch (InvalidDataException ex) {
-			System.out.println("After->" + in.available());
+			// ex.printStackTrace();
+			System.out.println("qqqqqqqqqqq->" + in.available());
+			System.out.println("Reading object end");
 			objectProperty = new ObjectEnd(in);
+			System.out.println("Object end found");
 		}
 		return objectProperty;
 	}

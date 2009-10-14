@@ -1,30 +1,45 @@
 package com.sdm.FLVParser.datatypes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sdm.FLVParser.utils.PushbackInputStream;
+import com.sdm.FLVParser.utils.Tools;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
 public class ECMAArray extends AMFValue {
 	private U32 associativeCount;
-	private ObjectProperty[] value;
+	List<ObjectProperty> propertyList;
 
 	public ECMAArray(PushbackInputStream in) throws Exception {
-		associativeCount = new U32(in);
-		value = new ObjectProperty[associativeCount.getIntValue()];
-		for (int i = 0; i < associativeCount.getIntValue(); i++) {
-			try {
-				value[i] = new ObjectEnd(in);
-			} catch (InvalidDataException ex) {
-				value[i] = new ObjectContent(in);
-			}
+		marker = new Marker(in);
+		if (!Markers.ECMA_ARRAY_MARKER.equals(marker.getValue())) {
+			unread(in);
+			throw new InvalidDataException(
+					"Invalid marker for AMF ECMA array type!", in);
 		}
+
+		associativeCount = new U32(in);
+		if (associativeCount.getIntValue() <= 0)
+			System.out.println("WARNING:Associative count:"
+					+ associativeCount.getIntValue());
+		propertyList = new ArrayList<ObjectProperty>();
+		ObjectProperty property = Tools.readObjectProperty(in);
+		while (!(property instanceof ObjectEnd)) {
+			propertyList.add(property);
+			property = Tools.readObjectProperty(in);
+		}
+		propertyList.add(property);
 	}
 
 	public void unread(PushbackInputStream in) throws Exception {
-		if (value != null)
-			for (int i = value.length; i >= 0; i--)
-				value[i].unread(in);
+		if (propertyList != null)
+			for (ObjectProperty property : propertyList)
+				property.unread(in);
 		if (associativeCount != null)
 			associativeCount.unread(in);
+		if (marker != null)
+			marker.unread(in);
 	}
 }

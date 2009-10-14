@@ -3,7 +3,6 @@ package com.sdm.FLVParser.datatypes;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import com.sdm.FLVParser.exceptions.InvalidDataException;
 import com.sdm.FLVParser.utils.PushbackInputStream;
 import com.sdm.FLVParser.utils.Tools;
 
@@ -18,9 +17,9 @@ public class UTF8 {
 		System.out.println("b->"+in.available());
 		int decLength = Tools.U16toInt(this.length);
 		if (decLength <= 0) {
-			System.out.println("Invalid UTF8 as length is 0!!!");
-			unread(in);
-			throw new InvalidDataException("Invalid UTF8 as length is 0!!!", in);
+			System.out.println("WARNING: UTF8 length is " + decLength);
+			//unread(in);
+			//throw new InvalidDataException("Invalid UTF8 as length is 0!!!", in);
 		}
 		utfData = new U8[decLength];
 		for (int i = 0; i < decLength; i++)

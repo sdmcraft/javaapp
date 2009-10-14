@@ -20,6 +20,6 @@ public class FLV {
 	}
 
 	public static void main(String[] args) throws Exception {
-		FLV flv = new FLV("c:\\temp\\test.flv");
+		FLV flv = new FLV("c:\\temp\\mainstream.flv");
 	}
 }
