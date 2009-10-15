@@ -1,8 +1,9 @@
 package com.sdm.FLVParser.datatypes;
 
-import com.sdm.FLVParser.utils.PushbackInputStream;
+import java.io.OutputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
+import com.sdm.FLVParser.utils.PushbackInputStream;
 import com.sdm.FLVParser.utils.Tools;
 
 public class UTF8empty {
@@ -20,6 +21,10 @@ public class UTF8empty {
 	public void unread(PushbackInputStream in) throws Exception {
 		if (length != null)
 			length.unread(in);
+	}
+
+	public void write(OutputStream out) throws Exception {
+		length.write(out);
 	}
 
 }

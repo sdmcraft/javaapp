@@ -1,5 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +42,13 @@ public class ECMAArray extends AMFValue {
 			associativeCount.unread(in);
 		if (marker != null)
 			marker.unread(in);
+	}
+
+	@Override
+	public void write(OutputStream out) throws Exception {
+		marker.write(out);
+		associativeCount.write(out);
+		for (ObjectProperty prop : propertyList)
+			prop.write(out);
 	}
 }

@@ -1,6 +1,8 @@
 package com.sdm.FLVParser.datatypes;
 
 import com.sdm.FLVParser.utils.PushbackInputStream;
+
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import com.sdm.FLVParser.exceptions.InvalidDataException;
 import com.sdm.FLVParser.utils.Tools;
 
 public class AMFObject extends AMFValue {
-	private UTF8 classname;
+	// private UTF8 classname;
 	private ObjectProperty[] value;
 
 	public AMFObject(PushbackInputStream in) throws Exception {
@@ -29,7 +31,7 @@ public class AMFObject extends AMFValue {
 		System.out.println("Completed reading an amf object");
 		value = new ObjectProperty[propertyList.size()];
 		int count = 0;
-		for(ObjectProperty prop : propertyList)
+		for (ObjectProperty prop : propertyList)
 			value[count++] = prop;
 	}
 
@@ -37,9 +39,18 @@ public class AMFObject extends AMFValue {
 		if (value != null)
 			for (int i = value.length; i >= 0; i--)
 				value[i].unread(in);
-		if (classname != null)
-			classname.unread(in);
+		// if (classname != null)
+		// classname.unread(in);
 		if (marker != null)
 			marker.unread(in);
+	}
+
+	@Override
+	public void write(OutputStream out) throws Exception {
+		marker.write(out);
+		// classname.write(out);
+		for (ObjectProperty prop : value) {
+			prop.write(out);
+		}
 	}
 }

@@ -1,6 +1,8 @@
 package com.sdm.FLVParser.datatypes;
 
 import com.sdm.FLVParser.utils.PushbackInputStream;
+
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,13 @@ public class VideoData implements TagData {
 		while ((b = (byte) in.read()) != -1) {
 			videoDataList.add(new U8(b));
 		}
+	}
+
+	public void write(OutputStream out) throws Exception {
+		videoInfo.write(out);
+		for (U8 u8 : videoDataList)
+			u8.write(out);
+
 	}
 
 	public U8 getVideoInfo() {

@@ -1,6 +1,8 @@
 package com.sdm.FLVParser.datatypes;
 
 import java.io.ByteArrayInputStream;
+import java.io.OutputStream;
+
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
@@ -15,6 +17,15 @@ public class FLVTag {
 	private TagData data;
 	private byte[] dataBytes;
 
+	public void write(OutputStream out) throws Exception
+	{
+		tagType.write(out);
+		dataSize.write(out);
+		timeStamp.write(out);
+		timeStampExtended.write(out);
+		streamID.write(out);
+		data.write(out);
+	}
 	public FLVTag(PushbackInputStream in) throws Exception {		
 		tagType = new U8(in);
 		System.out.println("Tag type:" + tagType.getValue());

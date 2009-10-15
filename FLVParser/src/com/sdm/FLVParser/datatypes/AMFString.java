@@ -31,6 +31,7 @@ public class AMFString extends AMFValue {
 	}
 
 	public void write(OutputStream out) throws Exception {
+		marker.write(out);
 		value.write(out);
 	}
 

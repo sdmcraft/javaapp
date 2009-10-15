@@ -1,6 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
 import java.io.OutputStream;
+
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
 public class U8 {

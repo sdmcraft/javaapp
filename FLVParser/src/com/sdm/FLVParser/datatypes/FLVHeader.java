@@ -1,5 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
+import java.io.OutputStream;
+
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
@@ -13,7 +15,6 @@ public class FLVHeader {
 	boolean videoTagPresent;
 
 	public FLVHeader(PushbackInputStream in) throws Exception {
-		signature = new U8[3];
 		U8 byte1 = new U8(in);
 		U8 byte2 = new U8(in);
 		U8 byte3 = new U8(in);
@@ -22,7 +23,8 @@ public class FLVHeader {
 				|| !byte3.equals(new U8((byte) 0x56))) {
 			// unread(in);
 			throw new InvalidDataException("Invalid FLV Signature!!!", in);
-		}
+		} else
+			signature = new U8[] { byte1, byte2, byte3 };
 		version = new U8(in);
 		flags = new U8(in);
 		if (!validateFlags()) {
@@ -36,6 +38,14 @@ public class FLVHeader {
 			throw new InvalidDataException("Invalid data offset!!!", in);
 		}
 
+	}
+
+	public void write(OutputStream out) throws Exception {
+		for (U8 u8 : signature)
+			u8.write(out);
+		version.write(out);
+		flags.write(out);
+		dataoffset.write(out);
 	}
 
 	private boolean validateFlags() {

@@ -1,5 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
+import java.io.OutputStream;
+
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
@@ -28,5 +30,10 @@ public class ScriptDataObjectEnd {
 			objectEnd.unread(in);
 		if (objectNameType != null)
 			objectNameType.unread(in);
+	}
+
+	public void write(OutputStream out) throws Exception {
+		objectNameType.write(out);
+		objectEnd.write(out);
 	}
 }

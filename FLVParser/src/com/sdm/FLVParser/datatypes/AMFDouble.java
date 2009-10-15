@@ -4,6 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
 public class AMFDouble {
@@ -67,5 +70,9 @@ public class AMFDouble {
 	public void unread(PushbackInputStream in) throws Exception {
 		if (valueBytes != null)
 			in.unread(valueBytes);
+	}
+
+	public void write(OutputStream out) throws Exception {
+		out.write(valueBytes);
 	}
 }

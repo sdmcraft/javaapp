@@ -1,5 +1,6 @@
 package com.sdm.FLVParser.datatypes;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,5 +15,10 @@ public class ScriptDataObject {
 		while (in.available() > 0) {
 			amfValueList.add(Tools.sniffer(in));
 		}
+	}
+
+	public void write(OutputStream out) throws Exception {
+		for (AMFValue amfVal : amfValueList)
+			amfVal.write(out);
 	}
 }

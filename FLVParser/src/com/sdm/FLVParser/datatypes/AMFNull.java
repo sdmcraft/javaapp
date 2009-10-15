@@ -1,5 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
+import java.io.OutputStream;
+
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
@@ -16,6 +18,11 @@ public class AMFNull extends AMFValue {
 	public void unread(PushbackInputStream in) throws Exception {
 		if (marker != null)
 			marker.unread(in);
+	}
+
+	@Override
+	public void write(OutputStream out) throws Exception {
+		marker.write(out);		
 	}
 
 }

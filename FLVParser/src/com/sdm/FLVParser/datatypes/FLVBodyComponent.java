@@ -1,5 +1,7 @@
 package com.sdm.FLVParser.datatypes;
 
+import java.io.OutputStream;
+
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
 public class FLVBodyComponent {
@@ -12,5 +14,11 @@ public class FLVBodyComponent {
 		System.out.println("Prev tag size:" + prevTagSize.getIntValue());
 		if (in.available() > 0)
 			tag = new FLVTag(in);
+	}
+
+	public void write(OutputStream out) throws Exception {
+		prevTagSize.write(out);
+		if (tag != null)
+			tag.write(out);
 	}
 }
