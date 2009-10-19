@@ -1,6 +1,7 @@
 package misc;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
@@ -18,17 +19,14 @@ import java.util.StringTokenizer;
  * 
  * Cookiemanager cm = new CookieManager(); URL url = new
  * URL("http://www.hccp.org/test/cookieTest.jsp");
- * 
- * . . .
- * 
- * // getting cookies: URLConnection conn = url.openConnection();
+ *  . . .
+ *  // getting cookies: URLConnection conn = url.openConnection();
  * conn.connect(); cm.storeCookies(conn);
- * 
- * // setting cookies cm.setCookies(url.openConnection());
+ *  // setting cookies cm.setCookies(url.openConnection());
  * 
  * @author Ian Brown
  * 
- **/
+ */
 
 public class CookieManager {
 
@@ -71,7 +69,8 @@ public class CookieManager {
 		// let's determine the domain from where these cookies are being sent
 		String domain = getDomainFromHost(conn.getURL().getHost());
 
-		Map domainStore; // this is where we will store cookies for this domain
+		Map domainStore; // this is where we will store cookies for this
+							// domain
 
 		// now let's check the store to see if we have an entry for this domain
 		if (store.containsKey(domain)) {
@@ -89,7 +88,7 @@ public class CookieManager {
 		for (int i = 1; (headerName = conn.getHeaderFieldKey(i)) != null; i++) {
 			if (headerName.equalsIgnoreCase(SET_COOKIE)) {
 				Map cookie = new HashMap();
-				System.out.println("Header:"+conn.getHeaderField(i));
+				System.out.println("Header:" + conn.getHeaderField(i));
 				StringTokenizer st = new StringTokenizer(
 						conn.getHeaderField(i), COOKIE_VALUE_DELIMITER);
 
@@ -109,7 +108,7 @@ public class CookieManager {
 
 				while (st.hasMoreTokens()) {
 					String token = st.nextToken();
-					System.out.println("Token:"+token);
+					System.out.println("Token:" + token);
 					cookie.put(token.substring(0,
 							token.indexOf(NAME_VALUE_SEPARATOR)).toLowerCase(),
 							token.substring(
@@ -216,9 +215,14 @@ public class CookieManager {
 	public static void main(String[] args) {
 		CookieManager cm = new CookieManager();
 		try {
-			URL url = new URL("http://localhost:8080/WebApp/CookieServlet");
+			URL url = new URL("http://localhost:8080/WebApp/Cookie Servlet");
 			URLConnection conn = url.openConnection();
 			conn.connect();
+			InputStream in = conn.getInputStream();
+			byte b = -1;
+			while ((b = (byte)in.read()) != -1)
+				System.out.println(b);
+			in.close();
 			cm.storeCookies(conn);
 			System.out.println(cm);
 			cm.setCookies(url.openConnection());

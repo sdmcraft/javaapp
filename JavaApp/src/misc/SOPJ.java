@@ -1,8 +1,10 @@
 package misc;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +15,13 @@ public class SOPJ {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+		if (args.length != 2)
+			System.out.println("Usage:$SOPJ <inputfile> <outputfile>");
 		BufferedReader reader = null;
-		String result = "";
+		BufferedWriter writer = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(System.in));			
+			reader = new BufferedReader(new FileReader(args[0]));
+			writer = new BufferedWriter(new FileWriter(args[1]));
 			String line = reader.readLine();
 			int testCaseCount = 0;
 			if (line != null)
@@ -27,17 +32,17 @@ public class SOPJ {
 					int from = Integer.parseInt(line.split(" ")[0]);
 					int to = Integer.parseInt(line.split(" ")[1]);
 					for (Integer n : getPrimeNumbers(from, to)) {
-						result += n;
-						result += "\n";
+						writer.write(n.toString());
+						writer.newLine();
 					}
 				}
-				result += "\n";
+				writer.newLine();
 			}
-			System.out.println(result);
 		} finally {
 			if (reader != null)
 				reader.close();
-			System.exit(0);
+			if (writer != null)
+				writer.close();
 		}
 	}
 
