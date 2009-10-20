@@ -1,7 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.Writer;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +12,8 @@ public class CookieServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
+		Writer out = resp.getWriter();
+		out.write("<HTML><BODY>Hi! This is cookie servlet!</BODY></HTML>");
 		resp.addCookie(new Cookie("name", "sdm"));
 	}
 
