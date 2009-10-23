@@ -14,8 +14,8 @@ public class ObjectContent extends ObjectProperty {
 	public ObjectContent(PushbackInputStream in) throws Exception {
 		try {
 			name = new UTF8(in);
-			System.out.println("Object content name is:"
-					+ name.getStringValue());
+			// System.out.println("Object content name is:"
+			// + name.getStringValue());
 			value = Tools.sniffer(in);
 		} catch (InvalidDataException ex) {
 			unread(in);

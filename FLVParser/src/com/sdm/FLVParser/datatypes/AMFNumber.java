@@ -17,6 +17,7 @@ public class AMFNumber extends AMFValue {
 					"Invalid marker for AMF Number type!", in);
 		}
 		value = new AMFDouble(in);
+		//System.out.println("AN AMF number:" + value.getDoubleValue());
 	}
 
 	public double getDoubleValue() {

@@ -52,7 +52,7 @@ public class AudioData implements TagData {
 			break;
 		default:
 			// throw new InvalidDataException("Invalid sound format!!!", in);
-			System.out.println("WARNING-Invalid sound format!!!");
+			////System.out.println("WARNING-Invalid sound format!!!");
 		}
 		switch (soundInfoByte & 0x0C) {
 		case 0:
@@ -69,7 +69,7 @@ public class AudioData implements TagData {
 			break;
 		default:
 			// throw new InvalidDataException("Invalid sound rate!!!", in);
-			System.out.println("WARNING-Invalid sound rate!!!");
+			////System.out.println("WARNING-Invalid sound rate!!!");
 		}
 		switch (soundInfoByte & 0x02) {
 		case 0:
@@ -80,7 +80,7 @@ public class AudioData implements TagData {
 			break;
 		default:
 			// throw new InvalidDataException("Invalid sound size!!!", in);
-			System.out.println("WARNING-Invalid sound size!!!");
+			////System.out.println("WARNING-Invalid sound size!!!");
 		}
 		switch (soundInfoByte & 0x01) {
 		case 0:

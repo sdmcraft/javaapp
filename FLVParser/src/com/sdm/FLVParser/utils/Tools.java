@@ -116,6 +116,7 @@ public class Tools {
 
 		Marker marker = new Marker(in);
 		AMFValue value = null;
+		//System.out.println("Sniffed marker:" + marker.getByteValue());
 		marker.unread(in);
 		if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
 			value = new AMFNumber(in);
@@ -152,16 +153,16 @@ public class Tools {
 			throws Exception {
 		ObjectProperty objectProperty = null;
 		try {
-			System.out.println("qqqqqqqqqqq->" + in.available());
-			System.out.println("Reading object content");
+			////System.out.println("qqqqqqqqqqq->" + in.available());
+			//System.out.println("Reading object content");
 			objectProperty = new ObjectContent(in);
-			System.out.println("Completed Reading object content");
+			////System.out.println("Completed Reading object content");
 		} catch (InvalidDataException ex) {
 			// ex.printStackTrace();
-			System.out.println("qqqqqqqqqqq->" + in.available());
-			System.out.println("Reading object end");
+			////System.out.println("qqqqqqqqqqq->" + in.available());
+			//System.out.println("Reading object end");
 			objectProperty = new ObjectEnd(in);
-			System.out.println("Object end found");
+			////System.out.println("Object end found");
 		}
 		return objectProperty;
 	}
@@ -170,7 +171,7 @@ public class Tools {
 		byte b1 = 0;
 		byte b2 = 0;
 		byte b3 = (byte) 0xf0;
-		System.out.println(byteArrToInt(new byte[] { b1, b2, b3 }));
+		////System.out.println(byteArrToInt(new byte[] { b1, b2, b3 }));
 
 	}
 

@@ -28,7 +28,9 @@ public class ECMAArray extends AMFValue {
 		propertyList = new ArrayList<ObjectProperty>();
 		ObjectProperty property = Tools.readObjectProperty(in);
 		while (!(property instanceof ObjectEnd)) {
+			// System.out.println("Adding an object property");
 			propertyList.add(property);
+			// System.out.println("Going to read an object property");
 			property = Tools.readObjectProperty(in);
 		}
 		propertyList.add(property);

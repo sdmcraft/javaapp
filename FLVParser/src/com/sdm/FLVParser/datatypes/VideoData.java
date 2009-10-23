@@ -53,7 +53,7 @@ public class VideoData implements TagData {
 			break;
 		default:
 			// throw new InvalidDataException("Invalid frame type!!!", in);
-			System.out.println("WARNING-Invalid frame type!!!");
+			////System.out.println("WARNING-Invalid frame type!!!");
 		}
 		switch (videoInfoByte & 0x0F) {
 		case 2:

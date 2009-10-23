@@ -30,7 +30,7 @@ public class FLVHeader {
 		if (!validateFlags()) {
 			// unread(in);
 			// throw new InvalidDataException("Invalid FLV flags!!!");
-			System.out.println("WARNING-Invalid FLV flags!!!");
+			////System.out.println("WARNING-Invalid FLV flags!!!");
 		}
 		dataoffset = new U32(in);
 		if (dataoffset.getIntValue() != 9) {

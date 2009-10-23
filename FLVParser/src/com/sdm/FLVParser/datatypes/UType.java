@@ -22,7 +22,7 @@ public abstract class UType {
 	}
 
 	public void unread(PushbackInputStream in) throws Exception {	
-		System.out.println("Unreading " + valueBytes.length + " bytes");		
+		////System.out.println("Unreading " + valueBytes.length + " bytes");		
 		in.unread(valueBytes);
 	}
 

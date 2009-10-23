@@ -17,8 +17,7 @@ public class FLVTag {
 	private TagData data;
 	private byte[] dataBytes;
 
-	public void write(OutputStream out) throws Exception
-	{
+	public void write(OutputStream out) throws Exception {
 		tagType.write(out);
 		dataSize.write(out);
 		timeStamp.write(out);
@@ -26,9 +25,10 @@ public class FLVTag {
 		streamID.write(out);
 		data.write(out);
 	}
-	public FLVTag(PushbackInputStream in) throws Exception {		
+
+	public FLVTag(PushbackInputStream in) throws Exception {
 		tagType = new U8(in);
-		System.out.println("Tag type:" + tagType.getValue());
+		// //System.out.println("Tag type:" + tagType.getValue());
 		if (tagType.getValue() == 8)
 			tagTypeString = "audio";
 		else if (tagType.getValue() == 9)
@@ -38,7 +38,7 @@ public class FLVTag {
 		else
 			throw new InvalidDataException("Invalid tag type!", in);
 		dataSize = new U24(in);
-		System.out.println("Data size:" + dataSize.getIntValue());
+		// //System.out.println("Data size:" + dataSize.getIntValue());
 		if (dataSize.getIntValue() < 0)
 			throw new InvalidDataException("Sub zero data size for the tag!!!",
 					in);
@@ -51,8 +51,8 @@ public class FLVTag {
 			dataBytes = new byte[dataSize.getIntValue()];
 			if (in.read(dataBytes) != dataSize.getIntValue())
 				throw new InvalidDataException("Unable to read tag data!!!", in);
-			for (byte b : dataBytes)
-				System.out.print(b + " ");
+			// for (byte b : dataBytes)
+			// //System.out.print(b + " ");
 
 			PushbackInputStream tagDataIn = new PushbackInputStream(
 					new ByteArrayInputStream(dataBytes), 2048);

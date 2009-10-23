@@ -12,8 +12,11 @@ public class ScriptDataObject {
 
 	public ScriptDataObject(PushbackInputStream in) throws Exception {
 		amfValueList = new ArrayList<AMFValue>();
+		int count = 0;
 		while (in.available() > 0) {
 			amfValueList.add(Tools.sniffer(in));
+			count++;
+			//System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>AMF val count" + count);
 		}
 	}
 

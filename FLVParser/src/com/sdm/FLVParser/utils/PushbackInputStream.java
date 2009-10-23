@@ -52,7 +52,7 @@ public class PushbackInputStream extends java.io.PushbackInputStream {
 	}
 
 	public void tellPos() {
-		System.out.println(pos);
+		////System.out.println(pos);
 	}
 
 }
