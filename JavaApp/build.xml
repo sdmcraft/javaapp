@@ -64,7 +64,7 @@
 	</target>
 
 	<target name="run" depends="cleanall,build">
-		<java jar="dist/JavaApp.jar" fork="true">
+		<java jar="dist/JavaApp.jar" classpathref="mylibs" fork="true">
 			<sysproperty key="logFile" value="C:/my.log" />
 			<arg value="C:/temp/config.xml" />
 		</java>
