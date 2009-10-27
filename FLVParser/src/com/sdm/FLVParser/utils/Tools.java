@@ -1,5 +1,10 @@
 package com.sdm.FLVParser.utils;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sdm.FLVParser.datatypes.AMFBoolean;
 import com.sdm.FLVParser.datatypes.AMFDate;
 import com.sdm.FLVParser.datatypes.AMFLongString;
@@ -116,7 +121,7 @@ public class Tools {
 
 		Marker marker = new Marker(in);
 		AMFValue value = null;
-		//System.out.println("Sniffed marker:" + marker.getByteValue());
+		// System.out.println("Sniffed marker:" + marker.getByteValue());
 		marker.unread(in);
 		if (marker.getValue().equals(Markers.NUMBER_MARKER)) {
 			value = new AMFNumber(in);
@@ -153,26 +158,51 @@ public class Tools {
 			throws Exception {
 		ObjectProperty objectProperty = null;
 		try {
-			////System.out.println("qqqqqqqqqqq->" + in.available());
-			//System.out.println("Reading object content");
+			// //System.out.println("qqqqqqqqqqq->" + in.available());
+			// System.out.println("Reading object content");
 			objectProperty = new ObjectContent(in);
-			////System.out.println("Completed Reading object content");
+			// //System.out.println("Completed Reading object content");
 		} catch (InvalidDataException ex) {
 			// ex.printStackTrace();
-			////System.out.println("qqqqqqqqqqq->" + in.available());
-			//System.out.println("Reading object end");
+			// //System.out.println("qqqqqqqqqqq->" + in.available());
+			// System.out.println("Reading object end");
 			objectProperty = new ObjectEnd(in);
-			////System.out.println("Object end found");
+			// //System.out.println("Object end found");
 		}
 		return objectProperty;
 	}
 
-	public static void main(String[] args) throws Exception {
-		byte b1 = 0;
-		byte b2 = 0;
-		byte b3 = (byte) 0xf0;
-		////System.out.println(byteArrToInt(new byte[] { b1, b2, b3 }));
-
+	public static List<File> recursiveListFiles(File root, FilenameFilter filter) {
+		List<File> resultList = null;
+		if (root.isDirectory()) {
+			resultList = new ArrayList<File>();
+			File[] filteredFileArr = (root.listFiles(filter));
+			for (File file : filteredFileArr) {
+				if (file.isFile())
+					resultList.add(file);
+			}
+			File files[] = root.listFiles();
+			for (File file : files) {
+				if (file.isDirectory()) {
+					for (File filteredFile : recursiveListFiles(file, filter)) {
+						resultList.add(filteredFile);
+					}
+				}
+			}
+		}
+		return resultList;
 	}
 
+	public final static FilenameFilter getFileExtFilter(final String ext) {
+		return new FilenameFilter() {
+			public boolean accept(File dir, String fileName) {
+				return fileName.endsWith("." + ext);
+			}
+		};
+	}
+
+	public static void main(String[] args) throws Exception {
+		for (File f : recursiveListFiles(new File("\\\\connectdev1\\C\\workspace\\branches\\breeze\\702\\content"), getFileExtFilter("flv")))
+			System.out.println(f);
+	}
 }

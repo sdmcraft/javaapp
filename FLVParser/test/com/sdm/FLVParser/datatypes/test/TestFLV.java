@@ -3,9 +3,9 @@ package com.sdm.FLVParser.datatypes.test;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -14,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sdm.FLVParser.datatypes.FLV;
+import com.sdm.FLVParser.utils.Tools;
 
 public class TestFLV extends TestCase {
 
@@ -40,7 +41,11 @@ public class TestFLV extends TestCase {
 		try {
 			boolean pass = true;
 			oneTimeSetup();
-			File[] flvFiles = testDataDir.listFiles(getFileExtFilter("flv"));
+			List<File> flvFiles = Tools
+					.recursiveListFiles(
+							new File(
+									"\\\\connectdev1\\C\\workspace\\branches\\breeze\\702\\content"),
+							Tools.getFileExtFilter("flv"));
 			for (File flvFile : flvFiles) {
 				try {
 					testLogWriter.print("Parsing " + flvFile);
@@ -57,13 +62,5 @@ public class TestFLV extends TestCase {
 			oneTimeDestroy();
 		}
 
-	}
-
-	final static FilenameFilter getFileExtFilter(final String ext) {
-		return new FilenameFilter() {
-			public boolean accept(File dir, String fileName) {
-				return fileName.endsWith("." + ext);
-			}
-		};
 	}
 }

@@ -17,7 +17,7 @@ public class TestTools extends TestCase {
 
 	@Test
 	public void testU16toInt() throws Exception {
-		for (int i = 0; i < 65535; i++) {
+		for (int i = 0; i <= 65535; i++) {
 			DataOutputStream dout = null;
 			ByteArrayOutputStream bout = null;
 			ByteArrayInputStream bin = null;
@@ -26,8 +26,8 @@ public class TestTools extends TestCase {
 			try {
 				bout = new ByteArrayOutputStream();
 				dout = new DataOutputStream(bout);
-				dout.write(i & 0xFF);
-				dout.write(i & 0xFF00);
+				dout.write(Tools.intToByteArr(i)[1]);
+				dout.write(Tools.intToByteArr(i)[0]);
 			} finally {
 				if (bout != null)
 					bout.close();
@@ -36,9 +36,6 @@ public class TestTools extends TestCase {
 			}
 			try {
 				byte[] byteArr = bout.toByteArray();
-				System.out.println("Length:" +byteArr.length);
-				for(byte b : byteArr)
-					System.out.println(b);
 				bin = new ByteArrayInputStream(byteArr);
 				din = new DataInputStream(bin);
 				pbin = new PushbackInputStream(din);

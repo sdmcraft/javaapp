@@ -102,7 +102,7 @@
 	<target name="test" depends="build,emma,clean">
 		<emmajava enabled="${emma.enabled}" libclasspathref="emma.lib"
 			sourcepath="${src.dir}" classpathref="mylibs"
-			classname="org.junit.runner.JUnitCore">
+			classname="org.junit.runner.JUnitCore" maxmemory="1g">
 			<arg value="com.sdm.FLVParser.test.FLVParserTestSuite" />
 			<html outfile="${coverage.dir}/coverage.html" />
 			<filter includes="com.sdm.FLVParser.*" />
