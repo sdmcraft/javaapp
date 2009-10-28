@@ -1,0 +1,106 @@
+<class-diagram version="0.9.86" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLV" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLV.java" binary="false">    
+    <position x="123" y="545" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLVBody" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBody.java" binary="false">    
+    <position x="328" y="407" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLVHeader" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVHeader.java" binary="false">    
+    <position x="107" y="179" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLVBodyComponent" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBodyComponent.java" binary="false">    
+    <position x="649" y="326" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLVTag" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false">    
+    <position x="924" y="321" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.TagData" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false">    
+    <position x="920" y="620" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVTag" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false" navigable="false">      
+      <attribute name="data"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.TagData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVBody" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBody.java" binary="false" navigable="false">      
+      <attribute name="componentList"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVBodyComponent" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBodyComponent.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLV" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLV.java" binary="false" navigable="false">      
+      <attribute name="header"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVHeader" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVHeader.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLV" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLV.java" binary="false" navigable="false">      
+      <attribute name="body"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVBody" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBody.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVBodyComponent" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBodyComponent.java" binary="false" navigable="false">      
+      <attribute name="tag"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVTag" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

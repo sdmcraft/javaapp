@@ -1,0 +1,1149 @@
+<class-diagram version="0.9.86" automaticImage="JPEG" icons="true" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLVHeader" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVHeader.java" binary="false">    
+    <position x="496" y="525" width="195" height="275"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AudioData" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AudioData.java" binary="false">    
+    <position x="1439" y="840" width="247" height="195"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFDate" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFDate.java" binary="false">    
+    <position x="1734" y="103" width="195" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.UTF8empty" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8empty.java" binary="false">    
+    <position x="2266" y="840" width="195" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLV" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLV.java" binary="false">    
+    <position x="-91" y="150" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.U32" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false">    
+    <position x="2501" y="840" width="154" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ScriptData" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptData.java" binary="false">    
+    <position x="2823" y="-210" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLVBody" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBody.java" binary="false">    
+    <position x="534" y="290" width="180" height="83"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.U16" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/U16.java" binary="false">    
+    <position x="2718" y="1187" width="154" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFAnonymousObject" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFAnonymousObject.java" binary="false">    
+    <position x="2204" y="103" width="151" height="51"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFDouble" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFDouble.java" binary="false">    
+    <position x="1243" y="290" width="195" height="195"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.S16" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/S16.java" binary="false">    
+    <position x="2758" y="840" width="154" height="83"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.U8" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false">    
+    <position x="1339" y="1388" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFUndef" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFUndef.java" binary="false">    
+    <position x="107" y="118" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLVBodyComponent" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBodyComponent.java" binary="false">    
+    <position x="731" y="525" width="234" height="83"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.Marker" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false">    
+    <position x="1026" y="840" width="195" height="147"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.Markers" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false">    
+    <position x="1261" y="840" width="138" height="51"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ScriptDataObject" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptDataObject.java" binary="false">    
+    <position x="2376" y="-202" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFValue" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false">    
+    <position x="1989" y="-214" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ObjectEnd" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectEnd.java" binary="false">    
+    <position x="1663" y="525" width="195" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ScriptDataObjectEnd" 
+    project="FLVParser" file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptDataObjectEnd.java" binary="false">    
+    <position x="1499" y="290" width="234" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.FLVTag" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false">    
+    <position x="720" y="840" width="182" height="307"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.VideoData" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/VideoData.java" binary="false">    
+    <position x="1726" y="840" width="244" height="163"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFNull" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFNull.java" binary="false">    
+    <position x="347" y="155" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ObjectContent" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectContent.java" binary="false">    
+    <position x="1898" y="525" width="203" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFBoolean" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFBoolean.java" binary="false">    
+    <position x="670" y="190" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <interface corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.TagData" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false">    
+    <position x="1726" y="1187" width="148" height="67"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.XMLDoc" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/XMLDoc.java" binary="false">    
+    <position x="2447" y="290" width="195" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFString" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFString.java" binary="false">    
+    <position x="1478" y="103" width="195" height="147"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFRef" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFRef.java" binary="false">    
+    <position x="3144" y="150" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.U24" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/U24.java" binary="false">    
+    <position x="720" y="1187" width="154" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ECMAArray" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/ECMAArray.java" binary="false">    
+    <position x="2395" y="103" width="195" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFLongString" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFLongString.java" binary="false">    
+    <position x="2682" y="290" width="209" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ObjectProperty" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectProperty.java" binary="false">    
+    <position x="1969" y="290" width="200" height="83"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFObject" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFObject.java" binary="false">    
+    <position x="1969" y="103" width="195" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.UTF8Long" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8Long.java" binary="false">    
+    <position x="2405" y="525" width="195" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.UTF8" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8.java" binary="false">    
+    <position x="2010" y="840" width="195" height="163"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.UType" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false">    
+    <position x="2640" y="525" width="195" height="179"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFNumber" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFNumber.java" binary="false">    
+    <position x="1243" y="103" width="195" height="131"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.StrictArray" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/StrictArray.java" binary="false">    
+    <position x="2693" y="103" width="195" height="99"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.StrictArray" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/StrictArray.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ECMAArray" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ECMAArray.java" binary="false" navigable="false">      
+      <attribute name="propertyList"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectProperty" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectProperty.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="2374" y="290"/>    
+    <bendpoint x="2374" y="525"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ECMAArray" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ECMAArray.java" binary="false" navigable="false">      
+      <attribute name="associativeCount"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U32" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFAnonymousObject" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFAnonymousObject.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectProperty" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectProperty.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <bendpoint x="2685" y="840"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.U24" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U24.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UType" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.VideoData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/VideoData.java" binary="false" navigable="false">      
+      <attribute name="videoDataList"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFDate" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFDate.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFDouble" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFDouble.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="DATE_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVTag" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false" navigable="false">      
+      <attribute name="dataSize"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U24" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U24.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVBodyComponent" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBodyComponent.java" binary="false" navigable="false">      
+      <attribute name="tag"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVTag" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.XMLDoc" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/XMLDoc.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8Long" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8Long.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="974" y="840"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVHeader" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVHeader.java" binary="false" navigable="false">      
+      <attribute name="flags"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFLongString" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFLongString.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8Long" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8Long.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="LONG_STRING_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="1212" y="103"/>    
+    <bendpoint x="1212" y="290"/>    
+    <bendpoint x="1212" y="525"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false" navigable="false">      
+      <attribute name="marker"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.Marker" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Marker" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="1271" y="525"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ScriptDataObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptDataObjectEnd.java" binary="false" navigable="false">      
+      <attribute name="objectNameType"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.Marker" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="BOOLEAN_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.VideoData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/VideoData.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.TagData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false"/>  
+  </realization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8empty" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8empty.java" binary="false" navigable="false">      
+      <attribute name="length"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U16.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="STRING_NULL_TERMINATOR"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFNumber" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFNumber.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFDouble" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFDouble.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFUndef" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFUndef.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="RECORDSET_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVTag" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false" navigable="false">      
+      <attribute name="tagType"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFDate" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFDate.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVTag" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false" navigable="false">      
+      <attribute name="data"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.TagData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ScriptDataObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptDataObjectEnd.java" binary="false" navigable="false">      
+      <attribute name="objectEnd"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectEnd.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ScriptDataObject" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptDataObject.java" binary="false" navigable="false">      
+      <attribute name="amfValueList"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLV" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLV.java" binary="false" navigable="false">      
+      <attribute name="body"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVBody" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBody.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <bendpoint x="2727" y="840"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.U16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U16.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UType" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false"/>  
+  </generalization>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.U32" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UType" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFObject" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFObject.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectProperty" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectProperty.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="1468" y="290"/>    
+    <bendpoint x="1468" y="525"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFString" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFString.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.StrictArray" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/StrictArray.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="TYPED_OBJECT_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AudioData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AudioData.java" binary="false" navigable="false">      
+      <attribute name="soundDataList"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.S16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/S16.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UType" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="NUMBER_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectEnd.java" binary="false" navigable="false">      
+      <attribute name="empty"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8empty" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8empty.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFNumber" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFNumber.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="XML_DOCUMENT_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFNull" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFNull.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <generalization>    
+    <bendpoint x="2620" y="103"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.XMLDoc" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/XMLDoc.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="STRICT_ARRAY_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AudioData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AudioData.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.TagData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false"/>  
+  </realization>  
+  <association>    
+    <bendpoint x="1763" y="290"/>    
+    <bendpoint x="1703" y="103"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectContent" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectContent.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ScriptData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptData.java" binary="false" navigable="false">      
+      <attribute name="scriptDataObject"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.ScriptDataObject" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptDataObject.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="2395" y="290"/>    
+    <bendpoint x="2865" y="525"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFDate" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFDate.java" binary="false" navigable="false">      
+      <attribute name="timeZone"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.S16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/S16.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="2942" y="290"/>    
+    <bendpoint x="2942" y="525"/>    
+    <bendpoint x="2942" y="840"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFRef" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFRef.java" binary="false" navigable="false">      
+      <attribute name="index"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U16.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AudioData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AudioData.java" binary="false" navigable="false">      
+      <attribute name="soundInfo"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="ECMA_ARRAY_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8.java" binary="false" navigable="false">      
+      <attribute name="utfData"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectContent" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectContent.java" binary="false" navigable="false">      
+      <attribute name="name"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="OBJECT_END_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVTag" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false" navigable="false">      
+      <attribute name="timeStampExtended"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="426" y="290"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLV" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLV.java" binary="false" navigable="false">      
+      <attribute name="header"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVHeader" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVHeader.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFRef" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFRef.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <realization>    
+    <bendpoint x="2641" y="-143"/>    
+    <bendpoint x="2641" y="-20"/>    
+    <bendpoint x="2641" y="103"/>    
+    <bendpoint x="2416" y="290"/>    
+    <bendpoint x="2326" y="525"/>    
+    <bendpoint x="2235" y="840"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ScriptData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptData.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.TagData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false"/>  
+  </realization>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFBoolean" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFBoolean.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.VideoData" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/VideoData.java" binary="false" navigable="false">      
+      <attribute name="videoInfo"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="932" y="840"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVHeader" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVHeader.java" binary="false" navigable="false">      
+      <attribute name="version"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="UNSUPPORTED_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <bendpoint x="2662" y="103"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFLongString" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFLongString.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="UNDEFINED_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="953" y="840"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVHeader" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVHeader.java" binary="false" navigable="false">      
+      <attribute name="signature"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVTag" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false" navigable="false">      
+      <attribute name="streamID"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U24" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U24.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="OBJECT_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFObject" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFObject.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="MOVIECLIP_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="2921" y="290"/>    
+    <bendpoint x="2921" y="525"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.StrictArray" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/StrictArray.java" binary="false" navigable="false">      
+      <attribute name="arrayCount"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U32" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVHeader" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVHeader.java" binary="false" navigable="false">      
+      <attribute name="dataoffset"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U32" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFString" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFString.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVBodyComponent" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBodyComponent.java" binary="false" navigable="false">      
+      <attribute name="prevTagSize"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U32" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8Long" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8Long.java" binary="false" navigable="false">      
+      <attribute name="length"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U32" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVTag" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVTag.java" binary="false" navigable="false">      
+      <attribute name="timeStamp"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U24" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U24.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectEnd.java" binary="false" navigable="false">      
+      <attribute name="endMarker"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.Marker" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectEnd.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectProperty" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectProperty.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8.java" binary="false" navigable="false">      
+      <attribute name="length"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U16.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectContent" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectContent.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectProperty" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectProperty.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="NULL_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVBody" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBody.java" binary="false" navigable="false">      
+      <attribute name="componentList"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.FLVBodyComponent" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/FLVBodyComponent.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="REFERENCE_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="995" y="290"/>    
+    <bendpoint x="995" y="525"/>    
+    <bendpoint x="995" y="840"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFBoolean" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFBoolean.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <bendpoint x="2706" y="840"/>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8Long" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8Long.java" binary="false" navigable="false">      
+      <attribute name="utfData"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ECMAArray" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ECMAArray.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="STRING_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

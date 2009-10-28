@@ -1,0 +1,154 @@
+<class-diagram version="0.9.86" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.U16" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/U16.java" binary="false">    
+    <position x="401" y="452" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.U24" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/U24.java" binary="false">    
+    <position x="285" y="579" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.U32" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false">    
+    <position x="668" y="449" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.U8" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false">    
+    <position x="1030" y="463" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.UTF8" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8.java" binary="false">    
+    <position x="643" y="99" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.UTF8empty" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8empty.java" binary="false">    
+    <position x="320" y="276" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.UTF8Long" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8Long.java" binary="false">    
+    <position x="667" y="282" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.UType" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false">    
+    <position x="513" y="635" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.S16" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/S16.java" binary="false">    
+    <position x="289" y="689" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8.java" binary="false" navigable="false">      
+      <attribute name="length"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U16.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8empty" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8empty.java" binary="false" navigable="false">      
+      <attribute name="length"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U16.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8Long" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8Long.java" binary="false" navigable="false">      
+      <attribute name="length"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U32" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8.java" binary="false" navigable="false">      
+      <attribute name="utfData"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.U16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U16.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UType" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false"/>  
+  </generalization>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.U24" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U24.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UType" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false"/>  
+  </generalization>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.UTF8Long" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UTF8Long.java" binary="false" navigable="false">      
+      <attribute name="utfData"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.U32" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U32.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UType" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false"/>  
+  </generalization>  
+  <generalization>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.S16" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/S16.java" binary="false"/>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.UType" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/UType.java" binary="false"/>  
+  </generalization>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

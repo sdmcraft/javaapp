@@ -1,0 +1,286 @@
+<class-diagram version="0.9.86" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.Marker" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false">    
+    <position x="735" y="285" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.Markers" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false">    
+    <position x="256" y="522" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.U8" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false">    
+    <position x="747" y="521" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AMFValue" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false">    
+    <position x="345" y="215" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ScriptDataObjectEnd" 
+    project="FLVParser" file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptDataObjectEnd.java" binary="false">    
+    <position x="521" y="106" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ObjectEnd" project="FLVParser" 
+    file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectEnd.java" binary="false">    
+    <position x="855" y="106" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectEnd.java" binary="false" navigable="false">      
+      <attribute name="endMarker"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.Marker" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="LONG_STRING_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ScriptDataObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptDataObjectEnd.java" binary="false" navigable="false">      
+      <attribute name="objectNameType"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.Marker" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="NUMBER_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="XML_DOCUMENT_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="OBJECT_END_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="ECMA_ARRAY_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="TYPED_OBJECT_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="UNSUPPORTED_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="STRING_NULL_TERMINATOR"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="DATE_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="BOOLEAN_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="STRICT_ARRAY_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="OBJECT_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="STRING_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="NULL_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="REFERENCE_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="RECORDSET_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Marker" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false" navigable="false">      
+      <attribute name="value"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.AMFValue" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/AMFValue.java" binary="false" navigable="false">      
+      <attribute name="marker"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.Marker" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Marker.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="UNDEFINED_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.Markers" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/Markers.java" binary="false" navigable="false">      
+      <attribute name="MOVIECLIP_MARKER"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.U8" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/U8.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association>    
+    <source project="FLVParser" name="com.sdm.FLVParser.datatypes.ScriptDataObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ScriptDataObjectEnd.java" binary="false" navigable="false">      
+      <attribute name="objectEnd"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="FLVParser" name="com.sdm.FLVParser.datatypes.ObjectEnd" 
+      file="/FLVParser/src/com/sdm/FLVParser/datatypes/ObjectEnd.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
