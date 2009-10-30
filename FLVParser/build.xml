@@ -6,8 +6,7 @@
 	<property name="lib.dir" value="lib" />
 	<property name="build.dir" value="build" />
 	<property name="build.classes" value="${build.dir}/classes" />
-	<property name="build.test-classes"
-		value="${build.dir}/test-classes" />
+	<property name="build.test-classes" value="${build.dir}/test-classes" />
 	<property name="coverage.dir" value="coverage" />
 	<property name="javac.debug" value="on" />
 	<property name="build.compiler" value="modern" />
@@ -30,8 +29,7 @@
 
 	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
 
-	<target name="emma"
-		description="turns on EMMA's on-the-fly instrumentation mode">
+	<target name="emma" description="turns on EMMA's on-the-fly instrumentation mode">
 		<property name="emma.enabled" value="true" />
 	</target>
 
@@ -44,21 +42,15 @@
 	</target>
 
 	<target name="build" depends="clean,prepare">
-		<javac classpathref="mylibs" destdir="${build.classes}"
-			debug="on" debuglevel="lines,vars,source" deprecation="on"
-			target="1.5">
+		<javac classpathref="mylibs" destdir="${build.classes}" debug="on" debuglevel="lines,vars,source" deprecation="on" target="1.5">
 			<src path="${src.dir}" />
 		</javac>
-		<jar jarfile="${dist.dir}/FLVParser.jar"
-			basedir="${build.classes}" />
+		<jar jarfile="${dist.dir}/FLVParser.jar" basedir="${build.classes}" />
 
-		<javac classpathref="mylibs" destdir="${build.test-classes}"
-			debug="on" debuglevel="lines,vars,source" deprecation="on"
-			target="1.5">
+		<javac classpathref="mylibs" destdir="${build.test-classes}" debug="on" debuglevel="lines,vars,source" deprecation="on" target="1.5">
 			<src path="${test.dir}" />
 		</javac>
-		<jar jarfile="${dist.dir}/TestFLVParser.jar"
-			basedir="${build.test-classes}" />
+		<jar jarfile="${dist.dir}/TestFLVParser.jar" basedir="${build.test-classes}" />
 
 	</target>
 
@@ -80,29 +72,23 @@
 		<java jar="dist/AccountMigration.jar" fork="true">
 			<arg value="${config}" />
 			<sysproperty key="DEBUG" value="true" />
-			<jvmarg
-				value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001" />
 		</java>
 	</target>
 
 
 
 	<target name="test-debug" depends="build,emma,clean">
-		<emmajava enabled="${emma.enabled}" libclasspathref="emma.lib"
-			sourcepath="${src.dir}" classpathref="mylibs"
-			classname="org.junit.runner.JUnitCore">
+		<emmajava enabled="${emma.enabled}" libclasspathref="emma.lib" sourcepath="${src.dir}" classpathref="mylibs" classname="org.junit.runner.JUnitCore">
 			<arg value="com.sdm.FLVParser.test.FLVParserTestSuite" />
-			<jvmarg
-				value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001" />
 			<html outfile="${coverage.dir}/coverage.html" />
 			<filter includes="com.sdm.FLVParser.*" />
 		</emmajava>
 	</target>
 
 	<target name="test" depends="build,emma,clean">
-		<emmajava enabled="${emma.enabled}" libclasspathref="emma.lib"
-			sourcepath="${src.dir}" classpathref="mylibs"
-			classname="org.junit.runner.JUnitCore" maxmemory="1g">
+		<emmajava enabled="${emma.enabled}" libclasspathref="emma.lib" sourcepath="${src.dir}" classpathref="mylibs" classname="org.junit.runner.JUnitCore" maxmemory="1g">
 			<arg value="com.sdm.FLVParser.test.FLVParserTestSuite" />
 			<html outfile="${coverage.dir}/coverage.html" />
 			<filter includes="com.sdm.FLVParser.*" />
@@ -132,5 +118,15 @@
 		</copy>
 		<zip destfile="${release}.zip" basedir="${release}" />
 	</target>
+
+	<target name="doc">
+		<javadoc packagenames="com.sdm.FLVParser.*" sourcepath="${src.dir}" defaultexcludes="yes" destdir="${doc.dir}/api-docs" author="true" version="true" use="true" windowtitle="FLV Parser API Docs">
+			<doctitle>
+				<![CDATA[<h1>FLV Parser API Docs</h1>]]></doctitle>
+		<bottom>
+			<![CDATA[<i>Copyright &#169; 2009 SDM Corp. All Rights Reserved.</i>]]></bottom>
+</javadoc>
+</target>
+
 
 </project>
