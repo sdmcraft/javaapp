@@ -70,8 +70,8 @@ public class U8 implements DataType {
 	 * Other than the passed object being the same object, same associated value
 	 * would also mean equal objects
 	 * 
-	 * @param The
-	 *            object passed for comparison
+	 * @param obj
+	 *            The object passed for comparison
 	 * @return true if the objects are equal else false
 	 */
 	@Override

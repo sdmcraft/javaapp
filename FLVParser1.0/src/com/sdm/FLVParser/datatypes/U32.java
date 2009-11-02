@@ -29,6 +29,11 @@ public class U32 extends UType {
 		}
 	}
 
+	public U32(int value) {
+		this.intValue = value;
+		this.valueBytes = Tools.intToByteArr(intValue);
+	}
+
 	/**
 	 * Constructs a U32 object by reading from the specified input stream
 	 * 
@@ -44,6 +49,14 @@ public class U32 extends UType {
 		intValue = (int) Tools.byteArrToInt(valueBytes);
 	}
 
+	/**
+	 * Sets the associated integer value
+	 * 
+	 * @param intValue
+	 *            Associated integer value
+	 * @throws Exception
+	 *             If an internal error occurred
+	 */
 	public void setIntValue(int intValue) throws Exception {
 		byte[] valueBytes = Tools.intToByteArr(intValue);
 		this.valueBytes = valueBytes;

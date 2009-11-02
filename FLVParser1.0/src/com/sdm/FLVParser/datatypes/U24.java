@@ -44,6 +44,14 @@ public class U24 extends UType {
 		intValue = (int) Tools.byteArrToInt(valueBytes);
 	}
 
+	/**
+	 * Sets the associated integer value
+	 * 
+	 * @param intValue
+	 *            Associated integer value
+	 * @throws Exception
+	 *             If an the value is too large to fit in a U24
+	 */
 	public void setIntValue(int intValue) throws Exception {
 		byte[] valueBytes = Tools.intToByteArr(intValue);
 		if (valueBytes[3] != 0)

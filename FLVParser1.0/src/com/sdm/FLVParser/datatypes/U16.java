@@ -44,6 +44,14 @@ public class U16 extends UType {
 	}
 
 	@Override
+	/**
+	 * Sets the associated integer value
+	 * 
+	 * @param intValue
+	 *            Associated integer value
+	 * @throws Exception
+	 *             If an the value is too large to fit in a U16
+	 */
 	public void setIntValue(int intValue) throws Exception {
 		byte[] valueBytes = Tools.intToByteArr(intValue);
 		if (valueBytes[2] != 0 || valueBytes[3] != 0)

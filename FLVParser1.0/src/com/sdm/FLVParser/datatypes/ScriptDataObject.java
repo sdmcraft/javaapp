@@ -24,4 +24,12 @@ public class ScriptDataObject {
 		for (AMFValue amfVal : amfValueList)
 			amfVal.write(out);
 	}
+
+	public List<AMFValue> getAmfValueList() {
+		return amfValueList;
+	}
+
+	public void setAmfValueList(List<AMFValue> amfValueList) {
+		this.amfValueList = amfValueList;
+	}
 }

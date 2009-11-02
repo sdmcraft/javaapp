@@ -33,4 +33,12 @@ public class AMFLongString extends AMFValue {
 		marker.write(out);
 		value.write(out);
 	}
+
+	public UTF8Long getValue() {
+		return value;
+	}
+
+	public void setValue(UTF8Long value) {
+		this.value = value;
+	}
 }

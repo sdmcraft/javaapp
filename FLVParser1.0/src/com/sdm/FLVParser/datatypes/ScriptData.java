@@ -18,4 +18,20 @@ public class ScriptData implements TagData {
 	public void write(OutputStream out) throws Exception {
 		scriptDataObject.write(out);
 	}
+
+	public ScriptDataObject getScriptDataObject() {
+		return scriptDataObject;
+	}
+
+	public void setScriptDataObject(ScriptDataObject scriptDataObject) {
+		this.scriptDataObject = scriptDataObject;
+	}
+
+	public static int getScriptDataCount() {
+		return scriptDataCount;
+	}
+
+	public static void setScriptDataCount(int scriptDataCount) {
+		ScriptData.scriptDataCount = scriptDataCount;
+	}
 }
