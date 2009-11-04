@@ -3,7 +3,10 @@ package com.sdm.FLVParser.examples;
 import java.util.List;
 import java.util.Map;
 
+import com.sdm.FLVParser.datatypes.AMFDate;
+import com.sdm.FLVParser.datatypes.AMFDouble;
 import com.sdm.FLVParser.datatypes.AMFLongString;
+import com.sdm.FLVParser.datatypes.AMFNumber;
 import com.sdm.FLVParser.datatypes.AMFValue;
 import com.sdm.FLVParser.datatypes.FLV;
 import com.sdm.FLVParser.datatypes.FLVBody;
@@ -36,14 +39,23 @@ public class Mapper {
 				ScriptData scriptData = (ScriptData) tag.getData();
 				ScriptDataObject scriptDataObject = scriptData
 						.getScriptDataObject();
-				for(AMFValue amfVal : scriptDataObject.getAmfValueList())
-				{
-					if(amfVal instanceof AMFLongString)
-					{
-						AMFLongString longStr = (AMFLongString)amfVal;
+				for (AMFValue amfVal : scriptDataObject.getAmfValueList()) {
+					if (amfVal instanceof AMFLongString) {
+						AMFLongString longStr = (AMFLongString) amfVal;
 						UTF8Long utfVal = longStr.getValue();
-						
+						String oldStr = utfVal.getStringValue();
+						String newStr = map.get(oldStr);
+						if (newStr != null)
+							utfVal.setStringValue(newStr);
+					} else if (amfVal instanceof AMFNumber) {
+						AMFNumber number = (AMFNumber) amfVal;
+						double doubleVal = number.getDoubleValue();
+						String oldStr = Double.toString(doubleVal);
+						String newStr = map.get(oldStr);
+						if (newStr != null)
+							number.setDoubleValue(Double.parseDouble(newStr));
 					}
+
 				}
 			}
 		}

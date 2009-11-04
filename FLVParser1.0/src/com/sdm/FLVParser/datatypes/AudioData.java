@@ -8,14 +8,37 @@ import java.util.List;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AudioData.
+ */
 public class AudioData implements TagData {
+	
+	/** The sound info. */
 	private U8 soundInfo;
+	
+	/** The sound data list. */
 	private List<U8> soundDataList;
+	
+	/** The sound format. */
 	private String soundFormat;
+	
+	/** The sound rate. */
 	private String soundRate;
+	
+	/** The sound size. */
 	private String soundSize;
+	
+	/** The sound type. */
 	private String soundType;
 
+	/**
+	 * Instantiates a new audio data.
+	 * 
+	 * @param in the in
+	 * 
+	 * @throws Exception the exception
+	 */
 	public AudioData(PushbackInputStream in) throws Exception {
 		soundInfo = new U8(in);
 		validateSoundInfo(in);
@@ -26,12 +49,22 @@ public class AudioData implements TagData {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.TagData#write(java.io.OutputStream)
+	 */
 	public void write(OutputStream out) throws Exception {
 		soundInfo.write(out);
 		for (U8 u8 : soundDataList)
 			u8.write(out);
 	}
 
+	/**
+	 * Validate sound info.
+	 * 
+	 * @param in the in
+	 * 
+	 * @throws Exception the exception
+	 */
 	private void validateSoundInfo(PushbackInputStream in) throws Exception {
 		byte soundInfoByte = soundInfo.getValue();
 		switch (soundInfoByte & 0xF0) {
@@ -98,10 +131,20 @@ public class AudioData implements TagData {
 
 	}
 
+	/**
+	 * Gets the sound info.
+	 * 
+	 * @return the sound info
+	 */
 	public U8 getSoundInfo() {
 		return soundInfo;
 	}
 
+	/**
+	 * Sets the sound info.
+	 * 
+	 * @param soundInfo the new sound info
+	 */
 	public void setSoundInfo(U8 soundInfo) {
 		this.soundInfo = soundInfo;
 	}

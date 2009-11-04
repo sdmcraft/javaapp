@@ -8,12 +8,31 @@ import java.util.List;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VideoData.
+ */
 public class VideoData implements TagData {
+	
+	/** The video info. */
 	private U8 videoInfo;
+	
+	/** The video data list. */
 	private List<U8> videoDataList;
+	
+	/** The frame type. */
 	private String frameType;
+	
+	/** The codec id. */
 	private String codecId;
 
+	/**
+	 * Instantiates a new video data.
+	 * 
+	 * @param in the in
+	 * 
+	 * @throws Exception the exception
+	 */
 	public VideoData(PushbackInputStream in) throws Exception {
 		videoInfo = new U8(in);
 		validateVideoInfo(in);
@@ -24,6 +43,9 @@ public class VideoData implements TagData {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.TagData#write(java.io.OutputStream)
+	 */
 	public void write(OutputStream out) throws Exception {
 		videoInfo.write(out);
 		for (U8 u8 : videoDataList)
@@ -31,14 +53,31 @@ public class VideoData implements TagData {
 
 	}
 
+	/**
+	 * Gets the video info.
+	 * 
+	 * @return the video info
+	 */
 	public U8 getVideoInfo() {
 		return videoInfo;
 	}
 
+	/**
+	 * Sets the video info.
+	 * 
+	 * @param videoInfo the new video info
+	 */
 	public void setVideoInfo(U8 videoInfo) {
 		this.videoInfo = videoInfo;
 	}
 
+	/**
+	 * Validate video info.
+	 * 
+	 * @param in the in
+	 * 
+	 * @throws Exception the exception
+	 */
 	private void validateVideoInfo(PushbackInputStream in) throws Exception {
 		byte videoInfoByte = videoInfo.getValue();
 		switch (videoInfoByte & 0xF0) {

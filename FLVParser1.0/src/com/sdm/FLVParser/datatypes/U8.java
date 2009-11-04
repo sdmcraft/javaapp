@@ -4,29 +4,30 @@ import java.io.OutputStream;
 
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
+// TODO: Auto-generated Javadoc
 /**
- * An unsigned byte, 8-bits of data, an octet
+ * An unsigned byte, 8-bits of data, an octet.
  */
 public class U8 implements DataType {
+	
+	/** The value. */
 	private byte value;
 
 	/**
-	 * Constructs a U8 object with specified byte value
+	 * Constructs a U8 object with specified byte value.
 	 * 
-	 * @param value
-	 *            Associated byte value
+	 * @param value Associated byte value
 	 */
 	public U8(byte value) {
 		this.value = value;
 	}
 
 	/**
-	 * Constructs a U8 object by reading from the specified input stream
+	 * Constructs a U8 object by reading from the specified input stream.
 	 * 
-	 * @param in
-	 *            Input stream to read from
-	 * @throws Exception
-	 *             If an error occurred while reading
+	 * @param in Input stream to read from
+	 * 
+	 * @throws Exception If an error occurred while reading
 	 */
 	public U8(PushbackInputStream in) throws Exception {
 		value = (byte) in.read();
@@ -35,7 +36,7 @@ public class U8 implements DataType {
 	}
 
 	/**
-	 * Returns the contained byte value
+	 * Returns the contained byte value.
 	 * 
 	 * @return Contained byte value
 	 */
@@ -44,22 +45,20 @@ public class U8 implements DataType {
 	}
 
 	/**
-	 * Sets the contained byte value
+	 * Sets the contained byte value.
 	 * 
-	 * @param value
-	 *            Byte value to be set
+	 * @param value Byte value to be set
 	 */
 	public void setValue(byte value) {
 		this.value = value;
 	}
 
 	/**
-	 * Writes this object to the specified output stream
+	 * Writes this object to the specified output stream.
 	 * 
-	 * @param out
-	 *            Output stream to write to
-	 * @throws Exception
-	 *             If an error occurred while writing
+	 * @param out Output stream to write to
+	 * 
+	 * @throws Exception If an error occurred while writing
 	 */
 	public void write(OutputStream out) throws Exception {
 		out.write(value & 0xFF);
@@ -70,8 +69,8 @@ public class U8 implements DataType {
 	 * Other than the passed object being the same object, same associated value
 	 * would also mean equal objects
 	 * 
-	 * @param obj
-	 *            The object passed for comparison
+	 * @param obj The object passed for comparison
+	 * 
 	 * @return true if the objects are equal else false
 	 */
 	@Override
@@ -89,19 +88,18 @@ public class U8 implements DataType {
 	}
 
 	/**
-	 * Unreads this object and pushes back whatever is read to the input stream
+	 * Unreads this object and pushes back whatever is read to the input stream.
 	 * 
-	 * @param in
-	 *            Input stream for unreading
-	 * @throws Exception
-	 *             If an error occured while unread
+	 * @param in Input stream for unreading
+	 * 
+	 * @throws Exception If an error occured while unread
 	 */
 	public void unread(PushbackInputStream in) throws Exception {
 		in.unread(value);
 	}
 
 	/**
-	 * Returns the string representation
+	 * Returns the string representation.
 	 * 
 	 * @return The string representation
 	 */

@@ -6,9 +6,22 @@ import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class XMLDoc.
+ */
 public class XMLDoc extends AMFValue {
+	
+	/** The value. */
 	private UTF8Long value;
 
+	/**
+	 * Instantiates a new xML doc.
+	 * 
+	 * @param in the in
+	 * 
+	 * @throws Exception the exception
+	 */
 	public XMLDoc(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
 		if (!Markers.XML_DOCUMENT_MARKER.equals(marker.getValue())) {
@@ -20,6 +33,9 @@ public class XMLDoc extends AMFValue {
 		value = new UTF8Long(in);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.AMFValue#unread(com.sdm.FLVParser.utils.PushbackInputStream)
+	 */
 	public void unread(PushbackInputStream in) throws Exception {
 		if (value != null)
 			value.unread(in);
@@ -28,6 +44,9 @@ public class XMLDoc extends AMFValue {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.AMFValue#write(java.io.OutputStream)
+	 */
 	@Override
 	public void write(OutputStream out) throws Exception {
 		marker.write(out);

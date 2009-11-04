@@ -6,26 +6,31 @@ import java.nio.charset.Charset;
 import com.sdm.FLVParser.utils.PushbackInputStream;
 import com.sdm.FLVParser.utils.Tools;
 
+// TODO: Auto-generated Javadoc
 /**
  * UTF-8 is the abbreviation for 8-bit Unicode Transformation Format. UTF-8
  * strings are typically preceded with a byte-length header followed by a
  * sequence of variable length (1 to 4 octets) encoded Unicode code-points.
  * 
  * @author satyam
- * 
  */
 public class UTF8 {
+	
+	/** The length. */
 	private U16 length;
+	
+	/** The utf data. */
 	private U8[] utfData;
+	
+	/** The string value. */
 	private String stringValue;
 
 	/**
-	 * Constructs a UTF-8 object by reading from the specified input stream
+	 * Constructs a UTF-8 object by reading from the specified input stream.
 	 * 
-	 * @param in
-	 *            Input stream to read from
-	 * @throws Exception
-	 *             If an error occurred while reading
+	 * @param in Input stream to read from
+	 * 
+	 * @throws Exception If an error occurred while reading
 	 */
 	public UTF8(PushbackInputStream in) throws Exception {
 		this.length = new U16(in);
@@ -44,12 +49,11 @@ public class UTF8 {
 	}
 
 	/**
-	 * Constructs a UTF-8 object from the specified string
+	 * Constructs a UTF-8 object from the specified string.
 	 * 
-	 * @param stringValue
-	 *            string value of the UTF-8 object
-	 * @throws Exception
-	 *             If an internal error occurred
+	 * @param stringValue string value of the UTF-8 object
+	 * 
+	 * @throws Exception If an internal error occurred
 	 */
 	public UTF8(String stringValue) throws Exception {
 		this.stringValue = stringValue;
@@ -60,7 +64,7 @@ public class UTF8 {
 	}
 
 	/**
-	 * Returns the string value of this UTF-8 object
+	 * Returns the string value of this UTF-8 object.
 	 * 
 	 * @return string value of the UTF-8 object
 	 */
@@ -69,12 +73,11 @@ public class UTF8 {
 	}
 
 	/**
-	 * Sets the string value of this UTF-8 object
+	 * Sets the string value of this UTF-8 object.
 	 * 
-	 * @param stringValue
-	 *            string value of the UTF-8 object
-	 * @throws Exception
-	 *             If an internal error occurred
+	 * @param stringValue string value of the UTF-8 object
+	 * 
+	 * @throws Exception If an internal error occurred
 	 */
 	public void setStringValue(String stringValue) throws Exception {
 		this.stringValue = stringValue;
@@ -85,12 +88,11 @@ public class UTF8 {
 	}
 
 	/**
-	 * Writes this object to the specified output stream
+	 * Writes this object to the specified output stream.
 	 * 
-	 * @param out
-	 *            Output stream to write to
-	 * @throws Exception
-	 *             If an error occurred while writing
+	 * @param out Output stream to write to
+	 * 
+	 * @throws Exception If an error occurred while writing
 	 */
 	public void write(OutputStream out) throws Exception {
 		length.write(out);
@@ -99,12 +101,11 @@ public class UTF8 {
 	}
 
 	/**
-	 * Unreads this object and pushes back whatever is read to the input stream
+	 * Unreads this object and pushes back whatever is read to the input stream.
 	 * 
-	 * @param in
-	 *            Input stream for unreading
-	 * @throws Exception
-	 *             If an error occurred while unread
+	 * @param in Input stream for unreading
+	 * 
+	 * @throws Exception If an error occurred while unread
 	 */
 	public void unread(PushbackInputStream in) throws Exception {
 		if (utfData != null) {

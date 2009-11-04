@@ -6,14 +6,37 @@ import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FLVHeader.
+ */
 public class FLVHeader {
+	
+	/** The signature. */
 	private U8[] signature;
+	
+	/** The version. */
 	private U8 version;
+	
+	/** The flags. */
 	private U8 flags;
+	
+	/** The dataoffset. */
 	private U32 dataoffset;
+	
+	/** The audio tag present. */
 	boolean audioTagPresent;
+	
+	/** The video tag present. */
 	boolean videoTagPresent;
 
+	/**
+	 * Instantiates a new fLV header.
+	 * 
+	 * @param in the in
+	 * 
+	 * @throws Exception the exception
+	 */
 	public FLVHeader(PushbackInputStream in) throws Exception {
 		U8 byte1 = new U8(in);
 		U8 byte2 = new U8(in);
@@ -40,6 +63,13 @@ public class FLVHeader {
 
 	}
 
+	/**
+	 * Write.
+	 * 
+	 * @param out the out
+	 * 
+	 * @throws Exception the exception
+	 */
 	public void write(OutputStream out) throws Exception {
 		for (U8 u8 : signature)
 			u8.write(out);
@@ -48,6 +78,11 @@ public class FLVHeader {
 		dataoffset.write(out);
 	}
 
+	/**
+	 * Validate flags.
+	 * 
+	 * @return true, if successful
+	 */
 	private boolean validateFlags() {
 		boolean result = true;
 		byte flagByte = flags.getValue();
@@ -61,40 +96,89 @@ public class FLVHeader {
 		return result;
 	}
 
+	/**
+	 * Gets the signature.
+	 * 
+	 * @return the signature
+	 */
 	public U8[] getSignature() {
 		return signature;
 	}
 
+	/**
+	 * Sets the signature.
+	 * 
+	 * @param signature the new signature
+	 * 
+	 * @throws Exception the exception
+	 */
 	public void setSignature(U8[] signature) throws Exception {
 		if (signature.length != 3)
 			throw new Exception("Signature must be a 3 bytes long!!!");
 		this.signature = signature;
 	}
 
+	/**
+	 * Gets the version.
+	 * 
+	 * @return the version
+	 */
 	public U8 getVersion() {
 		return version;
 	}
 
+	/**
+	 * Sets the version.
+	 * 
+	 * @param version the new version
+	 */
 	public void setVersion(U8 version) {
 		this.version = version;
 	}
 
+	/**
+	 * Gets the flags.
+	 * 
+	 * @return the flags
+	 */
 	public U8 getFlags() {
 		return flags;
 	}
 
+	/**
+	 * Sets the flags.
+	 * 
+	 * @param flags the new flags
+	 */
 	public void setFlags(U8 flags) {
 		this.flags = flags;
 	}
 
+	/**
+	 * Gets the dataoffset.
+	 * 
+	 * @return the dataoffset
+	 */
 	public U32 getDataoffset() {
 		return dataoffset;
 	}
 
+	/**
+	 * Sets the dataoffset.
+	 * 
+	 * @param dataoffset the new dataoffset
+	 */
 	public void setDataoffset(U32 dataoffset) {
 		this.dataoffset = dataoffset;
 	}
 
+	/**
+	 * Unread.
+	 * 
+	 * @param in the in
+	 * 
+	 * @throws Exception the exception
+	 */
 	public void unread(PushbackInputStream in) throws Exception {
 		if (dataoffset != null)
 			dataoffset.unread(in);

@@ -6,6 +6,7 @@ import com.sdm.FLVParser.utils.PushbackInputStream;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
+// TODO: Auto-generated Javadoc
 /**
  * An ActionScript Date is serialized as the number of milliseconds elapsed
  * since the epoch of midnight on 1st Jan 1970 in the UTC time zone. While the
@@ -15,19 +16,21 @@ import com.sdm.FLVParser.exceptions.InvalidDataException;
  * independently as needed.
  * 
  * @author satyam
- * 
  */
 public class AMFDate extends AMFValue {
+	
+	/** The time zone. */
 	private S16 timeZone;
+	
+	/** The value. */
 	private AMFDouble value;
 
 	/**
-	 * Constructs a AMF date object by reading from the specified input stream
+	 * Constructs a AMF date object by reading from the specified input stream.
 	 * 
-	 * @param in
-	 *            Input stream to read from
-	 * @throws Exception
-	 *             If an error occurred while reading
+	 * @param in Input stream to read from
+	 * 
+	 * @throws Exception If an error occurred while reading
 	 */
 	public AMFDate(PushbackInputStream in) throws Exception {
 		super.marker = new Marker(in);
@@ -46,6 +49,9 @@ public class AMFDate extends AMFValue {
 		value = new AMFDouble(in);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.AMFValue#unread(com.sdm.FLVParser.utils.PushbackInputStream)
+	 */
 	@Override
 	public void unread(PushbackInputStream in) throws Exception {
 		if (value != null)
@@ -56,6 +62,9 @@ public class AMFDate extends AMFValue {
 			marker.unread(in);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.AMFValue#write(java.io.OutputStream)
+	 */
 	@Override
 	public void write(OutputStream out) throws Exception {
 		marker.write(out);

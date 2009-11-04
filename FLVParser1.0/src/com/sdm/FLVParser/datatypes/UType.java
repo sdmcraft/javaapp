@@ -3,25 +3,22 @@ package com.sdm.FLVParser.datatypes;
 import java.io.OutputStream;
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
+// TODO: Auto-generated Javadoc
 /**
- * An abstract class for unsigned number types
+ * An abstract class for unsigned number types.
  * 
  * @author satyam
- * 
  */
 public abstract class UType {
-	/**
-	 * The byte array representation of the associated value
-	 */
+	
+	/** The byte array representation of the associated value. */
 	protected byte[] valueBytes;
 
-	/**
-	 * The integer representation of the associated value
-	 */
+	/** The integer representation of the associated value. */
 	protected int intValue;
 
 	/**
-	 * Returns the associated value as a byte array
+	 * Returns the associated value as a byte array.
 	 * 
 	 * @return Associated value as a byte array
 	 */
@@ -30,7 +27,7 @@ public abstract class UType {
 	}
 
 	/**
-	 * Returns the associated value as an integer
+	 * Returns the associated value as an integer.
 	 * 
 	 * @return Associated value as an integer
 	 */
@@ -39,34 +36,31 @@ public abstract class UType {
 	}
 
 	/**
-	 * Sets the integer value associated with this UType
+	 * Sets the integer value associated with this UType.
 	 * 
-	 * @param value
-	 *            Integer value associated with this UType
-	 * @throws Exception
-	 *             If an internal error occurred
+	 * @param value Integer value associated with this UType
+	 * 
+	 * @throws Exception If an internal error occurred
 	 */
 	abstract public void setIntValue(int value) throws Exception;
 
 	/**
-	 * Writes this object to the specified output stream
+	 * Writes this object to the specified output stream.
 	 * 
-	 * @param out
-	 *            Output stream to write to
-	 * @throws Exception
-	 *             If an error occurred while writing
+	 * @param out Output stream to write to
+	 * 
+	 * @throws Exception If an error occurred while writing
 	 */
 	public void write(OutputStream out) throws Exception {
 		out.write(valueBytes);
 	}
 
 	/**
-	 * Unreads this object and pushes back whatever is read to the input stream
+	 * Unreads this object and pushes back whatever is read to the input stream.
 	 * 
-	 * @param in
-	 *            Input stream for unreading
-	 * @throws Exception
-	 *             If an error occurred while unread
+	 * @param in Input stream for unreading
+	 * 
+	 * @throws Exception If an error occurred while unread
 	 */
 	public void unread(PushbackInputStream in) throws Exception {
 		// //System.out.println("Unreading " + valueBytes.length + " bytes");

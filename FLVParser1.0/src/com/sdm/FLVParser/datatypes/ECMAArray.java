@@ -9,10 +9,25 @@ import com.sdm.FLVParser.utils.Tools;
 
 import com.sdm.FLVParser.exceptions.InvalidDataException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ECMAArray.
+ */
 public class ECMAArray extends AMFValue {
+	
+	/** The associative count. */
 	private U32 associativeCount;
+	
+	/** The property list. */
 	List<ObjectProperty> propertyList;
 
+	/**
+	 * Instantiates a new eCMA array.
+	 * 
+	 * @param in the in
+	 * 
+	 * @throws Exception the exception
+	 */
 	public ECMAArray(PushbackInputStream in) throws Exception {
 		marker = new Marker(in);
 		if (!Markers.ECMA_ARRAY_MARKER.equals(marker.getValue())) {
@@ -36,6 +51,9 @@ public class ECMAArray extends AMFValue {
 		propertyList.add(property);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.AMFValue#unread(com.sdm.FLVParser.utils.PushbackInputStream)
+	 */
 	public void unread(PushbackInputStream in) throws Exception {
 		if (propertyList != null)
 			for (ObjectProperty property : propertyList)
@@ -46,6 +64,9 @@ public class ECMAArray extends AMFValue {
 			marker.unread(in);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.AMFValue#write(java.io.OutputStream)
+	 */
 	@Override
 	public void write(OutputStream out) throws Exception {
 		marker.write(out);

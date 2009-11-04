@@ -8,24 +8,27 @@ import java.io.OutputStream;
 
 import com.sdm.FLVParser.utils.PushbackInputStream;
 
+// TODO: Auto-generated Javadoc
 /**
  * 8 byte IEEE-754 double precision floating point value in network byte order
  * (sign bit in low memory).
  * 
  * @author satyam
- * 
  */
 public class AMFDouble {
+	
+	/** The double value. */
 	private double doubleValue;
+	
+	/** The value bytes. */
 	private byte[] valueBytes;
 
 	/**
-	 * Constructs a AMF double object by reading from the specified input stream
+	 * Constructs a AMF double object by reading from the specified input stream.
 	 * 
-	 * @param in
-	 *            Input stream to read from
-	 * @throws Exception
-	 *             If an error occurred while reading
+	 * @param in Input stream to read from
+	 * 
+	 * @throws Exception If an error occurred while reading
 	 */
 	public AMFDouble(PushbackInputStream in) throws Exception {
 		valueBytes = new byte[8];
@@ -42,7 +45,7 @@ public class AMFDouble {
 	}
 
 	/**
-	 * Returns the associated double value
+	 * Returns the associated double value.
 	 * 
 	 * @return Associated Double value
 	 */
@@ -51,12 +54,11 @@ public class AMFDouble {
 	}
 
 	/**
-	 * Sets the associated double value
+	 * Sets the associated double value.
 	 * 
-	 * @param doubleValue
-	 *            The associated double value
-	 * @throws Exception
-	 *             An internal error occurred
+	 * @param doubleValue The associated double value
+	 * 
+	 * @throws Exception An internal error occurred
 	 */
 	public void setDoubleValue(double doubleValue) throws Exception {
 		this.doubleValue = doubleValue;
@@ -76,7 +78,7 @@ public class AMFDouble {
 	}
 
 	/**
-	 * Returns the byte array for the associated double value
+	 * Returns the byte array for the associated double value.
 	 * 
 	 * @return The byte array for the associated double value
 	 */
@@ -85,12 +87,11 @@ public class AMFDouble {
 	}
 
 	/**
-	 * Sets the byte array for the associated double value
+	 * Sets the byte array for the associated double value.
 	 * 
-	 * @param valueBytes
-	 *            The byte array for the associated double value
-	 * @throws Exception
-	 *             An internal error occurred
+	 * @param valueBytes The byte array for the associated double value
+	 * 
+	 * @throws Exception An internal error occurred
 	 */
 	public void setValueBytes(byte[] valueBytes) throws Exception {
 		if (valueBytes.length != 8)
@@ -107,11 +108,25 @@ public class AMFDouble {
 
 	}
 
+	/**
+	 * Unreads this object and pushes back whatever is read to the input stream.
+	 * 
+	 * @param in Input stream for unreading
+	 * 
+	 * @throws Exception If an error occurred while unread
+	 */
 	public void unread(PushbackInputStream in) throws Exception {
 		if (valueBytes != null)
 			in.unread(valueBytes);
 	}
 
+	/**
+	 * Writes this object to the specified output stream.
+	 * 
+	 * @param out Output stream to write to
+	 * 
+	 * @throws Exception If an error occurred while writing
+	 */
 	public void write(OutputStream out) throws Exception {
 		out.write(valueBytes);
 	}

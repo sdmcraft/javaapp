@@ -6,6 +6,7 @@ import com.sdm.FLVParser.exceptions.InvalidDataException;
 import com.sdm.FLVParser.utils.PushbackInputStream;
 import com.sdm.FLVParser.utils.Tools;
 
+// TODO: Auto-generated Javadoc
 /**
  * An AMF 0 Boolean type is used to encode a primitive ActionScript 1.0 or 2.0
  * Boolean or an ActionScript 3.0 Boolean. The Object (non-primitive) version of
@@ -14,20 +15,22 @@ import com.sdm.FLVParser.utils.Tools;
  * non-zero byte value (typically 1) denotes true.
  * 
  * @author satyam
- * 
  */
 public class AMFBoolean extends AMFValue {
+	
+	/** The value. */
 	private U8 value;
+	
+	/** The boolean value. */
 	private boolean booleanValue;
 
 	/**
 	 * Constructs a AMF Boolean object by reading from the specified input
-	 * stream
+	 * stream.
 	 * 
-	 * @param in
-	 *            Input stream to read from
-	 * @throws Exception
-	 *             If an error occurred while reading
+	 * @param in Input stream to read from
+	 * 
+	 * @throws Exception If an error occurred while reading
 	 */
 	public AMFBoolean(PushbackInputStream in) throws Exception {
 		marker = new Marker(in);
@@ -45,7 +48,7 @@ public class AMFBoolean extends AMFValue {
 	}
 
 	/**
-	 * Returns the boolean value of this AMF boolean object
+	 * Returns the boolean value of this AMF boolean object.
 	 * 
 	 * @return boolean value of this AMF boolean object
 	 */
@@ -54,12 +57,11 @@ public class AMFBoolean extends AMFValue {
 	}
 
 	/**
-	 * Sets the boolean value of this AMF boolean object
+	 * Sets the boolean value of this AMF boolean object.
 	 * 
-	 * @param booleanValue
-	 *            boolean value of this AMF boolean object
-	 * @throws Exception
-	 *             If an internal error occurred
+	 * @param booleanValue boolean value of this AMF boolean object
+	 * 
+	 * @throws Exception If an internal error occurred
 	 */
 	public void setBooleanValue(boolean booleanValue) throws Exception {
 		this.booleanValue = booleanValue;
@@ -69,12 +71,18 @@ public class AMFBoolean extends AMFValue {
 			value = new U8((byte) 0);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.AMFValue#write(java.io.OutputStream)
+	 */
 	@Override
 	public void write(OutputStream out) throws Exception {
 		marker.write(out);
 		value.write(out);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sdm.FLVParser.datatypes.AMFValue#unread(com.sdm.FLVParser.utils.PushbackInputStream)
+	 */
 	@Override
 	public void unread(PushbackInputStream in) throws Exception {
 		if (value != null)
