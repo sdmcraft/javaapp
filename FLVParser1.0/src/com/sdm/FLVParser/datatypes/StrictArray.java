@@ -65,4 +65,20 @@ public class StrictArray extends AMFValue {
 		for (AMFValue amfVal : value)
 			amfVal.write(out);
 	}
+
+	public U32 getArrayCount() {
+		return arrayCount;
+	}
+
+	public void setArrayCount(U32 arrayCount) {
+		this.arrayCount = arrayCount;
+	}
+
+	public AMFValue[] getValue() {
+		return value;
+	}
+
+	public void setValue(AMFValue[] value) {
+		this.value = value;
+	}
 }

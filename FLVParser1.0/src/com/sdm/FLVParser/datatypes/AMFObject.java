@@ -71,4 +71,12 @@ public class AMFObject extends AMFValue {
 			prop.write(out);
 		}
 	}
+
+	public ObjectProperty[] getValue() {
+		return value;
+	}
+
+	public void setValue(ObjectProperty[] value) {
+		this.value = value;
+	}
 }

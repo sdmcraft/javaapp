@@ -74,4 +74,20 @@ public class ECMAArray extends AMFValue {
 		for (ObjectProperty prop : propertyList)
 			prop.write(out);
 	}
+
+	public U32 getAssociativeCount() {
+		return associativeCount;
+	}
+
+	public void setAssociativeCount(U32 associativeCount) {
+		this.associativeCount = associativeCount;
+	}
+
+	public List<ObjectProperty> getPropertyList() {
+		return propertyList;
+	}
+
+	public void setPropertyList(List<ObjectProperty> propertyList) {
+		this.propertyList = propertyList;
+	}
 }

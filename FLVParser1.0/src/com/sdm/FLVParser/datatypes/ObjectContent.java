@@ -56,4 +56,20 @@ public class ObjectContent extends ObjectProperty {
 		name.write(out);
 		value.write(out);
 	}
+
+	public UTF8 getName() {
+		return name;
+	}
+
+	public void setName(UTF8 name) {
+		this.name = name;
+	}
+
+	public AMFValue getValue() {
+		return value;
+	}
+
+	public void setValue(AMFValue value) {
+		this.value = value;
+	}
 }
