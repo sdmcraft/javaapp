@@ -18,36 +18,43 @@ import com.sdm.FLVParser.datatypes.ObjectProperty;
 import com.sdm.FLVParser.datatypes.ScriptData;
 import com.sdm.FLVParser.datatypes.ScriptDataObject;
 import com.sdm.FLVParser.datatypes.StrictArray;
+import com.sdm.FLVParser.datatypes.U24;
 import com.sdm.FLVParser.datatypes.U32;
 import com.sdm.FLVParser.datatypes.UTF8Long;
 
 public class Mapper {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-	}
-
-	public static void map(String FLVfile, Map<String, String> map)
+	public static FLV map(String FLVfile, Map<String, String> map)
 			throws Exception {
 		FLV flv = new FLV(FLVfile);
 		FLVBody flvbody = flv.getBody();
 		List<FLVBodyComponent> bodyComponentList = flvbody.getComponentList();
+		int change = 0;
 		for (FLVBodyComponent bodyComp : bodyComponentList) {
-			U32 prevTagSize = bodyComp.getPrevTagSize();
+			if (change != 0) {
+				int newPrevTagSize = bodyComp.getPrevTagSize().getIntValue()
+						+ change;
+				bodyComp.setPrevTagSize(new U32(newPrevTagSize));
+				change = 0;
+			}
 			FLVTag tag = bodyComp.getTag();
 			if (tag.getTagType().getValue() == 8) {
 				ScriptData scriptData = (ScriptData) tag.getData();
+				int oldTagSize = scriptData.byteSize();
 				ScriptDataObject scriptDataObject = scriptData
 						.getScriptDataObject();
 				for (AMFValue amfVal : scriptDataObject.getAmfValueList()) {
 					mapAMFValue(amfVal, map);
 				}
+				int newTagSize = scriptData.byteSize();
+				change = newTagSize - oldTagSize;
+				if (change != 0) {
+					tag.setDataSize(new U24(newTagSize));
+				}
 			}
 		}
+		return flv;
 	}
 
 	public static void mapAMFValue(AMFValue amfVal, Map<String, String> map)
@@ -105,5 +112,4 @@ public class Mapper {
 			}
 		}
 	}
-
 }

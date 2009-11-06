@@ -15,9 +15,11 @@ public class U24 extends UType {
 	/**
 	 * Constructs a U24 object with specified byte array.
 	 * 
-	 * @param valueBytes Associated byte array
+	 * @param valueBytes
+	 *            Associated byte array
 	 * 
-	 * @throws Exception If an error occurred while constructing
+	 * @throws Exception
+	 *             If an error occurred while constructing
 	 */
 	public U24(byte[] valueBytes) throws Exception {
 		if (valueBytes.length != 3)
@@ -31,9 +33,11 @@ public class U24 extends UType {
 	/**
 	 * Constructs a U24 object by reading from the specified input stream.
 	 * 
-	 * @param in Input stream to read from
+	 * @param in
+	 *            Input stream to read from
 	 * 
-	 * @throws Exception If an error occurred while reading
+	 * @throws Exception
+	 *             If an error occurred while reading
 	 */
 	public U24(PushbackInputStream in) throws Exception {
 		valueBytes = new byte[3];
@@ -42,12 +46,18 @@ public class U24 extends UType {
 		intValue = (int) Tools.byteArrToInt(valueBytes);
 	}
 
+	public U24(int i) throws Exception {
+		setIntValue(i);
+	}
+
 	/**
 	 * Sets the associated integer value.
 	 * 
-	 * @param intValue Associated integer value
+	 * @param intValue
+	 *            Associated integer value
 	 * 
-	 * @throws Exception If an the value is too large to fit in a U24
+	 * @throws Exception
+	 *             If an the value is too large to fit in a U24
 	 */
 	public void setIntValue(int intValue) throws Exception {
 		byte[] valueBytes = Tools.intToByteArr(intValue);

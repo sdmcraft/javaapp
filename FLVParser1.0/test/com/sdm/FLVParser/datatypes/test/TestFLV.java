@@ -6,8 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.TestCase;
+import misc.Utils;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -61,6 +63,11 @@ public class TestFLV extends TestCase {
 		} finally {
 			oneTimeDestroy();
 		}
+	}
 
+	@Test
+	public void testMapping() throws Exception {
+		File idMapFile = new File(testDataDir, "idMap.ser");
+		Map<String,String> idMap = (Map<String,String>)Utils.deserializeObject(idMapFile);		
 	}
 }
