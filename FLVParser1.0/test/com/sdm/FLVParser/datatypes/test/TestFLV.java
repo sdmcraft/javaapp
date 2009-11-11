@@ -16,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sdm.FLVParser.datatypes.FLV;
+import com.sdm.FLVParser.examples.Mapper;
 import com.sdm.FLVParser.utils.Tools;
 
 public class TestFLV extends TestCase {
@@ -65,9 +66,4 @@ public class TestFLV extends TestCase {
 		}
 	}
 
-	@Test
-	public void testMapping() throws Exception {
-		File idMapFile = new File(testDataDir, "idMap.ser");
-		Map<String,String> idMap = (Map<String,String>)Utils.deserializeObject(idMapFile);		
-	}
 }

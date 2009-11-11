@@ -1,7 +1,10 @@
 package com.sdm.FLVParser.examples;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
+
+import misc.Utils;
 
 import com.sdm.FLVParser.datatypes.AMFLongString;
 import com.sdm.FLVParser.datatypes.AMFNumber;
@@ -24,6 +27,17 @@ import com.sdm.FLVParser.datatypes.UTF8Long;
 
 public class Mapper {
 
+	public static void main(String[] args) throws Exception {
+		File testDataDir = new File("testData");
+		File idMapFile = new File(testDataDir, "idMap.ser");
+		File origFLVFile = new File(testDataDir, "orig.flv");
+		File mappedFLVFile = new File(testDataDir, "mapped.flv");
+		Map<String, String> idMap = (Map<String, String>) Utils
+				.deserializeObject(idMapFile);
+		FLV mappedFLV = map(origFLVFile.getAbsolutePath(), idMap);
+		mappedFLV.write(mappedFLVFile.getAbsolutePath());
+
+	}
 
 	public static FLV map(String FLVfile, Map<String, String> map)
 			throws Exception {
@@ -39,7 +53,11 @@ public class Mapper {
 				change = 0;
 			}
 			FLVTag tag = bodyComp.getTag();
-			if (tag.getTagType().getValue() == 8) {
+			if (tag == null)
+				continue;
+			System.out.println(tag.getDataSize().getIntValue());
+			System.out.println(tag.getTagType().getValue());
+			if (tag.getTagType().getValue() == 18) {
 				ScriptData scriptData = (ScriptData) tag.getData();
 				int oldTagSize = scriptData.byteSize();
 				ScriptDataObject scriptDataObject = scriptData
@@ -79,7 +97,7 @@ public class Mapper {
 				if (prop instanceof ObjectContent) {
 					ObjectContent cnt = (ObjectContent) prop;
 					String oldStr = cnt.getName().getStringValue();
-					String newStr = map.get(oldStr);
+					String newStr = Utils.replace(oldStr, map, "_a|[/-]");
 					if (newStr != null)
 						cnt.getName().setStringValue(newStr);
 					AMFValue val = cnt.getValue();
