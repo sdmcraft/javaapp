@@ -48,6 +48,8 @@
 		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf" basedir="${build.classes}" />
 
 		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf" basedir="${conf.dir}" update="true" />
+
+		<jar jarfile="${dist.dir}/Utils.jar" basedir="${build.classes}" includes= "misc/Utils.class" />
 	</target>
 
 	<target name="clean">
@@ -80,22 +82,18 @@
 	</target>
 
 	<target name="debugTest" depends="cleanall,build">
-		<java classname="org.junit.runner.JUnitCore" classpathref="mylibs" fork="true">								
+		<java classname="org.junit.runner.JUnitCore" classpathref="mylibs" fork="true">
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000" />
-			<arg value="algorithms.test.AlgorithmsTestSuite" />				
+			<arg value="algorithms.test.AlgorithmsTestSuite" />
 		</java>
 	</target>
 
-	
+
 	<target name="test" depends="cleanall,build,emma">
-		<emmajava enabled="${emma.enabled}" 
-			libclasspathref="emma.lib"			
-			sourcepath="${src.dir}"
-			classpathref="mylibs" 
-			classname="org.junit.runner.JUnitCore" >		
-			<sysproperty key="logFile" value="C:/my.log" />		
-			<arg value="misc.test.TestPersistentHashMap" />	
-			<html outfile="${coverage.dir}/coverage.html"  />
+		<emmajava enabled="${emma.enabled}" libclasspathref="emma.lib" sourcepath="${src.dir}" classpathref="mylibs" classname="org.junit.runner.JUnitCore">
+			<sysproperty key="logFile" value="C:/my.log" />
+			<arg value="misc.test.TestPersistentHashMap" />
+			<html outfile="${coverage.dir}/coverage.html" />
 			<filter includes="algorithms.test.*, algorithms.*, misc.*, misc.test.*" />
 		</emmajava>
 	</target>

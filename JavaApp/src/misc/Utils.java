@@ -5,9 +5,11 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.PushbackInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Utils {
 	public static List<String> delimitedReader(String delimiter, File f)
@@ -16,16 +18,16 @@ public class Utils {
 		List<String> result = new ArrayList<String>();
 		List<Byte> content = new ArrayList<Byte>();
 		byte[] delimBytes = delimiter.getBytes();
-		
+
 		System.out.println(delimBytes.length);
-		
+
 		PushbackInputStream pbin = new PushbackInputStream(new FileInputStream(
 				f), delimBytes.length);
 		byte[] buffer = new byte[delimBytes.length];
 		int b;
 
 		int read = pbin.read(buffer);
-		
+
 		System.out.println("Here is the delimiter:");
 		for (byte x : delimBytes)
 			System.out.print(Integer.toHexString(x) + " ");
@@ -36,23 +38,20 @@ public class Utils {
 			System.out.print(Integer.toHexString(x) + " ");
 		System.out.println("");
 
-		if (byteArrayEquals(buffer, delimBytes))
-		{
+		if (byteArrayEquals(buffer, delimBytes)) {
 			pbin.close();
 			return result;
-		}
-		else
+		} else
 			pbin.unread(buffer);
 
 		while ((b = pbin.read()) != -1) {
-			
+
 			content.add(new Byte((byte) b));
 			System.out.println("Read " + Integer.toHexString(b)
 					+ " and added it to content");
 
-			
 			int z = pbin.read(buffer);
-			System.out.println("Read buffer returned->"+z);
+			System.out.println("Read buffer returned->" + z);
 			if (z != -1) {
 				System.out.println("Here is the buffer:");
 				for (byte x : buffer)
@@ -75,7 +74,7 @@ public class Utils {
 							.println("This was read between last and this delimiter->"
 									+ s);
 					result.add(new String(contentArr));
-				} else if(z < buffer.length)
+				} else if (z < buffer.length)
 					pbin.unread(buffer);
 			}
 		}
@@ -112,7 +111,7 @@ public class Utils {
 		boolean result = false;
 		if (f1 == f2)
 			result = true;
-		else if(f1== null || f2 == null)
+		else if (f1 == null || f2 == null)
 			result = false;
 		else if ((f1.isDirectory() && f2.isFile())
 				|| (f1.isFile() && f2.isDirectory()))
@@ -177,6 +176,31 @@ public class Utils {
 		}
 		if (!folder.delete())
 			throw new Exception("Unable to delete directory!");
+	}
+
+	public static Object deserializeObject(File f) throws Exception {
+		Object object = null;
+		ObjectInputStream in = null;
+		try {
+			in = new ObjectInputStream(new FileInputStream(f));
+			object = in.readObject();
+		} finally {
+			if (in != null)
+				in.close();
+		}
+		return object;
+	}
+
+	public static String replace(String s, Map<String, String> idMap,
+			String splitRegex) {
+		String oldIds[] = s.split(splitRegex);
+		for (String oldId : oldIds) {
+			String newId = idMap.get(oldId);
+			if (newId != null && !("".equals(newId))) {
+				s = s.replace(oldId, newId);
+			}
+		}
+		return s;
 	}
 
 }
