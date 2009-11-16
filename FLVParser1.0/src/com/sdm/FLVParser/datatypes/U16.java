@@ -39,6 +39,10 @@ public class U16 extends UType {
 		valueBytes = new byte[2];
 		if (2 != in.read(valueBytes))
 			throw new Exception("Error reading from input stream");
+		System.out.print("U16 value bytes:");
+		for (byte b : valueBytes)
+			System.out.print(b );
+		System.out.println();
 		intValue = (int) Tools.byteArrToInt(valueBytes);
 	}
 

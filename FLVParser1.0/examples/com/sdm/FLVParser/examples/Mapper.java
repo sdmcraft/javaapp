@@ -81,14 +81,14 @@ public class Mapper {
 			AMFLongString longStr = (AMFLongString) amfVal;
 			UTF8Long utfVal = longStr.getValue();
 			String oldStr = utfVal.getStringValue();
-			String newStr = map.get(oldStr);
+			String newStr = Utils.replace(oldStr, map, "_a|[/-]");
 			if (newStr != null)
 				utfVal.setStringValue(newStr);
 		} else if (amfVal instanceof AMFNumber) {
 			AMFNumber number = (AMFNumber) amfVal;
 			double doubleVal = number.getDoubleValue();
 			String oldStr = Double.toString(doubleVal);
-			String newStr = map.get(oldStr);
+			String newStr = Utils.replace(oldStr, map, "_a|[/-]");
 			if (newStr != null)
 				number.setDoubleValue(Double.parseDouble(newStr));
 		} else if (amfVal instanceof AMFObject) {
@@ -107,7 +107,9 @@ public class Mapper {
 		} else if (amfVal instanceof AMFString) {
 			AMFString str = (AMFString) amfVal;
 			String oldStr = str.getStringValue();
-			String newStr = map.get(oldStr);
+			System.out.println("Old Str:"+oldStr);
+			String newStr = Utils.replace(oldStr, map, "_a|[/-]");
+			System.out.println("New Str:"+newStr);
 			if (newStr != null)
 				str.setStringValue(newStr);
 		} else if (amfVal instanceof ECMAArray) {
@@ -116,7 +118,7 @@ public class Mapper {
 				if (prop instanceof ObjectContent) {
 					ObjectContent cnt = (ObjectContent) prop;
 					String oldStr = cnt.getName().getStringValue();
-					String newStr = map.get(oldStr);
+					String newStr = Utils.replace(oldStr, map, "_a|[/-]");
 					if (newStr != null)
 						cnt.getName().setStringValue(newStr);
 					AMFValue val = cnt.getValue();

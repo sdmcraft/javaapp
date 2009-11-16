@@ -45,7 +45,7 @@ public class Tools {
 
 		byte byte1 = (byte) (value & 0xFF);
 		byte byte2 = (byte) ((value >>> 8) & 0xFF);
-		return new U16(new byte[] { byte1, byte2 });
+		return new U16(new byte[] { byte2, byte1 });
 	}
 
 	public static int U32toInt(U32 value) throws Exception {
