@@ -6,17 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
 import junit.framework.TestCase;
-import misc.Utils;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sdm.FLVParser.datatypes.FLV;
-import com.sdm.FLVParser.examples.Mapper;
 import com.sdm.FLVParser.utils.Tools;
 
 public class TestFLV extends TestCase {
@@ -63,6 +60,18 @@ public class TestFLV extends TestCase {
 				fail("testFLV failed");
 		} finally {
 			oneTimeDestroy();
+		}
+	}
+	
+	@Test
+	public void testFLVthruMapping() throws Exception
+	{
+		File origDir = new File(testDataDir,"orig");
+		File mapDir = new File(testDataDir,"mapped");
+		File amMapDir = new File(testDataDir,"am-mapped");
+		for(File origFile : origDir.listFiles())
+		{
+			
 		}
 	}
 

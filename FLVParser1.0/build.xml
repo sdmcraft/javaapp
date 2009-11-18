@@ -10,6 +10,7 @@
 	<property name="api-doc.dir" value="docs/api-docs" />
 	<property name="build.classes" value="${build.dir}/classes" />
 	<property name="build.test-classes" value="${build.dir}/test-classes" />
+	<property name="build.example-classes" value="${build.dir}/example-classes" />
 	<property name="coverage.dir" value="coverage" />
 	<property name="javac.debug" value="on" />
 	<property name="build.compiler" value="modern" />
@@ -40,6 +41,7 @@
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.classes}" />
 		<mkdir dir="${build.test-classes}" />
+		<mkdir dir="${build.example-classes}" />
 		<mkdir dir="${coverage.dir}" />
 		<mkdir dir="${dist.dir}" />
 		<mkdir dir="${api-doc.dir}" />
@@ -55,6 +57,12 @@
 			<src path="${test.dir}" />
 		</javac>
 		<jar jarfile="${dist.dir}/TestFLVParser.jar" basedir="${build.test-classes}" />
+		
+		<javac classpathref="mylibs" destdir="${build.example-classes}" debug="on" debuglevel="lines,vars,source" deprecation="on" target="1.5">
+			<src path="${examples.dir}" />
+		</javac>
+		<jar jarfile="${dist.dir}/FLVParserExamples.jar" basedir="${build.example-classes}" />
+
 
 	</target>
 
@@ -62,6 +70,7 @@
 		<delete quiet="true">
 			<fileset dir="${build.classes}" includes="**/*" />
 			<fileset dir="${build.test-classes}" includes="**/*" />
+			<fileset dir="${build.example-classes}" includes="**/*" />
 			<fileset dir="${coverage.dir}" includes="**/*" />
 			<fileset dir="${dist.dir}" includes="**/*" />
 			<fileset dir="${api-doc.dir}" includes="**/*" />
@@ -69,6 +78,7 @@
 		<delete quiet="true" dir="${coverage.dir}" />
 		<delete quiet="true" dir="${build.classes}" />
 		<delete quiet="true" dir="${build.test-classes}" />
+		<delete quiet="true" dir="${build.example-classes}" />
 		<delete quiet="true" dir="${build.dir}" />
 		<delete quiet="true" dir="${dist.dir}" />
 		<delete quiet="true" dir="${api-doc.dir}" />
