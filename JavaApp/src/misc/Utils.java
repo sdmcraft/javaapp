@@ -168,6 +168,15 @@ public class Utils {
 		};
 
 	}
+	
+	public final static FilenameFilter getFileExtFilter(final String ext) {
+		return new FilenameFilter() {
+			public boolean accept(File dir, String fileName) {
+				return fileName.endsWith("." + ext);
+			}
+		};
+	}
+
 
 	public static final void deleteFolder(File folder) throws Exception {
 		if (folder.isDirectory()) {

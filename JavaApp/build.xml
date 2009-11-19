@@ -49,7 +49,7 @@
 
 		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf" basedir="${conf.dir}" update="true" />
 
-		<jar jarfile="${dist.dir}/Utils.jar" basedir="${build.classes}" includes= "misc/Utils.class" />
+		<jar jarfile="${dist.dir}/Utils.jar" basedir="${build.classes}" includes= "misc/Utils*.class" />
 	</target>
 
 	<target name="clean">
