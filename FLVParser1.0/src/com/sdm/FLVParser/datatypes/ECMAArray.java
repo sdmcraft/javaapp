@@ -37,9 +37,9 @@ public class ECMAArray extends AMFValue {
 		}
 
 		associativeCount = new U32(in);
-		if (associativeCount.getIntValue() <= 0)
-			System.out.println("WARNING:Associative count:"
-					+ associativeCount.getIntValue());
+		// if (associativeCount.getIntValue() <= 0)
+			// System.out.println("WARNING:Associative count:"
+			// + associativeCount.getIntValue());
 		propertyList = new ArrayList<ObjectProperty>();
 		ObjectProperty property = Tools.readObjectProperty(in);
 		while (!(property instanceof ObjectEnd)) {

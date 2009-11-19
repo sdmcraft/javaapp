@@ -193,16 +193,11 @@ public class Tools {
 		return resultList;
 	}
 
-	public final static FilenameFilter getFileExtFilter(final String ext) {
-		return new FilenameFilter() {
-			public boolean accept(File dir, String fileName) {
-				return fileName.endsWith("." + ext);
-			}
-		};
-	}
 
-	public static void main(String[] args) throws Exception {
-		for (File f : recursiveListFiles(new File("\\\\connectdev1\\C\\workspace\\branches\\breeze\\702\\content"), getFileExtFilter("flv")))
-			System.out.println(f);
-	}
+	// public static void main(String[] args) throws Exception {
+	// for (File f : recursiveListFiles(new
+	// File("\\\\connectdev1\\C\\workspace\\branches\\breeze\\702\\content"),
+	// getFileExtFilter("flv")))
+	// System.out.println(f);
+	// }
 }

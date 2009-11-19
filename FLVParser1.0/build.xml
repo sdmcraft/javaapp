@@ -52,17 +52,16 @@
 			<src path="${src.dir}" />
 		</javac>
 		<jar jarfile="${dist.dir}/FLVParser.jar" basedir="${build.classes}" />
-
-		<javac classpathref="mylibs" destdir="${build.test-classes}" debug="on" debuglevel="lines,vars,source" deprecation="on" target="1.5">
-			<src path="${test.dir}" />
-		</javac>
-		<jar jarfile="${dist.dir}/TestFLVParser.jar" basedir="${build.test-classes}" />
 		
 		<javac classpathref="mylibs" destdir="${build.example-classes}" debug="on" debuglevel="lines,vars,source" deprecation="on" target="1.5">
 			<src path="${examples.dir}" />
 		</javac>
 		<jar jarfile="${dist.dir}/FLVParserExamples.jar" basedir="${build.example-classes}" />
 
+		<javac classpathref="mylibs" destdir="${build.test-classes}" debug="on" debuglevel="lines,vars,source" deprecation="on" target="1.5">
+			<src path="${test.dir}" />
+		</javac>
+		<jar jarfile="${dist.dir}/TestFLVParser.jar" basedir="${build.test-classes}" />
 
 	</target>
 

@@ -6,14 +6,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.TestCase;
+import misc.Utils;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sdm.FLVParser.datatypes.FLV;
+import com.sdm.FLVParser.examples.Mapper;
 import com.sdm.FLVParser.utils.Tools;
 
 public class TestFLV extends TestCase {
@@ -45,7 +48,7 @@ public class TestFLV extends TestCase {
 					.recursiveListFiles(
 							new File(
 									"\\\\connectdev1\\C\\workspace\\branches\\breeze\\702\\content"),
-							Tools.getFileExtFilter("flv"));
+							Utils.getFileExtFilter("flv"));
 			for (File flvFile : flvFiles) {
 				try {
 					testLogWriter.print("Parsing " + flvFile);
@@ -62,17 +65,21 @@ public class TestFLV extends TestCase {
 			oneTimeDestroy();
 		}
 	}
-	
+
 	@Test
-	public void testFLVthruMapping() throws Exception
-	{
-		File origDir = new File(testDataDir,"orig");
-		File mapDir = new File(testDataDir,"mapped");
-		File amMapDir = new File(testDataDir,"am-mapped");
-		for(File origFile : origDir.listFiles())
-		{
-			
+	public void testFLVthruMapping() throws Exception {
+		File origDir = new File(testDataDir, "orig");
+		File mapDir = new File(testDataDir, "mapped");
+		File amMapDir = new File(testDataDir, "am-mapped");
+		File idMapFile = new File(testDataDir, "idMap.ser");
+		Map<String, String> map = (Map<String, String>) Utils
+				.deserializeObject(idMapFile);
+		for (File origFile : origDir.listFiles()) {
+			FLV mappedFLV = Mapper.map(origFile.getAbsolutePath(), map);
+			mappedFLV.write(new File(mapDir, origFile.getName())
+					.getAbsolutePath());
 		}
+		assertEquals(true, Utils.compare(mapDir, amMapDir));
 	}
 
 }
