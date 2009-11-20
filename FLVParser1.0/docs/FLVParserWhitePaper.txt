@@ -32,3 +32,7 @@ USPs of this solution:
 1.FLV parsing and creation using pure java based interface has not been addressed before.
 2.With java already having a universal appeal and a huge developer community, there are infinite possibilities of extending this project.
 3.The solution is a pure java based AMF library with the inherent advantage of being object oriented.
+
+Example Usage in FLV Mapping
+The Java AMF library addresses the requirement of replacing certain values in a FLV based upon an available mapping. The library is used to read an FLV into a Java object tree. Once this is done, the tags can be iterated upon and replacements can be carried out by fetching the values from the map. This is made particularly easy because of the ease of having a programatic interface to manipulate the object tree.Once the replacements are complete in the object tree,it is written back to a FLV file. 
+
