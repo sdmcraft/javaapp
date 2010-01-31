@@ -123,6 +123,25 @@
 		<url-pattern>/Cookie Servlet</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>TestPG</servlet-name>
+		<jsp-file>/web/TestPG.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>TestPG</servlet-name>
+		<url-pattern>/TestPG</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TestPG2</servlet-name>
+		<jsp-file>/web/TestPG2.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>TestPG2</servlet-name>
+		<url-pattern>/TestPG2</url-pattern>
+	</servlet-mapping>
 
 	<login-config>
 		<auth-method>BASIC</auth-method>
