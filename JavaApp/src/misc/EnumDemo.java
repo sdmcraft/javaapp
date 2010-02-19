@@ -4,6 +4,7 @@ public class EnumDemo {
 
 	enum Day {
 		MON, TUE, WED, THU, FRI, SAT, SUN;
+		public static final String value = "a";
 		Day() {
 			System.out.println("Enum Constructor");
 		}
