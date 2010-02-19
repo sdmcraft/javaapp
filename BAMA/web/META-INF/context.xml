@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context path="/BAMA">
-  <Resource auth="Container" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" maxActive="20" maxIdle="10" maxWait="-1" name="breezeDB" password="breeze" type="javax.sql.DataSource" url="jdbc:sqlserver://localhost:1433;databaseName=breeze17JunHost" username="sa"/>
-</Context>
