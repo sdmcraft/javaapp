@@ -167,6 +167,33 @@
 		<filter-name>DemoFilter</filter-name>
 		<filter-class>filters.DemoFilter</filter-class>
 	</filter>
+
+	<filter>
+		<filter-name>Filter1</filter-name>
+		<filter-class>filters.Filter1</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>Filter2</filter-name>
+		<filter-class>filters.Filter2</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>Filter1</filter-name>
+		<url-pattern>/admin/*</url-pattern>		
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>Filter1</filter-name>
+		<url-pattern>/admin/*</url-pattern>		
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>Filter2</filter-name>
+		<url-pattern>/*</url-pattern>		
+	</filter-mapping>
+	
 	<filter-mapping>
 		<filter-name>DemoFilter</filter-name>
 		<servlet-name>FilteredServlet</servlet-name>
