@@ -44,6 +44,16 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>BeanDemoPG</servlet-name>
+		<jsp-file>/web/BeanDemoPG.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BeanDemoPG</servlet-name>
+		<url-pattern>/BeanDemoPG</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>SecureServlet</servlet-name>
 		<servlet-class>servlets.SecureServlet</servlet-class>
 	</servlet>
