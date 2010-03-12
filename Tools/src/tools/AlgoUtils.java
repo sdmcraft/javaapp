@@ -87,6 +87,53 @@ public class AlgoUtils {
 		}
 	}
 
+	private static int partition(int start, int end, int pivot, int[] elements) {
+		int leftPtr = start;
+		int rtPtr = end - 1;
+		while (true) {
+			while ((leftPtr <= end) && (elements[leftPtr] <= pivot)) {
+				leftPtr++;
+			}
+			while ((rtPtr > start + 1) && (elements[rtPtr] > pivot)) {
+				rtPtr--;
+			}
+			if (leftPtr < rtPtr) {
+				int temp = elements[leftPtr];
+				elements[leftPtr] = elements[rtPtr];
+				elements[rtPtr] = temp;
+				leftPtr++;
+				rtPtr--;
+			} else {
+				break;
+			}
+		}
+		int temp = elements[leftPtr];
+		elements[leftPtr] = elements[end];
+		elements[end] = temp;
+		System.out.println("Pivot location:" + leftPtr);
+		return leftPtr;
+	}
+
+	public static void quickSort(int[] elements) {
+		quickSort(0, elements.length - 1, elements);
+	}
+
+	private static void quickSort(int start, int end, int[] elements) {
+		if ((end - start) <= 0) {
+			return;
+		} else {
+			int pivot = elements[end];
+			System.out.println("\nPivot:" + pivot);
+			int newPivotLoc = partition(start, end, pivot, elements);
+			System.out.println("After partitioning:");
+			for (int i = start; i <= end; i++) {
+				System.out.print(elements[i] + " ");
+			}
+			quickSort(start, newPivotLoc - 1, elements);
+			quickSort(newPivotLoc + 1, end, elements);
+		}
+	}
+
 	public static void main(String[] args) {
 		System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 }, 0));
 		System.out
