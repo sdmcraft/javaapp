@@ -89,14 +89,16 @@ public class AlgoUtils {
 
 	private static int partition(int start, int end, int pivot, int[] elements) {
 		int leftPtr = start;
-		int rtPtr = end - 1;
+		int rtPtr = end-1;
 		while (true) {
-			while ((leftPtr <= end) && (elements[leftPtr] <= pivot)) {
+			while ((leftPtr < end) && (elements[leftPtr] < pivot)) {
 				leftPtr++;
 			}
 			while ((rtPtr > start + 1) && (elements[rtPtr] > pivot)) {
 				rtPtr--;
 			}
+			System.out.println("Left Ptr:" + leftPtr);
+			System.out.println("Rt Ptr:" + rtPtr);
 			if (leftPtr < rtPtr) {
 				int temp = elements[leftPtr];
 				elements[leftPtr] = elements[rtPtr];
@@ -107,18 +109,27 @@ public class AlgoUtils {
 				break;
 			}
 		}
-		int temp = elements[leftPtr];
-		elements[leftPtr] = elements[end];
-		elements[end] = temp;
+		if (leftPtr != end) {
+			int temp = elements[leftPtr];
+			elements[leftPtr] = elements[end];
+			elements[end] = temp;
+		}
 		System.out.println("Pivot location:" + leftPtr);
 		return leftPtr;
 	}
 
+	private static int partition1(int start, int end, int pivot, int[] elements)
+	{
+		int[] leftPartition = new int[elements.length]
+	}
 	public static void quickSort(int[] elements) {
+		System.out.println("Calling very first one");
 		quickSort(0, elements.length - 1, elements);
 	}
 
 	private static void quickSort(int start, int end, int[] elements) {
+		System.out.println("start:" + start);
+		System.out.println("end:" + end);
 		if ((end - start) <= 0) {
 			return;
 		} else {
@@ -126,10 +137,12 @@ public class AlgoUtils {
 			System.out.println("\nPivot:" + pivot);
 			int newPivotLoc = partition(start, end, pivot, elements);
 			System.out.println("After partitioning:");
-			for (int i = start; i <= end; i++) {
+			for (int i = start; i < elements.length; i++) {
 				System.out.print(elements[i] + " ");
 			}
+			System.out.println("Calling 1st one");
 			quickSort(start, newPivotLoc - 1, elements);
+			System.out.println("Calling 2nd one");
 			quickSort(newPivotLoc + 1, end, elements);
 		}
 	}
