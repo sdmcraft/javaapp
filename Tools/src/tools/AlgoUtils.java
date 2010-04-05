@@ -87,6 +87,7 @@ public class AlgoUtils {
 		}
 	}
 
+	/*QUICK SORT INCOMPLETE
 	private static int partition(int start, int end, int pivot, int[] elements) {
 		int leftPtr = start;
 		int rtPtr = end-1;
@@ -120,7 +121,7 @@ public class AlgoUtils {
 
 	private static int partition1(int start, int end, int pivot, int[] elements)
 	{
-		int[] leftPartition = new int[elements.length]
+		int[] leftPartition = new int[elements.length];
 	}
 	public static void quickSort(int[] elements) {
 		System.out.println("Calling very first one");
@@ -145,7 +146,7 @@ public class AlgoUtils {
 			System.out.println("Calling 2nd one");
 			quickSort(newPivotLoc + 1, end, elements);
 		}
-	}
+	}*/
 
 	public static void main(String[] args) {
 		System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 }, 0));

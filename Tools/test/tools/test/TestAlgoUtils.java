@@ -222,7 +222,7 @@ public class TestAlgoUtils {
 
 	}
 
-	@Test
+	/*@Test
 	public void testQuickSort() {
 		int[] arr = new int[] { -3, -2, -1, 1, 2, 3 };
 		int[] sorted = new int[] { -3, -2, -1, 1, 2, 3 };
@@ -270,6 +270,6 @@ public class TestAlgoUtils {
 		Assert.assertEquals(true, DSUtils.arrayCompare(arr, sorted));
 
 
-	}
+	}*/
 
 }
