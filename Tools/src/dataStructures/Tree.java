@@ -8,6 +8,10 @@ public class Tree {
 	private List<Tree> children;
 	private int value;
 
+	public Tree() {
+		children = new ArrayList<Tree>();		
+	}
+
 	public Tree(int value) {
 		children = new ArrayList<Tree>();
 		this.value = value;
