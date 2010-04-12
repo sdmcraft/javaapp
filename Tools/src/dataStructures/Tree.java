@@ -8,18 +8,18 @@ import java.util.Map;
 public class Tree {
 
 	private List<Tree> children;
-	private int value;
-	public String valueString;
+	private char value;
+	private String nodeID;
 	private String diagram;
-	private Map<Integer, Integer> intCount;
+	private Map<Character, Integer> intCount;
 
 	public Tree() {
 		children = new ArrayList<Tree>();
 		diagram = "digraph G {\n";
-		intCount = new HashMap<Integer, Integer>();
+		intCount = new HashMap<Character, Integer>();
 	}
 
-	public Tree(int value) {
+	public Tree(char value) {
 		children = new ArrayList<Tree>();
 		this.value = value;
 	}
@@ -32,11 +32,11 @@ public class Tree {
 		this.children = children;
 	}
 
-	public int getValue() {
+	public char getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(char value) {
 		this.value = value;
 	}
 
@@ -44,31 +44,30 @@ public class Tree {
 		children.add(child);
 	}
 
-	public String doDFS() {
-		doDFS(this);
+	public String getDiagram() {
+		getDiagram(this);
 		diagram += "}";
 		return diagram;
 	}
 
-	private void doDFS(Tree root) {
+	private void getDiagram(Tree root) {
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
-				int value = child.getValue();
-				String valueString = value + "";
+				char value = child.getValue();
+				String nodeID = value + "";
 				if (intCount.containsKey(value)) {
 					for (int i = 0; i < intCount.get(value); i++) {
-						valueString += "*";
+						nodeID += "*";
 					}
 					intCount.put(value, intCount.get(value) + 1);
 				} else {
 					intCount.put(value, 1);
 				}
-				child.valueString = valueString;
-				diagram += "\"" + root.valueString + "\"" + "->" + "\""
-						+ child.valueString + "\"" + ";\n";
-				doDFS(child);
+				child.nodeID = nodeID;
+				diagram += "\"" + root.nodeID + "\"" + "->" + "\""
+						+ child.nodeID + "\"" + ";\n";
+				getDiagram(child);
 			}
 		}
 	}
-
 }

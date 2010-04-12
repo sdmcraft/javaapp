@@ -2,8 +2,8 @@ package dataStructures;
 
 public class Trai extends Tree {
 
-	public void add(int item) {
-		add(new Integer(item).toString().toCharArray());
+	public void add(String item) {
+		add(item.toCharArray());
 	}
 
 	private void add(char[] charArray) {
@@ -16,19 +16,25 @@ public class Trai extends Tree {
 
 	private static Tree add(char c, Tree root) {
 		for (Tree node : root.getChildren()) {
-			if (node.getValue() == c - '0') {
+			if (node.getValue() == c) {
 				return node;
 			}
 		}
-		Tree node = new Tree(c - '0');
+		Tree node = new Tree(c);
 		root.addChild(node);
 		return node;
 	}
 
 	public static void main(String[] args) {
 		Trai trai = new Trai();
-		trai.add(12121212);
-		trai.add(123123);
-		System.out.println(trai.doDFS());
+		trai.add("A");
+		trai.add("to");
+		trai.add("tea");
+		trai.add("ted");
+		trai.add("ten");
+		trai.add("i");
+		trai.add("in");
+		trai.add("inn");
+		System.out.println(trai.getDiagram());
 	}
 }
