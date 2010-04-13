@@ -7,19 +7,19 @@ import java.util.Map;
 
 public class Tree {
 
-	private List<Tree> children;
-	private char value;
+	protected List<Tree> children;
+	protected String value;
 	private String nodeID;
 	private String diagram;
-	private Map<Character, Integer> intCount;
+	private Map<String, Integer> intCount;
 
 	public Tree() {
 		children = new ArrayList<Tree>();
 		diagram = "digraph G {\n";
-		intCount = new HashMap<Character, Integer>();
+		intCount = new HashMap<String, Integer>();
 	}
 
-	public Tree(char value) {
+	public Tree(String value) {
 		children = new ArrayList<Tree>();
 		this.value = value;
 	}
@@ -32,11 +32,11 @@ public class Tree {
 		this.children = children;
 	}
 
-	public char getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(char value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 
@@ -53,8 +53,8 @@ public class Tree {
 	private void getDiagram(Tree root) {
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
-				char value = child.getValue();
-				String nodeID = value + "";
+				String value = child.getValue();
+				String nodeID = value;
 				if (intCount.containsKey(value)) {
 					for (int i = 0; i < intCount.get(value); i++) {
 						nodeID += "*";

@@ -15,12 +15,13 @@ public class Trai extends Tree {
 	}
 
 	private static Tree add(char c, Tree root) {
+		String string = new String(new char[]{c});
 		for (Tree node : root.getChildren()) {
-			if (node.getValue() == c) {
+			if (node.getValue().equals(string)) {
 				return node;
 			}
 		}
-		Tree node = new Tree(c);
+		Tree node = new Tree(string);
 		root.addChild(node);
 		return node;
 	}
