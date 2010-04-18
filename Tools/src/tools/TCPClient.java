@@ -1,10 +1,8 @@
 package tools;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -12,23 +10,45 @@ import java.net.UnknownHostException;
 public class TCPClient {
 
 	Socket socket;
-	BufferedReader reader;
 	PrintWriter writer;
+	SocketReader socketReader;
 
 	public TCPClient() {
 
 	}
 
+	private class SocketReader implements Runnable {
+		private final Socket socket;
+		private final BufferedReader reader;
+
+		private SocketReader(Socket socket) throws IOException {
+			this.socket = socket;
+			reader = new BufferedReader(new InputStreamReader(socket
+					.getInputStream()));
+
+		}
+
+		public void run() {
+			try {
+				String message;
+				while ((message = reader.readLine()) != null) {
+					System.out.println("[Server]:" + message);
+				}
+			} catch (IOException ex) {
+				throw new RuntimeException(ex);
+			}
+		}
+	}
+
 	public void connect(String host, int port) throws UnknownHostException,
 			IOException {
 		socket = new Socket(host, port);
-		reader = new BufferedReader(new InputStreamReader(socket
-				.getInputStream()));
-		writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-				socket.getOutputStream())));
+		writer = new PrintWriter(socket.getOutputStream(), true);
+		socketReader = new SocketReader(socket);
+		new Thread(socketReader).start();
 	}
 
-	public void disconnect() throws IOException {	
+	public void disconnect() throws IOException {
 		socket.close();
 	}
 
@@ -39,15 +59,18 @@ public class TCPClient {
 
 	/**
 	 * @param args
-	 * @throws IOException 
-	 * @throws UnknownHostException 
+	 * @throws IOException
+	 * @throws UnknownHostException
+	 * @throws InterruptedException
 	 */
-	public static void main(String[] args) throws UnknownHostException, IOException {
+	public static void main(String[] args) throws UnknownHostException,
+			IOException, InterruptedException {
 		TCPClient client = new TCPClient();
-		client.connect("localhost", 2000);
+		client.connect("localhost", 2001);
 		client.send("Hello");
-		client.send("shutdown");
-		client.disconnect();
+//		Thread.sleep(1000);
+//		client.send("shutdown");
+//		client.disconnect();
 	}
 
 }

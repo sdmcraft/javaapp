@@ -32,12 +32,11 @@ public class CrudeTCPServer {
 			this.server = server;
 			reader = new BufferedReader(new InputStreamReader(socket
 					.getInputStream()));
-			writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-					socket.getOutputStream())));
+			writer = new PrintWriter(socket.getOutputStream(), true);
 		}
 
 		private void send(String message) {
-			writer.println(message);
+			writer.println(message);	
 			writer.flush();
 		}
 
@@ -52,23 +51,15 @@ public class CrudeTCPServer {
 
 		@Override
 		public void run() {
-			InputStream in = null;
 			try {
-				in = socket.getInputStream();
-				while (in.available() != 0) {
-					String message = reader.readLine();
+				String message;
+				while ((message = reader.readLine()) != null) {
 					System.out.println("[" + name + "]:" + message);
 					messageInterpreter(message);
 				}
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
 			} finally {
-				try {
-					if (in != null)
-						in.close();
-				} catch (Exception ex) {
-					throw new RuntimeException(ex);
-				}
 				connectionMap.remove(name);
 			}
 		}
@@ -87,6 +78,7 @@ public class CrudeTCPServer {
 			Socket socket = serverSocket.accept();
 			String connectionName = "Connection:" + connectionMap.size() + 1
 					+ "@" + System.currentTimeMillis();
+			System.out.println("Created connection:" + connectionName);
 			Connection connection = new Connection(socket, connectionName, this);
 			connectionMap.put(connectionName, connection);
 			new Thread(connection).start();
@@ -96,6 +88,7 @@ public class CrudeTCPServer {
 	public void stop() throws IOException {
 		System.out.println("Server going to shutdown");
 		serverSocket.close();
+		System.out.println("Server shutdown successful");
 	}
 
 	/**
@@ -103,7 +96,7 @@ public class CrudeTCPServer {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		CrudeTCPServer server = new CrudeTCPServer(2000);
+		CrudeTCPServer server = new CrudeTCPServer(2001);
 		server.start();
 	}
 
