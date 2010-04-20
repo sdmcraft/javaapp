@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class TCPClient {
@@ -34,6 +35,9 @@ public class TCPClient {
 				while ((message = reader.readLine()) != null) {
 					System.out.println("[Server]:" + message);
 				}
+				System.out.println("Connection ended with server");
+			} catch (SocketException ex) {
+				System.out.println("Connection with server is broken");
 			} catch (IOException ex) {
 				throw new RuntimeException(ex);
 			}
@@ -53,6 +57,7 @@ public class TCPClient {
 	}
 
 	public void send(String message) {
+		System.out.println("[Myself]:" + message);
 		writer.println(message);
 		writer.flush();
 	}
@@ -66,11 +71,11 @@ public class TCPClient {
 	public static void main(String[] args) throws UnknownHostException,
 			IOException, InterruptedException {
 		TCPClient client = new TCPClient();
-		client.connect("localhost", 2001);
+		client.connect("10.40.47.130", 2001);
 		client.send("Hello");
-//		Thread.sleep(1000);
-//		client.send("shutdown");
-//		client.disconnect();
+		// Thread.sleep(1000);
+		client.send("shutdown");
+		// client.disconnect();
 	}
 
 }

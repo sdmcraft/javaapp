@@ -1,12 +1,16 @@
 package tools;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PushbackInputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +31,7 @@ public class IOUtils {
 		int b;
 
 		try {
-			while (pbin.read(buffer) != -1) {				
+			while (pbin.read(buffer) != -1) {
 				if (!byteArrayEquals(buffer, delimBytes)) {
 					/* Not a delimiter, unread */
 					pbin.unread(buffer);
@@ -68,7 +72,8 @@ public class IOUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		List<String> result = delimitedReader("xxx", new File("c:\\temp\\test.txt"));
+		List<String> result = delimitedReader("xxx", new File(
+				"c:\\temp\\test.txt"));
 		for (String s : result)
 			System.out.println(s);
 	}
@@ -175,6 +180,21 @@ public class IOUtils {
 			}
 		}
 		return s;
+	}
+
+	public static void saveKeyToFile(String fileName, BigInteger mod,
+			BigInteger exp) throws IOException {
+		File file = new File(fileName);
+		ObjectOutputStream oout = new ObjectOutputStream(
+				new BufferedOutputStream(new FileOutputStream(fileName)));
+		try {
+			oout.writeObject(mod);
+			oout.writeObject(exp);
+		} catch (Exception e) {
+			throw new IOException("Unexpected error", e);
+		} finally {
+			oout.close();
+		}
 	}
 
 }

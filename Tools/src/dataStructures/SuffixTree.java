@@ -24,8 +24,10 @@ public class SuffixTree extends Trai {
 	}
 	
 	public static void main(String[] args) {
-		SuffixTree suffixTree = new SuffixTree("mississippi");
-		System.out.println(suffixTree.getDiagram());
+//		SuffixTree suffixTree = new SuffixTree("mississippi");
+//		System.out.println(suffixTree.getDiagram());
+		String string = "[123:{abc}]";
+		System.out.println(string.substring(1,string.indexOf(":")));
 	}
 
 }
