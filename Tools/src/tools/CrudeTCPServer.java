@@ -47,6 +47,11 @@ public class CrudeTCPServer {
 			if ("hello".equalsIgnoreCase(message)) {
 				send("I accept your hello");
 			}
+			if("Let's get cryptic".equalsIgnoreCase(message))
+			{
+				String publicKey = IOUtils.readFileAsString("keys/public.key");
+				send("<PublicKey>" + publicKey + "</PublicKey>");
+			}
 		}
 
 		@Override

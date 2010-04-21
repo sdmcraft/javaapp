@@ -13,6 +13,9 @@ public class TCPClient {
 	Socket socket;
 	PrintWriter writer;
 	SocketReader socketReader;
+	boolean readingPublicKey = false;
+	String publicKey = "";
+	boolean cryptMode = false;
 
 	public TCPClient() {
 
@@ -29,11 +32,33 @@ public class TCPClient {
 
 		}
 
+		private void messageInterpreter(String message) {
+
+			if (message.startsWith("<PublicKey>")) {
+				readingPublicKey = true;
+			}
+
+			if (readingPublicKey) {
+				publicKey += message;
+			}
+			if (message.endsWith("</PublicKey>")) {
+				readingPublicKey = false;
+				cryptMode = true;
+				publicKey = publicKey.substring(publicKey
+						.indexOf("<PublicKey>")
+						+ "<PublicKey>".length(), publicKey
+						.indexOf("</PublicKey>"));
+				System.out.println("Public Key:" + publicKey);
+			}
+
+		}
+
 		public void run() {
 			try {
 				String message;
 				while ((message = reader.readLine()) != null) {
 					System.out.println("[Server]:" + message);
+					messageInterpreter(message);
 				}
 				System.out.println("Connection ended with server");
 			} catch (SocketException ex) {
@@ -73,6 +98,7 @@ public class TCPClient {
 		TCPClient client = new TCPClient();
 		client.connect("10.40.47.130", 2001);
 		client.send("Hello");
+		client.send("Let's get cryptic");
 		// Thread.sleep(1000);
 		client.send("shutdown");
 		// client.disconnect();
