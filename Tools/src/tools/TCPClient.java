@@ -3,10 +3,12 @@ package tools;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.security.PublicKey;
 
 public class TCPClient {
 
@@ -14,8 +16,9 @@ public class TCPClient {
 	PrintWriter writer;
 	SocketReader socketReader;
 	boolean readingPublicKey = false;
-	String publicKey = "";
+	String publicKeyString = "";
 	boolean cryptMode = false;
+	PublicKey publicKey;
 
 	public TCPClient() {
 
@@ -23,47 +26,39 @@ public class TCPClient {
 
 	private class SocketReader implements Runnable {
 		private final Socket socket;
-		private final BufferedReader reader;
+		private final ObjectInputStream objectIn;;
 
 		private SocketReader(Socket socket) throws IOException {
 			this.socket = socket;
-			reader = new BufferedReader(new InputStreamReader(socket
-					.getInputStream()));
-
+			objectIn = new ObjectInputStream(socket.getInputStream());
 		}
 
-		private void messageInterpreter(String message) {
+		private void messageInterpreter(Object message) throws Exception {
 
-			if (message.startsWith("<PublicKey>")) {
-				readingPublicKey = true;
-			}
-
-			if (readingPublicKey) {
-				publicKey += message;
-			}
-			if (message.endsWith("</PublicKey>")) {
-				readingPublicKey = false;
+			if (message instanceof PublicKey) {
 				cryptMode = true;
-				publicKey = publicKey.substring(publicKey
-						.indexOf("<PublicKey>")
-						+ "<PublicKey>".length(), publicKey
-						.indexOf("</PublicKey>"));
-				System.out.println("Public Key:" + publicKey);
 			}
-
+			if (message instanceof String) {
+				if (cryptMode) {
+					System.out.println("[Server:]"
+							+ EncryptUtils.rsaDecrypt(message.toString(),
+									publicKey));
+				} else
+					System.out.println("[Server:]" + message.toString());
+			}
 		}
 
 		public void run() {
 			try {
-				String message;
-				while ((message = reader.readLine()) != null) {
-					System.out.println("[Server]:" + message);
+				Object message;
+				while ((message = objectIn.readObject()) != null) {
+					// System.out.println("[Server]:" + message);
 					messageInterpreter(message);
 				}
 				System.out.println("Connection ended with server");
 			} catch (SocketException ex) {
 				System.out.println("Connection with server is broken");
-			} catch (IOException ex) {
+			} catch (Exception ex) {
 				throw new RuntimeException(ex);
 			}
 		}

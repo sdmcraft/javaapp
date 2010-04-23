@@ -3,10 +3,12 @@ package tools;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,13 +17,14 @@ public class CrudeTCPServer {
 	private final int port;
 	private final ServerSocket serverSocket;
 	private final Map<String, Connection> connectionMap;
+	private KeyPair keyPair;
 
 	private class Connection implements Runnable {
 		private final Socket socket;
 		private final String name;
 		private final CrudeTCPServer server;
-		private BufferedReader reader;
-		private PrintWriter writer;
+		private BufferedReader reader;		
+		private ObjectOutputStream objectOut;
 
 		private Connection(Socket socket, String name, CrudeTCPServer server)
 				throws IOException {
@@ -30,15 +33,14 @@ public class CrudeTCPServer {
 			this.server = server;
 			reader = new BufferedReader(new InputStreamReader(socket
 					.getInputStream()));
-			writer = new PrintWriter(socket.getOutputStream(), true);
+			objectOut = new ObjectOutputStream(socket.getOutputStream());
 		}
 
-		private void send(String message) {
-			writer.println(message);
-			writer.flush();
+		private void send(Object message) throws Exception {
+			objectOut.writeObject(message);
 		}
 
-		private void messageInterpreter(String message) throws IOException {
+		private void messageInterpreter(String message) throws Exception {
 			if ("shutdown".equals(message)) {
 				send("Server going to sutdown");
 				socket.close();
@@ -47,10 +49,14 @@ public class CrudeTCPServer {
 			if ("hello".equalsIgnoreCase(message)) {
 				send("I accept your hello");
 			}
-			if("Let's get cryptic".equalsIgnoreCase(message))
-			{
-				String publicKey = IOUtils.readFileAsString("keys/public.key");
-				send("<PublicKey>" + publicKey + "</PublicKey>");
+			if ("Let's get cryptic".equalsIgnoreCase(message)) {
+				//String publicKey = IOUtils.readFileAsString("keys/public.key");
+				//send("<PublicKey>" + publicKey + "</PublicKey>");
+				send(keyPair.getPublic());
+				String serverMessage = "This is an encrypted message from server";
+				String encryptedMessage = new String(EncryptUtils.rsaEncrypt(
+						serverMessage, keyPair.getPrivate()));
+				send(encryptedMessage);
 			}
 		}
 
@@ -65,7 +71,7 @@ public class CrudeTCPServer {
 			} catch (SocketException ex) {
 				System.out.println("Connection:" + name + " broken");
 				connectionMap.remove(name);
-			} catch (IOException ex) {
+			} catch (Exception ex) {
 				throw new RuntimeException(ex);
 			} finally {
 				connectionMap.remove(name);
@@ -82,7 +88,8 @@ public class CrudeTCPServer {
 
 	public void start() throws Exception {
 		try {
-			EncryptUtils.generateKeyPair("keys/public.key", "keys/private.key");
+			keyPair = EncryptUtils.generateKeyPair("keys/public.key",
+					"keys/private.key");
 			System.out.println("Server ready to accept connections");
 			while (true) {
 				Socket socket = serverSocket.accept();
