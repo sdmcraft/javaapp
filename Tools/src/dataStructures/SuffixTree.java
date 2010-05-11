@@ -5,11 +5,10 @@ public class SuffixTree extends Trai {
 	public SuffixTree(String string) {
 		for (int i = 0; i < string.length(); i++) {
 			add(string.substring(i));
-		}
-		this.compact();
+		}		
 	}
 	
-	private void compact() {
+	public void compact() {
 		compact(this);
 	}
 
@@ -23,11 +22,12 @@ public class SuffixTree extends Trai {
 		}
 	}
 	
+	
+	
 	public static void main(String[] args) {
-//		SuffixTree suffixTree = new SuffixTree("mississippi");
-//		System.out.println(suffixTree.getDiagram());
-		String string = "[123:{abc}]";
-		System.out.println(string.substring(1,string.indexOf(":")));
+		SuffixTree suffixTree = new SuffixTree("ant");
+		System.out.println(suffixTree.getDiagram());
+		System.out.println(suffixTree.search("nana"));
 	}
 
 }
