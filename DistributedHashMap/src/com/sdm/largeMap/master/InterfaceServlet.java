@@ -18,7 +18,8 @@ public class InterfaceServlet extends HttpServlet {
 
 			if ("register".equalsIgnoreCase(action)) {
 				String slaveUrl = (String) request.getAttribute("slaveUrl");
-				State.getRegisteredSlaves().put(slaveUrl, slaveUrl);
+				Double slaveLoad = (Double) request.getAttribute("slaveLoad");
+				State.getRegisteredSlaves().add(new Slave(slaveUrl, slaveLoad));
 				writer.print("ok");
 			} else if ("deregister".equalsIgnoreCase(action)) {
 				String slaveUrl = (String) request.getAttribute("slaveUrl");

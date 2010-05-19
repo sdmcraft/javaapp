@@ -1,16 +1,20 @@
 package com.sdm.largeMap.master;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class State {
 
-	private final static Map<String,String> registeredSlaves = new ConcurrentHashMap<String,String>();
-	private final static Map<String,String> map = new HashMap<String, String>();
-	
+	private static final Set<Slave> registeredSlaves = new TreeSet<Slave>(new SlaveLoadComparator());
 
-	public final static Map<String,String> getRegisteredSlaves() {
+	public static final Set<Slave> getRegisteredSlaves() {
 		return registeredSlaves;
+	}
+
+	public static void main(String[] args) {
+		registeredSlaves.add(new Slave("1",0.5));
+		registeredSlaves.add(new Slave("2",0.75));
+		registeredSlaves.add(new Slave("3",0.0));
+		System.out.println(registeredSlaves);
 	}
 }
