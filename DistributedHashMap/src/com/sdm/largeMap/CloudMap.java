@@ -5,7 +5,32 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class CloudMap<K, V> implements Map<K, V> {
+import com.sdm.largeMap.master.Slave;
+import com.sdm.largeMap.master.State;
+
+public class CloudMap implements Map<String, String> {
+
+	private final Map<String, String> cache;
+	private final String mapId;
+
+	public CloudMap(final int cacheCapacity, float loadFactor) {
+		this.mapId = (String) State.getNextMapId();
+		this.cache = new LinkedHashMap<String, String>(cacheCapacity,
+				loadFactor, true) {
+			protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+				boolean putSucccess = false;				
+				if (size() > cacheCapacity) {
+					for (Slave slave : State.getRegisteredSlaves()) {
+						putSucccess = slave.put(mapId, eldest.getKey(), eldest
+								.getValue());
+						if (putSucccess)
+							break;
+					}
+				}
+				return putSucccess;
+			}
+		};
+	}
 
 	@Override
 	public void clear() {
@@ -26,13 +51,13 @@ public class CloudMap<K, V> implements Map<K, V> {
 	}
 
 	@Override
-	public Set<java.util.Map.Entry<K, V>> entrySet() {
+	public Set<java.util.Map.Entry<String, String>> entrySet() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public V get(Object arg0) {
+	public String get(Object arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -44,25 +69,25 @@ public class CloudMap<K, V> implements Map<K, V> {
 	}
 
 	@Override
-	public Set<K> keySet() {
+	public Set<String> keySet() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public V put(K arg0, V arg1) {		
+	public String put(String arg0, String arg1) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void putAll(Map<? extends K, ? extends V> arg0) {
+	public void putAll(Map<? extends String, ? extends String> arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public V remove(Object arg0) {
+	public String remove(Object arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -74,24 +99,9 @@ public class CloudMap<K, V> implements Map<K, V> {
 	}
 
 	@Override
-	public Collection<V> values() {
+	public Collection<String> values() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	private final Map<K, V> cache;
-
-	public CloudMap(final int cacheCapacity, float loadFactor) {
-		this.cache = new LinkedHashMap<K, V>(cacheCapacity, loadFactor, true) {
-			protected boolean removeEldestEntry(Map.Entry eldest) {
-				boolean remove = size() > cacheCapacity; 
-				if(remove)
-				{
-					
-				}
-				return remove;
-			}
-		};
 	}
 
 }

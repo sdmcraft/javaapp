@@ -1,15 +1,13 @@
 package com.sdm.largeMap.slave;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+
+import com.sdm.largeMap.Utils;
 
 public class ContextListener implements ServletContextListener {
 
@@ -26,8 +24,9 @@ public class ContextListener implements ServletContextListener {
 
 			connection = (HttpURLConnection) registerURL.openConnection();
 			connection.setRequestMethod("GET");
-			String masterResponse = convertStreamToString(connection.getInputStream());
-			if("ok".equalsIgnoreCase(masterResponse))
+			String masterResponse = Utils.convertStreamToString(connection
+					.getInputStream());
+			if ("ok".equalsIgnoreCase(masterResponse))
 				throw new Exception("Failed to deregister myself");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,7 +39,7 @@ public class ContextListener implements ServletContextListener {
 		masterServerURL = ctxEvent.getServletContext().getInitParameter(
 				"masterServerURL");
 		slaveServerURL = ctxEvent.getServletContext().getInitParameter(
-				"slaveServerURL");		
+				"slaveServerURL");
 		try {
 			URL registerURL = new URL(masterServerURL
 					+ "action=register&slaveUrl="
@@ -48,37 +47,13 @@ public class ContextListener implements ServletContextListener {
 
 			connection = (HttpURLConnection) registerURL.openConnection();
 			connection.setRequestMethod("GET");
-			String masterResponse = convertStreamToString(connection.getInputStream());
-			if("ok".equalsIgnoreCase(masterResponse))
+			String masterResponse = Utils.convertStreamToString(connection
+					.getInputStream());
+			if ("ok".equalsIgnoreCase(masterResponse))
 				throw new Exception("Failed to register myself");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public String convertStreamToString(InputStream is) throws IOException {
-		/*
-		 * To convert the InputStream to String we use the
-		 * BufferedReader.readLine() method. We iterate until the BufferedReader
-		 * return null which means there's no more data to read. Each line will
-		 * appended to a StringBuilder and returned as String.
-		 */
-		if (is != null) {
-			StringBuilder sb = new StringBuilder();
-			String line;
-
-			try {
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(is, "UTF-8"));
-				while ((line = reader.readLine()) != null) {
-					sb.append(line).append("\n");
-				}
-			} finally {
-				is.close();
-			}
-			return sb.toString();
-		} else {
-			return "";
-		}
-	}
 }

@@ -2,16 +2,12 @@ package com.sdm.largeMap.slave;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class InterfaceServlet extends HttpServlet {
-
-	private Map<String, String> map = new HashMap<String, String>();
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,12 +20,12 @@ public class InterfaceServlet extends HttpServlet {
 			if ("put".equalsIgnoreCase(action)) {
 				String key = (String) request.getAttribute("key");
 				String value = (String) request.getAttribute("value");
-				map.put(key, value);
-				writer.print("ok");
+				String mapId = (String) request.getAttribute("map-id");
+				writer.print(State.put(mapId, key, value));
 			} else if ("get".equalsIgnoreCase(action)) {
 				String key = (String) request.getAttribute("key");
-				String value = map.get(key);
-				writer.print("value");
+				String mapId = (String) request.getAttribute("map-id");
+				writer.print(State.get(mapId, key));
 			}
 		} finally {
 			if (writer != null)
