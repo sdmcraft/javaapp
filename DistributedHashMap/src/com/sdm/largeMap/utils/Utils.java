@@ -1,4 +1,4 @@
-package com.sdm.largeMap;
+package com.sdm.largeMap.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

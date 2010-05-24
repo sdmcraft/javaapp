@@ -7,7 +7,7 @@ import java.net.URLEncoder;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.sdm.largeMap.Utils;
+import com.sdm.largeMap.utils.Utils;
 
 public class ContextListener implements ServletContextListener {
 

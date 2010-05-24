@@ -4,7 +4,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import com.sdm.largeMap.Utils;
+import com.sdm.largeMap.utils.Utils;
 
 public class Slave {
 

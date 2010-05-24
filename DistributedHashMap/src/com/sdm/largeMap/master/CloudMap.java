@@ -1,12 +1,10 @@
-package com.sdm.largeMap;
+package com.sdm.largeMap.master;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.sdm.largeMap.master.Slave;
-import com.sdm.largeMap.master.State;
 
 public class CloudMap implements Map<String, String> {
 
