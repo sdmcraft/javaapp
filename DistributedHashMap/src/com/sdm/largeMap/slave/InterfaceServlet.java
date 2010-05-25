@@ -12,20 +12,24 @@ public class InterfaceServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		System.out.println("InterfaceServlet.doGet");
 		PrintWriter writer = null;
 		try {
 			writer = response.getWriter();
-			String action = (String) request.getAttribute("action");
+			String action = request.getParameter("action");
 
 			if ("put".equalsIgnoreCase(action)) {
-				String key = (String) request.getAttribute("key");
-				String value = (String) request.getAttribute("value");
-				String mapId = (String) request.getAttribute("map-id");
+				String key = request.getParameter("key");
+				String value = request.getParameter("value");
+				String mapId = request.getParameter("map-id");
 				writer.print(State.put(mapId, key, value));
 			} else if ("get".equalsIgnoreCase(action)) {
-				String key = (String) request.getAttribute("key");
-				String mapId = (String) request.getAttribute("map-id");
+				String key = request.getParameter("key");
+				String mapId = request.getParameter("map-id");
 				writer.print(State.get(mapId, key));
+			}else if ("ping".equalsIgnoreCase(action)) {
+				writer.print("ok");
+				response.addHeader("status", "ok");
 			}
 		} finally {
 			if (writer != null)
