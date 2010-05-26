@@ -42,6 +42,11 @@ public class Slave {
 				+ URLEncoder.encode(key, "UTF-8") + "&value="
 				+ URLEncoder.encode(value, "UTF-8"));
 	}
+	
+	public String info()
+	{
+		return send("action=info");
+	}
 
 	private String send(String encodedQuery) {
 		String response = null;

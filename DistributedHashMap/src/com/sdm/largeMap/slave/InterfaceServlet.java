@@ -30,6 +30,8 @@ public class InterfaceServlet extends HttpServlet {
 			}else if ("ping".equalsIgnoreCase(action)) {
 				writer.print("ok");
 				response.addHeader("status", "ok");
+			}else if("info".equalsIgnoreCase(action)){
+				writer.print(State.getInfo());
 			}
 		} finally {
 			if (writer != null)

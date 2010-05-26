@@ -4,11 +4,11 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<context-param>
 		<param-name>masterServerURL</param-name>
-		<param-value>http://localhost:9000</param-value>
+		<param-value>http://localhost:8080/CloudHashMap-Master/service</param-value>
 	</context-param>
 	<context-param>
 		<param-name>slaveServerURL</param-name>
-		<param-value>http://localhost:9001</param-value>
+		<param-value>http://localhost:8080/CloudHashMap-Slave/service</param-value>
 	</context-param>
 
 	<servlet>

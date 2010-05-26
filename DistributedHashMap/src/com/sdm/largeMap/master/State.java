@@ -16,6 +16,15 @@ public class State {
 	public static final String getNextMapId() {
 		return Long.toString(mapIdCounter.addAndGet(1));
 	}
+	
+	public static String getInfo() {
+		String result = "";
+		for(Slave slave : registeredSlaves)
+		{
+			result += slave.info() +"\n";
+		}
+		return result;
+	}
 
 	public static void main(String[] args) {
 		registeredSlaves.add(new Slave("1", 0.5));

@@ -11,16 +11,14 @@ import com.sdm.largeMap.utils.Utils;
 
 public class ContextListener implements ServletContextListener {
 
-	String masterServerURL;
-	String slaveServerURL;
 	private static HttpURLConnection connection;
 
 	@Override
 	public void contextDestroyed(ServletContextEvent ctxEvent) {
 		try {
-			URL registerURL = new URL(masterServerURL
+			URL registerURL = new URL(State.masterServerURL
 					+ "action=deregister&slaveUrl="
-					+ URLEncoder.encode(slaveServerURL, "UTF-8"));
+					+ URLEncoder.encode(State.slaveServerURL, "UTF-8"));
 
 			connection = (HttpURLConnection) registerURL.openConnection();
 			connection.setRequestMethod("GET");
@@ -36,14 +34,14 @@ public class ContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent ctxEvent) {
-		masterServerURL = ctxEvent.getServletContext().getInitParameter(
+		State.masterServerURL = ctxEvent.getServletContext().getInitParameter(
 				"masterServerURL");
-		slaveServerURL = ctxEvent.getServletContext().getInitParameter(
+		State.slaveServerURL = ctxEvent.getServletContext().getInitParameter(
 				"slaveServerURL");
 		try {
-			URL registerURL = new URL(masterServerURL
+			URL registerURL = new URL(State.masterServerURL
 					+ "action=register&slaveUrl="
-					+ URLEncoder.encode(slaveServerURL, "UTF-8"));
+					+ URLEncoder.encode(State.slaveServerURL, "UTF-8"));
 
 			connection = (HttpURLConnection) registerURL.openConnection();
 			connection.setRequestMethod("GET");

@@ -11,8 +11,10 @@
 	<property name="api-doc.dir" value="docs/api-docs" />
 	<property name="build.slave-classes" value="${build.dir}/slave/WEB-INF/classes" />
 	<property name="build.master-classes" value="${build.dir}/master/WEB-INF/classes" />
+	<property name="build.main-classes" value="${build.dir}/main/classes" />
 	<property name="build.slave" value="${build.dir}/slave" />
 	<property name="build.master" value="${build.dir}/master" />
+	<property name="build.main" value="${build.dir}/main" />
 	<property name="build.test-classes" value="${build.dir}/test-classes" />
 	<property name="build.example-classes" value="${build.dir}/example-classes" />
 	<property name="coverage.dir" value="coverage" />
@@ -45,8 +47,10 @@
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.slave}" />
 		<mkdir dir="${build.master}" />
+		<mkdir dir="${build.main}" />
 		<mkdir dir="${build.slave-classes}" />
-		<mkdir dir="${build.master-classes}" />		
+		<mkdir dir="${build.master-classes}" />
+		<mkdir dir="${build.main-classes}" />
 		<mkdir dir="${build.test-classes}" />
 		<mkdir dir="${build.example-classes}" />
 		<mkdir dir="${coverage.dir}" />
@@ -61,6 +65,7 @@
 			<include name="com/sdm/largeMap/slave/**" />
 			<include name="com/sdm/largeMap/utils/**" />
 			<exclude name="com/sdm/largeMap/master/**" />
+			<exclude name="com/sdm/largeMap/main/**" />
 		</javac>
 
 		<javac classpathref="mylibs" destdir="${build.master-classes}"
@@ -69,6 +74,16 @@
 			<include name="com/sdm/largeMap/master/**" />
 			<include name="com/sdm/largeMap/utils/**" />
 			<exclude name="com/sdm/largeMap/slave/**" />
+			<exclude name="com/sdm/largeMap/main/**" />
+		</javac>
+
+		<javac classpathref="mylibs" destdir="${build.main-classes}"
+			debug="on" debuglevel="lines,vars,source" deprecation="on" target="1.5">
+			<src path="${src.dir}" />
+			<exclude name="com/sdm/largeMap/master/**" />
+			<include name="com/sdm/largeMap/utils/**" />
+			<exclude name="com/sdm/largeMap/slave/**" />
+			<include name="com/sdm/largeMap/main/**" />
 		</javac>
 
 		<copy todir="${build.slave}/WEB-INF">
@@ -83,7 +98,7 @@
 		<move file="${build.master}/WEB-INF/master-web.xml" tofile="${build.master}/WEB-INF/web.xml" />		
 		<jar jarfile="${dist.dir}/CloudHashMap-Master.war" basedir="${build.master}" />
 		
-
+		<jar jarfile="${dist.dir}/CloudHashMap.jar" basedir="${build.master}" />
 	</target>
 
 	<target name="clean">

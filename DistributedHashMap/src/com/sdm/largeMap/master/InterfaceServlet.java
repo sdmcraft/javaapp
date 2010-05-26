@@ -40,6 +40,9 @@ public class InterfaceServlet extends HttpServlet {
 				writer.print(putResult);
 			} else if ("get-map-id".equalsIgnoreCase(action)) {
 				writer.print(State.getNextMapId());
+			}else if ("info".equalsIgnoreCase(action)) {
+				System.out.println("Master info requested");
+				writer.print(State.getInfo());
 			}
 		} finally {
 			if (writer != null)

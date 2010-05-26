@@ -45,7 +45,7 @@ public class CloudMap implements Map<String, String> {
 		InputStream resultStream = null;
 		try {
 			URL putURL = new URL(cloudService + "?" + encodedQuery);
-
+			System.out.println(putURL);
 			connection = (HttpURLConnection) putURL.openConnection();
 			connection.setRequestMethod("GET");
 			resultStream = connection.getInputStream();
@@ -144,6 +144,15 @@ public class CloudMap implements Map<String, String> {
 	public Collection<String> values() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public static void main(String[] args)
+	{
+		Map cloudMap = new CloudMap(2, 0.75f, "http://localhost:8080/CloudHashMap-Master/service");
+		cloudMap.put("a", "1");
+		cloudMap.put("b", "2");
+		cloudMap.put("c", "3");
+		cloudMap.put("d", "4");
 	}
 
 }
