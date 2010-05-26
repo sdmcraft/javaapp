@@ -14,17 +14,32 @@ public class InterfaceServlet extends HttpServlet {
 		PrintWriter writer = null;
 		try {
 			writer = response.getWriter();
-			String action = (String) request.getAttribute("action");
+			String action = request.getParameter("action");
 
 			if ("register".equalsIgnoreCase(action)) {
-				String slaveUrl = (String) request.getAttribute("slaveUrl");
-				Double slaveLoad = (Double) request.getAttribute("slaveLoad");
+				String slaveUrl = request.getParameter("slaveUrl");
+				Double slaveLoad = Double.parseDouble(request
+						.getParameter("slaveLoad"));
 				State.getRegisteredSlaves().add(new Slave(slaveUrl, slaveLoad));
 				writer.print("ok");
 			} else if ("deregister".equalsIgnoreCase(action)) {
-				String slaveUrl = (String) request.getAttribute("slaveUrl");
+				String slaveUrl = request.getParameter("slaveUrl");
 				State.getRegisteredSlaves().remove(slaveUrl);
 				writer.print("ok");
+			} else if ("put".equalsIgnoreCase(action)) {
+				String putResult = null;
+				String key = request.getParameter("key");
+				String value = request.getParameter("value");
+				String mapId = request.getParameter("map-id");
+
+				for (Slave slave : State.getRegisteredSlaves()) {
+					putResult = slave.put(mapId, key, value);
+					if (putResult.equals(key))
+						break;
+				}
+				writer.print(putResult);
+			} else if ("get-map-id".equalsIgnoreCase(action)) {
+				writer.print(State.getNextMapId());
 			}
 		} finally {
 			if (writer != null)

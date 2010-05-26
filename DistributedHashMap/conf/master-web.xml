@@ -2,22 +2,15 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-	<context-param>
-		<param-name>masterServerURL</param-name>
-		<param-value>http://localhost:9000</param-value>
-	</context-param>
-	<context-param>
-		<param-name>slaveServerURL</param-name>
-		<param-value>http://localhost:9001</param-value>
-	</context-param>
 
 	<servlet>
 		<servlet-name>InterfaceServlet</servlet-name>
-		<servlet-class>com.sdm.largeMap.slave.InterfaceServlet</servlet-class>
+		<servlet-class>com.sdm.largeMap.master.InterfaceServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>InterfaceServlet</servlet-name>
 		<url-pattern>/service</url-pattern>
 	</servlet-mapping>
+	
 </web-app>

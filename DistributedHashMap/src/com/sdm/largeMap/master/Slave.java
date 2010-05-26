@@ -1,5 +1,7 @@
 package com.sdm.largeMap.master;
 
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -34,26 +36,34 @@ public class Slave {
 		return url + "@" + load;
 	}
 
-	public boolean put(String mapId, String key, String value) {
-		boolean result;
+	public String put(String mapId, String key, String value)
+			throws UnsupportedEncodingException {
+		return send("action=put&map-id=" + mapId + "&key="
+				+ URLEncoder.encode(key, "UTF-8") + "&value="
+				+ URLEncoder.encode(value, "UTF-8"));
+	}
+
+	private String send(String encodedQuery) {
+		String response = null;
+		InputStream resultStream = null;
 		try {
-			URL putURL = new URL(url + "action=put&map-id=" + mapId + "&key="
-					+ URLEncoder.encode(key, "UTF-8") + "&value="
-					+ URLEncoder.encode(value, "UTF-8"));
+			URL putURL = new URL(url + "?" + encodedQuery);
 
 			connection = (HttpURLConnection) putURL.openConnection();
 			connection.setRequestMethod("GET");
-			String putResponse = Utils.convertStreamToString(connection
-					.getInputStream());
-			if ("ok".equalsIgnoreCase(putResponse))
-				result = true;
-			else
-				result = false;
+			resultStream = connection.getInputStream();
+			response = Utils.convertStreamToString(resultStream);
 		} catch (Exception e) {
-			result = false;
 			e.printStackTrace();
+		} finally {
+			try {
+				if (resultStream != null)
+					resultStream.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
-		return result;
+		return response;
 	}
 
 }

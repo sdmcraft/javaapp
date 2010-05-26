@@ -1,33 +1,77 @@
-package com.sdm.largeMap.master;
+package com.sdm.largeMap.main;
 
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.sdm.largeMap.utils.Utils;
 
 public class CloudMap implements Map<String, String> {
 
 	private final Map<String, String> cache;
 	private final String mapId;
+	private final String cloudService;
+	private HttpURLConnection connection;
 
-	public CloudMap(final int cacheCapacity, float loadFactor) {
-		this.mapId = (String) State.getNextMapId();
+	public CloudMap(final int cacheCapacity, float loadFactor,
+			String cloudService) {
+		this.cloudService = cloudService;
+		this.mapId = cloudGetMapId();
 		this.cache = new LinkedHashMap<String, String>(cacheCapacity,
 				loadFactor, true) {
 			protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
-				boolean putSucccess = false;				
+				boolean putSuccess = false;
 				if (size() > cacheCapacity) {
-					for (Slave slave : State.getRegisteredSlaves()) {
-						putSucccess = slave.put(mapId, eldest.getKey(), eldest
-								.getValue());
-						if (putSucccess)
-							break;
+					try {
+						putSuccess = eldest.getKey().equals(
+								cloudPut(eldest.getKey(), eldest.getValue()));
+					} catch (UnsupportedEncodingException ex) {
+						ex.printStackTrace();
 					}
 				}
-				return putSucccess;
+				return putSuccess;
 			}
 		};
+	}
+
+	private String send(String encodedQuery) {
+		String response = null;
+		InputStream resultStream = null;
+		try {
+			URL putURL = new URL(cloudService + "?" + encodedQuery);
+
+			connection = (HttpURLConnection) putURL.openConnection();
+			connection.setRequestMethod("GET");
+			resultStream = connection.getInputStream();
+			response = Utils.convertStreamToString(resultStream);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (resultStream != null)
+					resultStream.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		return response;
+	}
+
+	private String cloudGetMapId() {
+		return send("action=get-map-id");
+	}
+
+	private String cloudPut(String key, String value)
+			throws UnsupportedEncodingException {
+		return send("action=put&map-id=" + mapId + "&key="
+				+ URLEncoder.encode(key, "UTF-8") + "&value="
+				+ URLEncoder.encode(value, "UTF-8"));
 	}
 
 	@Override
