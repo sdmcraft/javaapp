@@ -12,7 +12,7 @@ public class InterfaceServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		System.out.println("InterfaceServlet.doGet");
+		System.out.println("(+)com.sdm.largeMap.slave.InterfaceServlet.doGet(+)");
 		PrintWriter writer = null;
 		try {
 			writer = response.getWriter();
@@ -37,6 +37,7 @@ public class InterfaceServlet extends HttpServlet {
 			if (writer != null)
 				writer.close();
 		}
+		System.out.println("(-)com.sdm.largeMap.slave.InterfaceServlet.doGet(-)");
 	}
 
 	@Override

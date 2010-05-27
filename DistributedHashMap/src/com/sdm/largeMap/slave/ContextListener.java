@@ -21,7 +21,7 @@ public class ContextListener implements ServletContextListener {
 					+ URLEncoder.encode(State.slaveServerURL, "UTF-8"));
 
 			connection = (HttpURLConnection) registerURL.openConnection();
-			connection.setRequestMethod("GET");
+			connection.setRequestMethod("POST");
 			String masterResponse = Utils.convertStreamToString(connection
 					.getInputStream());
 			if ("ok".equalsIgnoreCase(masterResponse))
@@ -34,24 +34,26 @@ public class ContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent ctxEvent) {
-		State.masterServerURL = ctxEvent.getServletContext().getInitParameter(
-				"masterServerURL");
-		State.slaveServerURL = ctxEvent.getServletContext().getInitParameter(
-				"slaveServerURL");
-		try {
-			URL registerURL = new URL(State.masterServerURL
-					+ "action=register&slaveUrl="
-					+ URLEncoder.encode(State.slaveServerURL, "UTF-8"));
-
-			connection = (HttpURLConnection) registerURL.openConnection();
-			connection.setRequestMethod("GET");
-			String masterResponse = Utils.convertStreamToString(connection
-					.getInputStream());
-			if ("ok".equalsIgnoreCase(masterResponse))
-				throw new Exception("Failed to register myself");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		System.out.println("(+)com.sdm.largeMap.slave.contextInitialized(+)");
+//		State.masterServerURL = ctxEvent.getServletContext().getInitParameter(
+//				"masterServerURL");
+//		State.slaveServerURL = ctxEvent.getServletContext().getInitParameter(
+//				"slaveServerURL");
+//		try {
+//			URL registerURL = new URL(State.masterServerURL
+//					+ "?action=register&slaveUrl="
+//					+ URLEncoder.encode(State.slaveServerURL, "UTF-8"));
+//
+//			connection = (HttpURLConnection) registerURL.openConnection();
+//			connection.setRequestMethod("GET");
+//			String masterResponse = Utils.convertStreamToString(connection
+//					.getInputStream());
+//			if ("ok".equalsIgnoreCase(masterResponse))
+//				throw new Exception("Failed to register myself");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		System.out.println("(-)com.sdm.largeMap.slave.contextInitialized(-)");
 	}
 
 }

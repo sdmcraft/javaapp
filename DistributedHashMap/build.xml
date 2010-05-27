@@ -113,6 +113,12 @@
 		<delete quiet="true" dir="${dist.dir}" />
 		<delete quiet="true" dir="${api-doc.dir}" />
 	</target>
+	
+	<target name="deploy" depends="build">
+			<copy todir="${deploy}">
+				<fileset dir="${dist.dir}" includes="*.war" />
+			</copy>
+	</target>
 
 	<!-- <target name="debug" depends="clean,build">
 		<java jar="dist/FLVParser.jar" fork="true">

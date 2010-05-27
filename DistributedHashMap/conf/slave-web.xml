@@ -20,4 +20,8 @@
 		<servlet-name>InterfaceServlet</servlet-name>
 		<url-pattern>/service</url-pattern>
 	</servlet-mapping>
+
+	<listener>
+		<listener-class>com.sdm.largeMap.slave.ContextListener</listener-class>
+	</listener>
 </web-app>
