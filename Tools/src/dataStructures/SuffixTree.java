@@ -26,7 +26,7 @@ public class SuffixTree extends Trai {
 	
 	public static void main(String[] args) {
 		SuffixTree suffixTree = new SuffixTree("ant");
-		System.out.println(suffixTree.getDiagram());
+		//System.out.println(suffixTree.getDiagram());
 		System.out.println(suffixTree.search("nana"));
 	}
 

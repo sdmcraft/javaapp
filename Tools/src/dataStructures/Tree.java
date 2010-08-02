@@ -12,6 +12,7 @@ public class Tree {
 	private String nodeID;
 	private String diagram;
 	private Map<String, Integer> intCount;
+	private Tree sibling;
 
 	public Tree() {
 		children = new ArrayList<Tree>();
@@ -95,4 +96,15 @@ public class Tree {
 			}
 		}
 	}
+	
+	public void siblingify()
+	{
+		siblingify(this);
+	}
+	
+	private void siblingify(Tree root)
+	{
+		
+	}
+
 }
