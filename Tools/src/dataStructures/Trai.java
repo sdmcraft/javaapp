@@ -37,5 +37,7 @@ public class Trai extends Tree {
 		trai.add("in");
 		trai.add("inn");
 		//System.out.println(trai.getDiagram());
+		trai.siblingify();
+		System.out.println(trai.getDiagram());
 	}
 }

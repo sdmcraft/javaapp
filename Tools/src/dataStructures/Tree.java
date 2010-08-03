@@ -2,6 +2,7 @@ package dataStructures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,7 @@ public class Tree {
 	}
 
 	public String getDiagram() {
+		preDiagram(this);
 		getDiagram(this);
 		diagram += "}";
 		return diagram;
@@ -63,7 +65,7 @@ public class Tree {
 		return result;
 	}
 
-	private void getDiagram(Tree root) {
+	private void preDiagram(Tree root) {
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
 				String value = child.getValue();
@@ -77,6 +79,18 @@ public class Tree {
 					intCount.put(value, 1);
 				}
 				child.nodeID = nodeID;
+				preDiagram(child);
+			}
+		}
+	}
+
+	private void getDiagram(Tree root) {		
+		if (root.sibling != null) {
+			diagram += "\"" + root.nodeID + "\"" + "->" + "\""
+					+ root.sibling.nodeID + "\"" + ";\n";
+		}
+		if (root.getChildren() != null && root.getChildren().size() > 0) {
+			for (Tree child : root.getChildren()) {
 				diagram += "\"" + root.nodeID + "\"" + "->" + "\""
 						+ child.nodeID + "\"" + ";\n";
 				getDiagram(child);
@@ -96,15 +110,21 @@ public class Tree {
 			}
 		}
 	}
-	
-	public void siblingify()
-	{
+
+	public void siblingify() {
 		siblingify(this);
 	}
-	
-	private void siblingify(Tree root)
-	{
-		
+
+	private void siblingify(Tree root) {
+		Iterator<Tree> itr = root.getChildren().iterator();
+		Tree prevChild = null;
+		while (itr.hasNext()) {
+			Tree child = itr.next();
+			siblingify(child);
+			if (prevChild != null)
+				prevChild.sibling = child;
+			prevChild = child;
+		}
 	}
 
 }
