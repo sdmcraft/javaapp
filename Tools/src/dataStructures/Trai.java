@@ -26,7 +26,7 @@ public class Trai extends Tree {
 		return node;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		Trai trai = new Trai();
 		trai.add("A");
 		trai.add("to");
@@ -38,6 +38,7 @@ public class Trai extends Tree {
 		trai.add("inn");
 		//System.out.println(trai.getDiagram());
 		trai.siblingify();
+		trai.setLevels();
 		System.out.println(trai.getDiagram());
 	}
 }

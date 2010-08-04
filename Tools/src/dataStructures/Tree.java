@@ -1,5 +1,6 @@
 package dataStructures;
 
+import java.awt.geom.QuadCurve2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,6 +15,7 @@ public class Tree {
 	private String diagram;
 	private Map<String, Integer> intCount;
 	private Tree sibling;
+	private int depth = 0;
 
 	public Tree() {
 		children = new ArrayList<Tree>();
@@ -70,13 +72,16 @@ public class Tree {
 			for (Tree child : root.getChildren()) {
 				String value = child.getValue();
 				String nodeID = value;
-				if (intCount.containsKey(value)) {
-					for (int i = 0; i < intCount.get(value); i++) {
+				if(child.depth > 0)
+					nodeID += "("+child.depth+")";
+				if (intCount.containsKey(nodeID)) {	
+					int count = intCount.get(nodeID);
+					for (int i = 0; i < count; i++) {
 						nodeID += "*";
 					}
-					intCount.put(value, intCount.get(value) + 1);
+					intCount.put(nodeID, count + 1);
 				} else {
-					intCount.put(value, 1);
+					intCount.put(nodeID, 1);
 				}
 				child.nodeID = nodeID;
 				preDiagram(child);
@@ -84,10 +89,38 @@ public class Tree {
 		}
 	}
 
-	private void getDiagram(Tree root) {		
+	public void setLevels() throws Exception {
+		ArrayQueue queue = new ArrayQueue(100);
+		queue.insert(this);
+		while (!queue.empty()) {
+			Tree root = (Tree) queue.remove();
+			for (Tree child : root.getChildren()) {
+				child.depth = root.depth + 1;
+				queue.insert(child);
+			}
+		}
+	}
+	
+	private ArrayQueue doBFT() throws Exception
+	{
+		ArrayQueue workQueue = new ArrayQueue(100);
+		ArrayQueue resultQueue = new ArrayQueue(100);
+		workQueue.insert(this);
+		resultQueue.insert(this);
+		while (!workQueue.empty()) {
+			Tree root = (Tree) workQueue.remove();
+			for (Tree child : root.getChildren()) {				
+				workQueue.insert(child);
+				resultQueue.insert(child);
+			}
+		}
+		return resultQueue;
+	}
+
+	private void getDiagram(Tree root) {
 		if (root.sibling != null) {
 			diagram += "\"" + root.nodeID + "\"" + "->" + "\""
-					+ root.sibling.nodeID + "\"" + ";\n";
+					+ root.sibling.nodeID + "\"" + "[constraint=false];\n";
 		}
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
@@ -111,19 +144,24 @@ public class Tree {
 		}
 	}
 
-	public void siblingify() {
+	public void siblingify() throws Exception{
 		siblingify(this);
 	}
 
-	private void siblingify(Tree root) {
-		Iterator<Tree> itr = root.getChildren().iterator();
-		Tree prevChild = null;
-		while (itr.hasNext()) {
-			Tree child = itr.next();
-			siblingify(child);
-			if (prevChild != null)
-				prevChild.sibling = child;
-			prevChild = child;
+	private void siblingify(Tree root) throws Exception{
+		ArrayQueue queue = doBFT();
+		boolean firstPass = true;
+		Tree lastNode = null;
+		Tree currentNode;
+		while(!queue.empty())
+		{
+			currentNode = (Tree)queue.remove();
+			if(!firstPass && lastNode != null && lastNode.depth == currentNode.depth)
+			{
+				lastNode.sibling = currentNode;
+			}
+			firstPass = false;
+			lastNode = currentNode;
 		}
 	}
 
