@@ -1,9 +1,7 @@
 package dataStructures;
 
-import java.awt.geom.QuadCurve2D;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +14,7 @@ public class Tree {
 	private Map<String, Integer> intCount;
 	private Tree sibling;
 	private int depth = 0;
+	private int height = 0;
 
 	public Tree() {
 		children = new ArrayList<Tree>();
@@ -72,9 +71,9 @@ public class Tree {
 			for (Tree child : root.getChildren()) {
 				String value = child.getValue();
 				String nodeID = value;
-				if(child.depth > 0)
-					nodeID += "("+child.depth+")";
-				if (intCount.containsKey(nodeID)) {	
+				if (child.depth > 0)
+					nodeID += "(" + child.depth + ")";
+				if (intCount.containsKey(nodeID)) {
 					int count = intCount.get(nodeID);
 					for (int i = 0; i < count; i++) {
 						nodeID += "*";
@@ -100,16 +99,15 @@ public class Tree {
 			}
 		}
 	}
-	
-	private ArrayQueue doBFT() throws Exception
-	{
+
+	private ArrayQueue doBFT() throws Exception {
 		ArrayQueue workQueue = new ArrayQueue(100);
 		ArrayQueue resultQueue = new ArrayQueue(100);
 		workQueue.insert(this);
 		resultQueue.insert(this);
 		while (!workQueue.empty()) {
 			Tree root = (Tree) workQueue.remove();
-			for (Tree child : root.getChildren()) {				
+			for (Tree child : root.getChildren()) {
 				workQueue.insert(child);
 				resultQueue.insert(child);
 			}
@@ -144,25 +142,39 @@ public class Tree {
 		}
 	}
 
-	public void siblingify() throws Exception{
+	public void siblingify() throws Exception {
 		siblingify(this);
 	}
 
-	private void siblingify(Tree root) throws Exception{
+	private void siblingify(Tree root) throws Exception {
 		ArrayQueue queue = doBFT();
 		boolean firstPass = true;
 		Tree lastNode = null;
 		Tree currentNode;
-		while(!queue.empty())
-		{
-			currentNode = (Tree)queue.remove();
-			if(!firstPass && lastNode != null && lastNode.depth == currentNode.depth)
-			{
+		while (!queue.empty()) {
+			currentNode = (Tree) queue.remove();
+			if (!firstPass && lastNode != null
+					&& lastNode.depth == currentNode.depth) {
 				lastNode.sibling = currentNode;
 			}
 			firstPass = false;
 			lastNode = currentNode;
 		}
+	}
+
+	public int getHeight() {
+		return getHeight(this);
+	}
+
+	private int getHeight(Tree root) {
+		int maxChildHeight = 0;
+		for (Tree child : root.getChildren()) {
+			int childHeight = getHeight(child) + 1;
+			if (maxChildHeight < childHeight)
+				maxChildHeight = childHeight;
+		}
+		root.height += maxChildHeight;
+		return root.height;
 	}
 
 }

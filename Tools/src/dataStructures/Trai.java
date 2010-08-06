@@ -33,12 +33,17 @@ public class Trai extends Tree {
 		trai.add("tea");
 		trai.add("ted");
 		trai.add("ten");
+		trai.add("tent");
+		trai.add("tense");
 		trai.add("i");
 		trai.add("in");
 		trai.add("inn");
-		//System.out.println(trai.getDiagram());
-		trai.siblingify();
+		trai.add("inner");
+		trai.add("insane");
+		//System.out.println(trai.getDiagram());		
 		trai.setLevels();
+		trai.siblingify();
 		System.out.println(trai.getDiagram());
+		System.out.println("Height:" + trai.getHeight());
 	}
 }
