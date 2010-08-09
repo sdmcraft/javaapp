@@ -133,10 +133,10 @@ public class AlgoUtils {
 		System.out.println("pivot->" + pivot);
 
 		while (leftPtr < rtPtr && leftPtr <= end-1 && rtPtr >= start) {
-			while (leftPtr <= end-1 && input[leftPtr] <= pivot) {
+			while (leftPtr < rtPtr && input[leftPtr] <= pivot) {
 				leftPtr++;
 			}
-			while (rtPtr >= start && input[rtPtr] >= pivot) {
+			while (leftPtr < rtPtr && input[rtPtr] >= pivot) {
 				rtPtr--;
 			}
 			if (leftPtr < rtPtr) {
