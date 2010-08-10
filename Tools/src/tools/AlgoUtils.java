@@ -115,7 +115,7 @@ public class AlgoUtils {
 
 	private static void quickSort(int[] input, int start, int end) {
 		int pivot = input[(start + end) / 2];
-		int[] ptrs = partition1(input, pivot, start, end);
+		int[] ptrs = partition(input, pivot, start, end);
 		
 		if (start < ptrs[1])
 			quickSort(input, start, ptrs[1]);
@@ -123,11 +123,21 @@ public class AlgoUtils {
 			quickSort(input, ptrs[0], end);
 
 	}
+	
+	private static int quickSelect(int[] input, int k)
+	{
+		int rank = -1;
+		while(rank != k)
+		{			
+			rank = partition(input, pivot, 0, input.length-1)[2];
+		}
+		return rank;
+	}
 
-	private static int[] partition1(int[] input, int pivot, int start, int end) {
+	private static int[] partition(int[] input, int pivot, int start, int end) {
 		int leftPtr = start;
 		int rtPtr = end;
-		
+		int rank = 0;
 
 //		System.out.println("start->" + start);
 //		System.out.println("end->" + end);
@@ -144,43 +154,18 @@ public class AlgoUtils {
 				int temp = input[leftPtr];
 				input[leftPtr] = input[rtPtr];
 				input[rtPtr] = temp;
+				if(pivot == input[leftPtr])
+					rank = input[leftPtr];
+				else if(pivot == input[rtPtr])
+					rank = input[rtPtr];
 
 				leftPtr++;
 				rtPtr--;
 			}
 		}
-		return new int[]{leftPtr,rtPtr};
+		return new int[]{leftPtr,rtPtr,rank};
 	}
 
-	private static void partition(int[] input, int start, int end) {
-		int leftPtr = start;
-		int rtPtr = end;
-		int pivot = input[(start + end) / 2];
-		// System.out.println("start->" + start);
-		// System.out.println("end->" + end);
-		// System.out.println("pivot->" + pivot);
-		while (leftPtr < rtPtr) {
-			while (input[leftPtr] < pivot)
-				leftPtr++;
-			while (input[rtPtr] > pivot)
-				rtPtr--;
-
-			int temp = input[leftPtr];
-			input[leftPtr] = input[rtPtr];
-			input[rtPtr] = temp;
-		}
-
-		int rank = 0;
-		if (input[leftPtr] == pivot) {
-			rank = leftPtr;
-		} else if (input[rtPtr] == pivot) {
-			rank = rtPtr;
-		}
-		if (start < rank - 1)
-			partition(input, start, rank - 1);
-		if (rank + 1 < end)
-			partition(input, rank + 1, end);
-	}
 
 	public static void main(String[] args) throws Exception {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
