@@ -124,12 +124,24 @@ public class AlgoUtils {
 
 	}
 	
-	private static int quickSelect(int[] input, int k)
+	public static int quickSelect(int[] input,int k)
 	{
+		quickSelect(input, 0, input.length-1, k);
+		return input[k];
+	}
+	
+	private static int quickSelect(int[] input, int start, int end, int k)
+	{
+		int pivot = input[(start + end) / 2];
 		int rank = -1;
 		while(rank != k)
 		{			
-			rank = partition(input, pivot, 0, input.length-1)[2];
+			rank = partition(input, pivot, start, end)[2];
+			//System.out.println("\nRank of " + pivot + " = "+rank);
+			if(rank < k)
+				rank = quickSelect(input, rank+1, end,k);
+			else if(rank > k)
+				rank = quickSelect(input, start, rank-1,k);
 		}
 		return rank;
 	}
@@ -155,9 +167,9 @@ public class AlgoUtils {
 				input[leftPtr] = input[rtPtr];
 				input[rtPtr] = temp;
 				if(pivot == input[leftPtr])
-					rank = input[leftPtr];
+					rank = leftPtr;
 				else if(pivot == input[rtPtr])
-					rank = input[rtPtr];
+					rank = rtPtr;
 
 				leftPtr++;
 				rtPtr--;
@@ -185,9 +197,13 @@ public class AlgoUtils {
 
 		// Thread.sleep(10000);
 		// quickSort(new int[] { 1, 1 });
+		//quickSort(input);
+		
+		int k = 1;
+		System.out.println(quickSelect(input, k) + " is ranked " + k);
+		
 		quickSort(input);
-
-		System.out.println("\nModified Array:");
+		System.out.println("\nSorted Array:");
 		for (int i : input)
 			System.out.print(" " + i);
 	}
