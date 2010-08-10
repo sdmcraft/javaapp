@@ -115,46 +115,41 @@ public class AlgoUtils {
 
 	private static void quickSort(int[] input, int start, int end) {
 		int pivot = input[(start + end) / 2];
-		int rank = partition1(input, pivot, start, end);
-		System.out.println("Rank:" + rank);
-		if (start < rank - 1 && rank >= 0)
-			quickSort(input, start, rank - 1);
-		if (rank + 1 < end && rank >= 0)
-			quickSort(input, rank + 1, end);
+		int[] ptrs = partition1(input, pivot, start, end);
+		
+		if (start < ptrs[1])
+			quickSort(input, start, ptrs[1]);
+		if (ptrs[0] < end)
+			quickSort(input, ptrs[0], end);
 
 	}
 
-	private static int partition1(int[] input, int pivot, int start, int end) {
+	private static int[] partition1(int[] input, int pivot, int start, int end) {
 		int leftPtr = start;
 		int rtPtr = end;
+		
 
-		System.out.println("start->" + start);
-		System.out.println("end->" + end);
-		System.out.println("pivot->" + pivot);
+//		System.out.println("start->" + start);
+//		System.out.println("end->" + end);
+//		System.out.println("pivot->" + pivot);
 
-		while (leftPtr < rtPtr && leftPtr <= end-1 && rtPtr >= start) {
-			while (leftPtr < rtPtr && input[leftPtr] <= pivot) {
+		while (leftPtr <= rtPtr) {
+			while (leftPtr < end && input[leftPtr] < pivot) {
 				leftPtr++;
 			}
-			while (leftPtr < rtPtr && input[rtPtr] >= pivot) {
+			while (start < rtPtr && input[rtPtr] > pivot) {
 				rtPtr--;
 			}
-			if (leftPtr < rtPtr) {
+			if (leftPtr <= rtPtr) {
 				int temp = input[leftPtr];
 				input[leftPtr] = input[rtPtr];
 				input[rtPtr] = temp;
-			} 
+
+				leftPtr++;
+				rtPtr--;
+			}
 		}
-
-		int rank = 0;
-		if (leftPtr <= end-1 && input[leftPtr] == pivot) {
-			rank = leftPtr;
-		} else if (rtPtr >= start && input[rtPtr] == pivot) {
-			rank = rtPtr;
-		} else
-			rank = -1;
-
-		return rank;
+		return new int[]{leftPtr,rtPtr};
 	}
 
 	private static void partition(int[] input, int start, int end) {
@@ -195,18 +190,18 @@ public class AlgoUtils {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1 }, 0));
 		// System.out.println(binarySearch(new int[] { 1, 2, 3 }, 0));
 		// System.out.println(binarySearch(new int[] { -1, 1 }, 0));
-		int[] input = new int[14];
-		for (int i = 0; i < 14; i++)
+		int[] input = new int[250];
+		for (int i = 0; i < 250; i++)
 			input[i] = (int) (Math.random() * 100);
 
 		System.out.println("Initial Array:");
 		for (int i : input)
 			System.out.print(" " + i);
 
-		//Thread.sleep(10000);
-		//quickSort(new int[] { 1, 1 });
+		// Thread.sleep(10000);
+		// quickSort(new int[] { 1, 1 });
 		quickSort(input);
-		
+
 		System.out.println("\nModified Array:");
 		for (int i : input)
 			System.out.print(" " + i);
