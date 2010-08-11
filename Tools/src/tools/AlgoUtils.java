@@ -115,45 +115,62 @@ public class AlgoUtils {
 
 	private static void quickSort(int[] input, int start, int end) {
 		int pivot = input[(start + end) / 2];
-		int[] ptrs = partition(input, pivot, start, end);
-		
+		int[] ptrs = partition(input, pivot, start, end,null);
+
 		if (start < ptrs[1])
 			quickSort(input, start, ptrs[1]);
 		if (ptrs[0] < end)
 			quickSort(input, ptrs[0], end);
 
 	}
-	
-	public static int quickSelect(int[] input,int k)
-	{
-		quickSelect(input, 0, input.length-1, k);
+
+	private static int[] rankIndices(int[] input, int k) {
+		int[] origIndex = new int[input.length];
+		for (int i = 0; i < origIndex.length; i++) {
+			origIndex[i] = i;
+		}
+		quickSelect(input, 0, input.length - 1, k, origIndex);
+		int[] result = new int[k];
+
+		System.out.println("Orig Index array:");
+		for (int i = 0; i < origIndex.length; i++) {
+			System.out.print(" " + origIndex[i]);
+		}
+		
+		for(int i=0;i<k;i++)
+			result[i] = origIndex[i];
+		return result;
+	}
+
+	public static int quickSelect(int[] input, int k) {
+		quickSelect(input, 0, input.length - 1, k, null);
 		return input[k];
 	}
-	
-	private static int quickSelect(int[] input, int start, int end, int k)
-	{
+
+	private static int quickSelect(int[] input, int start, int end, int k,
+			int[] origIndex) {
 		int pivot = input[(start + end) / 2];
 		int rank = -1;
-		while(rank != k)
-		{			
-			rank = partition(input, pivot, start, end)[2];
-			//System.out.println("\nRank of " + pivot + " = "+rank);
-			if(rank < k)
-				rank = quickSelect(input, rank+1, end,k);
-			else if(rank > k)
-				rank = quickSelect(input, start, rank-1,k);
+		while (rank != k) {
+			rank = partition(input, pivot, start, end, origIndex)[2];
+			// System.out.println("\nRank of " + pivot + " = "+rank);
+			if (rank < k)
+				rank = quickSelect(input, rank + 1, end, k, origIndex);
+			else if (rank > k)
+				rank = quickSelect(input, start, rank - 1, k, origIndex);
 		}
 		return rank;
 	}
 
-	private static int[] partition(int[] input, int pivot, int start, int end) {
+	private static int[] partition(int[] input, int pivot, int start, int end,
+			int[] origIndex) {
 		int leftPtr = start;
 		int rtPtr = end;
 		int rank = 0;
 
-//		System.out.println("start->" + start);
-//		System.out.println("end->" + end);
-//		System.out.println("pivot->" + pivot);
+		// System.out.println("start->" + start);
+		// System.out.println("end->" + end);
+		// System.out.println("pivot->" + pivot);
 
 		while (leftPtr <= rtPtr) {
 			while (leftPtr < end && input[leftPtr] < pivot) {
@@ -166,18 +183,24 @@ public class AlgoUtils {
 				int temp = input[leftPtr];
 				input[leftPtr] = input[rtPtr];
 				input[rtPtr] = temp;
-				if(pivot == input[leftPtr])
+
+				if (origIndex != null) {
+					temp = origIndex[leftPtr];
+					origIndex[leftPtr] = origIndex[rtPtr];
+					origIndex[rtPtr] = temp;
+				}
+				
+				if (pivot == input[leftPtr])
 					rank = leftPtr;
-				else if(pivot == input[rtPtr])
+				else if (pivot == input[rtPtr])
 					rank = rtPtr;
 
 				leftPtr++;
 				rtPtr--;
 			}
 		}
-		return new int[]{leftPtr,rtPtr,rank};
+		return new int[] { leftPtr, rtPtr, rank };
 	}
-
 
 	public static void main(String[] args) throws Exception {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
@@ -187,21 +210,29 @@ public class AlgoUtils {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1 }, 0));
 		// System.out.println(binarySearch(new int[] { 1, 2, 3 }, 0));
 		// System.out.println(binarySearch(new int[] { -1, 1 }, 0));
-		int[] input = new int[250];
-		for (int i = 0; i < 250; i++)
+		int[] input = new int[5];
+		for (int i = 0; i < 5; i++)
 			input[i] = (int) (Math.random() * 100);
 
 		System.out.println("Initial Array:");
 		for (int i : input)
 			System.out.print(" " + i);
 
+		System.out.println("\n");
+		int[] rankedIndices = rankIndices(input, 4);
+		System.out.println("Smallest 5 ranked indices: ");
+		for (int i : rankedIndices)
+			System.out.print(" " + i);
+//		
+//		System.out.println("\n");
 		// Thread.sleep(10000);
 		// quickSort(new int[] { 1, 1 });
-		//quickSort(input);
-		
-		int k = 1;
+		// quickSort(input);
+
+		System.out.println("\n");
+		int k = 0;
 		System.out.println(quickSelect(input, k) + " is ranked " + k);
-		
+
 		quickSort(input);
 		System.out.println("\nSorted Array:");
 		for (int i : input)
