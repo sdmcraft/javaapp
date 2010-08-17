@@ -9,9 +9,11 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.LineNumberReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PushbackInputStream;
+import java.io.Reader;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,10 +76,12 @@ public class IOUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		List<String> result = delimitedReader("xxx", new File(
-				"c:\\temp\\test.txt"));
-		for (String s : result)
-			System.out.println(s);
+		// List<String> result = delimitedReader("xxx", new File(
+		// "c:\\temp\\test.txt"));
+		// for (String s : result)
+		// System.out.println(s);
+		for (int i = 1; i <= 9; i++)
+			System.out.println(readLineFromFile(i, "C:\\temp\\temp.txt"));
 	}
 
 	public final static boolean compare(File f1, File f2) throws Exception {
@@ -212,6 +216,19 @@ public class IOUtils {
 		}
 		reader.close();
 		return fileData.toString();
+	}
+
+	public static String readLineFromFile(int lineNum, String filePath)
+			throws IOException {
+		LineNumberReader lineReader = new LineNumberReader(new BufferedReader(
+				new FileReader(filePath)));
+		int count = 0;
+		String result = null;
+		while (count < lineNum) {
+			result = lineReader.readLine();
+			count++;
+		}
+		return result;
 	}
 
 }

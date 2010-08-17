@@ -124,18 +124,21 @@ public class ArrayQueue {
 		return hash;
 	}
 
-	public void insert(Object item) throws Exception {
+	public synchronized void insert(Object item) throws Exception {
 		int newRear = (rear + 1) % elements.length;
-		if (newRear == front) {
-			throw new Exception("Queue full!!!");
-		} else {
-			elements[newRear] = item;
-			rear = newRear;
-			/* Queue was empty - special case */
-			if (front == -1) {
-				front = rear;
-			}
+		while (newRear == front) {
+			System.out.println("Going to wait since the queue is full");
+			wait();
+			newRear = (rear + 1) % elements.length;
 		}
+		System.out.println("Wait over,  proceeding with insert");
+		elements[newRear] = item;
+		rear = newRear;
+		/* Queue was empty - special case */
+		if (front == -1) {
+			front = rear;
+		}
+		notifyAll();
 	}
 
 	public void priorityInsert(Integer item) throws Exception {
@@ -203,21 +206,23 @@ public class ArrayQueue {
 		return minIndex;
 	}
 
-	public Object remove() throws Exception {
+	public synchronized Object remove() throws Exception {
 		Object returnItem = null;
-		if (rear == -1 && front == -1) {
-			throw new Exception("Queue empty!!!");
-		} else {
-			returnItem = elements[front];
-			elements[front] = null;
-			/* one item in the queue - special case */
-			if (rear == front) {
-				rear = -1;
-				front = -1;
-			} else {
-				front = (front + 1) % elements.length;
-			}
+		while (rear == -1 && front == -1) {
+			System.out.println("Going to wait since the queue is empty");
+			wait();
 		}
+		System.out.println("Wait over,  proceeding with remove");
+		returnItem = elements[front];
+		elements[front] = null;
+		/* one item in the queue - special case */
+		if (rear == front) {
+			rear = -1;
+			front = -1;
+		} else {
+			front = (front + 1) % elements.length;
+		}
+		notifyAll();
 		return returnItem;
 	}
 
@@ -260,5 +265,38 @@ public class ArrayQueue {
 		elements = new Object[this.elements.length];
 		rear = -1;
 		front = -1;
+	}
+
+	static class Task implements Runnable {
+
+		ArrayQueue queue;
+		String mode;
+
+		public Task(ArrayQueue queue, String mode) {
+			this.queue = queue;
+			this.mode = mode;
+		}
+
+		@Override
+		public void run() {
+			try {
+				for (int i = 0; i < 100; i++) {
+					if ("insert".equalsIgnoreCase(mode))
+						queue.insert(new Object());
+					else
+						queue.remove();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		ArrayQueue queue = new ArrayQueue(10);
+		for (int i = 0; i < 10; i++) {
+			new Thread(new Task(queue, "insert")).start();
+			new Thread(new Task(queue, "remove")).start();
+		}
 	}
 }

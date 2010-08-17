@@ -100,7 +100,7 @@ public class AlgoUtils {
 			result[i] = (char) ('a' + rankedIndices[i]);
 		}
 		
-		System.out.println("Top " + n +" occurrances: ");
+		System.out.println("Least " + n +" occurrances: ");
 		for (char i : result)
 			System.out.print(" " + i);
 
@@ -132,11 +132,6 @@ public class AlgoUtils {
 		}
 		quickSelect(input, 0, input.length - 1, k, origIndex);
 		int[] result = new int[k];
-
-		System.out.println("Orig Index array:");
-		for (int i = 0; i < origIndex.length; i++) {
-			System.out.print(" " + origIndex[i]);
-		}
 
 		for (int i = 0; i < k; i++)
 			result[i] = origIndex[i];
@@ -239,8 +234,8 @@ public class AlgoUtils {
 //		for (int i : input)
 //			System.out.print(" " + i);
 		
-		String input = "aabbccdddeeeee";
-		topNchars(input.toCharArray(),2);
+		String input = "abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxbcdefghijklmnopqrstuvwzzz";
+		topNchars(input.toCharArray(),3);
 	}
 
 }
