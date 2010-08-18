@@ -18,6 +18,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IOUtils {
 	public static List<String> delimitedReader(String delimiter, File f)
@@ -73,15 +75,6 @@ public class IOUtils {
 			}
 		}
 		return result;
-	}
-
-	public static void main(String[] args) throws Exception {
-		// List<String> result = delimitedReader("xxx", new File(
-		// "c:\\temp\\test.txt"));
-		// for (String s : result)
-		// System.out.println(s);
-		for (int i = 1; i <= 9; i++)
-			System.out.println(readLineFromFile(i, "C:\\temp\\temp.txt"));
 	}
 
 	public final static boolean compare(File f1, File f2) throws Exception {
@@ -229,6 +222,28 @@ public class IOUtils {
 			count++;
 		}
 		return result;
+	}
+
+	public static List<Long> numbersInText(String text) {
+		Pattern numberPattern = Pattern.compile("\\s\\d\\d*\\s");
+		Matcher matcher = numberPattern.matcher(text);
+		List<Long> result = new ArrayList<Long>();
+
+		while (matcher.find()) {
+			result.add(new Long(matcher.group().trim()));
+		}
+		return result;
+	}
+
+	public static void main(String[] args) throws Exception {
+		// List<String> result = delimitedReader("xxx", new File(
+		// "c:\\temp\\test.txt"));
+		// for (String s : result)
+		// System.out.println(s);
+		// for (int i = 1; i <= 9; i++)
+		// System.out.println(readLineFromFile(i, "C:\\temp\\temp.txt"));
+		for(long l : numbersInText("abc 13 df 454 bfr 44 a1s"))
+			System.out.println(l);
 	}
 
 }

@@ -94,13 +94,13 @@ public class AlgoUtils {
 			charCounts[input[i] - 'a']++;
 		}
 
-		int[] rankedIndices = rankIndices(charCounts, n);
+		int[] rankedIndices = rankIndices(charCounts, n, "max");
 
 		for (int i = 0; i < rankedIndices.length; i++) {
 			result[i] = (char) ('a' + rankedIndices[i]);
 		}
-		
-		System.out.println("Least " + n +" occurrances: ");
+
+		System.out.println("Top " + n + " occurrances: ");
 		for (char i : result)
 			System.out.print(" " + i);
 
@@ -125,12 +125,12 @@ public class AlgoUtils {
 
 	}
 
-	private static int[] rankIndices(int[] input, int k) {
+	private static int[] rankIndices(int[] input, int k, String mode) {
 		int[] origIndex = new int[input.length];
 		for (int i = 0; i < origIndex.length; i++) {
 			origIndex[i] = i;
 		}
-		quickSelect(input, 0, input.length - 1, k, origIndex);
+		quickSelect(input, 0, input.length - 1, k, origIndex, mode);
 		int[] result = new int[k];
 
 		for (int i = 0; i < k; i++)
@@ -138,25 +138,21 @@ public class AlgoUtils {
 		return result;
 	}
 
-	public static int quickSelect(int[] input, int k) {
-		quickSelect(input, 0, input.length - 1, k, null);
-		return input[k];
-	}
-
 	private static int quickSelect(int[] input, int start, int end, int k,
-			int[] origIndex) {
+			int[] origIndex, String mode) {
 		int pivot = input[(start + end) / 2];
 		int rank = -1;
 		while (rank != k) {
-			rank = partition(input, pivot, start, end, origIndex)[2];
+			rank = partition(input, pivot, start, end, origIndex, mode)[2];
 			// System.out.println("\nRank of " + pivot + " = "+rank);
 			if (rank < k)
-				rank = quickSelect(input, rank + 1, end, k, origIndex);
+				rank = quickSelect(input, rank + 1, end, k, origIndex, mode);
 			else if (rank > k)
-				rank = quickSelect(input, start, rank - 1, k, origIndex);
+				rank = quickSelect(input, start, rank - 1, k, origIndex, mode);
 		}
 		return rank;
 	}
+
 
 	private static int[] partition(int[] input, int pivot, int start, int end,
 			int[] origIndex) {
@@ -198,6 +194,54 @@ public class AlgoUtils {
 		return new int[] { leftPtr, rtPtr, rank };
 	}
 
+	private static int[] partition(int[] input, int pivot, int start, int end,
+			int[] origIndex, String mode) {
+		int leftPtr = start;
+		int rtPtr = end;
+		int rank = 0;
+		while (leftPtr <= rtPtr) {
+			if ("min".equals(mode)) {
+				while (leftPtr < end && input[leftPtr] < pivot) {
+					leftPtr++;
+				}
+			} else {
+				while (leftPtr < end && input[leftPtr] > pivot) {
+					leftPtr++;
+				}
+			}
+
+			if ("min".equals(mode)) {
+				while (start < rtPtr && input[rtPtr] > pivot) {
+					rtPtr--;
+				}
+			} else {
+				while (start < rtPtr && input[rtPtr] < pivot) {
+					rtPtr--;
+				}
+			}
+			if (leftPtr <= rtPtr) {
+				int temp = input[leftPtr];
+				input[leftPtr] = input[rtPtr];
+				input[rtPtr] = temp;
+
+				if (origIndex != null) {
+					temp = origIndex[leftPtr];
+					origIndex[leftPtr] = origIndex[rtPtr];
+					origIndex[rtPtr] = temp;
+				}
+
+				if (pivot == input[leftPtr])
+					rank = leftPtr;
+				else if (pivot == input[rtPtr])
+					rank = rtPtr;
+
+				leftPtr++;
+				rtPtr--;
+			}
+		}
+		return new int[] { leftPtr, rtPtr, rank };
+	}
+
 	public static void main(String[] args) throws Exception {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
 		// 0));
@@ -206,36 +250,36 @@ public class AlgoUtils {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1 }, 0));
 		// System.out.println(binarySearch(new int[] { 1, 2, 3 }, 0));
 		// System.out.println(binarySearch(new int[] { -1, 1 }, 0));
-//		int[] input = new int[5];
-//		for (int i = 0; i < 5; i++)
-//			input[i] = (int) (Math.random() * 100);
-//
-//		System.out.println("Initial Array:");
-//		for (int i : input)
-//			System.out.print(" " + i);
-//
-//		System.out.println("\n");
-//		int[] rankedIndices = rankIndices(input, 2);
-//		System.out.println("Smallest 2 ranked indices: ");
-//		for (int i : rankedIndices)
-//			System.out.print(" " + i);
+		// int[] input = new int[5];
+		// for (int i = 0; i < 5; i++)
+		// input[i] = (int) (Math.random() * 100);
+		//
+		// System.out.println("Initial Array:");
+		// for (int i : input)
+		// System.out.print(" " + i);
+		//
+		// System.out.println("\n");
+		// int[] rankedIndices = rankIndices(input, 2);
+		// System.out.println("Smallest 2 ranked indices: ");
+		// for (int i : rankedIndices)
+		// System.out.print(" " + i);
 		//		
 		// System.out.println("\n");
 		// Thread.sleep(10000);
 		// quickSort(new int[] { 1, 1 });
 		// quickSort(input);
 
-//		System.out.println("\n");
-//		int k = 0;
-//		System.out.println(quickSelect(input, k) + " is ranked " + k);
-//
-//		quickSort(input);
-//		System.out.println("\nSorted Array:");
-//		for (int i : input)
-//			System.out.print(" " + i);
-		
-		String input = "abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxbcdefghijklmnopqrstuvwzzz";
-		topNchars(input.toCharArray(),3);
+		// System.out.println("\n");
+		// int k = 0;
+		// System.out.println(quickSelect(input, k) + " is ranked " + k);
+		//
+		// quickSort(input);
+		// System.out.println("\nSorted Array:");
+		// for (int i : input)
+		// System.out.print(" " + i);
+
+		String input = "aabbccdddddefghijklmnopqrstuvwxyzzzzzzzzzzzzzzz";
+		topNchars(input.toCharArray(), 3);
 	}
 
 }
