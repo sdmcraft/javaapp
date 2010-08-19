@@ -69,8 +69,7 @@ public class Tree {
 	private void preDiagram(Tree root) {
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
-				String value = child.getValue();
-				System.out.println("Value:"+value);
+				String value = child.getValue();				
 				String nodeID = value;
 				if (child.depth > 0)
 					nodeID += "(" + child.depth + ")";
