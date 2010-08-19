@@ -13,7 +13,7 @@ public class Tree {
 	private String diagram;
 	private Map<String, Integer> intCount;
 	private Tree sibling;
-	private int depth = 0;
+	protected int depth = 0;
 	private int height = 0;
 
 	public Tree() {
@@ -70,6 +70,7 @@ public class Tree {
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
 				String value = child.getValue();
+				System.out.println("Value:"+value);
 				String nodeID = value;
 				if (child.depth > 0)
 					nodeID += "(" + child.depth + ")";
