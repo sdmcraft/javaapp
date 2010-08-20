@@ -78,14 +78,17 @@ public class BinaryTree extends Tree {
 		return result;
 	}
 
-	private static void inorderSubstitution(BinaryTree root,
-			List<String> items, int index) {
+	private static int inorderSubstitution(BinaryTree root, List<String> items,
+			int index) {
 		if (root != null) {
-			inorderSubstitution(root.left, items, index);
-			if (items.size() > index + 1)
-				root.value = items.get(index + 1);
-			inorderSubstitution(root.right, items, index + 2);
+			index = inorderSubstitution(root.left, items, index);
+
+			root.value = items.get(index);
+			index++;
+
+			index = inorderSubstitution(root.right, items, index);
 		}
+		return index;
 	}
 
 	private void sameShapeBinaryTree() {
@@ -101,7 +104,7 @@ public class BinaryTree extends Tree {
 		bt.build();
 		System.out.println(bt.getDiagram());
 		// System.out.println(bt.inorder());
-		bt.sameShapeBinaryTree();		
+		bt.sameShapeBinaryTree();
 		System.out.println(bt.getDiagram());
 	}
 
@@ -112,5 +115,6 @@ public class BinaryTree extends Tree {
 	public BinaryTree getRight() {
 		return right;
 	}
+	
 
 }

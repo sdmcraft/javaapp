@@ -12,6 +12,7 @@ public class Tree {
 	private String nodeID;
 	private String diagram;
 	private Map<String, Integer> intCount;
+	private int terminalCount;
 	private Tree sibling;
 	protected int depth = 0;
 	private int height = 0;
@@ -51,6 +52,7 @@ public class Tree {
 		root.diagram = "digraph G {\n";
 		root.nodeID = null;
 		root.intCount = new HashMap<String, Integer>();
+		root.terminalCount = 0;
 		for (Tree child : root.children) {
 			clearDiagram(child);
 		}
@@ -58,7 +60,7 @@ public class Tree {
 
 	public String getDiagram() {
 		clearDiagram(this);
-		preDiagram(this);
+		preDiagram();
 		getDiagram(this);
 		diagram += "}";
 		return diagram;
@@ -74,6 +76,11 @@ public class Tree {
 			}
 		}
 		return result;
+	}
+
+	private void preDiagram() {
+		nodeID = value + "(" + depth + ")";
+		preDiagram(this);
 	}
 
 	private void preDiagram(Tree root) {
@@ -95,6 +102,14 @@ public class Tree {
 				child.nodeID = nodeID;
 				preDiagram(child);
 			}
+		} 
+		
+		if(root instanceof BinaryTree)
+		{
+			if(((BinaryTree) root).getLeft() == null)
+				terminalCount++;
+			if(((BinaryTree) root).getRight() == null)
+				terminalCount++;			
 		}
 	}
 
@@ -135,14 +150,31 @@ public class Tree {
 				String color = null;
 				if (root instanceof BinaryTree) {
 					BinaryTree bt = (BinaryTree) root;
+
 					if (child == bt.getLeft())
 						color = "green";
 					else if (child == bt.getRight())
 						color = "red";
+
+					BinaryTree btChild = (BinaryTree) child;
+					if (btChild.getLeft() == null) {
+						diagram += "null" + terminalCount + " [shape=point];\n";
+						diagram += "\"" + child.nodeID + "\"" + "->" + "\""
+								+ "null" + terminalCount + "\" [color=green];\n";
+						terminalCount--;
+					}
+					if (btChild.getRight() == null) {
+						diagram += "null" + terminalCount + " [shape=point];\n";
+						diagram += "\"" + child.nodeID + "\"" + "->" + "\""
+								+ "null" + terminalCount + "\" [color=red];\n";
+						terminalCount--;
+					}
+
 				}
 				diagram += "\"" + root.nodeID + "\"" + "->" + "\""
 						+ child.nodeID + "\""
-						+ (color != null ? "[color=" + color + "]": "") + ";\n";
+						+ (color != null ? "[color=" + color + "]" : "")
+						+ ";\n";
 				getDiagram(child);
 			}
 		}
