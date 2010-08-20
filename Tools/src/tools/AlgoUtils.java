@@ -1,5 +1,7 @@
 package tools;
 
+import java.util.List;
+
 public class AlgoUtils {
 
 	public static int binarySearch(int[] array, int value) {
@@ -153,7 +155,6 @@ public class AlgoUtils {
 		return rank;
 	}
 
-
 	private static int[] partition(int[] input, int pivot, int start, int end,
 			int[] origIndex) {
 		int leftPtr = start;
@@ -240,6 +241,21 @@ public class AlgoUtils {
 			}
 		}
 		return new int[] { leftPtr, rtPtr, rank };
+	}
+
+	public static void sort(List<String> input, String sortingAlgo) {
+		int[] inputArray = new int[input.size()];
+		for (int i = 0; i < input.size(); i++) {
+			inputArray[i] = Integer.parseInt(input.get(i));
+		}
+		if ("quicksort".equals(sortingAlgo)) {
+			quickSort(inputArray);
+		}
+		input.clear();
+		for (int i = 0; i < inputArray.length; i++) {
+			input.add(Integer.toString(inputArray[i]));
+		}
+
 	}
 
 	public static void main(String[] args) throws Exception {

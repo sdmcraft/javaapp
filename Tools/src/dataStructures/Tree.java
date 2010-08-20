@@ -47,7 +47,17 @@ public class Tree {
 		children.add(child);
 	}
 
+	private static void clearDiagram(Tree root) {
+		root.diagram = "digraph G {\n";
+		root.nodeID = null;
+		root.intCount = new HashMap<String, Integer>();
+		for (Tree child : root.children) {
+			clearDiagram(child);
+		}
+	}
+
 	public String getDiagram() {
+		clearDiagram(this);
 		preDiagram(this);
 		getDiagram(this);
 		diagram += "}";
@@ -69,7 +79,7 @@ public class Tree {
 	private void preDiagram(Tree root) {
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
-				String value = child.getValue();				
+				String value = child.getValue();
 				String nodeID = value;
 				if (child.depth > 0)
 					nodeID += "(" + child.depth + ")";
@@ -122,8 +132,17 @@ public class Tree {
 		}
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
+				String color = null;
+				if (root instanceof BinaryTree) {
+					BinaryTree bt = (BinaryTree) root;
+					if (child == bt.getLeft())
+						color = "green";
+					else if (child == bt.getRight())
+						color = "red";
+				}
 				diagram += "\"" + root.nodeID + "\"" + "->" + "\""
-						+ child.nodeID + "\"" + ";\n";
+						+ child.nodeID + "\""
+						+ (color != null ? "[color=" + color + "]": "") + ";\n";
 				getDiagram(child);
 			}
 		}

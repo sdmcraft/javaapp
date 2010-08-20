@@ -3,6 +3,8 @@ package dataStructures;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.AlgoUtils;
+
 public class BinaryTree extends Tree {
 	private BinaryTree left;
 	private BinaryTree right;
@@ -11,6 +13,7 @@ public class BinaryTree extends Tree {
 
 	public BinaryTree() {
 		incrementNodeCount();
+		value = "1";
 	}
 
 	public BinaryTree(BinaryTree parent) {
@@ -79,22 +82,35 @@ public class BinaryTree extends Tree {
 			List<String> items, int index) {
 		if (root != null) {
 			inorderSubstitution(root.left, items, index);
-			root.value = items.get(index + 1);
-			inorderSubstitution(root.left, items, index + 2);
+			if (items.size() > index + 1)
+				root.value = items.get(index + 1);
+			inorderSubstitution(root.right, items, index + 2);
 		}
 	}
-	
-//	private BinaryTree sameShapeBinaryTree()
-//	{
-//		List<String> inorderTraversal = inorder();
-//		
-//	}
+
+	private void sameShapeBinaryTree() {
+		List<String> inorderTraversal = inorder();
+		System.out.println(inorderTraversal);
+		AlgoUtils.sort(inorderTraversal, "quicksort");
+		System.out.println(inorderTraversal);
+		inorderSubstitution(this, inorderTraversal, 0);
+	}
 
 	public static void main(String[] args) {
 		BinaryTree bt = new BinaryTree();
 		bt.build();
 		System.out.println(bt.getDiagram());
-		System.out.println(bt.inorder());
+		// System.out.println(bt.inorder());
+		bt.sameShapeBinaryTree();		
+		System.out.println(bt.getDiagram());
+	}
+
+	public BinaryTree getLeft() {
+		return left;
+	}
+
+	public BinaryTree getRight() {
+		return right;
 	}
 
 }
