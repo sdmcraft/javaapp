@@ -12,8 +12,11 @@ public class LinkedList implements Cloneable {
 		this.next = stringToLinkedList(string, 1);
 	}
 
+	public boolean hasNext() {
+		return next != null;
+	}
+
 	private static LinkedList stringToLinkedList(String string, int index) {
-		System.out.println("Index:" + index);
 		if (index >= string.length())
 			return null;
 		LinkedList linkedList = new LinkedList();
@@ -50,22 +53,38 @@ public class LinkedList implements Cloneable {
 		return clonedLinkedList;
 	}
 
-	 private static void reverse(LinkedList linkedList, LinkedList parent)
-	 {
-		if(linkedList == null)
-			return;
-		else
-		{
-			reverse(linkedList.next, linkedList);
-		}
+	private static LinkedList reverse(LinkedList linkedList, LinkedList parent) {
+		if (linkedList == null)
+			return parent;
+		LinkedList start = reverse(linkedList.next, linkedList);
 		linkedList.next = parent;
-	 }
+		return start;
+	}
+
+	public LinkedList reverse() {
+		LinkedList linkedList = clone(this);
+		return reverse(linkedList, null);
+	}
 
 	public static void main(String[] args) {
 		LinkedList linkedList = new LinkedList("12345");
+		System.out.println(linkedList.reverse());
 		System.out.println(linkedList);
-		System.out.println(linkedList.clone());
-		linkedList.reverse(linkedList, null);
-		System.out.println(linkedList);
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public LinkedList getNext() {
+		return next;
+	}
+
+	public void setNext(LinkedList next) {
+		this.next = next;
 	}
 }
