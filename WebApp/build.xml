@@ -7,6 +7,7 @@
 	<property name="conf.dir" value="conf" />
 	<property name="web.dir" value="web" />
 	<property name="lib.dir" value="lib" />
+	<property name="lib-noship.dir" value="lib-noship" />
 
 	<property name="build.dir" value="build" />
 	<property name="build.classes" value="${build.dir}/WEB-INF/classes" />
@@ -22,6 +23,9 @@
 
 	<path id="mylibs">
 		<fileset dir="${lib.dir}">
+			<patternset refid="java.libs" />
+		</fileset>
+		<fileset dir="${lib-noship.dir}">
 			<patternset refid="java.libs" />
 		</fileset>
 	</path>
