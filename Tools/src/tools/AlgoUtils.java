@@ -2,6 +2,8 @@ package tools;
 
 import java.util.List;
 
+import dataStructures.ArrayStack;
+
 public class AlgoUtils {
 
 	public static int binarySearch(int[] array, int value) {
@@ -258,6 +260,20 @@ public class AlgoUtils {
 
 	}
 
+	private static ArrayStack stackSort(ArrayStack stack) throws Exception {
+		ArrayStack stack2 = new ArrayStack(stack.getSize());
+		stack2.push(stack.pop());
+		while (!stack.isEmpty()) {
+			String val = stack.pop();
+			while (!stack2.isEmpty()
+					&& Integer.parseInt(val) > Integer.parseInt(stack2.peek())) {
+				stack.push(stack2.pop());
+			}
+			stack2.push(val);
+		}
+		return stack2;
+	}
+
 	public static void main(String[] args) throws Exception {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
 		// 0));
@@ -294,8 +310,12 @@ public class AlgoUtils {
 		// for (int i : input)
 		// System.out.print(" " + i);
 
-		String input = "aabbccdddddefghijklmnopqrstuvwxyzzzzzzzzzzzzzzz";
-		topNchars(input.toCharArray(), 3);
+		// String input = "aabbccdddddefghijklmnopqrstuvwxyzzzzzzzzzzzzzzz";
+		// topNchars(input.toCharArray(), 3);
+		ArrayStack stack = new ArrayStack(new String[] { "4", "1", "55", "5",
+				"2", "4", "55" });
+		
+		System.out.println(stackSort(stack));
 	}
 
 }
