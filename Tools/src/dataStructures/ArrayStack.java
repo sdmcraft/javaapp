@@ -57,4 +57,37 @@ public class ArrayStack {
 		return result;
 	}
 
+	private static void reverse(ArrayStack stack) throws Exception {
+		String val = stack.pop();
+		if (!stack.isEmpty()) {
+			reverse(stack);
+			swap(stack, val);
+		} else
+			stack.push(val);
+	}
+
+	private static void swap(ArrayStack stack, String val) throws Exception {
+		if (!stack.isEmpty()) {
+			String val2 = stack.pop();
+			swap(stack, val);
+			stack.push(val2);
+		} else {
+			stack.push(val);
+		}
+	}
+
+	public void reverse() throws Exception {
+		reverse(this);
+	}
+
+	public static void main(String[] args) throws Exception {
+		ArrayStack stack = new ArrayStack("a,b,c,d".split(","));
+		System.out.println(stack);
+		stack.reverse();
+		System.out.println(stack);
+	}
+
+	public int getTop() {
+		return top;
+	}
 }
