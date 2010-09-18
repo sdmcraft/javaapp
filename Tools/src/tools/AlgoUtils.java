@@ -274,6 +274,43 @@ public class AlgoUtils {
 		return stack2;
 	}
 
+	private static void mergeSort(int[] input) {
+		if (input.length == 1)
+			return;
+		int[] firstHalf = new int[input.length / 2];
+		int[] secondHalf = new int[input.length % 2 == 0 ? input.length / 2
+				: input.length / 2 + 1];
+		int i = 0;
+		for (; i < input.length / 2; i++)
+			firstHalf[i] = input[i];
+		for (; i < input.length; i++)
+			secondHalf[i - input.length / 2] = input[i];
+		mergeSort(firstHalf);
+		mergeSort(secondHalf);
+		merge(firstHalf, secondHalf);
+	}
+
+	private static int[] merge(int[] arr1, int[] arr2) {
+		int i = 0;
+		int j = 0;
+		int k = 0;
+		int[] merged = new int[arr1.length + arr2.length];
+		while (i < arr1.length && j < arr2.length) {
+			if (arr1[i] < arr2[j])
+				merged[k++] = arr1[i++];
+			else
+				merged[k++] = arr2[j++];
+		}
+
+		while (i < arr1.length)
+			merged[k++] = arr1[i++];
+
+		while (j < arr2.length)
+			merged[k++] = arr2[j++];
+		return merged;
+
+	}
+
 	public static void main(String[] args) throws Exception {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
 		// 0));
@@ -312,10 +349,14 @@ public class AlgoUtils {
 
 		// String input = "aabbccdddddefghijklmnopqrstuvwxyzzzzzzzzzzzzzzz";
 		// topNchars(input.toCharArray(), 3);
-		ArrayStack stack = new ArrayStack(new String[] { "4", "1", "55", "5",
-				"2", "4", "55" });
-		
-		System.out.println(stackSort(stack));
+		// ArrayStack stack = new ArrayStack(new String[] { "4", "1", "55", "5",
+		// "2", "4", "55" });
+		//
+		// System.out.println(stackSort(stack));
+		int[] input = new int[] { 6, 3, 8, 5, 3, 4, 9 };
+		mergeSort(input);
+		for (int i : input) {
+			System.out.println('\n' + i);
+		}
 	}
-
 }
