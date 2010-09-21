@@ -274,9 +274,9 @@ public class AlgoUtils {
 		return stack2;
 	}
 
-	private static void mergeSort(int[] input) {
+	private static int[] mergeSort(int[] input) {
 		if (input.length == 1)
-			return;
+			return input;
 		int[] firstHalf = new int[input.length / 2];
 		int[] secondHalf = new int[input.length % 2 == 0 ? input.length / 2
 				: input.length / 2 + 1];
@@ -285,9 +285,9 @@ public class AlgoUtils {
 			firstHalf[i] = input[i];
 		for (; i < input.length; i++)
 			secondHalf[i - input.length / 2] = input[i];
-		mergeSort(firstHalf);
-		mergeSort(secondHalf);
-		merge(firstHalf, secondHalf);
+		firstHalf = mergeSort(firstHalf);
+		secondHalf = mergeSort(secondHalf);
+		return merge(firstHalf, secondHalf);
 	}
 
 	private static int[] merge(int[] arr1, int[] arr2) {
@@ -307,6 +307,7 @@ public class AlgoUtils {
 
 		while (j < arr2.length)
 			merged[k++] = arr2[j++];
+
 		return merged;
 
 	}
@@ -353,10 +354,18 @@ public class AlgoUtils {
 		// "2", "4", "55" });
 		//
 		// System.out.println(stackSort(stack));
-		int[] input = new int[] { 6, 3, 8, 5, 3, 4, 9 };
-		mergeSort(input);
+		// int[] arr1 = new int[]{1,3,5,7,9,10};
+		// int[] arr2 = new int[]{0,2,4,6,8};
+		// int[] arr3 = merge(arr1,arr2);
+		// for(int i : arr3)
+		// System.out.println(i);
+		//int[] input = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10 };
+		int[] input = new int[] { 1,1 };
+		input = mergeSort(input);
 		for (int i : input) {
-			System.out.println('\n' + i);
+			System.out.print(" " + i);
 		}
+		//		
+		// System.out.println(7/2);
 	}
 }
