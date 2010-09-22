@@ -4,13 +4,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<context-param>
-		<param-name>tempFolder</param-name>
-		<param-value>"/tmp"</param-value>
-	</context-param>
-
-	<context-param>
 		<param-name>outgoingFolder</param-name>
-		<param-value>"/tmp/outgoing"</param-value>
+		<param-value>/var/spool/asterisk/outgoing</param-value>
 	</context-param>
 
 	<servlet>

@@ -18,18 +18,30 @@ public class FrontServlet extends HttpServlet {
 			String channel = req.getParameter("channel");
 			String number = req.getParameter("number");
 			String message = req.getParameter("message");
-			File callFile = new File(getServletContext().getInitParameter(
-					"tempFolder")
-					+ File.separator + (int) (Math.random() * 100) + ".call");
+			String tempFolder = (String) getServletContext().getAttribute(
+					"tempFolder");
+		
+			Process process = Runtime.getRuntime().exec("/usr/bin/text2wave -scale 1.5 -F 8000 -o " + tempFolder + File.separator + "festival.wav");
+			PrintWriter writer = new PrintWriter(process.getOutputStream());
+			writer.print(message);
+			writer.close();
+			
+			File callFile = new File(tempFolder + File.separator
+					+ (int) (Math.random() * 100) + ".call");
 			if (callFile.exists())
 				callFile.delete();
 			callFile.createNewFile();
-			PrintWriter writer = new PrintWriter(callFile);
+			writer = new PrintWriter(callFile);
 			writer.println("Channel:" + channel + "/" + number);
 			writer.println("Application:Playback");
-			writer.println("Data: " + message);
+			writer.println("Data:" + tempFolder + File.separator
+					+ "festival");
+			writer.close();
+			System.out.println("cp " + callFile + " "
+					+ getServletContext().getInitParameter("outgoingFolder")
+					+ File.separator + callFile.getName());
 			Runtime.getRuntime().exec(
-					"mv "
+					"cp "
 							+ callFile
 							+ " "
 							+ getServletContext().getInitParameter(

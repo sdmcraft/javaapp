@@ -13,13 +13,21 @@ public class ServletContextListenerImpl implements ServletContextListener {
 	}
 
 	@Override
-	public void contextInitialized(ServletContextEvent arg0) {
+	public void contextInitialized(ServletContextEvent event) {
 		System.out.println("Within context initialized");
-		if (!new File("temp").exists()) {
-			if (new File("temp").mkdir())
-				System.out.println("Successfully created temp folder");
-		}
-
+		System.out.println(event.getServletContext().getRealPath("/"));
+		File tempFolder = new File(event.getServletContext().getRealPath("/")
+				+ File.separator + "temp");
+		if (!tempFolder.exists()) {
+			if (tempFolder.mkdir()) {
+				System.out.println("Successfully created temp folder:"
+						+ tempFolder);
+			}
+		} else
+			System.out.println("temp folder already exists:"
+					+ tempFolder.getAbsolutePath());
+		event.getServletContext().setAttribute("tempFolder",
+				tempFolder.getAbsolutePath());
 	}
 
 }
