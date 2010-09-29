@@ -1,5 +1,6 @@
 package tools;
 
+import java.io.File;
 import java.util.List;
 
 import dataStructures.ArrayStack;
@@ -310,6 +311,11 @@ public class AlgoUtils {
 
 		return merged;
 
+	}
+	
+	private static void externalSort(File file,long fileSize,int[] ram)
+	{
+		
 	}
 
 	public static void main(String[] args) throws Exception {
