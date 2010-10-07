@@ -50,7 +50,7 @@ public class FrontServlet extends HttpServlet {
 				String room = req.getParameter("room");
 
 				callWriter.println("Application:MeetMe");
-				callWriter.println("Data:" + room);
+				callWriter.println("Data:" + room + ",T");
 
 			}
 
