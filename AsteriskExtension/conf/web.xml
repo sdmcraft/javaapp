@@ -8,6 +8,11 @@
 		<param-value>/var/spool/asterisk/outgoing</param-value>
 	</context-param>
 
+	<context-param>
+		<param-name>confFolder</param-name>
+		<param-value>/etc/asterisk</param-value>
+	</context-param>
+
 	<servlet>
 		<servlet-name>FrontServlet</servlet-name>
 		<servlet-class>servlets.FrontServlet</servlet-class>
