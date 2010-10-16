@@ -89,8 +89,21 @@ public class FrontServlet extends HttpServlet {
 					} catch (Exception ex) {
 						throw new ServletException(ex);
 					}
+				}
+				else if ("user".equals(action)) {
+					String userNumber = req.getParameter("user-number");
+					ConfigConfirmer configConfirmer = (ConfigConfirmer) getServletContext()
+							.getAttribute("config-confirmer");
+					try {
+						responseWriter.print("<result>"
+								+ configConfirmer.confirmUser(userNumber)
+								+ "</result>");
+					} catch (Exception ex) {
+						throw new ServletException(ex);
+					}
 
 				}
+
 			}
 		} finally {
 			try {

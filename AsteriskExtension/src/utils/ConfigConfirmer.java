@@ -16,4 +16,10 @@ public class ConfigConfirmer {
 		return meetMeConfig.entryChecker("rooms", "conf", roomNumber, 0);
 	}
 
+	public boolean confirmUser(String userNumber) throws Exception {
+		Config userConfig = new Config(asteriskConfFolder + File.separator
+				+ "users.conf");
+		return userConfig.entryChecker(userNumber);
+	}
+
 }

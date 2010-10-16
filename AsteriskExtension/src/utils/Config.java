@@ -34,7 +34,8 @@ public class Config {
 			}
 			String splitter = line.contains("=>") ? "=>" : "=";
 			String[] entryParts = line.split(splitter);
-			Entry entry = new Entry(entryParts[0], entryParts[1].split(","));
+			Entry entry = new Entry(entryParts[0],
+					entryParts.length >= 2 ? entryParts[1].split(",") : null);
 			list.add(entry);
 		}
 	}
@@ -58,6 +59,10 @@ public class Config {
 			}
 		}
 		return false;
+	}
+
+	public boolean entryChecker(String context) {
+		return data.containsKey(context);
 	}
 
 	public static void main(String[] args) throws Exception {
