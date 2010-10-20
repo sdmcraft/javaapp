@@ -313,9 +313,12 @@ public class AlgoUtils {
 
 	}
 	
-	private static void externalSort(File file,long fileSize,int[] ram)
+	private static void externalSort(String file,int start, int end, int memory) throws Exception
 	{
-		
+		if((end - start) <= memory)
+		{
+			
+		}
 	}
 
 	public static void main(String[] args) throws Exception {

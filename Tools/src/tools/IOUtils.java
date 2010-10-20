@@ -12,8 +12,8 @@ import java.io.InputStream;
 import java.io.LineNumberReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.PushbackInputStream;
-import java.io.Reader;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -224,6 +224,62 @@ public class IOUtils {
 		return result;
 	}
 
+	public static int numLinesInFile(String filePath) throws IOException {
+		LineNumberReader lineReader = new LineNumberReader(new BufferedReader(
+				new FileReader(filePath)));
+		int count = 0;
+		while (lineReader.readLine() != null) {
+			count++;
+		}
+		lineReader.close();
+		return count;
+	}
+
+	public static String[] fileToArray(String file, int start, int end)
+			throws Exception {
+		LineNumberReader lineReader = new LineNumberReader(new BufferedReader(
+				new FileReader(file)));
+		String[] result = new String[end - start];
+		int count = 0;
+		while (lineReader.readLine() != null && count < start) {
+			count++;
+		}
+		String line;
+		while ((line = lineReader.readLine()) != null && count < end) {
+			result[count - start] = line;
+			count++;
+		}
+		lineReader.close();
+		return result;
+	}
+
+	public static void replace(String file, int start, String[] replacement)
+			throws Exception {
+		LineNumberReader lineReader = new LineNumberReader(new BufferedReader(
+				new FileReader(file)));
+		File tempFile = new File(new File(file).getParent(), "tempFile");
+		PrintWriter writer = new PrintWriter(tempFile);
+
+		int count = 0;
+		String line;
+		while ((line = lineReader.readLine()) != null && count < start) {
+			writer.println(line);
+			count++;
+		}
+		int i = 0;
+		while (lineReader.readLine() != null
+				&& count < start + replacement.length) {
+			count++;
+			writer.println(replacement[i]);
+			i++;
+		}
+		while ((line = lineReader.readLine()) != null) {
+			writer.println(line);
+		}
+		lineReader.close();
+		writer.close();
+	}
+
 	public static List<Long> numbersInText(String text) {
 		Pattern numberPattern = Pattern.compile("\\s\\d\\d*\\s");
 		Matcher matcher = numberPattern.matcher(text);
@@ -242,7 +298,7 @@ public class IOUtils {
 		// System.out.println(s);
 		// for (int i = 1; i <= 9; i++)
 		// System.out.println(readLineFromFile(i, "C:\\temp\\temp.txt"));
-		for(long l : numbersInText("abc 13 df 454 bfr 44 a1s"))
+		for (long l : numbersInText("abc 13 df 454 bfr 44 a1s"))
 			System.out.println(l);
 	}
 
