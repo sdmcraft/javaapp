@@ -9,6 +9,7 @@
 </head>
 <body>
 <c:out value="Hello" />
-<jsp:plugin code="HelloWorldApplet"  type="applet"  width="400" height="300"></jsp:plugin>
+<jsp:plugin code="HelloWorldApplet" type="applet" width="400"
+	height="300"></jsp:plugin>
 </body>
 </html>

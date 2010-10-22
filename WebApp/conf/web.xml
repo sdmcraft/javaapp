@@ -153,6 +153,16 @@
 		<url-pattern>/TestPG2</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>ELDemoPG</servlet-name>
+		<jsp-file>/web/ELDemo.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ELDemoPG</servlet-name>
+		<url-pattern>/ELDemoPG</url-pattern>
+	</servlet-mapping>
+
 	<login-config>
 		<auth-method>BASIC</auth-method>
 	</login-config>
