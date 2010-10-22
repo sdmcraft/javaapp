@@ -12,4 +12,21 @@ public class DSUtils {
 		}
 		return true;
 	}
+
+	public static int[] stringArrayToIntArray(String[] data) {
+		int[] result = new int[data.length];
+		int i = 0;
+		for (String s : data)
+			result[i++] = Integer.parseInt(s);
+		return result;
+	}
+
+	public static String[] intArrayToStringArray(int[] data) {
+		String[] result = new String[data.length];
+		int i = 0;
+		for (int a : data)
+			result[i++] = Integer.toString(a);
+		return result;
+	}
+
 }

@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import dataStructures.ArrayStack;
+
 public class IOUtils {
 	public static List<String> delimitedReader(String delimiter, File f)
 			throws IOException, InterruptedException {
@@ -278,6 +280,21 @@ public class IOUtils {
 		}
 		lineReader.close();
 		writer.close();
+	}
+	
+	public static void merge(String file,int start1,int end1,int start2,int end2,int buffer) throws Exception
+	{
+		ArrayStack stack1 = new ArrayStack(buffer/3);
+		ArrayStack stack2 = new ArrayStack(buffer/3);
+		ArrayStack mergeStack = new ArrayStack(buffer/3);
+		int current1 = start1;
+		int current2 = start2;
+		
+	}
+	
+	private static void FileToStack(String file,int start,ArrayStack stack)
+	{
+		
 	}
 
 	public static List<Long> numbersInText(String text) {

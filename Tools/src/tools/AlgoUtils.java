@@ -317,7 +317,12 @@ public class AlgoUtils {
 	{
 		if((end - start) <= memory)
 		{
-			
+			String[] data = IOUtils.fileToArray(file, start, end);
+			int[] intData = DSUtils.stringArrayToIntArray(data);
+			quickSort(intData);
+			data = DSUtils.intArrayToStringArray(intData);
+			IOUtils.replace(file, start, data);
+			return;
 		}
 	}
 
