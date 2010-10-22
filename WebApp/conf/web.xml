@@ -130,7 +130,7 @@
 
 	<servlet-mapping>
 		<servlet-name>CookieServlet</servlet-name>
-		<url-pattern>/Cookie Servlet</url-pattern>
+		<url-pattern>/CookieServlet</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
