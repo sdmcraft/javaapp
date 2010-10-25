@@ -1,6 +1,5 @@
 package tools;
 
-import java.io.File;
 import java.util.List;
 
 import dataStructures.ArrayStack;
@@ -324,6 +323,13 @@ public class AlgoUtils {
 			IOUtils.replace(file, start, data);
 			return;
 		}
+		externalSort(file, start, start + (end-start)/2, memory);
+		externalSort(file, start + (end-start)/2 + 1, end, memory);
+	}
+	
+	private static void merge(String file,int start1,int end1,int start2,int end2)
+	{
+		
 	}
 
 	public static void main(String[] args) throws Exception {
