@@ -1,12 +1,8 @@
 package misc;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -16,8 +12,13 @@ public class Main {
 	 * @throws InterruptedException 
 	 */
 	public static void main(String[] args) throws Exception, InterruptedException {
-		File file = new File("C:\\a.jpg");
-		System.out.println(file.renameTo(new File("C:\\?.jpg")));
+		//File file = new File("C:\\a.jpg");
+		//System.out.println(file.renameTo(new File("C:\\?.jpg")));
+		List<String> list = new ArrayList<String>();
+		list.add("1");
+		list.add("2");
+		list.add("3");
+		System.out.println(list);
 //		PrintWriter out = new PrintWriter(System.out);
 //		for (int i = 0; i < 10; i++) {
 //			out.println("i="+i);
