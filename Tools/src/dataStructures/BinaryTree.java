@@ -116,5 +116,17 @@ public class BinaryTree extends Tree {
 		return right;
 	}
 	
+//	public boolean isBalanced()
+//	{
+//		int leftHeight = 0;
+//		int rightHeight = 0;
+//		if(this.left != null)
+//			leftHeight = left.getHeight();
+//		if(this.right != null)
+//			rightHeight = right.getHeight();
+//		if(Math.abs(leftHeight - rightHeight) > 1)
+//			return false;
+//		else return true;
+//	}
 
 }
