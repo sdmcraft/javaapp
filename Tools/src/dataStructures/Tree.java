@@ -102,14 +102,13 @@ public class Tree {
 				child.nodeID = nodeID;
 				preDiagram(child);
 			}
-		} 
-		
-		if(root instanceof BinaryTree)
-		{
-			if(((BinaryTree) root).getLeft() == null)
+		}
+
+		if (root instanceof BinaryTree) {
+			if (((BinaryTree) root).getLeft() == null)
 				terminalCount++;
-			if(((BinaryTree) root).getRight() == null)
-				terminalCount++;			
+			if (((BinaryTree) root).getRight() == null)
+				terminalCount++;
 		}
 	}
 
@@ -123,6 +122,44 @@ public class Tree {
 				queue.insert(child);
 			}
 		}
+	}
+
+	public boolean gapNoMoreThanOne() throws Exception {
+		this.setLevels();
+		int upper = -1;
+		int lower = -1;
+
+		/* TODO Currently limited to 100 nodes */
+		ArrayQueue queue = new ArrayQueue(100);
+		queue.insert(this);
+		while (!queue.empty()) {
+			Tree root = (Tree) queue.remove();
+
+			/* If this is a leaf */
+			if (root.getChildren() == null || root.getChildren().size() == 0) {
+				/* This is the first leaf we are encountering */
+				if (upper == -1 && lower == -1) {
+					upper = root.depth + 1;
+					lower = root.depth - 1;
+				}
+				/* We haven't narrowed the range yet */
+				else if (upper - lower > 1) {
+					if (root.depth == upper)
+						lower = upper - 1;
+					else if (root.depth == lower)
+						upper = lower + 1;
+				}
+				/* This leaf is outside the permissible range */
+				if (root.depth < lower || root.depth > upper)
+					return false;
+			} else {
+				for (Tree child : root.getChildren()) {
+					queue.insert(child);
+				}
+			}
+		}
+		return true;
+
 	}
 
 	private ArrayQueue doBFT() throws Exception {
@@ -160,7 +197,8 @@ public class Tree {
 					if (btChild.getLeft() == null) {
 						diagram += "null" + terminalCount + " [shape=point];\n";
 						diagram += "\"" + child.nodeID + "\"" + "->" + "\""
-								+ "null" + terminalCount + "\" [color=green];\n";
+								+ "null" + terminalCount
+								+ "\" [color=green];\n";
 						terminalCount--;
 					}
 					if (btChild.getRight() == null) {

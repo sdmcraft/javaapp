@@ -45,10 +45,15 @@ public class BinaryTree extends Tree {
 		if (root.depth >= maxDepth)
 			return;
 
-		if ((int) (Math.random() * 100) > 40) {
+		int randLeft = (int) (Math.random() * 100);
+		int randRight = (int) (Math.random() * 100);
+		System.out.println(randLeft);
+		System.out.println(randRight);
+
+		if (randLeft > 50) {
 			root.left = new BinaryTree(root);
 		}
-		if ((int) (Math.random() * 100) > 40) {
+		if (randRight > 50) {
 			root.right = new BinaryTree(root);
 		}
 
@@ -99,13 +104,14 @@ public class BinaryTree extends Tree {
 		inorderSubstitution(this, inorderTraversal, 0);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		BinaryTree bt = new BinaryTree();
 		bt.build();
 		System.out.println(bt.getDiagram());
+		System.out.println(bt.isBalanced());
 		// System.out.println(bt.inorder());
-		bt.sameShapeBinaryTree();
-		System.out.println(bt.getDiagram());
+		// bt.sameShapeBinaryTree();
+		// System.out.println(bt.getDiagram());
 	}
 
 	public BinaryTree getLeft() {
@@ -115,18 +121,9 @@ public class BinaryTree extends Tree {
 	public BinaryTree getRight() {
 		return right;
 	}
-	
-//	public boolean isBalanced()
-//	{
-//		int leftHeight = 0;
-//		int rightHeight = 0;
-//		if(this.left != null)
-//			leftHeight = left.getHeight();
-//		if(this.right != null)
-//			rightHeight = right.getHeight();
-//		if(Math.abs(leftHeight - rightHeight) > 1)
-//			return false;
-//		else return true;
-//	}
+
+	public boolean isBalanced() throws Exception {
+		return gapNoMoreThanOne();
+	}
 
 }

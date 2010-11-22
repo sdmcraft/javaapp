@@ -131,7 +131,7 @@ public class ArrayQueue {
 			wait();
 			newRear = (rear + 1) % elements.length;
 		}
-		System.out.println("Wait over,  proceeding with insert");
+		//System.out.println("Wait over,  proceeding with insert");
 		elements[newRear] = item;
 		rear = newRear;
 		/* Queue was empty - special case */
@@ -212,7 +212,7 @@ public class ArrayQueue {
 			System.out.println("Going to wait since the queue is empty");
 			wait();
 		}
-		System.out.println("Wait over,  proceeding with remove");
+		//System.out.println("Wait over,  proceeding with remove");
 		returnItem = elements[front];
 		elements[front] = null;
 		/* one item in the queue - special case */
