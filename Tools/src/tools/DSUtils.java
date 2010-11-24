@@ -29,4 +29,23 @@ public class DSUtils {
 		return result;
 	}
 
+	public static String booleanArrayToBitString(boolean[] input) {
+		StringBuilder sb = new StringBuilder();
+		for (boolean b : input) {
+			if (b)
+				sb.append('1');
+			else
+				sb.append('0');
+		}
+		return sb.toString();
+	}
+
+	public static boolean[] bitStringToBooleanArray(String bitStr) {
+		boolean[] bits = new boolean[bitStr.length()];
+		for (int i = 0; i < bitStr.length(); i++)
+			if (bitStr.charAt(i) == '1')
+				bits[i] = true;
+		return bits;
+	}
+
 }

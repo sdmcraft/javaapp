@@ -3,6 +3,7 @@ package tools;
 import java.util.List;
 
 import dataStructures.ArrayStack;
+import dataStructures.BitArray;
 
 public class AlgoUtils {
 
@@ -311,11 +312,11 @@ public class AlgoUtils {
 		return merged;
 
 	}
-	
-	private static void externalSort(String file,int start, int end, int memory) throws Exception
-	{
-		if((end - start) <= memory)
-		{
+
+	/* WIP */
+	private static void externalSort(String file, int start, int end, int memory)
+			throws Exception {
+		if ((end - start) <= memory) {
 			String[] data = IOUtils.fileToArray(file, start, end);
 			int[] intData = DSUtils.stringArrayToIntArray(data);
 			quickSort(intData);
@@ -323,13 +324,33 @@ public class AlgoUtils {
 			IOUtils.replace(file, start, data);
 			return;
 		}
-		externalSort(file, start, start + (end-start)/2, memory);
-		externalSort(file, start + (end-start)/2 + 1, end, memory);
+		externalSort(file, start, start + (end - start) / 2, memory);
+		externalSort(file, start + (end - start) / 2 + 1, end, memory);
 	}
-	
-	private static void merge(String file,int start1,int end1,int start2,int end2)
-	{
-		
+
+	/* WIP */
+	private static void merge(String file, int start1, int end1, int start2,
+			int end2) {
+
+	}
+
+	private static void countingSort(int[] input) {
+		int offset = input[0];
+		BitArray bitArray = new BitArray();
+		for (int i = 0; i < input.length; i++) {
+			if (offset > input[i]) {
+				bitArray.shift(input[i] - offset);
+				offset = input[i];
+			}
+			int index = input[i] - offset;
+			bitArray.increment(index);
+		}
+		for (int j = 0, i = 0; i < bitArray.length(); i++) {
+			for (int k = 0; k < bitArray.get(i); k++) {
+				input[j] = i + offset;
+				j++;
+			}
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -379,8 +400,8 @@ public class AlgoUtils {
 		// int[] arr3 = merge(arr1,arr2);
 		// for(int i : arr3)
 		// System.out.println(i);
-		//int[] input = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10 };
-		int[] input = new int[] { 1,1 };
+		// int[] input = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10 };
+		int[] input = new int[] { 1, 1 };
 		input = mergeSort(input);
 		for (int i : input) {
 			System.out.print(" " + i);

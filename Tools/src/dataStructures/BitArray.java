@@ -3,6 +3,8 @@ package dataStructures;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.DSUtils;
+
 /**
  * An array with variable sized elements in terms of bits. Internally this is a
  * list of variable sized boolean arrays.
@@ -12,27 +14,38 @@ public class BitArray {
 
 	public void add(long data) {
 		String bitStr = Long.toBinaryString(data);
-		boolean[] bits = new boolean[bitStr.length()];
-		for (int i = 0; i < bitStr.length(); i++)
-			if (bitStr.charAt(i) == '1')
-				bits[i] = true;
+		boolean[] bits = DSUtils.bitStringToBooleanArray(bitStr);
 		dataList.add(bits);
 	}
 
 	private String getBits(int index) {
 		boolean[] bits = dataList.get(index);
-
-		StringBuilder sb = new StringBuilder(bits.length);
-		for (int i = 0; i < bits.length; i++)
-			if (bits[i])
-				sb.append('1');
-			else
-				sb.append('0');
-		return sb.toString();
+		return DSUtils.booleanArrayToBitString(bits);
 	}
 
 	public long get(int index) {
 		return Long.parseLong(getBits(index), 2);
+	}
+
+	public void add(int index, long data) {
+		String bitStr = Long.toBinaryString(data);
+		boolean[] bits = DSUtils.bitStringToBooleanArray(bitStr);
+		dataList.add(index, bits);
+	}
+
+	public void shift(int offset) {
+		List<boolean[]> newDataList = new ArrayList<boolean[]>();
+		for (int i = 0; i < offset; i++)
+			dataList.add(0, new boolean[1]);
+	}
+
+	public void increment(int index) {
+		long value = Long.parseLong(getBits(index), 2) + 1;
+		add(index, value);
+	}
+
+	public int length() {
+		return dataList.size();
 	}
 
 	@Override
