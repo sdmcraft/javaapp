@@ -46,7 +46,7 @@ public class ArrayStack {
 	}
 
 	public int getSize() {
-		return elements.length;
+		return top + 1;
 	}
 
 	@Override
@@ -80,6 +80,14 @@ public class ArrayStack {
 		reverse(this);
 	}
 
+	public String[] toArray() {
+		String[] result = new String[elements.length];
+		for (int i = 0; i < elements.length; i++)
+			result[i] = elements[i];
+		return result;
+
+	}
+
 	public static void main(String[] args) throws Exception {
 		ArrayStack stack = new ArrayStack("a,b,c,d".split(","));
 		System.out.println(stack);
@@ -89,5 +97,17 @@ public class ArrayStack {
 
 	public int getTop() {
 		return top;
+	}
+
+	public ArrayStack cloneMe() throws Exception {
+		ArrayStack clonedStack = new ArrayStack(elements.length);
+		clonedStack.top = this.top;
+
+		String[] result = new String[elements.length];
+		for (int i = 0; i < elements.length; i++)
+			result[i] = elements[i];
+
+		clonedStack.elements = result;
+		return clonedStack;
 	}
 }

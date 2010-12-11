@@ -353,60 +353,41 @@ public class AlgoUtils {
 		}
 	}
 
+	private static String[] longestIncSubseq(int[] input) throws Exception {
+		ArrayStack[] stackStore = new ArrayStack[input.length];
+
+		for (int k = 0; k < input.length; k++) {
+			stackStore[k] = new ArrayStack(input.length);
+			int max = k;
+			for (int j = 0; j < k; j++) {
+				if (input[k] > input[j]) {
+					if (stackStore[j].getSize() >= stackStore[max].getSize()) {
+						max = j;
+					}
+				}
+			}
+			stackStore[k] = stackStore[max].cloneMe();
+			while (!stackStore[k].isEmpty()
+					&& Integer.parseInt(stackStore[k].peek()) > input[k])
+				stackStore[k].pop();
+			stackStore[k].push(Integer.toString(input[k]));
+		}
+
+		int max = 0;
+		for (int i = 0; i < stackStore.length; i++) {
+			if (stackStore[i].getSize() > stackStore[max].getSize())
+				max = i;
+		}
+
+		return stackStore[max].toArray();
+	}
+
 	public static void main(String[] args) throws Exception {
-		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
-		// 0));
-		// System.out
-		// .println(binarySearch(new int[] { -3, -2, -1, 0, 1, 2, 3 }, 0));
-		// System.out.println(binarySearch(new int[] { -3, -2, -1 }, 0));
-		// System.out.println(binarySearch(new int[] { 1, 2, 3 }, 0));
-		// System.out.println(binarySearch(new int[] { -1, 1 }, 0));
-		// int[] input = new int[5];
-		// for (int i = 0; i < 5; i++)
-		// input[i] = (int) (Math.random() * 100);
-		//
-		// System.out.println("Initial Array:");
-		// for (int i : input)
-		// System.out.print(" " + i);
-		//
-		// System.out.println("\n");
-		// int[] rankedIndices = rankIndices(input, 2);
-		// System.out.println("Smallest 2 ranked indices: ");
-		// for (int i : rankedIndices)
-		// System.out.print(" " + i);
-		//		
-		// System.out.println("\n");
-		// Thread.sleep(10000);
-		// quickSort(new int[] { 1, 1 });
-		// quickSort(input);
-
-		// System.out.println("\n");
-		// int k = 0;
-		// System.out.println(quickSelect(input, k) + " is ranked " + k);
-		//
-		// quickSort(input);
-		// System.out.println("\nSorted Array:");
-		// for (int i : input)
-		// System.out.print(" " + i);
-
-		// String input = "aabbccdddddefghijklmnopqrstuvwxyzzzzzzzzzzzzzzz";
-		// topNchars(input.toCharArray(), 3);
-		// ArrayStack stack = new ArrayStack(new String[] { "4", "1", "55", "5",
-		// "2", "4", "55" });
-		//
-		// System.out.println(stackSort(stack));
-		// int[] arr1 = new int[]{1,3,5,7,9,10};
-		// int[] arr2 = new int[]{0,2,4,6,8};
-		// int[] arr3 = merge(arr1,arr2);
-		// for(int i : arr3)
-		// System.out.println(i);
-		// int[] input = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10 };
-		int[] input = new int[] { 1, 1 };
-		input = mergeSort(input);
-		for (int i : input) {
+		int[] input = new int[] { 2,4,8,10,11,12,13,14,5,6,7,3,4,5,0,7,8};
+		String[] output = longestIncSubseq(input);
+		for (String i : output) {
 			System.out.print(" " + i);
 		}
-		//		
-		// System.out.println(7/2);
+
 	}
 }
