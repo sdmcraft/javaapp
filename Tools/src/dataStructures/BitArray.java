@@ -27,21 +27,27 @@ public class BitArray {
 		return Long.parseLong(getBits(index), 2);
 	}
 
-	public void add(int index, long data) {
+	public void set(int index, long data) {
 		String bitStr = Long.toBinaryString(data);
 		boolean[] bits = DSUtils.bitStringToBooleanArray(bitStr);
-		dataList.add(index, bits);
+		dataList.set(index, bits);
 	}
 
-	public void shift(int offset) {
-		List<boolean[]> newDataList = new ArrayList<boolean[]>();
+	public void leftExpand(int offset) {
 		for (int i = 0; i < offset; i++)
 			dataList.add(0, new boolean[1]);
 	}
 
+	private void rightExpand(int offset) {
+		for (int i = 0; i < offset; i++)
+			dataList.add(new boolean[1]);
+	}
+
 	public void increment(int index) {
+		if (index > dataList.size() -1)
+			rightExpand(index - dataList.size() + 1);
 		long value = Long.parseLong(getBits(index), 2) + 1;
-		add(index, value);
+		set(index, value);
 	}
 
 	public int length() {
