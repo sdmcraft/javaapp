@@ -353,13 +353,14 @@ public class AlgoUtils {
 			}
 		}
 	}
-	
+
+	/*http://www.algorithmist.com/index.php/Longest_Increasing_Subsequence*/
 	private static String[] longestIncSubseq(int[] input) throws Exception {
 		ArrayStack[] stackStore = new ArrayStack[input.length];
 
 		for (int k = 0; k < input.length; k++) {
 			stackStore[k] = new ArrayStack(input.length);
-			int max = k;
+			int max = 0;
 			for (int j = 0; j < k; j++) {
 				if (input[k] > input[j]) {
 					if (stackStore[j].getSize() >= stackStore[max].getSize()) {
@@ -368,9 +369,6 @@ public class AlgoUtils {
 				}
 			}
 			stackStore[k] = stackStore[max].cloneMe();
-			while (!stackStore[k].isEmpty()
-					&& Integer.parseInt(stackStore[k].peek()) > input[k])
-				stackStore[k].pop();
 			stackStore[k].push(Integer.toString(input[k]));
 		}
 
@@ -430,21 +428,26 @@ public class AlgoUtils {
 		// int[] arr3 = merge(arr1,arr2);
 		// for(int i : arr3)
 		// System.out.println(i);
-		int[] input1 = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10,-2,-2,-2,-2,0,0,0,0,0,0,10000,10000 };
-		int[] input2 = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10,-2,-2,-2,-2,0,0,0,0,0,0,10000,10000 };
-
-		countingSort(input1);
-		for (int i : input1) {
-			System.out.print(" " + i);
-		}
-
-		System.out.println("\n");
-		bubbleSort(input2);
-		for (int i : input2) {
-			System.out.print(" " + i);
-		}
-
+		int[] input1 = new int[] { 1,2,100,4,75,5,6,7,101,102,103,104,8,9,10,11,12,13,14,15};
+		// int[] input2 = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10, -2, -2, -2,
+		// -2,
+		// 0, 0, 0, 0, 0, 0, 10000, 10000 };
+		//
+		// countingSort(input1);
+		// for (int i : input1) {
+		// System.out.print(" " + i);
+		// }
+		//
+		// System.out.println("\n");
+		// bubbleSort(input2);
+		// for (int i : input2) {
+		// System.out.print(" " + i);
+		// }
+		//
 		//		
 		// System.out.println(7/2);
+		for(String s  : longestIncSubseq(input1))
+			System.out.println(s);
+		
 	}
 }
