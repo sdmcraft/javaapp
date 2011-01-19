@@ -354,7 +354,7 @@ public class AlgoUtils {
 		}
 	}
 
-	/*http://www.algorithmist.com/index.php/Longest_Increasing_Subsequence*/
+	/* http://www.algorithmist.com/index.php/Longest_Increasing_Subsequence */
 	private static String[] longestIncSubseq(int[] input) throws Exception {
 		ArrayStack[] stackStore = new ArrayStack[input.length];
 
@@ -379,6 +379,16 @@ public class AlgoUtils {
 		}
 
 		return stackStore[max].toArray();
+	}
+
+	public static int knapsack(int[][] input, int index, int capacity) {
+		if (capacity <= 0 || index >= input.length)
+			return 0;
+		else {
+			return Math.max(knapsack(input, index + 1, capacity), knapsack(
+					input, index + 1, capacity - input[index][0])
+					+ input[index][1]);
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -428,7 +438,8 @@ public class AlgoUtils {
 		// int[] arr3 = merge(arr1,arr2);
 		// for(int i : arr3)
 		// System.out.println(i);
-		int[] input1 = new int[] { 1,2,100,4,75,5,6,7,101,102,103,104,8,9,10,11,12,13,14,15};
+//		int[] input1 = new int[] { 1, 2, 100, 4, 75, 5, 6, 7, 101, 102, 103,
+//				104, 8, 9, 10, 11, 12, 13, 14, 15 };
 		// int[] input2 = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10, -2, -2, -2,
 		// -2,
 		// 0, 0, 0, 0, 0, 0, 10000, 10000 };
@@ -446,8 +457,9 @@ public class AlgoUtils {
 		//
 		//		
 		// System.out.println(7/2);
-		for(String s  : longestIncSubseq(input1))
-			System.out.println(s);
-		
+		// for (String s : longestIncSubseq(input1))
+		// System.out.println(s);
+		System.out.println(knapsack(new int[][]{{5,10},{7,2},{3,15},{2,6}}, 0, 12));
+
 	}
 }
