@@ -1,6 +1,8 @@
 package tools;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dataStructures.ArrayStack;
 import dataStructures.BitArray;
@@ -381,10 +383,32 @@ public class AlgoUtils {
 		return stackStore[max].toArray();
 	}
 
+	static int steps = 0;
+	static int steps2 = 0;
+
+	public static int knapsack(int[][] input, int index, int capacity,
+			Map<String, Integer> knapsackStore) {
+
+		if (!knapsackStore.containsKey(index + "," + capacity)) {
+			steps++;
+			if (capacity <= 0 || index >= input.length) {
+				knapsackStore.put(index + "," + capacity, 0);
+			} else {
+				knapsackStore.put(index + "," + capacity, Math.max(knapsack(
+						input, index + 1, capacity, knapsackStore), knapsack(
+						input, index + 1, capacity - input[index][0],
+						knapsackStore)
+						+ input[index][1]));
+			}
+		}
+		return knapsackStore.get(index + "," + capacity);
+	}
+
 	public static int knapsack(int[][] input, int index, int capacity) {
-		if (capacity <= 0 || index >= input.length)
+		steps2++;
+		if (capacity <= 0 || index >= input.length) {
 			return 0;
-		else {
+		} else {
 			return Math.max(knapsack(input, index + 1, capacity), knapsack(
 					input, index + 1, capacity - input[index][0])
 					+ input[index][1]);
@@ -438,8 +462,8 @@ public class AlgoUtils {
 		// int[] arr3 = merge(arr1,arr2);
 		// for(int i : arr3)
 		// System.out.println(i);
-//		int[] input1 = new int[] { 1, 2, 100, 4, 75, 5, 6, 7, 101, 102, 103,
-//				104, 8, 9, 10, 11, 12, 13, 14, 15 };
+		// int[] input1 = new int[] { 1, 2, 100, 4, 75, 5, 6, 7, 101, 102, 103,
+		// 104, 8, 9, 10, 11, 12, 13, 14, 15 };
 		// int[] input2 = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10, -2, -2, -2,
 		// -2,
 		// 0, 0, 0, 0, 0, 0, 10000, 10000 };
@@ -459,7 +483,14 @@ public class AlgoUtils {
 		// System.out.println(7/2);
 		// for (String s : longestIncSubseq(input1))
 		// System.out.println(s);
-		System.out.println(knapsack(new int[][]{{5,10},{7,2},{3,15},{2,6}}, 0, 12));
+		System.out.println(knapsack(new int[][] { { 5, 10 }, { 7, 2 },
+				{ 3, 15 }, { 2, 6 }, { 4, 7 }, { 1, 2 }, { 6, 1 } }, 0, 12));
+		System.out.println("Steps:" + steps2);
+
+		System.out.println(knapsack(new int[][] { { 5, 10 }, { 7, 2 },
+				{ 3, 15 }, { 2, 6 }, { 4, 7 }, { 1, 2 }, { 6, 1 } }, 0, 12,
+				new HashMap<String, Integer>()));
+		System.out.println("Steps:" + steps);
 
 	}
 }
