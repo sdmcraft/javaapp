@@ -386,6 +386,10 @@ public class AlgoUtils {
 	static int steps = 0;
 	static int steps2 = 0;
 
+	/*
+	 * KS(w[1..n],v[1..n],C) =
+	 * Max(KS(w[2..n],v[2..n],C),KS(w[1..n],v[1..n],C-w[1]) + v[1])
+	 */
 	public static int knapsack(int[][] input, int index, int capacity,
 			Map<String, Integer> knapsackStore) {
 
@@ -413,6 +417,46 @@ public class AlgoUtils {
 					input, index + 1, capacity - input[index][0])
 					+ input[index][1]);
 		}
+	}
+
+	public static String knapsack2(int[][] input, int index, int capacity,
+			Map<String, String> knapsackStore, String knapsackContents) {
+
+		if (!knapsackStore.containsKey(index + "," + capacity)) {
+			if (capacity <= 0 || index >= input.length) {
+				knapsackStore.put(index + "," + capacity, knapsackContents);
+			} else {
+
+				String contentsOnLeave = knapsack2(input, index + 1, capacity,
+						knapsackStore, knapsackContents);
+
+				boolean canTake = capacity - input[index][0] >= 0;
+				String contentsOnTake;
+				
+				if (canTake) {
+					contentsOnTake = knapsack2(input, index + 1, capacity
+							- input[index][0], knapsackStore, knapsackContents
+							+ "," + input[index][1]);
+				} else {
+					contentsOnTake = contentsOnLeave;
+				}
+				int valueOnLeave = 0;
+				int valueOnTake = 0;
+
+				for (String s : contentsOnLeave.split(","))
+					if (!"".equals(s))
+						valueOnLeave += Integer.parseInt(s);
+
+				for (String s : contentsOnTake.split(","))
+					if (!"".equals(s))
+						valueOnTake += Integer.parseInt(s);
+
+				knapsackStore.put(index + "," + capacity,
+						valueOnLeave > valueOnTake ? contentsOnLeave
+								: contentsOnTake);
+			}
+		}
+		return knapsackStore.get(index + "," + capacity);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -491,6 +535,14 @@ public class AlgoUtils {
 				{ 3, 15 }, { 2, 6 }, { 4, 7 }, { 1, 2 }, { 6, 1 } }, 0, 12,
 				new HashMap<String, Integer>()));
 		System.out.println("Steps:" + steps);
+
+		System.out.println(knapsack2(new int[][] { { 5, 10 }, { 7, 2 },
+				{ 3, 15 }, { 2, 6 }, { 4, 7 }, { 1, 2 }, { 6, 1 } }, 0, 12,
+				new HashMap<String, String>(), ""));
+
+		System.out.println(knapsack2(new int[][] { { 5, 10 }, { 7, 2 },
+				{ 2, 6 }, { 4, 7 }, { 1, 2 }, { 6, 1 } }, 0, 12,
+				new HashMap<String, String>(), ""));
 
 	}
 }
