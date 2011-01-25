@@ -1,8 +1,8 @@
 package misc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -14,11 +14,11 @@ public class Main {
 	public static void main(String[] args) throws Exception, InterruptedException {
 		//File file = new File("C:\\a.jpg");
 		//System.out.println(file.renameTo(new File("C:\\?.jpg")));
-		List<String> list = new ArrayList<String>();
-		list.add("1");
-		list.add("2");
-		list.add("3");
-		System.out.println(list);
+//		List<String> list = new ArrayList<String>();
+//		list.add("1");
+//		list.add("2");
+//		list.add("3");
+//		System.out.println(list);
 //		PrintWriter out = new PrintWriter(System.out);
 //		for (int i = 0; i < 10; i++) {
 //			out.println("i="+i);
@@ -71,6 +71,12 @@ public class Main {
 //		String s2 = "def";
 //		String s3 = (s1+s2);
 //		System.out.println(s3 == "abcdef");
+		Map<Long,Long> map = new HashMap<Long, Long>();
+		for(long i=789909926,j=0;true;i++,j++)
+		{
+			map.put(Long.valueOf(i), Long.valueOf(i));
+			System.out.println(j);
+		}
 		
 	}
 
@@ -82,5 +88,6 @@ public class Main {
 		}
 		return Integer.parseInt(new String(result));
 	}
+	
 
 }

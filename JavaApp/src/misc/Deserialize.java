@@ -27,6 +27,8 @@ public class Deserialize {
 		} finally {
 			if (in != null)
 				in.close();
+			if(writer != null)
+				writer.close();
 		}
 	}
 
