@@ -436,7 +436,7 @@ public class AlgoUtils {
 				for (String s : contentsOnLeave.split(","))
 					if (!"".equals(s))
 						valueOnLeave += Integer.parseInt(s);
-
+				System.out.println("===========");
 				System.out.println("On leave Knapsack Contents:"
 						+ contentsOnLeave + " Value:" + valueOnLeave);
 
@@ -453,7 +453,7 @@ public class AlgoUtils {
 							valueOnTake += Integer.parseInt(s);
 
 					System.out.println("On take Knapsack Contents:"
-							+ contentsOnTake + " Value:" + valueOnTake);
+							+ contentsOnTake + " Value:" + valueOnTake);					
 					knapsackStore.put(index + "," + capacity,
 							valueOnLeave > valueOnTake ? contentsOnLeave
 									: contentsOnTake);
