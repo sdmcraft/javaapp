@@ -424,22 +424,12 @@ public class AlgoUtils {
 
 		if (!knapsackStore.containsKey(index + "," + capacity)) {
 			if (capacity <= 0 || index >= input.length) {
-				knapsackStore.put(index + "," + capacity, knapsackContents);
+				return knapsackContents;
 			} else {
 
 				String contentsOnLeave = knapsack2(input, index + 1, capacity,
 						knapsackStore, knapsackContents);
 
-				boolean canTake = capacity - input[index][0] >= 0;
-				String contentsOnTake;
-				
-				if (canTake) {
-					contentsOnTake = knapsack2(input, index + 1, capacity
-							- input[index][0], knapsackStore, knapsackContents
-							+ "," + input[index][1]);
-				} else {
-					contentsOnTake = contentsOnLeave;
-				}
 				int valueOnLeave = 0;
 				int valueOnTake = 0;
 
@@ -447,13 +437,29 @@ public class AlgoUtils {
 					if (!"".equals(s))
 						valueOnLeave += Integer.parseInt(s);
 
-				for (String s : contentsOnTake.split(","))
-					if (!"".equals(s))
-						valueOnTake += Integer.parseInt(s);
+				System.out.println("On leave Knapsack Contents:"
+						+ contentsOnLeave + " Value:" + valueOnLeave);
 
-				knapsackStore.put(index + "," + capacity,
-						valueOnLeave > valueOnTake ? contentsOnLeave
-								: contentsOnTake);
+				boolean canTake = (capacity - input[index][0] >= 0)
+						&& (index < input.length - 1);
+				String contentsOnTake = "";
+
+				if (canTake) {
+					contentsOnTake = knapsack2(input, index + 1, capacity
+							- input[index][0], knapsackStore, knapsackContents
+							+ "," + input[index][1]);
+					for (String s : contentsOnTake.split(","))
+						if (!"".equals(s))
+							valueOnTake += Integer.parseInt(s);
+
+					System.out.println("On take Knapsack Contents:"
+							+ contentsOnTake + " Value:" + valueOnTake);
+					knapsackStore.put(index + "," + capacity,
+							valueOnLeave > valueOnTake ? contentsOnLeave
+									: contentsOnTake);
+				} else
+					knapsackStore.put(index + "," + capacity, contentsOnLeave);
+
 			}
 		}
 		return knapsackStore.get(index + "," + capacity);
@@ -528,20 +534,16 @@ public class AlgoUtils {
 		// for (String s : longestIncSubseq(input1))
 		// System.out.println(s);
 		System.out.println(knapsack(new int[][] { { 5, 10 }, { 7, 2 },
-				{ 3, 15 }, { 2, 6 }, { 4, 7 }, { 1, 2 }, { 6, 1 } }, 0, 12));
+				{ 2, 6 }, { 4, 7 }, { 1, 3 }, { 6, 1 } }, 0, 12));
 		System.out.println("Steps:" + steps2);
 
 		System.out.println(knapsack(new int[][] { { 5, 10 }, { 7, 2 },
-				{ 3, 15 }, { 2, 6 }, { 4, 7 }, { 1, 2 }, { 6, 1 } }, 0, 12,
+				{ 2, 6 }, { 4, 7 }, { 1, 3 }, { 6, 1 } }, 0, 12,
 				new HashMap<String, Integer>()));
 		System.out.println("Steps:" + steps);
 
 		System.out.println(knapsack2(new int[][] { { 5, 10 }, { 7, 2 },
-				{ 3, 15 }, { 2, 6 }, { 4, 7 }, { 1, 2 }, { 6, 1 } }, 0, 12,
-				new HashMap<String, String>(), ""));
-
-		System.out.println(knapsack2(new int[][] { { 5, 10 }, { 7, 2 },
-				{ 2, 6 }, { 4, 7 }, { 1, 2 }, { 6, 1 } }, 0, 12,
+				{ 2, 6 }, { 4, 7 }, { 1, 3 }, { 6, 1 } }, 0, 12,
 				new HashMap<String, String>(), ""));
 
 	}
