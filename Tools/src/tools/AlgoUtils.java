@@ -518,7 +518,7 @@ public class AlgoUtils {
 		//		
 		// System.out.println(7/2);
 		// for (String s : longestIncSubseq(input1))
-		// System.out.println(s);
+		// System.out.println(s);;
 		System.out.println(knapsack(new int[][] { { 5, 10 }, { 7, 2 },
 				{ 2, 6 }, { 4, 7 }, { 1, 3 }, { 6, 1 } }, 0, 12));
 		System.out.println("Steps:" + steps2);
