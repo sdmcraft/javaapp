@@ -419,50 +419,36 @@ public class AlgoUtils {
 		}
 	}
 
-	public static String knapsack2(int[][] input, int index, int capacity,
-			Map<String, String> knapsackStore, String knapsackContents) {
+	public static String[] knapsack2(int[][] input, int index, int capacity,
+			Map<String, Integer> knapsackStore) {
 
+		String contents = "";
 		if (!knapsackStore.containsKey(index + "," + capacity)) {
 			if (capacity <= 0 || index >= input.length) {
-				return knapsackContents;
+				return new String[] { "0", "" };
 			} else {
 
-				String contentsOnLeave = knapsack2(input, index + 1, capacity,
-						knapsackStore, knapsackContents);
+				String[] leave = knapsack2(input, index + 1, capacity,
+						knapsackStore);
+				String[] take = knapsack2(input, index + 1, capacity
+						- input[index][0], knapsackStore);
 
-				int valueOnLeave = 0;
-				int valueOnTake = 0;
+				int valueOnLeave = Integer.parseInt(leave[0]);
+				int valueOnTake = Integer.parseInt(take[0]);
 
-				for (String s : contentsOnLeave.split(","))
-					if (!"".equals(s))
-						valueOnLeave += Integer.parseInt(s);
-				System.out.println("===========");
-				System.out.println("On leave Knapsack Contents:"
-						+ contentsOnLeave + " Value:" + valueOnLeave);
-
-				boolean canTake = (capacity - input[index][0] >= 0)
-						&& (index < input.length - 1);
-				String contentsOnTake = "";
-
-				if (canTake) {
-					contentsOnTake = knapsack2(input, index + 1, capacity
-							- input[index][0], knapsackStore, knapsackContents
-							+ "," + input[index][1]);
-					for (String s : contentsOnTake.split(","))
-						if (!"".equals(s))
-							valueOnTake += Integer.parseInt(s);
-
-					System.out.println("On take Knapsack Contents:"
-							+ contentsOnTake + " Value:" + valueOnTake);					
-					knapsackStore.put(index + "," + capacity,
-							valueOnLeave > valueOnTake ? contentsOnLeave
-									: contentsOnTake);
-				} else
-					knapsackStore.put(index + "," + capacity, contentsOnLeave);
-
+				if (valueOnLeave > valueOnTake) {
+					knapsackStore.put(index + "," + capacity, valueOnLeave);
+					contents = leave[1];
+				} else {
+					knapsackStore.put(index + "," + capacity, valueOnTake);
+					contents = take[1];
+				}
+				contents += "," + input[index][1];
 			}
 		}
-		return knapsackStore.get(index + "," + capacity);
+		return new String[] {
+				Integer.toString(knapsackStore.get(index + "," + capacity)),
+				contents };
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -544,7 +530,7 @@ public class AlgoUtils {
 
 		System.out.println(knapsack2(new int[][] { { 5, 10 }, { 7, 2 },
 				{ 2, 6 }, { 4, 7 }, { 1, 3 }, { 6, 1 } }, 0, 12,
-				new HashMap<String, String>(), ""));
+				new HashMap<String, Integer>())[1]);
 
 	}
 }
