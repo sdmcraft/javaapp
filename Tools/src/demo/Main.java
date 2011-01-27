@@ -1,5 +1,9 @@
 package demo;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,48 +26,60 @@ public class Main {
 		}
 	}
 
-	public static void executorServiceDemo()
-	{
+	public static void executorServiceDemo() {
 		ExecutorService threadPool = Executors.newFixedThreadPool(5);
 		FutureTask<String> futures[] = new FutureTask[10];
-		for(int i=0;i<10;i++)
-		{
+		for (int i = 0; i < 10; i++) {
 			futures[i] = new FutureTask<String>(new Task());
 			threadPool.execute(futures[i]);
 		}
-		for(int i=0;i<10;i++)
-		{
-			System.out.println(futures[i].isDone());			
+		for (int i = 0; i < 10; i++) {
+			System.out.println(futures[i].isDone());
 		}
-		
+
 	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		executorServiceDemo();
-//		try {
-//			String sURL = "https://www.google.com/accounts/ServiceLogin?service=mail";
-//			URL url = new URL(sURL);
-//			URLConnection httpConn = url.openConnection();
-//			httpConn.setDoInput(true);
-//			httpConn.connect();
-//			InputStream in = httpConn.getInputStream();
-//			BufferedInputStream bufIn = new BufferedInputStream(in);
-//			int nbytes;
-//			do {
-//				// Echo the response on the Java Console.
-//				// This is crude, and just for demo purposes.
-//				byte buf[] = new byte[8192];
-//				nbytes = bufIn.read(buf, 0, 8192);
-//				System.out.println(new String(buf, "US-ASCII"));
-//			} while (nbytes > 0);
-//
-//		} catch (Exception e) {
-//			System.out.println("Exception: " + e.getMessage());
-//		}
-//
+		try {
+			String sURL = "https://admin.acrobat.com/";
+			URL url = new URL(sURL);
+			URLConnection httpConn = url.openConnection();
+			httpConn.setDoInput(true);
+			httpConn.connect();
+			InputStream in = httpConn.getInputStream();
+			BufferedInputStream bufIn = new BufferedInputStream(in);
+			int nbytes;
+			do {
+				// Echo the response on the Java Console.
+				// This is crude, and just for demo purposes.
+				byte buf[] = new byte[8192];
+				nbytes = bufIn.read(buf, 0, 8192);
+				System.out.println(new String(buf, "US-ASCII"));
+			} while (nbytes > 0);
+
+			sURL = "https://www.google.com/accounts/ServiceLogin";
+			url = new URL(sURL);
+			httpConn = url.openConnection();
+			httpConn.setDoInput(true);
+			httpConn.connect();
+			in = httpConn.getInputStream();
+			bufIn = new BufferedInputStream(in);
+
+			do {
+				// Echo the response on the Java Console.
+				// This is crude, and just for demo purposes.
+				byte buf[] = new byte[8192];
+				nbytes = bufIn.read(buf, 0, 8192);
+				System.out.println(new String(buf, "US-ASCII"));
+			} while (nbytes > 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
