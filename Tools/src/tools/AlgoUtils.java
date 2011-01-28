@@ -428,17 +428,25 @@ public class AlgoUtils {
 		} else {
 
 			String[] leave = knapsack2(input, index + 1, capacity);
-			String[] take = knapsack2(input, index + 1, capacity
-					- input[index][0]);
-
 			int valueOnLeave = Integer.parseInt(leave[0]);
-			int valueOnTake = Integer.parseInt(take[0]) + input[index][1];
-			value = valueOnLeave > valueOnTake ? valueOnLeave : valueOnTake;
-			if (valueOnLeave > valueOnTake) {
+
+			boolean canTake = capacity - input[index][0] >= 0;
+			String[] take = null;
+			int valueOnTake = 0;
+			if (canTake) {
+				take = knapsack2(input, index + 1, capacity - input[index][0]);
+				valueOnTake = Integer.parseInt(take[0]) + input[index][1];
+				value = valueOnLeave > valueOnTake ? valueOnLeave : valueOnTake;
+				if (valueOnLeave > valueOnTake) {
+					contents = leave[1];
+				} else
+					contents = input[index][1] + "," + take[1];
+
+			} else {
 				contents = leave[1];
-			} else if (index + 1 < input.length)
-				contents = input[index + 1][1] + "," + take[1];
-		}		
+				value = valueOnLeave;
+			}
+		}
 		return new String[] { value + "", contents };
 	}
 
@@ -510,17 +518,17 @@ public class AlgoUtils {
 		// System.out.println(7/2);
 		// for (String s : longestIncSubseq(input1))
 		// System.out.println(s);;
-		System.out.println(knapsack(new int[][] { { 5, 10 }, { 7, 2 },
-				{ 2, 6 }, { 4, 7 }, { 1, 3 }, { 6, 1 } }, 0, 12));
+
+		int[][] input = new int[][] { { 0, 0 }, { 5, 10 }, { 7, 2 }, { 2, 6 },
+				{ 4, 7 }, { 1, 3 }, { 6, 1 }, { 12, 50 }, { 5, 60 } };
+		System.out.println(knapsack(input, 0, 12));
 		System.out.println("Steps:" + steps2);
 
-		System.out.println(knapsack(new int[][] { { 5, 10 }, { 7, 2 },
-				{ 2, 6 }, { 4, 7 }, { 1, 3 }, { 6, 1 } }, 0, 12,
+		System.out.println(knapsack(input, 0, 12,
 				new HashMap<String, Integer>()));
 		System.out.println("Steps:" + steps);
 
-		String[] str =  knapsack2(new int[][] { { 5, 10 }, { 7, 2 },
-				{ 2, 6 }, { 4, 7 }, { 1, 3 }, { 6, 1 } }, 0, 12);
+		String[] str = knapsack2(input, 0, 12);
 		System.out.println(str[0]);
 		System.out.println(str[1]);
 
