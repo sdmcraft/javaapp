@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
 
 import org.asteriskjava.manager.AuthenticationFailedException;
 import org.asteriskjava.manager.TimeoutException;
 import org.meetmejava.Conference;
-import org.meetmejava.State;
+import org.meetmejava.Context;
 import org.meetmejava.User;
 import org.meetmejava.event.Event;
 
@@ -59,13 +58,13 @@ public class Client implements Observer {
 		settings.put("URL", url);
 		settings.put("ADMIN", admin);
 		settings.put("PASSWORD", pwd);
-		State state = new State(settings);
-		state.init();
-		Conference conference = new Conference(confId, state);
+		Context context = new Context(settings);
+		context.init();
+		Conference conference = new Conference(confId, context);
 		conference.init();
 		conference.addObserver(this);
 		Thread.sleep(60000);
-		state.destroy();
+		context.destroy();
 	}
 
 	/**
@@ -73,10 +72,6 @@ public class Client implements Observer {
 	 * 
 	 * @param args
 	 *            the arguments
-	 * @throws TimeoutException
-	 * @throws AuthenticationFailedException
-	 * @throws IOException
-	 * @throws IllegalStateException
 	 * @throws TimeoutException
 	 * @throws AuthenticationFailedException
 	 * @throws IOException

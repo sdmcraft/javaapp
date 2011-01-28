@@ -12,9 +12,10 @@ import org.meetmejava.Conference;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class State
+ * The Class Context represents provides a context for interaction between
+ * MeetMe-java and the Asterisk server
  */
-public class State {
+public class Context {
 
 	/** The connection. */
 	private final Connection connection;
@@ -23,7 +24,7 @@ public class State {
 	private final AsteriskServer asteriskServer;
 
 	/** The asterisk url. */
-	private final String asteriskURL;
+	private final String asteriskIp;
 
 	/** The asterisk admin. */
 	private final String asteriskAdmin;
@@ -31,23 +32,8 @@ public class State {
 	/** The asterisk password. */
 	private final String asteriskPassword;
 
-	/** The asterisk ext url. */
-	private final String asteriskExtURL;
-
-	/** The temp rec dir. */
-	private final String tempRecDir;
-
 	/** The dial out locks. */
 	private final Map<String, Map<String, String>> dialOutLocks = new HashMap<String, Map<String, String>>();
-
-	/**
-	 * Gets the temp rec dir.
-	 * 
-	 * @return the temp rec dir
-	 */
-	public String getTempRecDir() {
-		return tempRecDir;
-	}
 
 	/** The live event handler. */
 	private LiveEventHandler liveEventHandler;
@@ -56,25 +42,22 @@ public class State {
 	private final Map<String, Conference> startedConferences = new HashMap<String, Conference>();
 
 	/**
-	 * Instantiates a new state.
-	 * 
-	 * @param settings
-	 *            the settings
-	 * @throws TimeoutException
-	 * @throws AuthenticationFailedException
-	 * @throws IOException
-	 * @throws IllegalStateException
-	 * @throws Exception
-	 *             the exception
+	 * Instantiates a new context.
+	 *
+	 * @param asteriskIp The ip address of the Asterisk server
+	 * @param asteriskAdmin The admin user on Asterisk who can access Asterisk Manage Interface
+	 * @param asteriskPassword The password of the admin user
+	 * @throws IllegalStateException the illegal state exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException the authentication failed exception
+	 * @throws TimeoutException the timeout exception
 	 */
-	public State(Map<String, String> settings) throws IllegalStateException,
+	public Context(String asteriskIp,String asteriskAdmin,String asteriskPassword) throws IllegalStateException,
 			IOException, AuthenticationFailedException, TimeoutException {
-		asteriskURL = settings.get("URL");
-		asteriskAdmin = settings.get("ADMIN");
-		asteriskPassword = settings.get("PASSWORD");
-		asteriskExtURL = settings.get("EXTENSION_URL");
-		tempRecDir = settings.get("TEMP_REC_DIR");
-		connection = new Connection(asteriskURL, asteriskAdmin,
+		this.asteriskIp = asteriskIp;
+		this.asteriskAdmin = asteriskAdmin;
+		this.asteriskPassword = asteriskPassword;
+		connection = new Connection(asteriskIp, asteriskAdmin,
 				asteriskPassword);
 		connection.connect();
 		asteriskServer = new DefaultAsteriskServer(connection
@@ -122,7 +105,7 @@ public class State {
 	 * @return the asterisk url
 	 */
 	public String getAsteriskURL() {
-		return asteriskURL;
+		return asteriskIp;
 	}
 
 	/**

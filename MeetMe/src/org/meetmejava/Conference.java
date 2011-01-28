@@ -38,8 +38,8 @@ public class Conference extends Observable {
 	/** The recording name. */
 	private String recordingName;
 
-	/** The state. */
-	private final State state;
+	/** The context. */
+	private final Context context;
 
 	/** The conference id. */
 	private final String conferenceId;
@@ -60,20 +60,20 @@ public class Conference extends Observable {
 	 *            the conference id
 	 * @param recordingNumber
 	 *            the recording number
-	 * @param state
-	 *            the state
+	 * @param context
+	 *            the context
 	 */
-	public Conference(String conferenceId, State state) {
+	public Conference(String conferenceId, Context context) {
 
-		meetMeRoom = state.getAsteriskServer().getMeetMeRoom(conferenceId);
-		this.state = state;
+		meetMeRoom = context.getAsteriskServer().getMeetMeRoom(conferenceId);
+		this.context = context;
 		this.conferenceUserMap = meetMeUsersToConferenceUserMap(meetMeRoom
 				.getUsers());
 		this.conferenceId = conferenceId;
 	}
 
 	public void init() {
-		state.getStartedConferences().put(conferenceId, this);
+		context.getStartedConferences().put(conferenceId, this);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class Conference extends Observable {
 	}
 
 	/**
-	 * Sets the conference user mute state.
+	 * Sets the conference user mute context.
 	 * 
 	 * @param userId
 	 *            the user id
@@ -151,12 +151,12 @@ public class Conference extends Observable {
 			MeetMeMuteAction muteAction = new MeetMeMuteAction(conferenceId,
 					conferenceUserMap.get(userId).getUserNumber());
 
-			state.getConnection().sendAction(muteAction);
+			context.getConnection().sendAction(muteAction);
 		} else {
 			MeetMeUnmuteAction unmuteAction = new MeetMeUnmuteAction(
 					conferenceId, conferenceUserMap.get(userId).getUserNumber());
 
-			state.getConnection().sendAction(unmuteAction);
+			context.getConnection().sendAction(unmuteAction);
 		}
 
 	}
@@ -172,7 +172,7 @@ public class Conference extends Observable {
 	public void requestHangup(String userId) throws Exception {
 		HangupAction hangupAction = new HangupAction(getMeetMeUser(userId)
 				.getChannel().getName());
-		state.getConnection().sendAction(hangupAction);
+		context.getConnection().sendAction(hangupAction);
 	}
 
 	/**
@@ -199,8 +199,8 @@ public class Conference extends Observable {
 	public String requestDialOut(String phoneNumber) throws Exception {
 		Map<String, String> dialOutLock = new HashMap<String, String>();
 		synchronized (dialOutLock) {
-			state.getDialOutLocks().put(phoneNumber, dialOutLock);
-			URL url = new URL(state.getAsteriskExtURL()
+			context.getDialOutLocks().put(phoneNumber, dialOutLock);
+			URL url = new URL(context.getAsteriskExtURL()
 					+ "?context=call&action=meetme-dialout&channel="
 					// TODO Channel hardcoded to SIP for now
 					+ URLEncoder.encode("SIP", "UTF-8") + "&number="
@@ -215,7 +215,7 @@ public class Conference extends Observable {
 				dialOutLock.wait();
 		}
 		String userId = dialOutLock.get("user-id");
-		state.getDialOutLocks().remove(phoneNumber);
+		context.getDialOutLocks().remove(phoneNumber);
 		return userId;
 	}
 
@@ -293,7 +293,7 @@ public class Conference extends Observable {
 	public void destroy() {
 		for (User user : conferenceUserMap.values())
 			user.destroy();
-		state.getStartedConferences().remove(conferenceId);
+		context.getStartedConferences().remove(conferenceId);
 	}
 
 	/**
@@ -306,12 +306,12 @@ public class Conference extends Observable {
 	}
 
 	/**
-	 * Gets the state.
+	 * Gets the context.
 	 * 
-	 * @return the state
+	 * @return the context
 	 */
-	public State getState() {
-		return state;
+	public Context getState() {
+		return context;
 	}
 
 	/**
@@ -338,12 +338,12 @@ public class Conference extends Observable {
 	 * @return the recording path
 	 */
 	public String getRecordingPath() {
-		return state.getTempRecDir() + File.separator + recordingName;
+		return context.getTempRecDir() + File.separator + recordingName;
 	}
 
 	// public static void main(String[] args) throws Exception{
-	// State state = new State();
-	// Conference conference = new Conference("6300",state);
+	// Context context = new Context();
+	// Conference conference = new Conference("6300",context);
 	// conference.getUsersFromServer();
 	// }
 }

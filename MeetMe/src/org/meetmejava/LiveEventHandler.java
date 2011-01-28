@@ -29,25 +29,25 @@ public class LiveEventHandler implements AsteriskServerListener,
 	private final static Logger logger = Logger
 			.getLogger(LiveEventHandler.class.getName());
 
-	/** The state. */
-	private final State state;
+	/** The context. */
+	private final Context context;
 
 	/**
 	 * Instantiates a new live event handler.
 	 *
-	 * @param state the state
+	 * @param context the context
 	 */
-	public LiveEventHandler(State state) {
-		this.state = state;
+	public LiveEventHandler(Context context) {
+		this.context = context;
 	}
 
 	/**
 	 * Inits the.
 	 */
 	public void init() {
-		AsteriskServer asteriskServer = state.getAsteriskServer();
+		AsteriskServer asteriskServer = context.getAsteriskServer();
 		asteriskServer.addAsteriskServerListener(this);
-		state.getConnection().addManagerEventListener(this);
+		context.getConnection().addManagerEventListener(this);
 
 		for (AsteriskChannel asteriskChannel : asteriskServer.getChannels()) {
 			logger.fine(asteriskChannel.toString());
@@ -74,9 +74,9 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 * Destroy.
 	 */
 	public void destroy() {
-		AsteriskServer asteriskServer = state.getAsteriskServer();
+		AsteriskServer asteriskServer = context.getAsteriskServer();
 		asteriskServer.removeAsteriskServerListener(this);
-		state.getConnection().removeManagerEventListener(this);
+		context.getConnection().removeManagerEventListener(this);
 
 		for (AsteriskChannel asteriskChannel : asteriskServer.getChannels()) {
 			logger.fine(asteriskChannel.toString());
@@ -119,7 +119,7 @@ public class LiveEventHandler implements AsteriskServerListener,
 		String id = channel.getId();
 		String phoneNumber = AsteriskUtils.getPhoneNumberFromChannel(channel
 				.getName());
-		Map<String, String> dialOutLock = state.getDialOutLocks().get(
+		Map<String, String> dialOutLock = context.getDialOutLocks().get(
 				phoneNumber);
 		if (dialOutLock != null) {
 			synchronized (dialOutLock) {
@@ -137,7 +137,7 @@ public class LiveEventHandler implements AsteriskServerListener,
 	public void onNewMeetMeUser(MeetMeUser user) {
 		logger.fine(user.toString());
 		try {
-			Conference conference = state.getStartedConferences().get(
+			Conference conference = context.getStartedConferences().get(
 					user.getRoom().getRoomNumber());
 			conference.handleAddConferenceUser(user, AsteriskUtils
 					.getUserPhoneNumber(user));
@@ -171,7 +171,7 @@ public class LiveEventHandler implements AsteriskServerListener,
 		logger.fine("Received manager event: " + managerEvent);
 		if (managerEvent instanceof MeetMeEndEvent) {
 			MeetMeEndEvent endEvent = (MeetMeEndEvent) managerEvent;
-			Conference conference = state.getStartedConferences().get(
+			Conference conference = context.getStartedConferences().get(
 					endEvent.getMeetMe());
 			if (conference != null)
 				conference.handleEndConference();
