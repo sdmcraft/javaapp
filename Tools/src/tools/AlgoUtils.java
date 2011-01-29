@@ -383,58 +383,29 @@ public class AlgoUtils {
 		return stackStore[max].toArray();
 	}
 
-	static int steps = 0;
-	static int steps2 = 0;
+	static int work = 0;
 
 	/*
 	 * KS(w[1..n],v[1..n],C) =
 	 * Max(KS(w[2..n],v[2..n],C),KS(w[1..n],v[1..n],C-w[1]) + v[1])
 	 */
-	public static int knapsack(int[][] input, int index, int capacity,
-			Map<String, Integer> knapsackStore) {
+	public static String[] knapsack(int[][] input, int index, int capacity) {
 
-		if (!knapsackStore.containsKey(index + "," + capacity)) {
-			steps++;
-			if (capacity <= 0 || index >= input.length) {
-				knapsackStore.put(index + "," + capacity, 0);
-			} else {
-				knapsackStore.put(index + "," + capacity, Math.max(knapsack(
-						input, index + 1, capacity, knapsackStore), knapsack(
-						input, index + 1, capacity - input[index][0],
-						knapsackStore)
-						+ input[index][1]));
-			}
-		}
-		return knapsackStore.get(index + "," + capacity);
-	}
-
-	public static int knapsack(int[][] input, int index, int capacity) {
-		steps2++;
-		if (capacity <= 0 || index >= input.length) {
-			return 0;
-		} else {
-			return Math.max(knapsack(input, index + 1, capacity), knapsack(
-					input, index + 1, capacity - input[index][0])
-					+ input[index][1]);
-		}
-	}
-
-	public static String[] knapsack2(int[][] input, int index, int capacity) {
-
+		work++;
 		String contents = "";
 		int value;
 		if (capacity <= 0 || index >= input.length) {
 			return new String[] { "0", "" };
 		} else {
 
-			String[] leave = knapsack2(input, index + 1, capacity);
+			String[] leave = knapsack(input, index + 1, capacity);
 			int valueOnLeave = Integer.parseInt(leave[0]);
 
 			boolean canTake = capacity - input[index][0] >= 0;
 			String[] take = null;
 			int valueOnTake = 0;
 			if (canTake) {
-				take = knapsack2(input, index + 1, capacity - input[index][0]);
+				take = knapsack(input, index + 1, capacity - input[index][0]);
 				valueOnTake = Integer.parseInt(take[0]) + input[index][1];
 				value = valueOnLeave > valueOnTake ? valueOnLeave : valueOnTake;
 				if (valueOnLeave > valueOnTake) {
@@ -448,6 +419,51 @@ public class AlgoUtils {
 			}
 		}
 		return new String[] { value + "", contents };
+	}
+
+	/*
+	 * KS(w[1..n],v[1..n],C) =
+	 * Max(KS(w[2..n],v[2..n],C),KS(w[1..n],v[1..n],C-w[1]) + v[1]) Uses the
+	 * already calculated results by memoing them in knapsackStore
+	 */
+	public static String[] knapsack(int[][] input, int index, int capacity,
+			String[][][] knapsackStore) {
+		if (knapsackStore[index][capacity] == null) {
+			work++;
+			String contents = "";
+			int value;
+			if (capacity <= 0 || index >= input.length) {
+				knapsackStore[index][capacity] = new String[] { "0", "" };
+			} else {
+				/* Descision of leaving index item */
+				String[] leave = knapsack(input, index + 1, capacity,
+						knapsackStore);
+				int valueOnLeave = Integer.parseInt(leave[0]);
+
+				/* Descision of taking index item if possible */
+				boolean canTake = capacity - input[index][0] >= 0;
+				String[] take = null;
+				int valueOnTake = 0;
+				if (canTake) {
+					take = knapsack(input, index + 1, capacity
+							- input[index][0], knapsackStore);
+					valueOnTake = Integer.parseInt(take[0]) + input[index][1];
+					value = valueOnLeave > valueOnTake ? valueOnLeave
+							: valueOnTake;
+					if (valueOnLeave > valueOnTake) {
+						contents = leave[1];
+					} else
+						contents = input[index][1] + "," + take[1];
+
+				} else {
+					contents = leave[1];
+					value = valueOnLeave;
+				}
+				knapsackStore[index][capacity] = new String[] { value + "",
+						contents };
+			}
+		}
+		return knapsackStore[index][capacity];
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -520,17 +536,18 @@ public class AlgoUtils {
 		// System.out.println(s);;
 
 		int[][] input = new int[][] { { 0, 0 }, { 5, 10 }, { 7, 2 }, { 2, 6 },
-				{ 4, 7 }, { 1, 3 }, { 6, 1 }, { 12, 50 }, { 5, 60 } };
-		System.out.println(knapsack(input, 0, 12));
-		System.out.println("Steps:" + steps2);
+				{ 4, 7 }, { 1, 3 }, { 6, 1 }, { 8, 5 }, { 9, 11 }, { 1, 5 },
+				{ 4, 7 }, { 7, 8 } };
 
-		System.out.println(knapsack(input, 0, 12,
-				new HashMap<String, Integer>()));
-		System.out.println("Steps:" + steps);
-
-		String[] str = knapsack2(input, 0, 12);
+		String[] str = knapsack(input, 0, 12);
 		System.out.println(str[0]);
 		System.out.println(str[1]);
+		System.out.println("Work:" + work);
 
+		work = 0;
+		str = knapsack(input, 0, 12, new String[input.length + 1][13][]);
+		System.out.println(str[0]);
+		System.out.println(str[1]);
+		System.out.println("Work:" + work);
 	}
 }
