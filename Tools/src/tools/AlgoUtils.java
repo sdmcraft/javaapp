@@ -466,6 +466,12 @@ public class AlgoUtils {
 		return knapsackStore[index][capacity];
 	}
 
+	/*
+	 * LCS(A[1..m],B[1..n]) = ifA[m] == B[n] LCS(A[1..m-1],B[1..n-1]) + 1 else
+	 * Max(LCS(A[1..m-1],B[1..n]),LCS(A[1..m],B[1..n-1]))
+	 * 
+	 * LCS(A[k],B[l]) = A[k] or B[l] if A[k] == B[l] or = "" if A[k] != B[l]
+	 */
 	public static void main(String[] args) throws Exception {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
 		// 0));
