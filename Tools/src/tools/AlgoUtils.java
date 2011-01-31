@@ -1,5 +1,6 @@
 package tools;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -467,11 +468,72 @@ public class AlgoUtils {
 	}
 
 	/*
-	 * LCS(A[1..m],B[1..n]) = ifA[m] == B[n] LCS(A[1..m-1],B[1..n-1]) + 1 else
-	 * Max(LCS(A[1..m-1],B[1..n]),LCS(A[1..m],B[1..n-1]))
+	 * LCS(A[1..m],B[1..n]) = ifA[m] == B[n] LCS(A[1..m-1],B[1..n-1]) + A[m]
+	 * else Max(LCS(A[1..m-1],B[1..n]),LCS(A[1..m],B[1..n-1]))
 	 * 
-	 * LCS(A[k],B[l]) = A[k] or B[l] if A[k] == B[l] or = "" if A[k] != B[l]
+	 * LCS(A[k],B[l..m]) = A[k] if B[l..m] contains A[k] else = null
 	 */
+	public static List<Integer> longestCommonSubSequence(int[] input1,
+			int[] input2, int index1, int index2) {
+		work++;
+		List<Integer> result = new ArrayList<Integer>();
+		if (index1 == 0) {
+			for (int i = 0; i <= index2; i++)
+				if (input2[i] == input1[index1])
+					result.add(input1[index1]);
+		} else if (index2 == 0) {
+			for (int i = 0; i <= index2; i++)
+				if (input1[i] == input2[index2])
+					result.add(input2[index2]);
+		} else if (input1[index1] == input2[index2]) {
+			result = longestCommonSubSequence(input1, input2, index1 - 1,
+					index2 - 1);
+			result.add(input1[index1]);
+		} else {
+			List<Integer> result1 = longestCommonSubSequence(input1, input2,
+					index1 - 1, index2);
+			List<Integer> result2 = longestCommonSubSequence(input1, input2,
+					index1, index2 - 1);
+			if (result1.size() > result2.size())
+				result = result1;
+			else
+				result = result2;
+		}
+		return result;
+	}
+
+	public static List<Integer> longestCommonSubSequence(int[] input1,
+			int[] input2, int index1, int index2, List<Integer>[][] store) {
+		if (store[index1][index2] == null) {
+			work++;
+			List<Integer> result = new ArrayList<Integer>();
+			if (index1 == 0) {
+				for (int i = 0; i <= index2; i++)
+					if (input2[i] == input1[index1])
+						result.add(input1[index1]);
+			} else if (index2 == 0) {
+				for (int i = 0; i <= index2; i++)
+					if (input1[i] == input2[index2])
+						result.add(input2[index2]);
+			} else if (input1[index1] == input2[index2]) {
+				result = longestCommonSubSequence(input1, input2, index1 - 1,
+						index2 - 1, store);
+				result.add(input1[index1]);
+			} else {
+				List<Integer> result1 = longestCommonSubSequence(input1,
+						input2, index1 - 1, index2, store);
+				List<Integer> result2 = longestCommonSubSequence(input1,
+						input2, index1, index2 - 1, store);
+				if (result1.size() > result2.size())
+					result = result1;
+				else
+					result = result2;
+			}
+			store[index1][index2] = result;
+		}
+		return store[index1][index2];
+	}
+
 	public static void main(String[] args) throws Exception {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
 		// 0));
@@ -519,10 +581,20 @@ public class AlgoUtils {
 		// int[] arr3 = merge(arr1,arr2);
 		// for(int i : arr3)
 		// System.out.println(i);
-		// int[] input1 = new int[] { 1, 2, 100, 4, 75, 5, 6, 7, 101, 102, 103,
-		// 104, 8, 9, 10, 11, 12, 13, 14, 15 };
-		// int[] input2 = new int[] { 6, 3, 8, 5, 3, 4, 9, -5, 10, -2, -2, -2,
-		// -2,
+		int[] input1 = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 };
+		int[] input2 = new int[] { 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36 };
+		List<Integer>[][] store = new List[input1.length][input2.length];
+		work = 0;
+		List<Integer> result = longestCommonSubSequence(input1, input2,
+				input1.length - 1, input2.length - 1, store);
+		System.out.println(result);
+		System.out.println("Work:" + work);
+
+		work = 0;
+		result = longestCommonSubSequence(input1, input2, input1.length - 1,
+				input2.length - 1);
+		System.out.println(result);
+		System.out.println("Work:" + work);
 		// 0, 0, 0, 0, 0, 0, 10000, 10000 };
 		//
 		// countingSort(input1);
@@ -541,19 +613,20 @@ public class AlgoUtils {
 		// for (String s : longestIncSubseq(input1))
 		// System.out.println(s);;
 
-		int[][] input = new int[][] { { 0, 0 }, { 5, 10 }, { 7, 2 }, { 2, 6 },
-				{ 4, 7 }, { 1, 3 }, { 6, 1 }, { 8, 5 }, { 9, 11 }, { 1, 5 },
-				{ 4, 7 }, { 7, 8 } };
-
-		String[] str = knapsack(input, 0, 12);
-		System.out.println(str[0]);
-		System.out.println(str[1]);
-		System.out.println("Work:" + work);
-
-		work = 0;
-		str = knapsack(input, 0, 12, new String[input.length + 1][13][]);
-		System.out.println(str[0]);
-		System.out.println(str[1]);
-		System.out.println("Work:" + work);
+		// int[][] input = new int[][] { { 0, 0 }, { 5, 10 }, { 7, 2 }, { 2, 6
+		// },
+		// { 4, 7 }, { 1, 3 }, { 6, 1 }, { 8, 5 }, { 9, 11 }, { 1, 5 },
+		// { 4, 7 }, { 7, 8 } };
+		//
+		// String[] str = knapsack(input, 0, 12);
+		// System.out.println(str[0]);
+		// System.out.println(str[1]);
+		// System.out.println("Work:" + work);
+		//
+		// work = 0;
+		// str = knapsack(input, 0, 12, new String[input.length + 1][13][]);
+		// System.out.println(str[0]);
+		// System.out.println(str[1]);
+		// System.out.println("Work:" + work);
 	}
 }
