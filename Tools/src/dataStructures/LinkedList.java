@@ -12,6 +12,13 @@ public class LinkedList implements Cloneable {
 		this.next = stringToLinkedList(string, 1);
 	}
 
+	public LinkedList(String[] strings, int index) {
+		if (index >= strings.length)
+			return;
+		this.value = strings[index];
+		this.next = new LinkedList(strings, index + 1);
+	}
+
 	public boolean hasNext() {
 		return next != null;
 	}
