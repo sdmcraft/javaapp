@@ -1,5 +1,4 @@
 package algorithms;
-import algorithms.StackImpl;
 
 public class ExpressionEvaluator {
     

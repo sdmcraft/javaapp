@@ -1,10 +1,10 @@
 package algorithms.test;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
 import algorithms.DequeueAsStack;
-import algorithms.StackImpl;
-import junit.framework.TestCase;
 
 public class DequeueAsStackTest extends TestCase {
 	@Test

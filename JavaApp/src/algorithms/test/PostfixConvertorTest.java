@@ -5,9 +5,10 @@
 package algorithms.test;
 
 import junit.framework.TestCase;
-import algorithms.PostfixConvertor;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import algorithms.PostfixConvertor;
 
 /**
  *

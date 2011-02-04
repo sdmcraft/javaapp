@@ -1,10 +1,10 @@
 package algorithms.test;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
 import algorithms.LinkedListNode;
-
-import junit.framework.TestCase;
 
 public class LinkedListNodeTest extends TestCase {
 	@Test

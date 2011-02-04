@@ -4,8 +4,8 @@
  */
 package algorithms.test;
 
-import algorithms.SortedArray;
 import junit.framework.TestCase;
+import algorithms.SortedArray;
 
 /**
  *

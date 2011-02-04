@@ -5,15 +5,15 @@
 package algorithms.test;
 
 import junit.framework.TestCase;
-import algorithms.ArrayQueue;
-import algorithms.BusinessException;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import algorithms.ArrayQueue;
+import algorithms.BusinessException;
 
 /**
  * 
