@@ -16,7 +16,8 @@ public class LinkedList implements Cloneable {
 		if (index >= strings.length)
 			return;
 		this.value = strings[index];
-		this.next = new LinkedList(strings, index + 1);
+		if (index < strings.length - 1)
+			this.next = new LinkedList(strings, index + 1);
 	}
 
 	public boolean hasNext() {
@@ -39,7 +40,7 @@ public class LinkedList implements Cloneable {
 
 	private static String toString(LinkedList linkedList) {
 		if (linkedList == null) {
-			return null;
+			return "null";
 		} else {
 			return linkedList.value + "-->" + toString(linkedList.next);
 		}

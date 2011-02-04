@@ -1,6 +1,11 @@
 package demo;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -41,45 +46,17 @@ public class Main {
 
 	/**
 	 * @param args
+	 * @throws IOException
 	 */
-	public static void main(String[] args) {
-		try {
-			String sURL = "https://admin.acrobat.com/";
-			URL url = new URL(sURL);
-			URLConnection httpConn = url.openConnection();
-			httpConn.setDoInput(true);
-			httpConn.connect();
-			InputStream in = httpConn.getInputStream();
-			BufferedInputStream bufIn = new BufferedInputStream(in);
-			int nbytes;
-			do {
-				// Echo the response on the Java Console.
-				// This is crude, and just for demo purposes.
-				byte buf[] = new byte[8192];
-				nbytes = bufIn.read(buf, 0, 8192);
-				System.out.println(new String(buf, "US-ASCII"));
-			} while (nbytes > 0);
-
-			sURL = "https://www.google.com/accounts/ServiceLogin";
-			url = new URL(sURL);
-			httpConn = url.openConnection();
-			httpConn.setDoInput(true);
-			httpConn.connect();
-			in = httpConn.getInputStream();
-			bufIn = new BufferedInputStream(in);
-
-			do {
-				// Echo the response on the Java Console.
-				// This is crude, and just for demo purposes.
-				byte buf[] = new byte[8192];
-				nbytes = bufIn.read(buf, 0, 8192);
-				System.out.println(new String(buf, "US-ASCII"));
-			} while (nbytes > 0);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+	public static void main(String[] args) throws IOException {
+		FileOutputStream fos = new FileOutputStream("c:\\temp\\temp.txt");
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
+		DataOutputStream dos = new DataOutputStream(bos);
+		dos.writeUTF("Hello world");
+		
+		
+		dos.close();
+		bos.close();
+		fos.close();
 	}
-
 }

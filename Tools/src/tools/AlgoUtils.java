@@ -543,27 +543,24 @@ public class AlgoUtils {
 			else if (Integer.parseInt(current.getValue()) < 0
 					&& minusStart == null)
 				minusStart = current;
+			current = current.getNext();
 		}
 
 		LinkedList plusCurrent = plusStart;
-		current = plusStart;
+		LinkedList minusCurrent = minusStart;
+		current = input;
+
 		while (current.getNext() != null) {
 			if (Integer.parseInt(current.getNext().getValue()) >= 0) {
 				plusCurrent.setNext(current.getNext());
 				plusCurrent = current.getNext();
-			}
-			current = current.getNext();
-		}
-
-		LinkedList minusCurrent = minusStart;
-		current = minusStart;
-		while (current.getNext() != null) {
-			if (Integer.parseInt(current.getNext().getValue()) < 0) {
+			} else if (Integer.parseInt(current.getNext().getValue()) < 0) {
 				minusCurrent.setNext(current.getNext());
 				minusCurrent = current.getNext();
 			}
 			current = current.getNext();
 		}
+
 		minusCurrent.setNext(plusStart);
 	}
 
@@ -666,7 +663,7 @@ public class AlgoUtils {
 		String[] input = { "2", "-1", "3", "9", "-5", "0" };
 		LinkedList list = new LinkedList(input, 0);
 		System.out.println(list);
-		// segregatePlusMinus(list);
-		// System.out.println(list);
+		segregatePlusMinus(list);
+		System.out.println(list);
 	}
 }
