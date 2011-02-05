@@ -1,21 +1,19 @@
 package org.meetmejava.event;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Enum EventType.
+ * Denotes the type of the event. The type of the event is governed by the cause
+ * of the event.
  */
 public enum EventType {
-	
-	/** The USE r_ joined. */
-	USER_JOINED, 
- /** The CONFERENC e_ ended. */
- CONFERENCE_ENDED, 
- /** The RECORDING. */
- RECORDING, 
- /** The MUTE. */
- MUTE, 
- /** The TALKER. */
- TALKER, 
- /** The USE r_ left. */
- USER_LEFT
+
+	/** A new user joined */
+	USER_JOINED,
+	/** The conference ended */
+	CONFERENCE_ENDED,
+	/** The user was muted */
+	MUTE,
+	/** The user is talking */
+	TALKER,
+	/** The user left. */
+	USER_LEFT
 }

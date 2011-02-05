@@ -18,9 +18,8 @@ import org.asteriskjava.manager.action.MeetMeUnmuteAction;
 import org.meetmejava.event.Event;
 import org.meetmejava.event.EventType;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Conference.
+ * Conference represents a MeetMe conference on the Asterisk server
  */
 public class Conference extends Observable {
 
@@ -42,7 +41,7 @@ public class Conference extends Observable {
 	private final Context context;
 
 	/** The conference id. */
-	private final String conferenceId;
+	private final String conferenceNumber;
 
 	/** The recording. */
 	private boolean recording;
@@ -51,29 +50,49 @@ public class Conference extends Observable {
 	private final static Logger logger = Logger.getLogger(Conference.class
 			.getName());
 
-	// private final String conferenceId;
+	// private final String conferenceNumber;
 
 	/**
-	 * Instantiates a new conference.
+	 * Represents a MeetMe conference.
 	 * 
-	 * @param conferenceId
-	 *            the conference id
-	 * @param recordingNumber
-	 *            the recording number
+	 * @param conferenceNumber
+	 *            the number to be dialled in order to join the conference
 	 * @param context
-	 *            the context
+	 *            the context for interaction between MeetMe-java and the
+	 *            Asterisk server
 	 */
-	public Conference(String conferenceId, Context context) {
+	private Conference(String conferenceNumber, Context context) {
 
-		meetMeRoom = context.getAsteriskServer().getMeetMeRoom(conferenceId);
+		meetMeRoom = context.getAsteriskServer()
+				.getMeetMeRoom(conferenceNumber);
 		this.context = context;
 		this.conferenceUserMap = meetMeUsersToConferenceUserMap(meetMeRoom
 				.getUsers());
-		this.conferenceId = conferenceId;
+		this.conferenceNumber = conferenceNumber;
 	}
 
-	public void init() {
-		context.getStartedConferences().put(conferenceId, this);
+	/**
+	 * Initializes the audio conference. This is necessary in order to receive
+	 * events for this conference.
+	 */
+	private void init() {
+		context.getStartedConferences().put(conferenceNumber, this);
+	}
+
+	/**
+	 * Creates a new instance of MeetMe conference.
+	 * 
+	 * @param conferenceNumber
+	 *            the number to be dialled in order to join the conference
+	 * @param context
+	 *            the context for interaction between MeetMe-java and the
+	 *            Asterisk server
+	 */
+	public static Conference getInstance(String conferenceNumber,
+			Context context) {
+		Conference conference = new Conference(conferenceNumber, context);
+		conference.init();
+		return conference;
 	}
 
 	/**
@@ -148,13 +167,15 @@ public class Conference extends Observable {
 	public void setConferenceUserMuteState(String userId, boolean mute)
 			throws Exception {
 		if (mute) {
-			MeetMeMuteAction muteAction = new MeetMeMuteAction(conferenceId,
+			MeetMeMuteAction muteAction = new MeetMeMuteAction(
+					conferenceNumber,
 					conferenceUserMap.get(userId).getUserNumber());
 
 			context.getConnection().sendAction(muteAction);
 		} else {
 			MeetMeUnmuteAction unmuteAction = new MeetMeUnmuteAction(
-					conferenceId, conferenceUserMap.get(userId).getUserNumber());
+					conferenceNumber, conferenceUserMap.get(userId)
+							.getUserNumber());
 
 			context.getConnection().sendAction(unmuteAction);
 		}
@@ -205,7 +226,7 @@ public class Conference extends Observable {
 					// TODO Channel hardcoded to SIP for now
 					+ URLEncoder.encode("SIP", "UTF-8") + "&number="
 					+ URLEncoder.encode(phoneNumber, "UTF-8") + "&room="
-					+ URLEncoder.encode(conferenceId, "UTF-8"));
+					+ URLEncoder.encode(conferenceNumber, "UTF-8"));
 			URLConnection httpConn = url.openConnection();
 			httpConn.connect();
 			httpConn.getInputStream();
@@ -288,12 +309,12 @@ public class Conference extends Observable {
 	}
 
 	/**
-	 * Destroy.
+	 * Destroys this conference instance
 	 */
 	public void destroy() {
 		for (User user : conferenceUserMap.values())
 			user.destroy();
-		context.getStartedConferences().remove(conferenceId);
+		context.getStartedConferences().remove(conferenceNumber);
 	}
 
 	/**
@@ -328,22 +349,8 @@ public class Conference extends Observable {
 	 * 
 	 * @return the conference id
 	 */
-	public String getConferenceId() {
-		return conferenceId;
+	public String getconferenceNumber() {
+		return conferenceNumber;
 	}
 
-	/**
-	 * Gets the recording path.
-	 * 
-	 * @return the recording path
-	 */
-	public String getRecordingPath() {
-		return context.getTempRecDir() + File.separator + recordingName;
-	}
-
-	// public static void main(String[] args) throws Exception{
-	// Context context = new Context();
-	// Conference conference = new Conference("6300",context);
-	// conference.getUsersFromServer();
-	// }
 }

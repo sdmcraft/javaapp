@@ -13,7 +13,7 @@ import org.meetmejava.Conference;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Context represents provides a context for interaction between
- * MeetMe-java and the Asterisk server
+ * MeetMe-java and the Asterisk server.
  */
 public class Context {
 
@@ -43,16 +43,25 @@ public class Context {
 
 	/**
 	 * Instantiates a new context.
-	 *
-	 * @param asteriskIp The ip address of the Asterisk server
-	 * @param asteriskAdmin The admin user on Asterisk who can access Asterisk Manage Interface
-	 * @param asteriskPassword The password of the admin user
-	 * @throws IllegalStateException the illegal state exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws AuthenticationFailedException the authentication failed exception
-	 * @throws TimeoutException the timeout exception
+	 * 
+	 * @param asteriskIp
+	 *            The ip address of the Asterisk server
+	 * @param asteriskAdmin
+	 *            The admin user on Asterisk who can access Asterisk Manager
+	 *            Interface
+	 * @param asteriskPassword
+	 *            The password of the admin user
+	 * @throws IllegalStateException
+	 *             the illegal state exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException
+	 *             the authentication failed exception
+	 * @throws TimeoutException
+	 *             the timeout exception
 	 */
-	public Context(String asteriskIp,String asteriskAdmin,String asteriskPassword) throws IllegalStateException,
+	private Context(String asteriskIp, String asteriskAdmin,
+			String asteriskPassword) throws IllegalStateException,
 			IOException, AuthenticationFailedException, TimeoutException {
 		this.asteriskIp = asteriskIp;
 		this.asteriskAdmin = asteriskAdmin;
@@ -66,15 +75,44 @@ public class Context {
 	}
 
 	/**
-	 * Inits the.
+	 * Initializes the context to start receiving events from the Asterisk
+	 * server.
 	 */
-	public void init() {
+	private void init() {
 		liveEventHandler = new LiveEventHandler(this);
 		liveEventHandler.init();
 	}
 
 	/**
-	 * Destroy.
+	 * Gets a new instance of a context.
+	 * 
+	 * @param asteriskIp
+	 *            The ip address of the Asterisk server
+	 * @param asteriskAdmin
+	 *            The admin user on Asterisk who can access Asterisk Manager
+	 *            Interface
+	 * @param asteriskPassword
+	 *            The password of the admin user
+	 * @throws IllegalStateException
+	 *             the illegal state exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException
+	 *             the authentication failed exception
+	 * @throws TimeoutException
+	 *             the timeout exception
+	 */
+	public static Context getInstance(String asteriskIp, String asteriskAdmin,
+			String asteriskPassword) throws IllegalStateException, IOException,
+			AuthenticationFailedException, TimeoutException {
+		Context context = new Context(asteriskIp, asteriskAdmin,
+				asteriskPassword);
+		context.init();
+		return context;
+	}
+
+	/**
+	 * Destroys this context
 	 */
 	public void destroy() {
 		liveEventHandler.destroy();
@@ -133,15 +171,6 @@ public class Context {
 	 */
 	Map<String, Conference> getStartedConferences() {
 		return startedConferences;
-	}
-
-	/**
-	 * Gets the asterisk ext url.
-	 * 
-	 * @return the asterisk ext url
-	 */
-	String getAsteriskExtURL() {
-		return asteriskExtURL;
 	}
 
 	/**

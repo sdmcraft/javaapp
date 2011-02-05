@@ -21,15 +21,10 @@ public class Connection {
 
 	/**
 	 * Instantiates a new connection.
-	 * 
-	 * @param address
-	 *            the address
-	 * @param uname
-	 *            the uname
-	 * @param pwd
-	 *            the pwd
-	 * @throws Exception
-	 *             the exception
+	 *
+	 * @param address the address
+	 * @param uname the uname
+	 * @param pwd the pwd
 	 */
 	public Connection(String address, String uname, String pwd) {
 		ManagerConnectionFactory factory = new ManagerConnectionFactory(
@@ -41,14 +36,11 @@ public class Connection {
 
 	/**
 	 * Connect.
-	 * 
-	 * @throws TimeoutException
-	 * @throws AuthenticationFailedException
-	 * @throws IOException
-	 * @throws IllegalStateException
-	 * 
-	 * @throws Exception
-	 *             the exception
+	 *
+	 * @throws IllegalStateException the illegal state exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException the authentication failed exception
+	 * @throws TimeoutException the timeout exception
 	 */
 	public void connect() throws IllegalStateException, IOException,
 			AuthenticationFailedException, TimeoutException {

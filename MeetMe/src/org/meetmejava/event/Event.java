@@ -2,20 +2,22 @@ package org.meetmejava.event;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Event.
+ * Represents a MeetMe event. MeetMe events are dipatched as a result of a
+ * change in the conferencing state for e.g. on somebody joining/leaving a
+ * conference. @see org.meetmejava.event
  */
 public class Event {
-	
-	/** The type. */
+
 	private final EventType type;
-	
+
 	/** The data. */
 	private final Object data;
 
 	/**
 	 * Instantiates a new event.
-	 *
-	 * @param type the type
+	 * 
+	 * @param type
+	 *            the type
 	 */
 	public Event(EventType type) {
 		this.type = type;
@@ -24,9 +26,11 @@ public class Event {
 
 	/**
 	 * Instantiates a new event.
-	 *
-	 * @param type the type
-	 * @param data the data
+	 * 
+	 * @param type
+	 *            the type
+	 * @param data
+	 *            the data
 	 */
 	public Event(EventType type, Object data) {
 		this.type = type;
@@ -34,18 +38,19 @@ public class Event {
 	}
 
 	/**
-	 * Gets the type.
-	 *
-	 * @return the type
+	 * Gets the event type.The type of the event tells the cause of this event.
+	 * 
+	 * @return the event type indicating the event cause
 	 */
 	public EventType getType() {
 		return type;
 	}
 
 	/**
-	 * Gets the data.
-	 *
-	 * @return the data
+	 * Gets the data associated with this event. This method is only relevant
+	 * for USER_JOINED event wherein it gets the user who just joined.
+	 * 
+	 * @return the data associated with this event
 	 */
 	public Object getData() {
 		return data;
