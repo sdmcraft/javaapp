@@ -533,7 +533,8 @@ public class AlgoUtils {
 		return store[index1][index2];
 	}
 
-	public static void segregatePlusMinus(LinkedList input) throws Exception {
+	public static LinkedList segregatePlusMinus(LinkedList input)
+			throws Exception {
 		LinkedList plusStart = null;
 		LinkedList minusStart = null;
 		LinkedList current = input;
@@ -550,18 +551,24 @@ public class AlgoUtils {
 		LinkedList minusCurrent = minusStart;
 		current = input;
 
-		while (current.getNext() != null) {
-			if (Integer.parseInt(current.getNext().getValue()) >= 0) {
-				plusCurrent.setNext(current.getNext());
-				plusCurrent = current.getNext();
-			} else if (Integer.parseInt(current.getNext().getValue()) < 0) {
-				minusCurrent.setNext(current.getNext());
-				minusCurrent = current.getNext();
+		while (current != null) {
+			if (plusCurrent != current
+					&& Integer.parseInt(current.getValue()) >= 0) {
+				plusCurrent.setNext(current);
+				plusCurrent = plusCurrent.getNext();
+			} else if (minusCurrent != current
+					&& Integer.parseInt(current.getValue()) < 0) {
+				minusCurrent.setNext(current);
+				minusCurrent = minusCurrent.getNext();
 			}
 			current = current.getNext();
 		}
+		plusCurrent.setNext(null);
+		minusCurrent.setNext(null);
 
 		minusCurrent.setNext(plusStart);
+		current = minusStart;
+		return current;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -660,10 +667,9 @@ public class AlgoUtils {
 		// System.out.println(str[0]);
 		// System.out.println(str[1]);
 		// System.out.println("Work:" + work);
-		String[] input = { "2", "-1", "3", "9", "-5", "0" };
+		String[] input = { "2", "-1", "3", "9", "-5", "0","15","-7","-3","-3","31" };
 		LinkedList list = new LinkedList(input, 0);
 		System.out.println(list);
-		segregatePlusMinus(list);
-		System.out.println(list);
+		System.out.println(segregatePlusMinus(list));
 	}
 }
