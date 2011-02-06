@@ -9,8 +9,9 @@ import org.asteriskjava.live.MeetMeUser;
 import org.meetmejava.event.Event;
 import org.meetmejava.event.EventType;
 
+// TODO: Auto-generated Javadoc
 /**
- * User represents a participant in a MeetMe conference
+ * User represents a participant in a MeetMe conference.
  */
 public class User extends Observable implements PropertyChangeListener {
 

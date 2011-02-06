@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="../lib/asterisk-java-1.0.0.M3.jar:../lib" destdir="../doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.meetmejava.event" source="1.6" sourcefiles="../src/org/meetmejava/Conference.java,../src/org/meetmejava/package-info.java,../src/org/meetmejava/User.java,../src/org/meetmejava/Context.java" sourcepath="../src" splitindex="true" use="true" version="true">
+            <link href="file:/media/DATAPART1/sdm/EclipseProjects/MeetMe/doc/"/>
+            <link href="http://java.sun.com/javase/6/docs/api/"/>
+        </javadoc>
+    </target>
+</project>

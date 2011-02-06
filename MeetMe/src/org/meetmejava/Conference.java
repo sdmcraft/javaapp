@@ -18,8 +18,9 @@ import org.asteriskjava.manager.action.MeetMeUnmuteAction;
 import org.meetmejava.event.Event;
 import org.meetmejava.event.EventType;
 
+// TODO: Auto-generated Javadoc
 /**
- * Conference represents a MeetMe conference on the Asterisk server
+ * Conference represents a MeetMe conference on the Asterisk server.
  */
 public class Conference extends Observable {
 
@@ -81,12 +82,11 @@ public class Conference extends Observable {
 
 	/**
 	 * Creates a new instance of MeetMe conference.
-	 * 
-	 * @param conferenceNumber
-	 *            the number to be dialled in order to join the conference
-	 * @param context
-	 *            the context for interaction between MeetMe-java and the
-	 *            Asterisk server
+	 *
+	 * @param conferenceNumber the number to be dialled in order to join the conference
+	 * @param context the context for interaction between MeetMe-java and the
+	 * Asterisk server
+	 * @return single instance of Conference
 	 */
 	public static Conference getInstance(String conferenceNumber,
 			Context context) {
@@ -309,7 +309,7 @@ public class Conference extends Observable {
 	}
 
 	/**
-	 * Destroys this conference instance
+	 * Destroys this conference instance.
 	 */
 	public void destroy() {
 		for (User user : conferenceUserMap.values())

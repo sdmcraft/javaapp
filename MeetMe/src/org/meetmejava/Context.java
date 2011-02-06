@@ -12,8 +12,8 @@ import org.meetmejava.Conference;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Context represents provides a context for interaction between
- * MeetMe-java and the Asterisk server.
+ * The Class Context represents a context for interaction between MeetMe-java
+ * and the Asterisk server.
  */
 public class Context {
 
@@ -84,23 +84,17 @@ public class Context {
 	}
 
 	/**
-	 * Gets a new instance of a context.
-	 * 
-	 * @param asteriskIp
-	 *            The ip address of the Asterisk server
-	 * @param asteriskAdmin
-	 *            The admin user on Asterisk who can access Asterisk Manager
-	 *            Interface
-	 * @param asteriskPassword
-	 *            The password of the admin user
-	 * @throws IllegalStateException
-	 *             the illegal state exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws AuthenticationFailedException
-	 *             the authentication failed exception
-	 * @throws TimeoutException
-	 *             the timeout exception
+	 * Gets a new instance of Context.
+	 *
+	 * @param asteriskIp The ip address of the Asterisk server
+	 * @param asteriskAdmin The admin user on Asterisk who can access Asterisk Manager
+	 * Interface
+	 * @param asteriskPassword The password of the admin user
+	 * @return single instance of Context
+	 * @throws IllegalStateException the illegal state exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException the authentication failed exception
+	 * @throws TimeoutException the timeout exception
 	 */
 	public static Context getInstance(String asteriskIp, String asteriskAdmin,
 			String asteriskPassword) throws IllegalStateException, IOException,
@@ -112,7 +106,8 @@ public class Context {
 	}
 
 	/**
-	 * Destroys this context
+	 * Destroys this context.
+	 * The context is not usable after it has been destroyed.
 	 */
 	public void destroy() {
 		liveEventHandler.destroy();

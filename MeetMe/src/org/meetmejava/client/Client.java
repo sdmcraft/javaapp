@@ -17,9 +17,7 @@ import org.meetmejava.event.Event;
  */
 public class Client implements Observer {
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override
@@ -50,25 +48,16 @@ public class Client implements Observer {
 
 	/**
 	 * Demo.
-	 * 
-	 * @param ip
-	 *            the ip
-	 * @param admin
-	 *            the admin
-	 * @param pwd
-	 *            the pwd
-	 * @param confId
-	 *            the conf id
-	 * @throws IllegalStateException
-	 *             the illegal state exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws AuthenticationFailedException
-	 *             the authentication failed exception
-	 * @throws TimeoutException
-	 *             the timeout exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 *
+	 * @param ip the ip
+	 * @param admin the admin
+	 * @param pwd the pwd
+	 * @param conferenceNumber the conference number
+	 * @throws IllegalStateException the illegal state exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException the authentication failed exception
+	 * @throws TimeoutException the timeout exception
+	 * @throws InterruptedException the interrupted exception
 	 */
 	public void demo(String ip, String admin, String pwd,
 			String conferenceNumber)
@@ -86,19 +75,13 @@ public class Client implements Observer {
 
 	/**
 	 * The main method.
-	 * 
-	 * @param args
-	 *            the arguments
-	 * @throws IllegalStateException
-	 *             the illegal state exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws AuthenticationFailedException
-	 *             the authentication failed exception
-	 * @throws TimeoutException
-	 *             the timeout exception
-	 * @throws InterruptedException
-	 *             the interrupted exception
+	 *
+	 * @param args the arguments
+	 * @throws IllegalStateException the illegal state exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException the authentication failed exception
+	 * @throws TimeoutException the timeout exception
+	 * @throws InterruptedException the interrupted exception
 	 */
 	public static void main(String[] args) throws IllegalStateException,
 			IOException, AuthenticationFailedException, TimeoutException,

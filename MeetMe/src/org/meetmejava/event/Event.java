@@ -8,6 +8,7 @@ package org.meetmejava.event;
  */
 public class Event {
 
+	/** The type. */
 	private final EventType type;
 
 	/** The data. */
