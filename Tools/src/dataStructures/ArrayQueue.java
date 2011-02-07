@@ -277,7 +277,6 @@ public class ArrayQueue {
 			this.mode = mode;
 		}
 
-		@Override
 		public void run() {
 			try {
 				for (int i = 0; i < 100; i++) {
