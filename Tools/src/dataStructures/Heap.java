@@ -1,8 +1,16 @@
 package dataStructures;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class HeapNode {
 	String data;
 	int weight;
+
+	public HeapNode(String data, int weight) {
+		this.data = data;
+		this.weight = weight;
+	}
 }
 
 public class Heap {
@@ -132,6 +140,45 @@ public class Heap {
 		 * i=size-1;i>=0;i--) System.out.print(remove(arr,i)+" ");
 		 */
 
-		String[] wordList = new String[] { "apple" };
+		String text = "© 2010 Adobe Systems Incorporated. All rights reserved. "
+				+ "Adobe® Flash® Media Gateway SSAS Control Service API Reference for Windows®. "
+				+ "This API reference is licensed for use under the terms of the Creative Commons "
+				+ "Attribution Non-Commercial 3.0 License. This License allows users to copy, "
+				+ "distribute, and transmit the reference for noncommercial purposes only so long "
+				+ "as (1) proper attribution to Adobe is given as the owner of the reference; and "
+				+ "(2) any reuse or distribution of the reference contains a notice that use of the "
+				+ "reference is governed by these terms. The best way to provide notice is to include "
+				+ "the following link. To view a copy of this license, visit "
+				+ "http://creativecommons.org/licenses/by-nc-sa/3.0/. Adobe, the Adobe logo,"
+				+ " Actionscript, and Flash are either registered trademarks or trademarks of Adobe "
+				+ "Systems Incorporated in the United States and/or other countries. Intel is a "
+				+ "trademark of Intel Corporation in the U.S. and other countries. Microsoft and "
+				+ "Windows are either registered trademarks or trademarks of Microsoft Corporation "
+				+ "in the United States and/or other countries. All other trademarks are the property "
+				+ "of their respective owners. Adobe Systems Incorporated, 345 Park Avenue, San Jose, "
+				+ "California 95110, USA.";
+
+		String[] strings = text.split(" ");
+		List<HeapNode> list = new ArrayList<HeapNode>();
+		Heap heap = new Heap(strings.length);
+		for (int i = 0; i < strings.length; i++) {
+			//System.out.println();
+			int j;
+			for (j = 0; j < list.size(); j++) {
+				if (list.get(j).data.equals(strings[i])) {
+					list.get(j).weight++;
+					heap.trickleUp(j);
+					break;
+				}
+			}
+			/* The string was already handled by incrementing count */
+			if (j < list.size())
+				continue;
+			else {
+				heap.insert(new HeapNode(strings[i], 1));
+			}
+		}
+		System.out.println(heap.remove().data);
+
 	}
 }

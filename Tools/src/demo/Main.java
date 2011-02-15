@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -49,14 +50,14 @@ public class Main {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		FileOutputStream fos = new FileOutputStream("c:\\temp\\temp.txt");
-		BufferedOutputStream bos = new BufferedOutputStream(fos);
-		DataOutputStream dos = new DataOutputStream(bos);
-		dos.writeUTF("Hello world");
+		HashMap<String, Integer> myMap = new HashMap<String,Integer>();
+		HashMap<String, String> myMap2 = new HashMap<String,String>();
 		
-		
-		dos.close();
-		bos.close();
-		fos.close();
+		Integer i = new Integer(5);
+		Integer j = new Integer(5);
+		myMap2.put("a1", "aa");
+		myMap2.put("a2", "aa");
+		System.out.println(myMap.get("a1")==myMap.get("a2"));
+		System.out.println(myMap2.get("a1")==myMap2.get("a2"));
 	}
 }
