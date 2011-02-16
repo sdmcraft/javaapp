@@ -21,6 +21,7 @@ public class Heap {
 	/** Creates a new instance of Heap */
 	public Heap(int size) {
 		nodes = new HeapNode[size];
+		this.heapSize = 0;
 	}
 
 	public void insert(HeapNode item) {
@@ -33,7 +34,7 @@ public class Heap {
 	public void trickleUp(int index) {
 		int parentIndex = (index - 1) / 2;
 		HeapNode item = nodes[index];
-		while ((item.weight < nodes[parentIndex].weight) && (index > 0)) {
+		while ((item.weight > nodes[parentIndex].weight) && (index > 0)) {
 			nodes[index] = nodes[parentIndex];
 			index = parentIndex;
 			parentIndex = (index - 1) / 2;
@@ -44,6 +45,7 @@ public class Heap {
 	public HeapNode remove() {
 		HeapNode result = nodes[0];
 		nodes[0] = nodes[--heapSize];
+		nodes[heapSize] = null;
 		trickledown(0);
 		return result;
 	}
@@ -158,27 +160,46 @@ public class Heap {
 				+ "of their respective owners. Adobe Systems Incorporated, 345 Park Avenue, San Jose, "
 				+ "California 95110, USA.";
 
+		// String text = "a b c b d";
 		String[] strings = text.split(" ");
-		List<HeapNode> list = new ArrayList<HeapNode>();
 		Heap heap = new Heap(strings.length);
 		for (int i = 0; i < strings.length; i++) {
-			//System.out.println();
 			int j;
-			for (j = 0; j < list.size(); j++) {
-				if (list.get(j).data.equals(strings[i])) {
-					list.get(j).weight++;
-					heap.trickleUp(j);
+			boolean found = false;
+			for (j = 0; j < heap.getNodes().length; j++) {
+				HeapNode node = heap.getNodes()[j];
+				if (node != null) {
+					if (node.data.equals(strings[i])) {
+						found = true;
+						node.weight++;
+						heap.trickleUp(j);
+						break;
+					}
+				} else
 					break;
-				}
 			}
 			/* The string was already handled by incrementing count */
-			if (j < list.size())
+			if (found)
 				continue;
 			else {
 				heap.insert(new HeapNode(strings[i], 1));
 			}
 		}
-		System.out.println(heap.remove().data);
+		
+		for(HeapNode node : heap.getNodes())
+			System.out.println(node.data + "--->" + node.weight);
 
+//		while (heap.getHeapSize() > 0) {
+//			HeapNode node = heap.remove();
+//			System.out.println(node.data + "--->" + node.weight);
+//		}
+	}
+
+	public HeapNode[] getNodes() {
+		return nodes;
+	}
+
+	public int getHeapSize() {
+		return heapSize;
 	}
 }
