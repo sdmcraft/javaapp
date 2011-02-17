@@ -49,6 +49,8 @@ public class Tree {
 	}
 
 	private static void clearDiagram(Tree root) {
+		if (root == null)
+			return;
 		root.diagram = "digraph G {\n";
 		root.nodeID = null;
 		root.intCount = new HashMap<String, Integer>();
@@ -84,6 +86,8 @@ public class Tree {
 	}
 
 	private void preDiagram(Tree root) {
+		if (root == null)
+			return;
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
 				String value = child.getValue();

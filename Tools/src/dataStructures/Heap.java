@@ -1,8 +1,5 @@
 package dataStructures;
 
-import java.util.ArrayList;
-import java.util.List;
-
 class HeapNode {
 	String data;
 	int weight;
@@ -115,6 +112,24 @@ public class Heap {
 		return result;
 	}
 
+	public BinaryTree toBinaryTree() {
+		return toBinaryTree(0);
+	}
+
+	private BinaryTree toBinaryTree(int index) {
+		if (index < heapSize) {
+			HeapNode node = this.nodes[index];
+			BinaryTree binaryTree = new BinaryTree(node.data + "("
+					+ node.weight + ")");
+
+			binaryTree.setLeft(toBinaryTree(2 * index + 1));
+			binaryTree.setRight(toBinaryTree(2 * index + 2));
+			return binaryTree;
+
+		} else
+			return null;
+	}
+
 	public static void main(String[] args) {
 		// int size = (int) (Math.random() * 20);
 		// Heap heap = new Heap(size);
@@ -185,14 +200,17 @@ public class Heap {
 				heap.insert(new HeapNode(strings[i], 1));
 			}
 		}
-		
-		for(HeapNode node : heap.getNodes())
-			System.out.println(node.data + "--->" + node.weight);
 
-//		while (heap.getHeapSize() > 0) {
-//			HeapNode node = heap.remove();
-//			System.out.println(node.data + "--->" + node.weight);
-//		}
+		Tree tree = heap.toBinaryTree();
+		System.out.println(tree.getDiagram());
+
+		// for (HeapNode node : heap.getNodes())
+		// System.out.println(node.data + "--->" + node.weight);
+
+		// while (heap.getHeapSize() > 0) {
+		// HeapNode node = heap.remove();
+		// System.out.println(node.data + "--->" + node.weight);
+		// }
 	}
 
 	public HeapNode[] getNodes() {

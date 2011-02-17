@@ -16,6 +16,11 @@ public class BinaryTree extends Tree {
 		value = "1";
 	}
 
+	public BinaryTree(String value) {
+		super(value);
+		incrementNodeCount();
+	}
+
 	public BinaryTree(BinaryTree parent) {
 		this.parent = parent;
 		this.depth = parent.depth + 1;
@@ -124,6 +129,21 @@ public class BinaryTree extends Tree {
 
 	public boolean isBalanced() throws Exception {
 		return gapNoMoreThanOne();
+	}
+
+	public void setLeft(BinaryTree left) {
+		if (left == null)
+			return;
+		this.left = left;
+		children.add(0, left);
+	}
+
+	public void setRight(BinaryTree right) {
+		if (right == null)
+			return;
+
+		this.right = right;
+		children.add(1, right);
 	}
 
 }
