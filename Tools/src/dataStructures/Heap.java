@@ -53,8 +53,8 @@ public class Heap {
 		int rtChildIndex = 2 * index + 2;
 		while ((leftChildIndex < heapSize)
 				&& (rtChildIndex < heapSize)
-				&& ((item.weight > nodes[leftChildIndex].weight) || (item.weight > nodes[rtChildIndex].weight))) {
-			if (nodes[leftChildIndex].weight < nodes[rtChildIndex].weight) {
+				&& ((item.weight < nodes[leftChildIndex].weight) || (item.weight < nodes[rtChildIndex].weight))) {
+			if (nodes[leftChildIndex].weight > nodes[rtChildIndex].weight) {
 				nodes[index] = nodes[leftChildIndex];
 				index = leftChildIndex;
 			} else {
@@ -130,6 +130,11 @@ public class Heap {
 			return null;
 	}
 
+	public String getDiagram() throws Exception {
+		Tree tree = toBinaryTree();
+		return tree.getDiagram();
+	}
+
 	public static void main(String[] args) {
 		// int size = (int) (Math.random() * 20);
 		// Heap heap = new Heap(size);
@@ -157,25 +162,11 @@ public class Heap {
 		 * i=size-1;i>=0;i--) System.out.print(remove(arr,i)+" ");
 		 */
 
-		String text = "© 2010 Adobe Systems Incorporated. All rights reserved. "
-				+ "Adobe® Flash® Media Gateway SSAS Control Service API Reference for Windows®. "
-				+ "This API reference is licensed for use under the terms of the Creative Commons "
-				+ "Attribution Non-Commercial 3.0 License. This License allows users to copy, "
-				+ "distribute, and transmit the reference for noncommercial purposes only so long "
-				+ "as (1) proper attribution to Adobe is given as the owner of the reference; and "
-				+ "(2) any reuse or distribution of the reference contains a notice that use of the "
-				+ "reference is governed by these terms. The best way to provide notice is to include "
-				+ "the following link. To view a copy of this license, visit "
-				+ "http://creativecommons.org/licenses/by-nc-sa/3.0/. Adobe, the Adobe logo,"
-				+ " Actionscript, and Flash are either registered trademarks or trademarks of Adobe "
-				+ "Systems Incorporated in the United States and/or other countries. Intel is a "
-				+ "trademark of Intel Corporation in the U.S. and other countries. Microsoft and "
-				+ "Windows are either registered trademarks or trademarks of Microsoft Corporation "
-				+ "in the United States and/or other countries. All other trademarks are the property "
-				+ "of their respective owners. Adobe Systems Incorporated, 345 Park Avenue, San Jose, "
-				+ "California 95110, USA.";
-
-		// String text = "a b c b d";
+		String text = "In the testing environment we do not currently allow International dial out, "
+				+ "the fact it is dialing strikes me as odd as it shouldn't be doing that either. This is "
+				+ "something Jeff and I have been trying to get implemented before. We will try to push to get this "
+				+ "enabled for your testing. For the meantime though, you will have to do dial ins";
+		// String text = "a b c b d c c";
 		String[] strings = text.split(" ");
 		Heap heap = new Heap(strings.length);
 		for (int i = 0; i < strings.length; i++) {
@@ -201,16 +192,10 @@ public class Heap {
 			}
 		}
 
-		Tree tree = heap.toBinaryTree();
-		System.out.println(tree.getDiagram());
-
-		// for (HeapNode node : heap.getNodes())
-		// System.out.println(node.data + "--->" + node.weight);
-
-		// while (heap.getHeapSize() > 0) {
-		// HeapNode node = heap.remove();
-		// System.out.println(node.data + "--->" + node.weight);
-		// }
+		while (heap.getHeapSize() > 0) {
+			HeapNode node = heap.remove();
+			System.out.println(node.data + "--->" + node.weight);
+		}
 	}
 
 	public HeapNode[] getNodes() {
