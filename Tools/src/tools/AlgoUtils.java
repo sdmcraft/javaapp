@@ -570,6 +570,14 @@ public class AlgoUtils {
 		current = minusStart;
 		return current;
 	}
+	
+	/*http://www.careercup.com/question?id=7795665
+	 * http://en.wikipedia.org/wiki/Catalan_number
+	 * C(2m+1) = Sigma(C(1+2j)*(2m-1-2j)) where j=0...m-1*/
+	public int numFullBinaryTrees()
+	{
+		
+	}
 
 	public static void main(String[] args) throws Exception {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
