@@ -39,7 +39,7 @@ public class Context {
 	private LiveEventHandler liveEventHandler;
 
 	/** The started conferences. */
-	private final Map<String, Conference> startedConferences = new HashMap<String, Conference>();
+	private final Map<String, Conference> conferences = new HashMap<String, Conference>();
 
 	/**
 	 * Instantiates a new context.
@@ -164,8 +164,8 @@ public class Context {
 	 * 
 	 * @return the started conferences
 	 */
-	Map<String, Conference> getStartedConferences() {
-		return startedConferences;
+	Map<String, Conference> getConferences() {
+		return conferences;
 	}
 
 	/**

@@ -1,9 +1,5 @@
 package org.meetmejava;
 
-import java.io.File;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,25 +14,21 @@ import org.asteriskjava.manager.action.MeetMeUnmuteAction;
 import org.meetmejava.event.Event;
 import org.meetmejava.event.EventType;
 
-// TODO: Auto-generated Javadoc
 /**
- * Conference represents a MeetMe conference on the Asterisk server.
+ * Conference represents a MeetMe conference on the Asterisk server. This class
+ * implements the observable interface. Any class which wants to receive events
+ * related to this conference, must add itself as an observer of this class
+ * instance.
  */
 public class Conference extends Observable {
 
 	/** The meet me room. */
 	private final MeetMeRoom meetMeRoom;
 
-	/** The conference user map. */
-	private final Map<String, User> conferenceUserMap; /*
-														 * A map of conference
-														 * users to their
-														 * respective meetme
-														 * userIDs
-														 */
-
-	/** The recording name. */
-	private String recordingName;
+	/**
+	 * A map of conference users to their respective meetme userIDs
+	 */
+	private final Map<String, User> conferenceUserMap;
 
 	/** The context. */
 	private final Context context;
@@ -77,15 +69,17 @@ public class Conference extends Observable {
 	 * events for this conference.
 	 */
 	private void init() {
-		context.getStartedConferences().put(conferenceNumber, this);
+		context.getConferences().put(conferenceNumber, this);
 	}
 
 	/**
 	 * Creates a new instance of MeetMe conference.
-	 *
-	 * @param conferenceNumber the number to be dialled in order to join the conference
-	 * @param context the context for interaction between MeetMe-java and the
-	 * Asterisk server
+	 * 
+	 * @param conferenceNumber
+	 *            the number to be dialled in order to join the conference
+	 * @param context
+	 *            the context for interaction between MeetMe-java and the
+	 *            Asterisk server
 	 * @return single instance of Conference
 	 */
 	public static Conference getInstance(String conferenceNumber,
@@ -209,60 +203,6 @@ public class Conference extends Observable {
 	}
 
 	/**
-	 * Request dial out.
-	 * 
-	 * @param phoneNumber
-	 *            the phone number
-	 * @return the string
-	 * @throws Exception
-	 *             the exception
-	 */
-	public String requestDialOut(String phoneNumber) throws Exception {
-		Map<String, String> dialOutLock = new HashMap<String, String>();
-		synchronized (dialOutLock) {
-			context.getDialOutLocks().put(phoneNumber, dialOutLock);
-			URL url = new URL(context.getAsteriskExtURL()
-					+ "?context=call&action=meetme-dialout&channel="
-					// TODO Channel hardcoded to SIP for now
-					+ URLEncoder.encode("SIP", "UTF-8") + "&number="
-					+ URLEncoder.encode(phoneNumber, "UTF-8") + "&room="
-					+ URLEncoder.encode(conferenceNumber, "UTF-8"));
-			URLConnection httpConn = url.openConnection();
-			httpConn.connect();
-			httpConn.getInputStream();
-			// TODO This should be a timed wait. On timeout, throw dialout
-			// failure
-			while (!dialOutLock.containsKey("user-id"))
-				dialOutLock.wait();
-		}
-		String userId = dialOutLock.get("user-id");
-		context.getDialOutLocks().remove(phoneNumber);
-		return userId;
-	}
-
-	/**
-	 * Request start recording.
-	 * 
-	 * @param recordingName
-	 *            the recording name
-	 * @throws Exception
-	 *             the exception
-	 */
-	public void requestStartRecording(String recordingName) throws Exception {
-		this.recordingName = recordingName;
-
-	}
-
-	/**
-	 * Request stop recording.
-	 * 
-	 * @throws Exception
-	 *             the exception
-	 */
-	public void requestStopRecording() throws Exception {
-	}
-
-	/**
 	 * Handle add conference user.
 	 * 
 	 * @param user
@@ -314,7 +254,7 @@ public class Conference extends Observable {
 	public void destroy() {
 		for (User user : conferenceUserMap.values())
 			user.destroy();
-		context.getStartedConferences().remove(conferenceNumber);
+		context.getConferences().remove(conferenceNumber);
 	}
 
 	/**
@@ -353,4 +293,10 @@ public class Conference extends Observable {
 		return conferenceNumber;
 	}
 
+	@Override
+	public String toString() {
+		if (meetMeRoom == null)
+			return null;
+		return meetMeRoom.getRoomNumber();
+	}
 }

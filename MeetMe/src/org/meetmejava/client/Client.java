@@ -86,6 +86,6 @@ public class Client implements Observer {
 	public static void main(String[] args) throws IllegalStateException,
 			IOException, AuthenticationFailedException, TimeoutException,
 			InterruptedException {
-		new Client().demo("192.168.1.103", "admin", "P@$$w0rd", "6300");
+		new Client().demo("192.168.1.102", "admin", "P@$$w0rd", "6300");
 	}
 }

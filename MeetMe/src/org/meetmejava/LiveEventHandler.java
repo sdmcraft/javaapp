@@ -137,7 +137,7 @@ public class LiveEventHandler implements AsteriskServerListener,
 	public void onNewMeetMeUser(MeetMeUser user) {
 		logger.fine(user.toString());
 		try {
-			Conference conference = context.getStartedConferences().get(
+			Conference conference = context.getConferences().get(
 					user.getRoom().getRoomNumber());
 			conference.handleAddConferenceUser(user, AsteriskUtils
 					.getUserPhoneNumber(user));
@@ -171,7 +171,7 @@ public class LiveEventHandler implements AsteriskServerListener,
 		logger.fine("Received manager event: " + managerEvent);
 		if (managerEvent instanceof MeetMeEndEvent) {
 			MeetMeEndEvent endEvent = (MeetMeEndEvent) managerEvent;
-			Conference conference = context.getStartedConferences().get(
+			Conference conference = context.getConferences().get(
 					endEvent.getMeetMe());
 			if (conference != null)
 				conference.handleEndConference();
