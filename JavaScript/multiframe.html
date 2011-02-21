@@ -32,16 +32,16 @@
 	function loadIframe()
 	{
 		if(step < count)
-		{
-			document.getElementById('iframe-'+step).src = "http://my.adobe.acrobat.com/bamaseparation/?launcher=false&guestName=a"+step;
+		{			
+			document.getElementById('iframe-'+step).src = "http://account.corp.adobe.com/meet9?launcher=false&guestName=xp"+step;
 			step++;
-			var t = setTimeout("loadIframe()",3000);
+			var t = setTimeout("loadIframe()",200);
 		}	
 	}
 
 </script>
 </head>
-<body id="main-body" onload="createIframeTable(2);loadIframe()">
+<body id="main-body" onload="createIframeTable(5);loadIframe()">
 <div id="div1"></div>
 </body>
 </html>
