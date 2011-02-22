@@ -1,9 +1,12 @@
 package tools;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dataStructures.ArrayStack;
+import dataStructures.BinaryTree;
 import dataStructures.BitArray;
 import dataStructures.LinkedList;
 
@@ -570,13 +573,25 @@ public class AlgoUtils {
 		current = minusStart;
 		return current;
 	}
-	
-	/*http://www.careercup.com/question?id=7795665
-	 * http://en.wikipedia.org/wiki/Catalan_number
-	 * C(2m+1) = Sigma(C(1+2j)*(2m-1-2j)) where j=0...m-1*/
-	public int numFullBinaryTrees()
-	{
-		
+
+	/*
+	 * http://www.careercup.com/question?id=7795665
+	 * http://en.wikipedia.org/wiki/Catalan_number C(2m+1) = Sigma(C(1+2j)*
+	 * C(2m-1-2j)) where j=0...m-1
+	 */
+	public static int numFullBinaryTrees(int n,
+			Map<Integer, List<BinaryTree>> store) {
+		if ((n - 1) % 2 != 0)
+			return 0;
+		else {
+			int m = (n - 1) / 2;
+			int sum = 1;
+			for (int j = 0; j <= m - 1; j++) {
+				sum += numFullBinaryTrees(1 + 2 * j, store)
+						* numFullBinaryTrees(2 * m - 1 - 2 * j, store);
+			}
+			return sum;
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -675,9 +690,12 @@ public class AlgoUtils {
 		// System.out.println(str[0]);
 		// System.out.println(str[1]);
 		// System.out.println("Work:" + work);
-		String[] input = { "2", "-1", "3", "9", "-5", "0","15","-7","-3","-3","31" };
-		LinkedList list = new LinkedList(input, 0);
-		System.out.println(list);
-		System.out.println(segregatePlusMinus(list));
+		// String[] input = { "2", "-1", "3", "9", "-5", "0", "15", "-7", "-3",
+		// "-3", "31" };
+		// LinkedList list = new LinkedList(input, 0);
+		// System.out.println(list);
+		// System.out.println(segregatePlusMinus(list));
+		Map<Integer, List<BinaryTree>> store = new HashMap<Integer, List<BinaryTree>>();
+		System.out.println(numFullBinaryTrees(2, store));
 	}
 }
