@@ -594,6 +594,41 @@ public class AlgoUtils {
 		}
 	}
 
+	/*
+	 * m = (n+1)/2
+	 * 
+	 * C(2m-1) = Sigma(C(1+2j)* C(2m-1-2j)) where j=0...m-1
+	 */
+	public static int counter = 0;
+	public static void numFullBinaryTrees2(int n,
+			Map<Integer, List<BinaryTree>> store) {
+		if ((n - 1) % 2 != 0) {
+			store.put(n, null);
+			return;
+		} else {
+			List<BinaryTree> treeList = new ArrayList<BinaryTree>();
+			int m = (n - 1) / 2;
+			for (int j = 0; j <= m - 1; j++) {
+				int nodesOnLeft = 1 + 2 * j;
+				int nodesOnRight = 2 * m - 1 - 2 * j;
+				numFullBinaryTrees2(nodesOnLeft, store);
+				numFullBinaryTrees2(nodesOnRight, store);
+				BinaryTree root = new BinaryTree(Integer.toString(counter++));
+				for (BinaryTree leftTree : store.get(nodesOnLeft)) {
+					for (BinaryTree rightTree : store.get(nodesOnRight)) {
+						root.setLeft(leftTree);
+						root.setRight(rightTree);
+						treeList.add(root);
+					}
+				}
+			}
+			if (m == 0)
+				treeList.add(new BinaryTree(Integer.toString(counter++)));
+			store.put(n, treeList);
+			return;
+		}
+	}
+
 	public static void main(String[] args) throws Exception {
 		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
 		// 0));
@@ -696,6 +731,10 @@ public class AlgoUtils {
 		// System.out.println(list);
 		// System.out.println(segregatePlusMinus(list));
 		Map<Integer, List<BinaryTree>> store = new HashMap<Integer, List<BinaryTree>>();
-		System.out.println(numFullBinaryTrees(2, store));
+		numFullBinaryTrees2(5, store);
+		for(BinaryTree btree : store.get(5))
+		{
+			System.out.println(btree.getDiagram());
+		}
 	}
 }
