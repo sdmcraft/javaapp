@@ -600,6 +600,7 @@ public class AlgoUtils {
 	 * C(2m-1) = Sigma(C(1+2j)* C(2m-1-2j)) where j=0...m-1
 	 */
 	public static int counter = 0;
+
 	public static void numFullBinaryTrees2(int n,
 			Map<Integer, List<BinaryTree>> store) {
 		if ((n - 1) % 2 != 0) {
@@ -613,9 +614,10 @@ public class AlgoUtils {
 				int nodesOnRight = 2 * m - 1 - 2 * j;
 				numFullBinaryTrees2(nodesOnLeft, store);
 				numFullBinaryTrees2(nodesOnRight, store);
-				BinaryTree root = new BinaryTree(Integer.toString(counter++));
 				for (BinaryTree leftTree : store.get(nodesOnLeft)) {
 					for (BinaryTree rightTree : store.get(nodesOnRight)) {
+						BinaryTree root = new BinaryTree(Integer
+								.toString(counter++));
 						root.setLeft(leftTree);
 						root.setRight(rightTree);
 						treeList.add(root);
@@ -731,9 +733,8 @@ public class AlgoUtils {
 		// System.out.println(list);
 		// System.out.println(segregatePlusMinus(list));
 		Map<Integer, List<BinaryTree>> store = new HashMap<Integer, List<BinaryTree>>();
-		numFullBinaryTrees2(5, store);
-		for(BinaryTree btree : store.get(5))
-		{
+		numFullBinaryTrees2(3, store);
+		for (BinaryTree btree : store.get(3)) {
 			System.out.println(btree.getDiagram());
 		}
 	}

@@ -136,6 +136,7 @@ public class BinaryTree extends Tree {
 			return;
 		this.left = left;
 		children.add(0, left);
+		left.parent = this;
 	}
 
 	public void setRight(BinaryTree right) {
@@ -144,6 +145,7 @@ public class BinaryTree extends Tree {
 
 		this.right = right;
 		children.add(1, right);
+		right.parent = this;
 	}
 
 }
