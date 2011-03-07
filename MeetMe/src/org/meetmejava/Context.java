@@ -1,6 +1,9 @@
 package org.meetmejava;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +11,8 @@ import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.live.DefaultAsteriskServer;
 import org.asteriskjava.manager.AuthenticationFailedException;
 import org.asteriskjava.manager.TimeoutException;
+import org.jdom.Document;
+import org.jdom.input.SAXBuilder;
 import org.meetmejava.Conference;
 
 // TODO: Auto-generated Javadoc
@@ -31,6 +36,8 @@ public class Context {
 
 	/** The asterisk password. */
 	private final String asteriskPassword;
+
+	private final String extensionURL;
 
 	/** The dial out locks. */
 	private final Map<String, Map<String, String>> dialOutLocks = new HashMap<String, Map<String, String>>();
@@ -61,17 +68,20 @@ public class Context {
 	 *             the timeout exception
 	 */
 	private Context(String asteriskIp, String asteriskAdmin,
-			String asteriskPassword) throws IllegalStateException,
-			IOException, AuthenticationFailedException, TimeoutException {
-		this.asteriskIp = asteriskIp;
-		this.asteriskAdmin = asteriskAdmin;
-		this.asteriskPassword = asteriskPassword;
-		connection = new Connection(asteriskIp, asteriskAdmin,
-				asteriskPassword);
-		connection.connect();
-		asteriskServer = new DefaultAsteriskServer(connection
-				.getManagerConnection());
-
+			String asteriskPassword, String extensionURL) throws Exception {
+		try {
+			this.asteriskIp = asteriskIp;
+			this.asteriskAdmin = asteriskAdmin;
+			this.asteriskPassword = asteriskPassword;
+			connection = new Connection(asteriskIp, asteriskAdmin,
+					asteriskPassword);
+			connection.connect();
+			asteriskServer = new DefaultAsteriskServer(connection
+					.getManagerConnection());
+			this.extensionURL = extensionURL;
+		} catch (Exception ex) {
+			throw new Exception(ex);
+		}
 	}
 
 	/**
@@ -85,29 +95,48 @@ public class Context {
 
 	/**
 	 * Gets a new instance of Context.
-	 *
-	 * @param asteriskIp The ip address of the Asterisk server
-	 * @param asteriskAdmin The admin user on Asterisk who can access Asterisk Manager
-	 * Interface
-	 * @param asteriskPassword The password of the admin user
+	 * 
+	 * @param asteriskIp
+	 *            The ip address of the Asterisk server
+	 * @param asteriskAdmin
+	 *            The admin user on Asterisk who can access Asterisk Manager
+	 *            Interface
+	 * @param asteriskPassword
+	 *            The password of the admin user
 	 * @return single instance of Context
-	 * @throws IllegalStateException the illegal state exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws AuthenticationFailedException the authentication failed exception
-	 * @throws TimeoutException the timeout exception
+	 * @throws IllegalStateException
+	 *             the illegal state exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException
+	 *             the authentication failed exception
+	 * @throws TimeoutException
+	 *             the timeout exception
 	 */
 	public static Context getInstance(String asteriskIp, String asteriskAdmin,
-			String asteriskPassword) throws IllegalStateException, IOException,
-			AuthenticationFailedException, TimeoutException {
+			String asteriskPassword, String extensionURL) throws Exception {
 		Context context = new Context(asteriskIp, asteriskAdmin,
-				asteriskPassword);
+				asteriskPassword, extensionURL);
 		context.init();
 		return context;
 	}
 
+	public boolean validateRoomNumber(String roomNumber) throws Exception {
+		URL url = new URL(extensionURL
+				+ "?context=confirm&action=meetme-room&room-number="
+				+ URLEncoder.encode(roomNumber, "UTF-8"));
+		URLConnection httpConn = url.openConnection();
+		httpConn.connect();
+		Document response = new SAXBuilder().build(httpConn.getInputStream());
+		if (!"true".equals(response.getRootElement().getValue())) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
-	 * Destroys this context.
-	 * The context is not usable after it has been destroyed.
+	 * Destroys this context. The context is not usable after it has been
+	 * destroyed.
 	 */
 	public void destroy() {
 		liveEventHandler.destroy();

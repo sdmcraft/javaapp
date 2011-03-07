@@ -17,7 +17,9 @@ import org.meetmejava.event.Event;
  */
 public class Client implements Observer {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	@Override
@@ -48,23 +50,29 @@ public class Client implements Observer {
 
 	/**
 	 * Demo.
-	 *
-	 * @param ip the ip
-	 * @param admin the admin
-	 * @param pwd the pwd
-	 * @param conferenceNumber the conference number
-	 * @throws IllegalStateException the illegal state exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws AuthenticationFailedException the authentication failed exception
-	 * @throws TimeoutException the timeout exception
-	 * @throws InterruptedException the interrupted exception
+	 * 
+	 * @param ip
+	 *            the ip
+	 * @param admin
+	 *            the admin
+	 * @param pwd
+	 *            the pwd
+	 * @param conferenceNumber
+	 *            the conference number
+	 * @throws IllegalStateException
+	 *             the illegal state exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException
+	 *             the authentication failed exception
+	 * @throws TimeoutException
+	 *             the timeout exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
 	public void demo(String ip, String admin, String pwd,
-			String conferenceNumber)
-			throws IllegalStateException, IOException,
-			AuthenticationFailedException, TimeoutException,
-			InterruptedException {
-		Context context = Context.getInstance(ip, admin, pwd);
+			String conferenceNumber) throws Exception {
+		Context context = Context.getInstance(ip, admin, pwd, null);
 		Conference conference = Conference.getInstance(conferenceNumber,
 				context);
 		conference.addObserver(this);
@@ -75,17 +83,21 @@ public class Client implements Observer {
 
 	/**
 	 * The main method.
-	 *
-	 * @param args the arguments
-	 * @throws IllegalStateException the illegal state exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws AuthenticationFailedException the authentication failed exception
-	 * @throws TimeoutException the timeout exception
-	 * @throws InterruptedException the interrupted exception
+	 * 
+	 * @param args
+	 *            the arguments
+	 * @throws IllegalStateException
+	 *             the illegal state exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException
+	 *             the authentication failed exception
+	 * @throws TimeoutException
+	 *             the timeout exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
 	 */
-	public static void main(String[] args) throws IllegalStateException,
-			IOException, AuthenticationFailedException, TimeoutException,
-			InterruptedException {
+	public static void main(String[] args) throws Exception {
 		new Client().demo("192.168.1.102", "admin", "P@$$w0rd", "6300");
 	}
 }
