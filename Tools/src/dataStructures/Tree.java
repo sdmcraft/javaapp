@@ -1,11 +1,14 @@
 package dataStructures;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Tree {
+import tools.IOUtils;
+
+public class Tree implements Cloneable, Serializable {
 
 	protected List<Tree> children;
 	protected String value;
@@ -16,6 +19,15 @@ public class Tree {
 	private Tree sibling;
 	protected int depth = 0;
 	private int height = 0;
+
+	@Override
+	public Object clone() {
+		try {
+			return IOUtils.deepCopy(this);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 
 	public Tree() {
 		children = new ArrayList<Tree>();

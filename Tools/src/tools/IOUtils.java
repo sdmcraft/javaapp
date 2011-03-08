@@ -2,6 +2,8 @@ package tools;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.LineNumberReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.PushbackInputStream;
@@ -171,6 +174,31 @@ public class IOUtils {
 		return object;
 	}
 
+	public static void serializeObject(Object o, File f) throws Exception {
+		ObjectOutput out = null;
+		try {
+			out = new ObjectOutputStream(new FileOutputStream(f));
+			out.writeObject(o);
+		} finally {
+			if (out != null)
+				out.close();
+		}
+	}
+
+	/*
+	 * Remember that if source or its members do not implement serializable,
+	 * this method would not work
+	 */
+	public static Object deepCopy(Object source) throws Exception {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(baos);
+		oos.writeObject(source);
+		ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+		ObjectInputStream ois = new ObjectInputStream(bais);
+		Object copy = ois.readObject();
+		return copy;
+	}
+
 	public static String replace(String s, Map<String, String> idMap,
 			String splitRegex) {
 		String oldIds[] = s.split(splitRegex);
@@ -281,20 +309,19 @@ public class IOUtils {
 		lineReader.close();
 		writer.close();
 	}
-	
-	public static void merge(String file,int start1,int end1,int start2,int end2,int buffer) throws Exception
-	{
-		ArrayStack stack1 = new ArrayStack(buffer/3);
-		ArrayStack stack2 = new ArrayStack(buffer/3);
-		ArrayStack mergeStack = new ArrayStack(buffer/3);
+
+	public static void merge(String file, int start1, int end1, int start2,
+			int end2, int buffer) throws Exception {
+		ArrayStack stack1 = new ArrayStack(buffer / 3);
+		ArrayStack stack2 = new ArrayStack(buffer / 3);
+		ArrayStack mergeStack = new ArrayStack(buffer / 3);
 		int current1 = start1;
 		int current2 = start2;
-		
+
 	}
-	
-	private static void FileToStack(String file,int start,ArrayStack stack)
-	{
-		
+
+	private static void FileToStack(String file, int start, ArrayStack stack) {
+
 	}
 
 	public static List<Long> numbersInText(String text) {

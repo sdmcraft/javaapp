@@ -5,7 +5,7 @@ import java.util.List;
 
 import tools.AlgoUtils;
 
-public class BinaryTree extends Tree {
+public class BinaryTree extends Tree implements Cloneable{
 	private BinaryTree left;
 	private BinaryTree right;
 	private BinaryTree parent;
