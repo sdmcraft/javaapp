@@ -39,7 +39,6 @@ public class Conference extends Observable {
 	/** The recording. */
 	private boolean recording;
 
-	/** The Constant logger. */
 	private final static Logger logger = Logger.getLogger(Conference.class
 			.getName());
 
@@ -201,6 +200,7 @@ public class Conference extends Observable {
 			requestHangup(userId);
 		}
 	}
+
 
 	/**
 	 * Handle add conference user.

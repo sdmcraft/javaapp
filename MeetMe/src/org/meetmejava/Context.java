@@ -40,7 +40,7 @@ public class Context {
 	private final String extensionURL;
 
 	/** The dial out locks. */
-	private final Map<String, Map<String, String>> dialOutLocks = new HashMap<String, Map<String, String>>();
+	private final Map<String, Map<String, Integer>> dialOutLocks = new HashMap<String, Map<String, Integer>>();
 
 	/** The live event handler. */
 	private LiveEventHandler liveEventHandler;
@@ -114,9 +114,10 @@ public class Context {
 	 *             the timeout exception
 	 */
 	public static Context getInstance(String asteriskIp, String asteriskAdmin,
-			String asteriskPassword, String extensionURL) throws Exception {
+			String asteriskPassword, String extensionUrl)
+			throws Exception {
 		Context context = new Context(asteriskIp, asteriskAdmin,
-				asteriskPassword, extensionURL);
+				asteriskPassword, extensionUrl);
 		context.init();
 		return context;
 	}
@@ -132,6 +133,30 @@ public class Context {
 			return false;
 		}
 		return true;
+	}
+
+	public Integer requestDialOut(String phoneNumber, String roomNumber)
+			throws Exception {
+		Map<String, Integer> dialOutLock = new HashMap<String, Integer>();
+		synchronized (dialOutLock) {
+			dialOutLocks.put(phoneNumber, dialOutLock);
+			URL url = new URL(extensionURL
+					+ "?context=call&action=meetme-dialout&channel="
+					// TODO Channel hardcoded to SIP for now
+					+ URLEncoder.encode("SIP", "UTF-8") + "&number="
+					+ URLEncoder.encode(phoneNumber, "UTF-8") + "&room="
+					+ URLEncoder.encode(roomNumber, "UTF-8"));
+			URLConnection httpConn = url.openConnection();
+			httpConn.connect();
+			httpConn.getInputStream();
+			// TODO This should be a timed wait. On timeout, throw dialout
+			// failure
+			while (!dialOutLock.containsKey("user-number"))
+				dialOutLock.wait();
+		}
+		Integer userNumber = dialOutLock.get("user-number");
+		dialOutLocks.remove(phoneNumber);
+		return userNumber;
 	}
 
 	/**
@@ -202,7 +227,7 @@ public class Context {
 	 * 
 	 * @return the dial out locks
 	 */
-	Map<String, Map<String, String>> getDialOutLocks() {
+	Map<String, Map<String, Integer>> getDialOutLocks() {
 		return dialOutLocks;
 	}
 

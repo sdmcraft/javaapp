@@ -71,11 +71,18 @@ public class Client implements Observer {
 	 *             the interrupted exception
 	 */
 	public void demo(String ip, String admin, String pwd,
-			String conferenceNumber) throws Exception {
-		Context context = Context.getInstance(ip, admin, pwd, null);
+			String conferenceNumber, String[] phoneNumbers, String extensionUrl)
+			throws Exception {
+		Context context = Context.getInstance(ip, admin, pwd, extensionUrl);
 		Conference conference = Conference.getInstance(conferenceNumber,
 				context);
 		conference.addObserver(this);
+		Thread.sleep(2000);
+		for (String phoneNumber : phoneNumbers) {
+			System.out.println("User Number:"
+					+ context.requestDialOut(phoneNumber, conferenceNumber
+							+ " joined"));
+		}
 		Thread.sleep(60000);
 		conference.destroy();
 		context.destroy();
@@ -98,6 +105,7 @@ public class Client implements Observer {
 	 *             the interrupted exception
 	 */
 	public static void main(String[] args) throws Exception {
-		new Client().demo("192.168.1.102", "admin", "P@$$w0rd", "6300");
+		new Client().demo("192.168.1.103", "admin", "P@$$w0rd", "6300",
+				new String[] { "6000" }, "http://192.168.1.103:8080/AsteriskExtension");
 	}
 }

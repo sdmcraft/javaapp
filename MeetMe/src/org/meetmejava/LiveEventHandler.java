@@ -34,8 +34,9 @@ public class LiveEventHandler implements AsteriskServerListener,
 
 	/**
 	 * Instantiates a new live event handler.
-	 *
-	 * @param context the context
+	 * 
+	 * @param context
+	 *            the context
 	 */
 	public LiveEventHandler(Context context) {
 		this.context = context;
@@ -101,8 +102,12 @@ public class LiveEventHandler implements AsteriskServerListener,
 
 	}
 
-	/* (non-Javadoc)
-	 * @see org.asteriskjava.live.AsteriskServerListener#onNewAgent(org.asteriskjava.live.internal.AsteriskAgentImpl)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.asteriskjava.live.AsteriskServerListener#onNewAgent(org.asteriskjava
+	 * .live.internal.AsteriskAgentImpl)
 	 */
 	@Override
 	public void onNewAgent(AsteriskAgentImpl agent) {
@@ -110,44 +115,72 @@ public class LiveEventHandler implements AsteriskServerListener,
 		agent.addPropertyChangeListener(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.asteriskjava.live.AsteriskServerListener#onNewAsteriskChannel(org.asteriskjava.live.AsteriskChannel)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.asteriskjava.live.AsteriskServerListener#onNewAsteriskChannel(org
+	 * .asteriskjava.live.AsteriskChannel)
 	 */
 	@Override
 	public void onNewAsteriskChannel(AsteriskChannel channel) {
-		logger.fine(channel.toString());
-		String id = channel.getId();
-		String phoneNumber = AsteriskUtils.getPhoneNumberFromChannel(channel
-				.getName());
-		Map<String, String> dialOutLock = context.getDialOutLocks().get(
-				phoneNumber);
-		if (dialOutLock != null) {
-			synchronized (dialOutLock) {
-				dialOutLock.put("user-id", id);
-				dialOutLock.notifyAll();
-			}
-		}
-		channel.addPropertyChangeListener(this);
+//		logger.fine(channel.toString());
+//		String id = channel.getId();
+//		String phoneNumber = AsteriskUtils.getPhoneNumberFromChannel(channel
+//				.getName());
+//		Map<String, Integer> dialOutLock = context.getDialOutLocks().get(
+//				phoneNumber);
+//		if (dialOutLock != null) {
+//			synchronized (dialOutLock) {
+//				dialOutLock.put("user-id", id);
+//				dialOutLock.notifyAll();
+//			}
+//		}
+//		channel.addPropertyChangeListener(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.asteriskjava.live.AsteriskServerListener#onNewMeetMeUser(org.asteriskjava.live.MeetMeUser)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.asteriskjava.live.AsteriskServerListener#onNewMeetMeUser(org.asteriskjava
+	 * .live.MeetMeUser)
 	 */
 	@Override
 	public void onNewMeetMeUser(MeetMeUser user) {
 		logger.fine(user.toString());
 		try {
+			String phoneNumber = AsteriskUtils
+					.getUserPhoneNumber(user);
+			Map<String, Integer> dialOutLock = context
+					.getDialOutLocks().get(phoneNumber);
+			if (dialOutLock != null) {
+				synchronized (dialOutLock) {
+					dialOutLock.put("user-number", user.getUserNumber());
+					dialOutLock.notify();
+				}
+				/* Sleep for sometime to let notified thread proceed */
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException ex) {
+					logger.log(Level.WARNING, ex.getMessage(), ex);
+				}
+			}
+
 			Conference conference = context.getConferences().get(
 					user.getRoom().getRoomNumber());
-			conference.handleAddConferenceUser(user, AsteriskUtils
-					.getUserPhoneNumber(user));
+			conference.handleAddConferenceUser(user, phoneNumber);
 		} catch (Exception ex) {
 			logger.log(Level.WARNING, ex.getMessage(), ex);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.asteriskjava.live.AsteriskServerListener#onNewQueueEntry(org.asteriskjava.live.AsteriskQueueEntry)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.asteriskjava.live.AsteriskServerListener#onNewQueueEntry(org.asteriskjava
+	 * .live.AsteriskQueueEntry)
 	 */
 	@Override
 	public void onNewQueueEntry(AsteriskQueueEntry queueEntry) {
@@ -155,16 +188,23 @@ public class LiveEventHandler implements AsteriskServerListener,
 		queueEntry.addPropertyChangeListener(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seejava.beans.PropertyChangeListener#propertyChange(java.beans.
+	 * PropertyChangeEvent)
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
 		logger.fine(propertyChangeEvent.toString());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.asteriskjava.manager.ManagerEventListener#onManagerEvent(org.asteriskjava.manager.event.ManagerEvent)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.asteriskjava.manager.ManagerEventListener#onManagerEvent(org.asteriskjava
+	 * .manager.event.ManagerEvent)
 	 */
 	@Override
 	public void onManagerEvent(ManagerEvent managerEvent) {
