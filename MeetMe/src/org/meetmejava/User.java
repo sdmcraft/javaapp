@@ -42,6 +42,11 @@ public class User extends Observable implements PropertyChangeListener {
 		this.meetMeUser = meetMeUser;
 		meetMeUser.addPropertyChangeListener(this);
 	}
+	
+	public void requestHangUp()
+	{
+		this.meetMeUser.getChannel().hangup();
+	}
 
 	/* (non-Javadoc)
 	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)

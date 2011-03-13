@@ -1,6 +1,8 @@
 package org.meetmejava.client;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,6 +18,8 @@ import org.meetmejava.event.Event;
  * The Class Client.
  */
 public class Client implements Observer {
+	
+	List<User> users = new ArrayList<User>();
 
 	/*
 	 * (non-Javadoc)
@@ -30,9 +34,11 @@ public class Client implements Observer {
 		case USER_JOINED:
 			User user = (User) event.getData();
 			user.addObserver(this);
+			users.add(user);
 			System.out.println("A user joined the audio conference");
 			break;
 		case CONFERENCE_ENDED:
+			users.clear();
 			System.out.println("The audio conference ended");
 			break;
 		case MUTE:
@@ -80,9 +86,11 @@ public class Client implements Observer {
 		Thread.sleep(2000);
 		for (String phoneNumber : phoneNumbers) {
 			System.out.println("User Number:"
-					+ context.requestDialOut(phoneNumber, conferenceNumber
-							+ " joined"));
+					+ context.requestDialOut(phoneNumber, conferenceNumber)
+							+ " joined");
 		}
+		Thread.sleep(10000);
+		users.get(0).requestHangUp();
 		Thread.sleep(60000);
 		conference.destroy();
 		context.destroy();
@@ -105,7 +113,8 @@ public class Client implements Observer {
 	 *             the interrupted exception
 	 */
 	public static void main(String[] args) throws Exception {
-		new Client().demo("192.168.1.103", "admin", "P@$$w0rd", "6300",
-				new String[] { "6000" }, "http://192.168.1.103:8080/AsteriskExtension");
+		new Client().demo("192.168.1.101", "admin", "P@$$w0rd", "6300",
+				new String[] { "6000" },
+				"http://192.168.1.101:8080/AsteriskExtension/service");
 	}
 }
