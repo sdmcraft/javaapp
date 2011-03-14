@@ -618,8 +618,8 @@ public class AlgoUtils {
 					for (BinaryTree rightTree : store.get(nodesOnRight)) {
 						BinaryTree root = new BinaryTree(Integer
 								.toString(counter++));
-						root.setLeft(leftTree);
-						root.setRight(rightTree);
+						root.setLeft((BinaryTree) leftTree.clone());
+						root.setRight((BinaryTree) rightTree.clone());
 						treeList.add(root);
 					}
 				}
@@ -733,8 +733,8 @@ public class AlgoUtils {
 		// System.out.println(list);
 		// System.out.println(segregatePlusMinus(list));
 		Map<Integer, List<BinaryTree>> store = new HashMap<Integer, List<BinaryTree>>();
-		numFullBinaryTrees2(3, store);
-		for (BinaryTree btree : store.get(3)) {
+		numFullBinaryTrees2(5, store);
+		for (BinaryTree btree : store.get(5)) {
 			System.out.println(btree.getDiagram());
 		}
 	}

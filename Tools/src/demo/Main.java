@@ -1,15 +1,7 @@
 package demo;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,14 +42,17 @@ public class Main {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		HashMap<String, Integer> myMap = new HashMap<String,Integer>();
-		HashMap<String, String> myMap2 = new HashMap<String,String>();
-		
-		Integer i = new Integer(5);
-		Integer j = new Integer(5);
-		myMap2.put("a1", "aa");
-		myMap2.put("a2", "aa");
-		System.out.println(myMap.get("a1")==myMap.get("a2"));
-		System.out.println(myMap2.get("a1")==myMap2.get("a2"));
+		File file = new File("\\\\connectdev1\\nas");
+		System.out.println(file.getPath());
+		System.out.println(file.isDirectory());
+		// HashMap<String, Integer> myMap = new HashMap<String,Integer>();
+		// HashMap<String, String> myMap2 = new HashMap<String,String>();
+		//		
+		// Integer i = new Integer(5);
+		// Integer j = new Integer(5);
+		// myMap2.put("a1", "aa");
+		// myMap2.put("a2", "aa");
+		// System.out.println(myMap.get("a1")==myMap.get("a2"));
+		// System.out.println(myMap2.get("a1")==myMap2.get("a2"));
 	}
 }
