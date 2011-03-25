@@ -13,7 +13,9 @@ public class ArrayQueue {
 	/**
 	 * Creates a new instance of ArrayQueue
 	 */
-	public ArrayQueue(int size) {
+	public ArrayQueue(int size) throws Exception {
+		if (size < 0)
+			throw new Exception("size cannot be less than 0");
 		elements = new Object[size];
 		rear = -1;
 		front = -1;
@@ -25,7 +27,9 @@ public class ArrayQueue {
 	 * 
 	 * @param elements
 	 */
-	public ArrayQueue(Object[] elements) {
+	public ArrayQueue(Object[] elements) throws Exception {
+		if (elements == null)
+			throw new Exception("elements cannot be null");
 		this.elements = elements;
 		rear = -1;
 		front = -1;
@@ -131,7 +135,7 @@ public class ArrayQueue {
 			wait();
 			newRear = (rear + 1) % elements.length;
 		}
-		//System.out.println("Wait over,  proceeding with insert");
+		// System.out.println("Wait over,  proceeding with insert");
 		elements[newRear] = item;
 		rear = newRear;
 		/* Queue was empty - special case */
@@ -212,7 +216,7 @@ public class ArrayQueue {
 			System.out.println("Going to wait since the queue is empty");
 			wait();
 		}
-		//System.out.println("Wait over,  proceeding with remove");
+		// System.out.println("Wait over,  proceeding with remove");
 		returnItem = elements[front];
 		elements[front] = null;
 		/* one item in the queue - special case */
@@ -291,7 +295,7 @@ public class ArrayQueue {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ArrayQueue queue = new ArrayQueue(10);
 		for (int i = 0; i < 10; i++) {
 			new Thread(new Task(queue, "insert")).start();
