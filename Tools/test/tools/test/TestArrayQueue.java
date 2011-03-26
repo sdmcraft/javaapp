@@ -1,10 +1,10 @@
 package tools.test;
 
-import java.lang.reflect.Field;
-
 import junit.framework.Assert;
 
 import org.junit.Test;
+
+import tools.TestUtils;
 
 import dataStructures.ArrayQueue;
 
@@ -15,13 +15,46 @@ public class TestArrayQueue {
 		try {
 			Object[] elements = new Object[0];
 			ArrayQueue queue = new ArrayQueue(elements);
-
-			Class suspect = Class.forName("dataStructures.ArrayQueue");
-			Field question = suspect.getField("front");
-			Assert.assertEquals(-1, question.get(suspect));
+			TestUtils.inspect(queue, "front", -1);
+			TestUtils.inspect(queue, "rear", -1);
+			
 			elements = new Object[1];
 			queue = new ArrayQueue(elements);
+			TestUtils.inspect(queue, "front", -1);
+			TestUtils.inspect(queue, "rear", -1);
+			
+			elements[0] = new Object();
+			queue = new ArrayQueue(elements);
+			TestUtils.inspect(queue, "front", 0);
+			TestUtils.inspect(queue, "rear", 0);
+			
+			elements = new Object[]{null,null,new Object(),new Object(),new Object()};
+			queue = new ArrayQueue(elements);
+			TestUtils.inspect(queue, "front", 2);
+			TestUtils.inspect(queue, "rear", 4);
+
+			elements = new Object[]{new Object(),new Object(),new Object(),null,null};
+			queue = new ArrayQueue(elements);
+			TestUtils.inspect(queue, "front", 0);
+			TestUtils.inspect(queue, "rear", 2);
+
+			elements = new Object[]{null,new Object(),new Object(),new Object(),null};
+			queue = new ArrayQueue(elements);
+			TestUtils.inspect(queue, "front", 1);
+			TestUtils.inspect(queue, "rear", 3);
+
+			elements = new Object[]{new Object(),new Object(),null,null,new Object()};
+			queue = new ArrayQueue(elements);
+			TestUtils.inspect(queue, "front", 4);
+			TestUtils.inspect(queue, "rear", 1);
+
+			elements = new Object[]{new Object(),new Object(),new Object(),new Object(),new Object()};
+			queue = new ArrayQueue(elements);
+			TestUtils.inspect(queue, "front", 0);
+			TestUtils.inspect(queue, "rear", 4);
+
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			Assert.fail();
 		}
 
