@@ -17,6 +17,7 @@ public class Tree implements Cloneable, Serializable {
 	private Map<String, Integer> intCount;
 	private int terminalCount;
 	private Tree sibling;
+	
 	protected int depth = 0;
 	private int height = 0;
 
@@ -72,8 +73,9 @@ public class Tree implements Cloneable, Serializable {
 		}
 	}
 
-	public String getDiagram() {
+	public String getDiagram() throws Exception{
 		clearDiagram(this);
+		setLevels();
 		preDiagram();
 		getDiagram(this);
 		diagram += "}";
@@ -92,7 +94,7 @@ public class Tree implements Cloneable, Serializable {
 		return result;
 	}
 
-	private void preDiagram() {
+	private void preDiagram() {		
 		nodeID = value + "(" + depth + ")";
 		preDiagram(this);
 	}

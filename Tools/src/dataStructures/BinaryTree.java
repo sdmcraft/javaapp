@@ -5,7 +5,7 @@ import java.util.List;
 
 import tools.AlgoUtils;
 
-public class BinaryTree extends Tree implements Cloneable{
+public class BinaryTree extends Tree implements Cloneable {
 	private BinaryTree left;
 	private BinaryTree right;
 	private BinaryTree parent;
@@ -134,7 +134,9 @@ public class BinaryTree extends Tree implements Cloneable{
 	public void setLeft(BinaryTree left) {
 		if (left == null)
 			return;
-		this.left = left;
+		this.left = left;		
+		if (children.size() > 0)
+			children.remove(0);
 		children.add(0, left);
 		left.parent = this;
 	}
@@ -143,7 +145,9 @@ public class BinaryTree extends Tree implements Cloneable{
 		if (right == null)
 			return;
 
-		this.right = right;
+		this.right = right;		
+		if (children.size() > 1)
+			children.remove(1);
 		children.add(1, right);
 		right.parent = this;
 	}
