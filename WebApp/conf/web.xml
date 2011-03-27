@@ -79,6 +79,16 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>FileDownloadServlet</servlet-name>
+		<servlet-class>servlets.FileDownloadServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FileDownloadServlet</servlet-name>
+		<url-pattern>/FileDownloadServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>JSTLDemoPG</servlet-name>
 		<jsp-file>/web/JSTLdemoPG.jsp</jsp-file>
 	</servlet>
@@ -162,6 +172,17 @@
 		<servlet-name>ELDemoPG</servlet-name>
 		<url-pattern>/ELDemoPG</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>HelloWorld</servlet-name>
+		<jsp-file>/web/HelloWorld.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HelloWorld</servlet-name>
+		<url-pattern>/HelloWorld</url-pattern>
+	</servlet-mapping>
+
 
 	<login-config>
 		<auth-method>BASIC</auth-method>
