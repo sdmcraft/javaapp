@@ -1,7 +1,5 @@
 package misc;
 
-import com.sun.jna.Library;
-import com.sun.jna.Native;
 
 public class JNADemo {
 
