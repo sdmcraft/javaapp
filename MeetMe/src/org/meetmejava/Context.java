@@ -6,6 +6,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.live.DefaultAsteriskServer;
@@ -13,6 +14,8 @@ import org.asteriskjava.manager.AuthenticationFailedException;
 import org.asteriskjava.manager.TimeoutException;
 import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import org.meetmejava.Conference;
 
 // TODO: Auto-generated Javadoc
@@ -21,6 +24,9 @@ import org.meetmejava.Conference;
  * and the Asterisk server.
  */
 public class Context {
+
+	private final static Logger logger = Logger.getLogger(Context.class
+			.getName());
 
 	/** The connection. */
 	private final Connection connection;
@@ -47,6 +53,9 @@ public class Context {
 
 	/** The started conferences. */
 	private final Map<String, Conference> conferences = new HashMap<String, Conference>();
+
+	private final XMLOutputter xmlOutputter = new XMLOutputter(Format
+			.getPrettyFormat());
 
 	/**
 	 * Instantiates a new context.
@@ -126,9 +135,11 @@ public class Context {
 		URL url = new URL(extensionURL
 				+ "?context=confirm&action=meetme-room&room-number="
 				+ URLEncoder.encode(roomNumber, "UTF-8"));
+		logger.info("Posting URL: " + url);
 		URLConnection httpConn = url.openConnection();
 		httpConn.connect();
 		Document response = new SAXBuilder().build(httpConn.getInputStream());
+		logger.info(xmlOutputter.outputString(response));
 		if (!"true".equals(response.getRootElement().getValue())) {
 			return false;
 		}
