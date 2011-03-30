@@ -43,6 +43,10 @@
 			<fileset dir="${conf.dir}" includes="web.xml" />
 		</copy>
 
+		<copy todir="${build.dir}/WEB-INF/classes">
+			<fileset dir="${conf.dir}" includes="logging.properties" />
+		</copy>
+
 		<jar jarfile="${dist.dir}/AsteriskExtension.war" basedir="${build.dir}" />
 	</target>
 

@@ -3,6 +3,7 @@ package servlets;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import utils.ConfigConfirmer;
 
 public class FrontServlet extends HttpServlet {
+
+	Logger logger = Logger.getLogger(FrontServlet.class.getName());
 
 	@Override
 	public void init() {
@@ -23,6 +26,7 @@ public class FrontServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
+		logger.info("FrontServlet received:" + req.getQueryString());
 		PrintWriter responseWriter = resp.getWriter();
 		try {
 			String context = req.getParameter("context");
@@ -89,8 +93,7 @@ public class FrontServlet extends HttpServlet {
 					} catch (Exception ex) {
 						throw new ServletException(ex);
 					}
-				}
-				else if ("user".equals(action)) {
+				} else if ("user".equals(action)) {
 					String userNumber = req.getParameter("user-number");
 					ConfigConfirmer configConfirmer = (ConfigConfirmer) getServletContext()
 							.getAttribute("config-confirmer");
