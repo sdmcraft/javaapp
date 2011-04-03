@@ -55,6 +55,7 @@ public class Conference extends Observable {
 	 */
 	private Conference(String conferenceNumber, Context context) {
 
+		logger.fine("Creating a new conference " + conferenceNumber);
 		meetMeRoom = context.getAsteriskServer()
 				.getMeetMeRoom(conferenceNumber);
 		this.context = context;
@@ -68,6 +69,7 @@ public class Conference extends Observable {
 	 * events for this conference.
 	 */
 	private void init() {
+		logger.fine("Adding conference " + conferenceNumber + " to context");
 		context.getConferences().put(conferenceNumber, this);
 	}
 
@@ -200,7 +202,6 @@ public class Conference extends Observable {
 			requestHangup(userId);
 		}
 	}
-
 
 	/**
 	 * Handle add conference user.

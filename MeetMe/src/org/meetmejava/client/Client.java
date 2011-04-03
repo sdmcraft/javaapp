@@ -113,8 +113,8 @@ public class Client implements Observer {
 	 *             the interrupted exception
 	 */
 	public static void main(String[] args) throws Exception {
-		new Client().demo("192.168.1.101", "admin", "P@$$w0rd", "6300",
+		new Client().demo("192.168.1.102", "admin", "P@$$w0rd", "6300",
 				new String[] { "6000" },
-				"http://192.168.1.101:8080/AsteriskExtension/service");
+				"http://192.168.1.102:8080/AsteriskExtension/service");
 	}
 }

@@ -79,6 +79,8 @@ public class Context {
 	private Context(String asteriskIp, String asteriskAdmin,
 			String asteriskPassword, String extensionURL) throws Exception {
 		try {
+			logger.fine("Creating a new context for " + asteriskIp + ","
+					+ extensionURL);
 			this.asteriskIp = asteriskIp;
 			this.asteriskAdmin = asteriskAdmin;
 			this.asteriskPassword = asteriskPassword;

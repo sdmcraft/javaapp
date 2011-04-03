@@ -69,6 +69,8 @@ public class LiveEventHandler implements AsteriskServerListener,
 				user.addPropertyChangeListener(this);
 			}
 		}
+
+		logger.fine("LiveEventHandler registered to receive events..");
 	}
 
 	/**
@@ -124,19 +126,19 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 */
 	@Override
 	public void onNewAsteriskChannel(AsteriskChannel channel) {
-//		logger.fine(channel.toString());
-//		String id = channel.getId();
-//		String phoneNumber = AsteriskUtils.getPhoneNumberFromChannel(channel
-//				.getName());
-//		Map<String, Integer> dialOutLock = context.getDialOutLocks().get(
-//				phoneNumber);
-//		if (dialOutLock != null) {
-//			synchronized (dialOutLock) {
-//				dialOutLock.put("user-id", id);
-//				dialOutLock.notifyAll();
-//			}
-//		}
-//		channel.addPropertyChangeListener(this);
+		// logger.fine(channel.toString());
+		// String id = channel.getId();
+		// String phoneNumber = AsteriskUtils.getPhoneNumberFromChannel(channel
+		// .getName());
+		// Map<String, Integer> dialOutLock = context.getDialOutLocks().get(
+		// phoneNumber);
+		// if (dialOutLock != null) {
+		// synchronized (dialOutLock) {
+		// dialOutLock.put("user-id", id);
+		// dialOutLock.notifyAll();
+		// }
+		// }
+		// channel.addPropertyChangeListener(this);
 	}
 
 	/*

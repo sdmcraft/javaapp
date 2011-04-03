@@ -1,6 +1,7 @@
 package org.meetmejava;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.asteriskjava.manager.AuthenticationFailedException;
 import org.asteriskjava.manager.ManagerConnection;
@@ -16,17 +17,24 @@ import org.asteriskjava.manager.response.ManagerResponse;
  */
 public class Connection {
 
+	Logger logger = Logger.getLogger(Connection.class.getName());
+
 	/** The manager connection. */
 	private final ManagerConnection managerConnection;
 
 	/**
 	 * Instantiates a new connection.
-	 *
-	 * @param address the address
-	 * @param uname the uname
-	 * @param pwd the pwd
+	 * 
+	 * @param address
+	 *            the address
+	 * @param uname
+	 *            the uname
+	 * @param pwd
+	 *            the pwd
 	 */
 	public Connection(String address, String uname, String pwd) {
+		logger.fine("Creating a manager connection for " + address + ","
+				+ uname);
 		ManagerConnectionFactory factory = new ManagerConnectionFactory(
 				address, uname, pwd);
 
@@ -36,11 +44,15 @@ public class Connection {
 
 	/**
 	 * Connect.
-	 *
-	 * @throws IllegalStateException the illegal state exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws AuthenticationFailedException the authentication failed exception
-	 * @throws TimeoutException the timeout exception
+	 * 
+	 * @throws IllegalStateException
+	 *             the illegal state exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws AuthenticationFailedException
+	 *             the authentication failed exception
+	 * @throws TimeoutException
+	 *             the timeout exception
 	 */
 	public void connect() throws IllegalStateException, IOException,
 			AuthenticationFailedException, TimeoutException {
