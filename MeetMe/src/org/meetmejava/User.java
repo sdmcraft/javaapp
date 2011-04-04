@@ -83,6 +83,7 @@ public class User extends Observable implements PropertyChangeListener {
 	 * Destroy.
 	 */
 	public void destroy() {
+		logger.fine("Destroying user " + getUserId());
 		meetMeUser.removePropertyChangeListener(this);
 		setChanged();
 		notifyObservers(new Event(EventType.USER_LEFT));

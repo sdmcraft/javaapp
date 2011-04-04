@@ -244,6 +244,7 @@ public class Conference extends Observable {
 	 * Handle end conference.
 	 */
 	public void handleEndConference() {
+		logger.info("Handling conference end event");
 		conferenceUserMap.clear();
 		setChanged();
 		notifyObservers(new Event(EventType.CONFERENCE_ENDED));
@@ -253,6 +254,7 @@ public class Conference extends Observable {
 	 * Destroys this conference instance.
 	 */
 	public void destroy() {
+		logger.fine("Destroying the conference " + conferenceNumber);
 		for (User user : conferenceUserMap.values())
 			user.destroy();
 		context.getConferences().remove(conferenceNumber);
