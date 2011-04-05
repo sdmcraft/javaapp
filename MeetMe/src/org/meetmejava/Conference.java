@@ -163,8 +163,8 @@ public class Conference extends Observable {
 			throws Exception {
 		if (mute) {
 			MeetMeMuteAction muteAction = new MeetMeMuteAction(
-					conferenceNumber,
-					conferenceUserMap.get(userId).getUserNumber());
+					conferenceNumber, conferenceUserMap.get(userId)
+							.getUserNumber());
 
 			context.getConnection().sendAction(muteAction);
 		} else {
@@ -185,7 +185,8 @@ public class Conference extends Observable {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public void requestHangup(String userId) throws Exception {
+	private void requestHangup(String userId) throws Exception {
+		logger.fine("Hanging up user " + userId);
 		HangupAction hangupAction = new HangupAction(getMeetMeUser(userId)
 				.getChannel().getName());
 		context.getConnection().sendAction(hangupAction);
@@ -198,8 +199,18 @@ public class Conference extends Observable {
 	 *             the exception
 	 */
 	public void requestEndConference() throws Exception {
-		for (String userId : conferenceUserMap.keySet()) {
-			requestHangup(userId);
+		logger
+				.fine("Request received to end conference. Hanging up all users..");
+
+		/*
+		 * Lock conferenceUserMap to avoid user left events modifying it while
+		 * we place hangup requests for all users
+		 */
+		synchronized (conferenceUserMap) {
+			for (String userId : conferenceUserMap.keySet()) {
+				conferenceUserMap.get(userId).requestHangUp();
+			}
+
 		}
 	}
 
@@ -215,6 +226,7 @@ public class Conference extends Observable {
 	 */
 	public void handleAddConferenceUser(MeetMeUser user, String phoneNumber)
 			throws Exception {
+		logger.fine("Handling user join event");
 		User conferenceUser = new User(user);
 		conferenceUserMap.put(conferenceUser.getUserId(), conferenceUser);
 
@@ -231,7 +243,7 @@ public class Conference extends Observable {
 	 * @param userId
 	 *            the user id
 	 */
-	public void handleRemoveConferenceUser(String userId) {
+	private void handleRemoveConferenceUser(String userId) {
 		User conferenceUser = conferenceUserMap.get(userId);
 		setChanged();
 

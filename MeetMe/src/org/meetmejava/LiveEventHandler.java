@@ -150,12 +150,11 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 */
 	@Override
 	public void onNewMeetMeUser(MeetMeUser user) {
-		logger.fine(user.toString());
+		logger.fine("A new user joined " + user.toString());
 		try {
-			String phoneNumber = AsteriskUtils
-					.getUserPhoneNumber(user);
-			Map<String, Integer> dialOutLock = context
-					.getDialOutLocks().get(phoneNumber);
+			String phoneNumber = AsteriskUtils.getUserPhoneNumber(user);
+			Map<String, Integer> dialOutLock = context.getDialOutLocks().get(
+					phoneNumber);
 			if (dialOutLock != null) {
 				synchronized (dialOutLock) {
 					dialOutLock.put("user-number", user.getUserNumber());
