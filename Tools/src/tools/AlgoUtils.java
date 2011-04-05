@@ -595,6 +595,10 @@ public class AlgoUtils {
 	}
 
 	/*
+	 * Take one node on the left and rest on right. Now take 3 on left and rest
+	 * on right. And so on.. Follow the same for child trees. Maintain a
+	 * dictionary of all trees for n nodes
+	 * 
 	 * m = (n+1)/2
 	 * 
 	 * C(2m-1) = Sigma(C(1+2j)* C(2m-1-2j)) where j=0...m-1
@@ -733,8 +737,9 @@ public class AlgoUtils {
 		// System.out.println(list);
 		// System.out.println(segregatePlusMinus(list));
 		Map<Integer, List<BinaryTree>> store = new HashMap<Integer, List<BinaryTree>>();
-		numFullBinaryTrees2(5, store);
-		for (BinaryTree btree : store.get(5)) {
+		numFullBinaryTrees2(7, store);
+		for (BinaryTree btree : store.get(7)) {
+			btree.childCount();
 			System.out.println(btree.getDiagram());
 		}
 	}

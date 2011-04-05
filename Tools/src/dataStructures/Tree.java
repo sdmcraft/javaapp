@@ -17,7 +17,7 @@ public class Tree implements Cloneable, Serializable {
 	private Map<String, Integer> intCount;
 	private int terminalCount;
 	private Tree sibling;
-	
+
 	protected int depth = 0;
 	private int height = 0;
 
@@ -73,7 +73,7 @@ public class Tree implements Cloneable, Serializable {
 		}
 	}
 
-	public String getDiagram() throws Exception{
+	public String getDiagram() throws Exception {
 		clearDiagram(this);
 		setLevels();
 		preDiagram();
@@ -94,7 +94,7 @@ public class Tree implements Cloneable, Serializable {
 		return result;
 	}
 
-	private void preDiagram() {		
+	private void preDiagram() {
 		nodeID = value + "(" + depth + ")";
 		preDiagram(this);
 	}
@@ -137,6 +137,18 @@ public class Tree implements Cloneable, Serializable {
 			Tree root = (Tree) queue.remove();
 			for (Tree child : root.getChildren()) {
 				child.depth = root.depth + 1;
+				queue.insert(child);
+			}
+		}
+	}
+
+	public void childCount() throws Exception {
+		ArrayQueue queue = new ArrayQueue(100);
+		queue.insert(this);
+		while (!queue.empty()) {
+			Tree root = (Tree) queue.remove();
+			System.out.println(root.value + "-->" + root.children.size());
+			for (Tree child : root.getChildren()) {
 				queue.insert(child);
 			}
 		}
