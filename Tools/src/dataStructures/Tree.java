@@ -77,6 +77,7 @@ public class Tree implements Cloneable, Serializable {
 		clearDiagram(this);
 		setLevels();
 		preDiagram();
+		//System.out.println(intCount);
 		getDiagram(this);
 		diagram += "}";
 		return diagram;
@@ -105,19 +106,19 @@ public class Tree implements Cloneable, Serializable {
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
 				String value = child.getValue();
-				String nodeID = value;
-				if (child.depth > 0)
-					nodeID += "(" + child.depth + ")";
-				if (intCount.containsKey(nodeID)) {
-					int count = intCount.get(nodeID);
+				String placeholder = value;
+				placeholder += "(" + child.depth + ")";
+				child.nodeID = placeholder;
+				if (intCount.containsKey(placeholder)) {
+					int count = intCount.get(placeholder);
 					for (int i = 0; i < count; i++) {
-						nodeID += "*";
+						child.nodeID += "*";
 					}
-					intCount.put(nodeID, count + 1);
+					//System.out.println("--------->" + child.nodeID);
+					intCount.put(placeholder, count + 1);
 				} else {
-					intCount.put(nodeID, 1);
+					intCount.put(placeholder, 1);
 				}
-				child.nodeID = nodeID;
 				preDiagram(child);
 			}
 		}
@@ -147,7 +148,7 @@ public class Tree implements Cloneable, Serializable {
 		queue.insert(this);
 		while (!queue.empty()) {
 			Tree root = (Tree) queue.remove();
-			System.out.println(root.value + "-->" + root.children.size());
+			//System.out.println(root.value + "-->" + root.children.size());
 			for (Tree child : root.getChildren()) {
 				queue.insert(child);
 			}
