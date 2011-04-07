@@ -607,6 +607,7 @@ public class AlgoUtils {
 
 	public static void numFullBinaryTrees2(int n,
 			Map<Integer, List<BinaryTree>> store) {
+		System.out.println("n->" + n);
 		if ((n - 1) % 2 != 0) {
 			store.put(n, null);
 			return;
@@ -616,8 +617,10 @@ public class AlgoUtils {
 			for (int j = 0; j <= m - 1; j++) {
 				int nodesOnLeft = 1 + 2 * j;
 				int nodesOnRight = 2 * m - 1 - 2 * j;
-				numFullBinaryTrees2(nodesOnLeft, store);
-				numFullBinaryTrees2(nodesOnRight, store);
+				if (store.get(nodesOnLeft) == null)
+					numFullBinaryTrees2(nodesOnLeft, store);
+				if (store.get(nodesOnRight) == null)
+					numFullBinaryTrees2(nodesOnRight, store);
 				for (BinaryTree leftTree : store.get(nodesOnLeft)) {
 					for (BinaryTree rightTree : store.get(nodesOnRight)) {
 						BinaryTree root = new BinaryTree(Integer
@@ -737,9 +740,8 @@ public class AlgoUtils {
 		// System.out.println(list);
 		// System.out.println(segregatePlusMinus(list));
 		Map<Integer, List<BinaryTree>> store = new HashMap<Integer, List<BinaryTree>>();
-		numFullBinaryTrees2(7, store);
-		for (BinaryTree btree : store.get(7)) {
-			btree.childCount();
+		numFullBinaryTrees2(21, store);
+		for (BinaryTree btree : store.get(21)) {
 			System.out.println(btree.getDiagram());
 		}
 	}
