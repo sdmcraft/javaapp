@@ -9,15 +9,21 @@ public enum EventType {
 
 	/** A new user joined. */
 	USER_JOINED,
-	
+
 	/** The conference ended. */
 	CONFERENCE_ENDED,
-	
+
 	/** The user was muted. */
 	MUTE,
-	
+
+	/** The user was unmuted. */
+	UNMUTE,
+
 	/** The user is talking. */
-	TALKER,
+	TALKING,
+	/** The user is not talking. */
+	NOT_TALKING,
+
 	/** The user left. */
 	USER_LEFT
 }

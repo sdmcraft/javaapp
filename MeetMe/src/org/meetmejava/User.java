@@ -17,9 +17,8 @@ public class User extends Observable implements PropertyChangeListener {
 
 	/** The meet me user. */
 	private MeetMeUser meetMeUser;
-	
-	/** The talking. */
-	private boolean talking = false;
+
+	private boolean alive = false;
 
 	/** The Constant logger. */
 	private final static Logger logger = Logger.getLogger(User.class.getName());
@@ -35,45 +34,64 @@ public class User extends Observable implements PropertyChangeListener {
 
 	/**
 	 * Instantiates a new user.
-	 *
-	 * @param meetMeUser the meet me user
+	 * 
+	 * @param meetMeUser
+	 *            the meet me user
 	 */
 	public User(MeetMeUser meetMeUser) {
 		this.meetMeUser = meetMeUser;
 		meetMeUser.addPropertyChangeListener(this);
-	}
-	
-	public void requestHangUp()
-	{
-		this.meetMeUser.getChannel().hangup();
+		alive = true;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+	public void requestHangUp() {
+		if (!alive) {
+			System.out.println("Ignoring hangup request, " + getPhoneNumber()
+					+ " is already dead!!");
+
+		} else {
+			System.out.println("Requesting hangup for " + getPhoneNumber());
+			this.meetMeUser.getChannel().hangup();
+		}
+	}
+
+	public void requestMuteStateChange() {
+		if (meetMeUser.isMuted()) {
+			System.out.println("Unmuting user " + meetMeUser.getUserNumber());
+			meetMeUser.unmute();
+		} else {
+			System.out.println("Muting user " + meetMeUser.getUserNumber());
+			meetMeUser.mute();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seejava.beans.PropertyChangeListener#propertyChange(java.beans.
+	 * PropertyChangeEvent)
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		logger.fine("Received event:" + evt);
+		if (!alive)
+			System.out
+					.println("Received event. This looks like a problem!! The user is already dead");
 		String propertyName = evt.getPropertyName();
 		String propertyValue = evt.getNewValue().toString();
+		System.out.println(propertyName + " = " + propertyValue);
 		if ("muted".equals(propertyName)) {
-			boolean newMuteState = Boolean.parseBoolean(propertyValue);
-			if (newMuteState != meetMeUser.isMuted()) {
-				if (newMuteState)
-					meetMeUser.mute();
-				else
-					meetMeUser.unmute();
-				setChanged();
+			setChanged();
+			if ("true".equals(propertyValue))
 				notifyObservers(new Event(EventType.MUTE));
-			}
+			else
+				notifyObservers(new Event(EventType.UNMUTE));
 		}
 		if ("talking".equals(propertyName)) {
-			boolean newTalkState = Boolean.parseBoolean(propertyValue);
-			if (newTalkState != talking) {
-				talking = newTalkState;
-				setChanged();
-				notifyObservers(new Event(EventType.TALKER));
-			}
+			setChanged();
+			if ("true".equals(propertyValue))
+				notifyObservers(new Event(EventType.TALKING));
+			else
+				notifyObservers(new Event(EventType.NOT_TALKING));
 		} else if ("state".equals(propertyName) && "LEFT".equals(propertyValue)) {
 			destroy();
 		}
@@ -87,12 +105,12 @@ public class User extends Observable implements PropertyChangeListener {
 		meetMeUser.removePropertyChangeListener(this);
 		setChanged();
 		notifyObservers(new Event(EventType.USER_LEFT));
-
+		alive = false;
 	}
 
 	/**
 	 * Gets the user id.
-	 *
+	 * 
 	 * @return the user id
 	 */
 	public String getUserId() {
@@ -101,7 +119,7 @@ public class User extends Observable implements PropertyChangeListener {
 
 	/**
 	 * Checks if is muted.
-	 *
+	 * 
 	 * @return true, if is muted
 	 */
 	public boolean isMuted() {
@@ -110,7 +128,7 @@ public class User extends Observable implements PropertyChangeListener {
 
 	/**
 	 * Checks if is talking.
-	 *
+	 * 
 	 * @return true, if is talking
 	 */
 	public boolean isTalking() {
@@ -119,7 +137,7 @@ public class User extends Observable implements PropertyChangeListener {
 
 	/**
 	 * Gets the phone number.
-	 *
+	 * 
 	 * @return the phone number
 	 */
 	public String getPhoneNumber() {
@@ -129,11 +147,15 @@ public class User extends Observable implements PropertyChangeListener {
 
 	/**
 	 * Gets the user number.
-	 *
+	 * 
 	 * @return the user number
 	 */
 	public Integer getUserNumber() {
 		return meetMeUser.getUserNumber();
+	}
+
+	public boolean isAlive() {
+		return alive;
 	}
 
 }

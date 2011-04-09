@@ -9,8 +9,6 @@ import java.util.logging.Logger;
 import org.asteriskjava.live.MeetMeRoom;
 import org.asteriskjava.live.MeetMeUser;
 import org.asteriskjava.manager.action.HangupAction;
-import org.asteriskjava.manager.action.MeetMeMuteAction;
-import org.asteriskjava.manager.action.MeetMeUnmuteAction;
 import org.meetmejava.event.Event;
 import org.meetmejava.event.EventType;
 
@@ -150,49 +148,6 @@ public class Conference extends Observable {
 	}
 
 	/**
-	 * Sets the conference user mute context.
-	 * 
-	 * @param userId
-	 *            the user id
-	 * @param mute
-	 *            the mute
-	 * @throws Exception
-	 *             the exception
-	 */
-	public void setConferenceUserMuteState(String userId, boolean mute)
-			throws Exception {
-		if (mute) {
-			MeetMeMuteAction muteAction = new MeetMeMuteAction(
-					conferenceNumber, conferenceUserMap.get(userId)
-							.getUserNumber());
-
-			context.getConnection().sendAction(muteAction);
-		} else {
-			MeetMeUnmuteAction unmuteAction = new MeetMeUnmuteAction(
-					conferenceNumber, conferenceUserMap.get(userId)
-							.getUserNumber());
-
-			context.getConnection().sendAction(unmuteAction);
-		}
-
-	}
-
-	/**
-	 * Request hangup.
-	 * 
-	 * @param userId
-	 *            the user id
-	 * @throws Exception
-	 *             the exception
-	 */
-	private void requestHangup(String userId) throws Exception {
-		logger.fine("Hanging up user " + userId);
-		HangupAction hangupAction = new HangupAction(getMeetMeUser(userId)
-				.getChannel().getName());
-		context.getConnection().sendAction(hangupAction);
-	}
-
-	/**
 	 * Request end conference.
 	 * 
 	 * @throws Exception
@@ -238,21 +193,6 @@ public class Conference extends Observable {
 	}
 
 	/**
-	 * Handle remove conference user.
-	 * 
-	 * @param userId
-	 *            the user id
-	 */
-	private void handleRemoveConferenceUser(String userId) {
-		User conferenceUser = conferenceUserMap.get(userId);
-		setChanged();
-
-		notifyObservers(new Event(EventType.USER_LEFT, conferenceUser));
-
-		conferenceUserMap.remove(userId);
-	}
-
-	/**
 	 * Handle end conference.
 	 */
 	public void handleEndConference() {
@@ -267,8 +207,11 @@ public class Conference extends Observable {
 	 */
 	public void destroy() {
 		logger.fine("Destroying the conference " + conferenceNumber);
-		for (User user : conferenceUserMap.values())
-			user.destroy();
+		for (User user : conferenceUserMap.values()) {
+			if (user.isAlive())
+				user.requestHangUp();
+		}
+		conferenceUserMap.clear();
 		context.getConferences().remove(conferenceNumber);
 	}
 
