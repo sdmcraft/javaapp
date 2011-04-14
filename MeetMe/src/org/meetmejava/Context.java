@@ -46,7 +46,7 @@ public class Context {
 	private final String extensionURL;
 
 	/** The dial out locks. */
-	private final Map<String, Map<String, Integer>> dialOutLocks = new HashMap<String, Map<String, Integer>>();
+	private final Map<String, Map<String, String>> dialOutLocks = new HashMap<String, Map<String, String>>();
 
 	/** The live event handler. */
 	private LiveEventHandler liveEventHandler;
@@ -125,8 +125,7 @@ public class Context {
 	 *             the timeout exception
 	 */
 	public static Context getInstance(String asteriskIp, String asteriskAdmin,
-			String asteriskPassword, String extensionUrl)
-			throws Exception {
+			String asteriskPassword, String extensionUrl) throws Exception {
 		Context context = new Context(asteriskIp, asteriskAdmin,
 				asteriskPassword, extensionUrl);
 		context.init();
@@ -148,9 +147,9 @@ public class Context {
 		return true;
 	}
 
-	public Integer requestDialOut(String phoneNumber, String roomNumber)
+	public String requestDialOut(String phoneNumber, String roomNumber)
 			throws Exception {
-		Map<String, Integer> dialOutLock = new HashMap<String, Integer>();
+		Map<String, String> dialOutLock = new HashMap<String, String>();
 		synchronized (dialOutLock) {
 			dialOutLocks.put(phoneNumber, dialOutLock);
 			URL url = new URL(extensionURL
@@ -164,12 +163,12 @@ public class Context {
 			httpConn.getInputStream();
 			// TODO This should be a timed wait. On timeout, throw dialout
 			// failure
-			while (!dialOutLock.containsKey("user-number"))
+			while (!dialOutLock.containsKey("user-id"))
 				dialOutLock.wait();
 		}
-		Integer userNumber = dialOutLock.get("user-number");
+		String userId = dialOutLock.get("user-id");
 		dialOutLocks.remove(phoneNumber);
-		return userNumber;
+		return userId;
 	}
 
 	/**
@@ -240,7 +239,7 @@ public class Context {
 	 * 
 	 * @return the dial out locks
 	 */
-	Map<String, Map<String, Integer>> getDialOutLocks() {
+	Map<String, Map<String, String>> getDialOutLocks() {
 		return dialOutLocks;
 	}
 

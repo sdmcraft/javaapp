@@ -153,11 +153,11 @@ public class LiveEventHandler implements AsteriskServerListener,
 		logger.fine("A new user joined " + user.toString());
 		try {
 			String phoneNumber = AsteriskUtils.getUserPhoneNumber(user);
-			Map<String, Integer> dialOutLock = context.getDialOutLocks().get(
+			Map<String, String> dialOutLock = context.getDialOutLocks().get(
 					phoneNumber);
 			if (dialOutLock != null) {
 				synchronized (dialOutLock) {
-					dialOutLock.put("user-number", user.getUserNumber());
+					dialOutLock.put("user-id", user.getChannel().getId());
 					dialOutLock.notify();
 				}
 				/* Sleep for sometime to let notified thread proceed */

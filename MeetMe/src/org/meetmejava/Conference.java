@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import org.asteriskjava.live.MeetMeRoom;
 import org.asteriskjava.live.MeetMeUser;
-import org.asteriskjava.manager.action.HangupAction;
 import org.meetmejava.event.Event;
 import org.meetmejava.event.EventType;
 
@@ -146,7 +145,7 @@ public class Conference extends Observable {
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Request end conference.
 	 * 
