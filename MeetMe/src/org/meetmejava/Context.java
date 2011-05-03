@@ -6,6 +6,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 import java.util.logging.Logger;
 
 import org.asteriskjava.live.AsteriskServer;
@@ -16,14 +17,15 @@ import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.meetmejava.Conference;
+import org.meetmejava.event.Event;
+import org.meetmejava.event.EventType;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Context represents a context for interaction between MeetMe-java
  * and the Asterisk server.
  */
-public class Context {
+public class Context extends Observable {
 
 	private final static Logger logger = Logger.getLogger(Context.class
 			.getName());
@@ -54,8 +56,8 @@ public class Context {
 	/** The started conferences. */
 	private final Map<String, Conference> conferences = new HashMap<String, Conference>();
 
-	private final XMLOutputter xmlOutputter = new XMLOutputter(Format
-			.getPrettyFormat());
+	private final XMLOutputter xmlOutputter = new XMLOutputter(
+			Format.getPrettyFormat());
 
 	/**
 	 * Instantiates a new context.
@@ -87,8 +89,8 @@ public class Context {
 			connection = new Connection(asteriskIp, asteriskAdmin,
 					asteriskPassword);
 			connection.connect();
-			asteriskServer = new DefaultAsteriskServer(connection
-					.getManagerConnection());
+			asteriskServer = new DefaultAsteriskServer(
+					connection.getManagerConnection());
 			this.extensionURL = extensionURL;
 		} catch (Exception ex) {
 			throw new Exception(ex);
@@ -147,28 +149,39 @@ public class Context {
 		return true;
 	}
 
-	public String requestDialOut(String phoneNumber, String roomNumber)
-			throws Exception {
-		Map<String, String> dialOutLock = new HashMap<String, String>();
-		synchronized (dialOutLock) {
-			dialOutLocks.put(phoneNumber, dialOutLock);
-			URL url = new URL(extensionURL
-					+ "?context=call&action=meetme-dialout&channel="
-					// TODO Channel hardcoded to SIP for now
-					+ URLEncoder.encode("SIP", "UTF-8") + "&number="
-					+ URLEncoder.encode(phoneNumber, "UTF-8") + "&room="
-					+ URLEncoder.encode(roomNumber, "UTF-8"));
-			URLConnection httpConn = url.openConnection();
-			httpConn.connect();
-			httpConn.getInputStream();
-			// TODO This should be a timed wait. On timeout, throw dialout
-			// failure
-			while (!dialOutLock.containsKey("user-id"))
-				dialOutLock.wait();
+	public String requestDialOut(String phoneNumber, String roomNumber,
+			String channel) throws Exception {
+		try {
+			Map<String, String> dialOutLock = new HashMap<String, String>();
+			synchronized (dialOutLock) {
+				dialOutLocks.put(phoneNumber, dialOutLock);
+				URL url = new URL(extensionURL
+						+ "?context=call&action=meetme-dialout&channel="
+						+ URLEncoder.encode(channel, "UTF-8") + "&number="
+						+ URLEncoder.encode(phoneNumber, "UTF-8") + "&room="
+						+ URLEncoder.encode(roomNumber, "UTF-8"));
+				logger.fine("Placing dial-out request:" + url);
+				URLConnection httpConn = url.openConnection();
+				httpConn.connect();
+				httpConn.getInputStream();
+				// TODO This should be a timed wait. On timeout, throw dialout
+				// failure
+				while (!dialOutLock.containsKey("user-id"))
+					dialOutLock.wait(20000);
+			}
+			String userId = dialOutLock.get("user-id");
+			if ("FAILED".equals(userId))
+				throw new Exception("Dialout failed!!!");
+			return userId;
+		} finally {
+			dialOutLocks.remove(phoneNumber);
 		}
-		String userId = dialOutLock.get("user-id");
-		dialOutLocks.remove(phoneNumber);
-		return userId;
+	}
+
+	public void handleChannelHangup(String channelId) {
+		logger.info("Handling call rejection");
+		setChanged();
+		notifyObservers(new Event(EventType.CHANNEL_HUNGUP, channelId));
 	}
 
 	/**

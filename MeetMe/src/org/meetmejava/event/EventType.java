@@ -25,5 +25,7 @@ public enum EventType {
 	NOT_TALKING,
 
 	/** The user left. */
-	USER_LEFT
+	USER_LEFT,
+	
+	CHANNEL_HUNGUP
 }

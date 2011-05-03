@@ -178,7 +178,7 @@ public class Conference extends Observable {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public void handleAddConferenceUser(MeetMeUser user, String phoneNumber)
+	public void handleAddConferenceUser(MeetMeUser user)
 			throws Exception {
 		logger.fine("Handling user join event");
 		User conferenceUser = new User(user);

@@ -15,6 +15,7 @@ import org.asteriskjava.live.MeetMeRoom;
 import org.asteriskjava.live.MeetMeUser;
 import org.asteriskjava.live.internal.AsteriskAgentImpl;
 import org.asteriskjava.manager.ManagerEventListener;
+import org.asteriskjava.manager.event.HangupEvent;
 import org.asteriskjava.manager.event.ManagerEvent;
 import org.asteriskjava.manager.event.MeetMeEndEvent;
 
@@ -126,19 +127,19 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 */
 	@Override
 	public void onNewAsteriskChannel(AsteriskChannel channel) {
-		// logger.fine(channel.toString());
-		// String id = channel.getId();
-		// String phoneNumber = AsteriskUtils.getPhoneNumberFromChannel(channel
-		// .getName());
-		// Map<String, Integer> dialOutLock = context.getDialOutLocks().get(
-		// phoneNumber);
-		// if (dialOutLock != null) {
-		// synchronized (dialOutLock) {
-		// dialOutLock.put("user-id", id);
-		// dialOutLock.notifyAll();
-		// }
-		// }
-		// channel.addPropertyChangeListener(this);
+		logger.fine("A new channel joined:" + channel.toString());
+		String id = channel.getId();
+		String phoneNumber = AsteriskUtils.getPhoneNumberFromChannel(channel
+				.getName());
+		Map<String, String> dialOutLock = context.getDialOutLocks().get(
+				phoneNumber);
+		if (dialOutLock != null) {
+			synchronized (dialOutLock) {
+				dialOutLock.put("user-id", id);
+				dialOutLock.notifyAll();
+			}
+		}
+		channel.addPropertyChangeListener(this);
 	}
 
 	/*
@@ -152,25 +153,26 @@ public class LiveEventHandler implements AsteriskServerListener,
 	public void onNewMeetMeUser(MeetMeUser user) {
 		logger.fine("A new user joined " + user.toString());
 		try {
-			String phoneNumber = AsteriskUtils.getUserPhoneNumber(user);
-			Map<String, String> dialOutLock = context.getDialOutLocks().get(
-					phoneNumber);
-			if (dialOutLock != null) {
-				synchronized (dialOutLock) {
-					dialOutLock.put("user-id", user.getChannel().getId());
-					dialOutLock.notify();
-				}
-				/* Sleep for sometime to let notified thread proceed */
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException ex) {
-					logger.log(Level.WARNING, ex.getMessage(), ex);
-				}
-			}
+			// String phoneNumber = AsteriskUtils.getUserPhoneNumber(user);
+			// logger.fine("Phone Number:" + phoneNumber);
+			// Map<String, String> dialOutLock = context.getDialOutLocks().get(
+			// phoneNumber);
+			// if (dialOutLock != null) {
+			// synchronized (dialOutLock) {
+			// dialOutLock.put("user-id", user.getChannel().getId());
+			// dialOutLock.notifyAll();
+			// }
+			// /* Sleep for sometime to let notified thread proceed */
+			// try {
+			// Thread.sleep(500);
+			// } catch (InterruptedException ex) {
+			// logger.log(Level.WARNING, ex.getMessage(), ex);
+			// }
+			// }
 
 			Conference conference = context.getConferences().get(
 					user.getRoom().getRoomNumber());
-			conference.handleAddConferenceUser(user, phoneNumber);
+			conference.handleAddConferenceUser(user);
 		} catch (Exception ex) {
 			logger.log(Level.WARNING, ex.getMessage(), ex);
 		}
@@ -216,8 +218,10 @@ public class LiveEventHandler implements AsteriskServerListener,
 					endEvent.getMeetMe());
 			if (conference != null)
 				conference.handleEndConference();
+		} else if (managerEvent instanceof HangupEvent) {
+			HangupEvent hangupEvent = (HangupEvent) managerEvent;
+			context.handleChannelHangup(hangupEvent.getUniqueId());
 		}
-
 	}
 
 }

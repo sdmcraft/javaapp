@@ -17,12 +17,16 @@ public class AsteriskUtils {
 
 	/**
 	 * Verify meet me room.
-	 *
-	 * @param roomNumber the room number
-	 * @param witness the witness
-	 * @param managerConnection the manager connection
+	 * 
+	 * @param roomNumber
+	 *            the room number
+	 * @param witness
+	 *            the witness
+	 * @param managerConnection
+	 *            the manager connection
 	 * @return true, if successful
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	public static boolean verifyMeetMeRoom(String roomNumber, String witness,
 			ManagerConnection managerConnection) throws Exception {
@@ -51,42 +55,46 @@ public class AsteriskUtils {
 
 	/**
 	 * Gets the phone number from channel.
-	 *
-	 * @param channel the channel
+	 * 
+	 * @param channel
+	 *            the channel
 	 * @return the phone number from channel
 	 */
 	public static final String getPhoneNumberFromChannel(String channel) {
-		Pattern channelNamePattern = Pattern.compile("SIP/[0-9]+");
-		Matcher matcher = channelNamePattern.matcher(channel);
-		String phoneNumber = null;
-		if (matcher.find()) {
-			phoneNumber = matcher.group().substring(4);
+		String phoneNumber = channel;
+		if (channel.startsWith("Gtalk") && channel.contains(".com"))
+			phoneNumber = channel.substring(channel.indexOf("Gtalk") + 6,
+					channel.lastIndexOf(".com") + 4);
+		else if (channel.startsWith("SIP")) {
+			Pattern channelNamePattern = Pattern.compile("SIP/[0-9]+");
+			Matcher matcher = channelNamePattern.matcher(channel);
+
+			if (matcher.find()) {
+				phoneNumber = matcher.group().substring(4);
+			}
 		}
 		return phoneNumber;
 	}
 
 	/**
 	 * Gets the user phone number.
-	 *
-	 * @param user the user
+	 * 
+	 * @param user
+	 *            the user
 	 * @return the user phone number
 	 */
 	public static final String getUserPhoneNumber(MeetMeUser user) {
 		String channel = user.getChannel().getName();
-		Pattern channelNamePattern = Pattern.compile("SIP/[0-9]+");
-		Matcher matcher = channelNamePattern.matcher(channel);
-		String phoneNumber = null;
-		if (matcher.find()) {
-			phoneNumber = matcher.group().substring(4);
-		}
-		return phoneNumber;
+		return getPhoneNumberFromChannel(channel);
 	}
 
 	/**
 	 * The main method.
-	 *
-	 * @param args the arguments
-	 * @throws Exception the exception
+	 * 
+	 * @param args
+	 *            the arguments
+	 * @throws Exception
+	 *             the exception
 	 */
 	public static void main(String[] args) throws Exception {
 		ManagerConnectionFactory factory = new ManagerConnectionFactory(

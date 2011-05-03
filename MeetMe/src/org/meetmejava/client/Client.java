@@ -100,7 +100,7 @@ public class Client implements Observer {
 		Thread.sleep(2000);
 		for (String phoneNumber : phoneNumbers) {
 			System.out.println("User Number:"
-					+ context.requestDialOut(phoneNumber, conferenceNumber)
+					+ context.requestDialOut(phoneNumber, conferenceNumber,"SIP")
 							+ " dialled out");
 		}
 		Thread.sleep(10000);
