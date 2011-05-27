@@ -7,12 +7,15 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.live.DefaultAsteriskServer;
 import org.asteriskjava.manager.AuthenticationFailedException;
 import org.asteriskjava.manager.TimeoutException;
+import org.asteriskjava.manager.action.OriginateAction;
+import org.asteriskjava.manager.response.ManagerResponse;
 import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
@@ -56,6 +59,8 @@ public class Context extends Observable {
 	/** The started conferences. */
 	private final Map<String, Conference> conferences = new HashMap<String, Conference>();
 
+	private AtomicLong actionIdCounter = new AtomicLong(0);
+
 	private final XMLOutputter xmlOutputter = new XMLOutputter(
 			Format.getPrettyFormat());
 
@@ -95,6 +100,13 @@ public class Context extends Observable {
 		} catch (Exception ex) {
 			throw new Exception(ex);
 		}
+	}
+
+	private long getNextActionId() {
+		if (actionIdCounter.get() == Long.MAX_VALUE)
+			actionIdCounter.set(0);
+
+		return actionIdCounter.getAndAdd(1);
 	}
 
 	/**
@@ -176,6 +188,18 @@ public class Context extends Observable {
 		} finally {
 			dialOutLocks.remove(phoneNumber);
 		}
+	}
+
+	public String requestDialOut1(String phoneNumber, String roomNumber,
+			String channel) throws Exception {
+
+		OriginateAction dialoutAction = new OriginateAction();
+		dialoutAction.setChannel(channel + "/" + phoneNumber);
+		dialoutAction.setExten(roomNumber);
+		dialoutAction.setActionId(Long.toString(getNextActionId()));
+		ManagerResponse dialoutResponse = connection.getManagerConnection()
+				.sendAction(dialoutAction);
+		return dialoutResponse.getActionId();
 	}
 
 	public void handleChannelHangup(String channelId) {
