@@ -100,8 +100,8 @@ public class Client implements Observer {
 		Thread.sleep(2000);
 		for (String phoneNumber : phoneNumbers) {
 			System.out.println("User Number:"
-					+ context.requestDialOut(phoneNumber, conferenceNumber,"SIP")
-							+ " dialled out");
+					+ context.requestDialOut(phoneNumber, conferenceNumber,
+							"SIP") + " dialled out");
 		}
 		Thread.sleep(10000);
 		if (users.containsKey("6001"))
@@ -135,7 +135,7 @@ public class Client implements Observer {
 	 */
 	public static void main(String[] args) throws Exception {
 		new Client().demo("50.18.44.168", "admin", "P@$$w0rd", "6300",
-				new String[] { "6001", "6002" },
+				new String[] { "6002" },
 				"http://50.18.44.168:8080/AsteriskExtension/service");
 	}
 }

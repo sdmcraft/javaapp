@@ -161,7 +161,7 @@ public class Context extends Observable {
 		return true;
 	}
 
-	public String requestDialOut(String phoneNumber, String roomNumber,
+	public String requestDialOutOld(String phoneNumber, String roomNumber,
 			String channel) throws Exception {
 		try {
 			Map<String, String> dialOutLock = new HashMap<String, String>();
@@ -190,16 +190,21 @@ public class Context extends Observable {
 		}
 	}
 
-	public String requestDialOut1(String phoneNumber, String roomNumber,
+	public void requestDialOut(String phoneNumber, String roomNumber,
 			String channel) throws Exception {
 
+		logger.info("Requesting dial out for phone: " + phoneNumber
+				+ " in channel: " + channel);
 		OriginateAction dialoutAction = new OriginateAction();
 		dialoutAction.setChannel(channel + "/" + phoneNumber);
+		dialoutAction.setContext("local");
+		dialoutAction.setPriority(new Integer(1));
+		dialoutAction.setTimeout(new Long(30000));
+
 		dialoutAction.setExten(roomNumber);
 		dialoutAction.setActionId(Long.toString(getNextActionId()));
-		ManagerResponse dialoutResponse = connection.getManagerConnection()
-				.sendAction(dialoutAction);
-		return dialoutResponse.getActionId();
+		connection.getManagerConnection().sendAction(dialoutAction, 30000);
+		logger.info("Dial out was answered");
 	}
 
 	public void handleChannelHangup(String channelId) {
