@@ -70,7 +70,7 @@ public class AsteriskUtils {
 			Matcher matcher = channelNamePattern.matcher(channel);
 
 			if (matcher.find()) {
-				phoneNumber = matcher.group().substring(4);
+				phoneNumber = matcher.group();
 			}
 		}
 		return phoneNumber;

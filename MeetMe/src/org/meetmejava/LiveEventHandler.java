@@ -128,17 +128,6 @@ public class LiveEventHandler implements AsteriskServerListener,
 	@Override
 	public void onNewAsteriskChannel(AsteriskChannel channel) {
 		logger.fine("A new channel joined:" + channel.toString());
-		String id = channel.getId();
-		String phoneNumber = AsteriskUtils.getPhoneNumberFromChannel(channel
-				.getName());
-		Map<String, String> dialOutLock = context.getDialOutLocks().get(
-				phoneNumber);
-		if (dialOutLock != null) {
-			synchronized (dialOutLock) {
-				dialOutLock.put("user-id", id);
-				dialOutLock.notifyAll();
-			}
-		}
 		channel.addPropertyChangeListener(this);
 	}
 

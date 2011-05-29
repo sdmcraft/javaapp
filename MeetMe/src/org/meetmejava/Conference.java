@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import org.asteriskjava.live.MeetMeRoom;
 import org.asteriskjava.live.MeetMeUser;
+import org.asteriskjava.manager.action.OriginateAction;
 import org.meetmejava.event.Event;
 import org.meetmejava.event.EventType;
 
@@ -145,7 +146,28 @@ public class Conference extends Observable {
 		}
 		return null;
 	}
-	
+
+	public String requestDialOut(String phoneNumber) throws Exception {
+
+		logger.info("Requesting dial out for phone: " + phoneNumber);
+		OriginateAction dialoutAction = new OriginateAction();
+		dialoutAction.setChannel(phoneNumber);
+
+		/* TODO Remove these hardcodings */
+		dialoutAction.setContext("local");
+		dialoutAction.setPriority(new Integer(1));
+		dialoutAction.setTimeout(new Long(30000));
+
+		dialoutAction.setExten(meetMeRoom.getRoomNumber());
+
+		/* This blocks till the call is answered */
+		context.getConnection().getManagerConnection()
+				.sendAction(dialoutAction, 30000);
+
+		logger.info("Dial out was answered by " + phoneNumber);
+		return phoneNumber + "@" + meetMeRoom.getRoomNumber();
+	}
+
 	/**
 	 * Request end conference.
 	 * 
@@ -153,8 +175,7 @@ public class Conference extends Observable {
 	 *             the exception
 	 */
 	public void requestEndConference() throws Exception {
-		logger
-				.fine("Request received to end conference. Hanging up all users..");
+		logger.fine("Request received to end conference. Hanging up all users..");
 
 		/*
 		 * Lock conferenceUserMap to avoid user left events modifying it while
@@ -178,8 +199,7 @@ public class Conference extends Observable {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public void handleAddConferenceUser(MeetMeUser user)
-			throws Exception {
+	public void handleAddConferenceUser(MeetMeUser user) throws Exception {
 		logger.fine("Handling user join event");
 		User conferenceUser = new User(user);
 		conferenceUserMap.put(conferenceUser.getUserId(), conferenceUser);

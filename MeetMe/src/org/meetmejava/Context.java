@@ -50,16 +50,11 @@ public class Context extends Observable {
 
 	private final String extensionURL;
 
-	/** The dial out locks. */
-	private final Map<String, Map<String, String>> dialOutLocks = new HashMap<String, Map<String, String>>();
-
 	/** The live event handler. */
 	private LiveEventHandler liveEventHandler;
 
 	/** The started conferences. */
 	private final Map<String, Conference> conferences = new HashMap<String, Conference>();
-
-	private AtomicLong actionIdCounter = new AtomicLong(0);
 
 	private final XMLOutputter xmlOutputter = new XMLOutputter(
 			Format.getPrettyFormat());
@@ -100,13 +95,6 @@ public class Context extends Observable {
 		} catch (Exception ex) {
 			throw new Exception(ex);
 		}
-	}
-
-	private long getNextActionId() {
-		if (actionIdCounter.get() == Long.MAX_VALUE)
-			actionIdCounter.set(0);
-
-		return actionIdCounter.getAndAdd(1);
 	}
 
 	/**
@@ -159,52 +147,6 @@ public class Context extends Observable {
 			return false;
 		}
 		return true;
-	}
-
-	public String requestDialOutOld(String phoneNumber, String roomNumber,
-			String channel) throws Exception {
-		try {
-			Map<String, String> dialOutLock = new HashMap<String, String>();
-			synchronized (dialOutLock) {
-				dialOutLocks.put(phoneNumber, dialOutLock);
-				URL url = new URL(extensionURL
-						+ "?context=call&action=meetme-dialout&channel="
-						+ URLEncoder.encode(channel, "UTF-8") + "&number="
-						+ URLEncoder.encode(phoneNumber, "UTF-8") + "&room="
-						+ URLEncoder.encode(roomNumber, "UTF-8"));
-				logger.fine("Placing dial-out request:" + url);
-				URLConnection httpConn = url.openConnection();
-				httpConn.connect();
-				httpConn.getInputStream();
-				// TODO This should be a timed wait. On timeout, throw dialout
-				// failure
-				while (!dialOutLock.containsKey("user-id"))
-					dialOutLock.wait(20000);
-			}
-			String userId = dialOutLock.get("user-id");
-			if ("FAILED".equals(userId))
-				throw new Exception("Dialout failed!!!");
-			return userId;
-		} finally {
-			dialOutLocks.remove(phoneNumber);
-		}
-	}
-
-	public void requestDialOut(String phoneNumber, String roomNumber,
-			String channel) throws Exception {
-
-		logger.info("Requesting dial out for phone: " + phoneNumber
-				+ " in channel: " + channel);
-		OriginateAction dialoutAction = new OriginateAction();
-		dialoutAction.setChannel(channel + "/" + phoneNumber);
-		dialoutAction.setContext("local");
-		dialoutAction.setPriority(new Integer(1));
-		dialoutAction.setTimeout(new Long(30000));
-
-		dialoutAction.setExten(roomNumber);
-		dialoutAction.setActionId(Long.toString(getNextActionId()));
-		connection.getManagerConnection().sendAction(dialoutAction, 30000);
-		logger.info("Dial out was answered");
 	}
 
 	public void handleChannelHangup(String channelId) {
@@ -274,15 +216,6 @@ public class Context extends Observable {
 	 */
 	Map<String, Conference> getConferences() {
 		return conferences;
-	}
-
-	/**
-	 * Gets the dial out locks.
-	 * 
-	 * @return the dial out locks
-	 */
-	Map<String, Map<String, String>> getDialOutLocks() {
-		return dialOutLocks;
 	}
 
 }

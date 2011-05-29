@@ -35,7 +35,7 @@ public class Client implements Observer {
 			User user = (User) event.getData();
 			user.addObserver(this);
 			users.put(user.getPhoneNumber(), user);
-			System.out.println(user.getPhoneNumber()
+			System.out.println(user.getUserId()
 					+ " joined the audio conference");
 			break;
 		case CONFERENCE_ENDED:
@@ -100,18 +100,17 @@ public class Client implements Observer {
 		Thread.sleep(2000);
 		for (String phoneNumber : phoneNumbers) {
 			System.out.println("User Number:"
-					+ context.requestDialOut(phoneNumber, conferenceNumber,
-							"SIP") + " dialled out");
+					+ conference.requestDialOut(phoneNumber) + " dialled out");
 		}
 		Thread.sleep(10000);
-		if (users.containsKey("6001"))
-			users.get("6001").requestMuteStateChange();
+		if (users.containsKey("SIP/6002"))
+			users.get("SIP/6002").requestMuteStateChange();
 		Thread.sleep(10000);
-		if (users.containsKey("6001"))
-			users.get("6001").requestMuteStateChange();
+		if (users.containsKey("SIP/6002"))
+			users.get("SIP/6002").requestMuteStateChange();
 		Thread.sleep(10000);
-		if (users.containsKey("6001"))
-			users.get("6001").requestHangUp();
+		if (users.containsKey("SIP/6002"))
+			users.get("SIP/6002").requestHangUp();
 		Thread.sleep(10000);
 		conference.destroy();
 		context.destroy();
@@ -135,7 +134,7 @@ public class Client implements Observer {
 	 */
 	public static void main(String[] args) throws Exception {
 		new Client().demo("50.18.44.168", "admin", "P@$$w0rd", "6300",
-				new String[] { "6002" },
+				new String[] { "SIP/6002" },
 				"http://50.18.44.168:8080/AsteriskExtension/service");
 	}
 }
