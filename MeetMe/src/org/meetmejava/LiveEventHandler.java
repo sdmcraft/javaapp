@@ -2,7 +2,6 @@ package org.meetmejava;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
