@@ -11,6 +11,7 @@
 <%
 	Map<String, String[]> paramMap = request.getParameterMap();
 %>
+Text : ${pageContext.request.contextPath}
 <table>
 	<thead>
 		<tr>
