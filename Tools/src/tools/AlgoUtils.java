@@ -78,6 +78,27 @@ public class AlgoUtils {
 		}
 	}
 
+	/*
+	 * The principle of Shell sort is to rearrange the file so that looking at
+	 * every hth element yields a sorted file. We call such a file h-sorted. If
+	 * the file is then k-sorted for some other integer k, then the file remains
+	 * h-sorted. For instance, if a list was 5-sorted and then 3-sorted, the
+	 * list is now not only 3-sorted, but both 5- and 3-sorted. If this were not
+	 * true, the algorithm would undo work that it had done in previous
+	 * iterations, and would not achieve such a low running time.
+	 * 
+	 * The algorithm draws upon a sequence of positive integers known as the
+	 * increment sequence. Any sequence will do, as long as it ends with 1, but
+	 * some sequences perform better than others. The algorithm begins by
+	 * performing a gap insertion sort, with the gap being the first number in
+	 * the increment sequence. It continues to perform a gap insertion sort for
+	 * each number in the sequence, until it finishes with a gap of 1. When the
+	 * increment reaches 1, the gap insertion sort is simply an ordinary
+	 * insertion sort, guaranteeing that the final list is sorted. Beginning
+	 * with large increments allows elements in the file to move quickly towards
+	 * their final positions, and makes it easier to subsequently sort for
+	 * smaller increments.
+	 */
 	public static void shellSort(int[] elements) {
 		int h = 1;
 		while (h <= elements.length / 3) {
@@ -623,8 +644,8 @@ public class AlgoUtils {
 					numFullBinaryTrees2(nodesOnRight, store);
 				for (BinaryTree leftTree : store.get(nodesOnLeft)) {
 					for (BinaryTree rightTree : store.get(nodesOnRight)) {
-						BinaryTree root = new BinaryTree(Integer
-								.toString(counter++));
+						BinaryTree root = new BinaryTree(
+								Integer.toString(counter++));
 						root.setLeft((BinaryTree) leftTree.clone());
 						root.setRight((BinaryTree) rightTree.clone());
 						treeList.add(root);
@@ -659,7 +680,7 @@ public class AlgoUtils {
 		// System.out.println("Smallest 2 ranked indices: ");
 		// for (int i : rankedIndices)
 		// System.out.print(" " + i);
-		//		
+		//
 		// System.out.println("\n");
 		// Thread.sleep(10000);
 		// quickSort(new int[] { 1, 1 });
@@ -714,7 +735,7 @@ public class AlgoUtils {
 		// System.out.print(" " + i);
 		// }
 		//
-		//		
+		//
 		// System.out.println(7/2);
 		// for (String s : longestIncSubseq(input1))
 		// System.out.println(s);;
