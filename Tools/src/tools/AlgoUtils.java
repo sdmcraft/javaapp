@@ -380,7 +380,20 @@ public class AlgoUtils {
 		}
 	}
 
-	/* http://www.algorithmist.com/index.php/Longest_Increasing_Subsequence */
+	/*
+	 * http://www.algorithmist.com/index.php/Longest_Increasing_Subsequence The
+	 * idea is to iterate over the array. Each array element has a personal
+	 * stack associated with contains the longest increasing subsequence of
+	 * which it is the last element. So when iterating on a stack element, finds
+	 * out the personal stacks of all the elements before it which are smaller
+	 * that it so that this element can add itself to their stack and make it
+	 * own personal stack with it being the last element. Also of all the
+	 * personal stacks of the elements before this one, the biggest one is
+	 * chosen because we are only interested in the "longest" subsequence which
+	 * ends with this elements. The after we have done it for all, we just need
+	 * to find the largest personal stack and that is our longest increasing
+	 * subsequence of that array.
+	 */
 	private static String[] longestIncSubseq(int[] input) throws Exception {
 		ArrayStack[] stackStore = new ArrayStack[input.length];
 
