@@ -77,7 +77,7 @@ public class Tree implements Cloneable, Serializable {
 		clearDiagram(this);
 		setLevels();
 		preDiagram();
-		//System.out.println(intCount);
+		// System.out.println(intCount);
 		getDiagram(this);
 		diagram += "}";
 		return diagram;
@@ -114,7 +114,7 @@ public class Tree implements Cloneable, Serializable {
 					for (int i = 0; i < count; i++) {
 						child.nodeID += "*";
 					}
-					//System.out.println("--------->" + child.nodeID);
+					// System.out.println("--------->" + child.nodeID);
 					intCount.put(placeholder, count + 1);
 				} else {
 					intCount.put(placeholder, 1);
@@ -148,7 +148,7 @@ public class Tree implements Cloneable, Serializable {
 		queue.insert(this);
 		while (!queue.empty()) {
 			Tree root = (Tree) queue.remove();
-			//System.out.println(root.value + "-->" + root.children.size());
+			// System.out.println(root.value + "-->" + root.children.size());
 			for (Tree child : root.getChildren()) {
 				queue.insert(child);
 			}
@@ -295,6 +295,18 @@ public class Tree implements Cloneable, Serializable {
 		}
 		root.height += maxChildHeight;
 		return root.height;
+	}
+
+	/*To be tested*/
+	public LinkedList maxValuePath() {
+		LinkedList maxValuePath = null;
+		Long maxValue = 0L;
+		for (Tree subTree : children) {
+			LinkedList subList = subTree.maxValuePath();
+			if (subList.sum() > maxValue)
+				maxValuePath = subList;
+		}
+		return maxValuePath.prefix(new LinkedList(value));
 	}
 
 }

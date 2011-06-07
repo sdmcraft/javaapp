@@ -95,4 +95,18 @@ public class LinkedList implements Cloneable {
 	public void setNext(LinkedList next) {
 		this.next = next;
 	}
+
+	/*To be tested*/
+	public Long sum() {
+		Long sum = Long.parseLong(this.value);
+		if (this.next != null)
+			sum += this.next.sum();
+		return sum;
+	}
+
+	/*To be tested*/
+	public LinkedList prefix(LinkedList prefixList) {
+		prefixList.next = this;
+		return prefixList;
+	}
 }
