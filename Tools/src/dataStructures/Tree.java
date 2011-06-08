@@ -132,7 +132,7 @@ public class Tree implements Cloneable, Serializable {
 	}
 
 	public void setLevels() throws Exception {
-		ArrayQueue queue = new ArrayQueue(100);
+		ArrayQueue queue = new ArrayQueue(1000);
 		queue.insert(this);
 		while (!queue.empty()) {
 			Tree root = (Tree) queue.remove();
@@ -144,7 +144,7 @@ public class Tree implements Cloneable, Serializable {
 	}
 
 	public void childCount() throws Exception {
-		ArrayQueue queue = new ArrayQueue(100);
+		ArrayQueue queue = new ArrayQueue(1000);
 		queue.insert(this);
 		while (!queue.empty()) {
 			Tree root = (Tree) queue.remove();
@@ -161,7 +161,7 @@ public class Tree implements Cloneable, Serializable {
 		int lower = -1;
 
 		/* TODO Currently limited to 100 nodes */
-		ArrayQueue queue = new ArrayQueue(100);
+		ArrayQueue queue = new ArrayQueue(1000);
 		queue.insert(this);
 		while (!queue.empty()) {
 			Tree root = (Tree) queue.remove();
@@ -194,8 +194,8 @@ public class Tree implements Cloneable, Serializable {
 	}
 
 	private ArrayQueue doBFT() throws Exception {
-		ArrayQueue workQueue = new ArrayQueue(100);
-		ArrayQueue resultQueue = new ArrayQueue(100);
+		ArrayQueue workQueue = new ArrayQueue(1000);
+		ArrayQueue resultQueue = new ArrayQueue(1000);
 		workQueue.insert(this);
 		resultQueue.insert(this);
 		while (!workQueue.empty()) {
@@ -297,7 +297,7 @@ public class Tree implements Cloneable, Serializable {
 		return root.height;
 	}
 
-	/*To be tested*/
+	/* To be tested */
 	public LinkedList maxValuePath() {
 		LinkedList maxValuePath = null;
 		Long maxValue = 0L;
@@ -307,6 +307,26 @@ public class Tree implements Cloneable, Serializable {
 				maxValuePath = subList;
 		}
 		return maxValuePath.prefix(new LinkedList(value));
+	}
+
+	public static Tree generate(int levels, int maxVal, int maxChildren) {
+		if (levels == 0)
+			return null;
+		else {
+			Tree tree = new Tree(
+					Integer.toString((int) (Math.random() * maxVal)));
+			for (int i = 0; i < (int) (Math.random() * maxChildren); i++) {
+				Tree child = Tree.generate(levels - 1, maxVal, maxChildren);
+				if (child != null)
+					tree.addChild(child);
+			}
+			return tree;
+		}
+	}
+
+	public static void main(String[] args) throws Exception {
+		Tree tree = Tree.generate(4, 50, 6);
+		System.out.println(tree.getDiagram());
 	}
 
 }
