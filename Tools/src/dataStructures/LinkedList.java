@@ -7,9 +7,14 @@ public class LinkedList implements Cloneable {
 	public LinkedList() {
 	}
 
-	public LinkedList(String string) {
-		this.value = string.charAt(0) + "";
-		this.next = stringToLinkedList(string, 1);
+	public LinkedList(String string, boolean split) {
+		if (split) {
+			this.value = string.charAt(0) + "";
+			this.next = stringToLinkedList(string, 1);
+		} else {
+			this.value = string;
+			this.next = null;
+		}
 	}
 
 	public LinkedList(String[] strings, int index) {
@@ -75,7 +80,7 @@ public class LinkedList implements Cloneable {
 	}
 
 	public static void main(String[] args) {
-		LinkedList linkedList = new LinkedList("12345");
+		LinkedList linkedList = new LinkedList("12345", true);
 		System.out.println(linkedList.reverse());
 		System.out.println(linkedList);
 	}
@@ -96,7 +101,7 @@ public class LinkedList implements Cloneable {
 		this.next = next;
 	}
 
-	/*To be tested*/
+	/* To be tested */
 	public Long sum() {
 		Long sum = Long.parseLong(this.value);
 		if (this.next != null)
@@ -104,7 +109,7 @@ public class LinkedList implements Cloneable {
 		return sum;
 	}
 
-	/*To be tested*/
+	/* To be tested */
 	public LinkedList prefix(LinkedList prefixList) {
 		prefixList.next = this;
 		return prefixList;

@@ -5,8 +5,8 @@ import dataStructures.LinkedList;
 public class MathUtils {
 
 	private static String add(String string1, String string2) {
-		LinkedList number1 = new LinkedList(string1);
-		LinkedList number2 = new LinkedList(string2);
+		LinkedList number1 = new LinkedList(string1, true);
+		LinkedList number2 = new LinkedList(string2, true);
 		LinkedList number1Rev = number1.reverse();
 		LinkedList number2Rev = number2.reverse();		
 		StringBuilder result = new StringBuilder();

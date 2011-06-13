@@ -14,6 +14,7 @@ public class Tree implements Cloneable, Serializable {
 	protected String value;
 	private String nodeID;
 	private String diagram;
+	private String color;
 	private Map<String, Integer> intCount;
 	private int terminalCount;
 	private Tree sibling;
@@ -215,7 +216,6 @@ public class Tree implements Cloneable, Serializable {
 		}
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
-				String color = null;
 				if (root instanceof BinaryTree) {
 					BinaryTree bt = (BinaryTree) root;
 
@@ -297,16 +297,20 @@ public class Tree implements Cloneable, Serializable {
 		return root.height;
 	}
 
-	/* To be tested */
 	public LinkedList maxValuePath() {
 		LinkedList maxValuePath = null;
 		Long maxValue = 0L;
 		for (Tree subTree : children) {
 			LinkedList subList = subTree.maxValuePath();
-			if (subList.sum() > maxValue)
+			if (subList.sum() > maxValue) {
+				maxValue = subList.sum();
 				maxValuePath = subList;
+			}
 		}
-		return maxValuePath.prefix(new LinkedList(value));
+		if (maxValuePath == null)
+			return new LinkedList(value, false);
+		else
+			return maxValuePath.prefix(new LinkedList(value, false));
 	}
 
 	public static Tree generate(int levels, int maxVal, int maxChildren) {
@@ -324,8 +328,32 @@ public class Tree implements Cloneable, Serializable {
 		}
 	}
 
+	/*WIP*/
+	public boolean detectPath(LinkedList path) {
+		boolean result = false;
+		System.out.println("path is:" + path);
+		if (path.getValue().equals(this.value)) {
+			if (this.children == null || this.children.isEmpty()) {
+				result = true;
+				this.color = "red";
+			} else {
+				for (Tree subTree : children) {
+					result = subTree.detectPath(path.getNext());
+					if (result) {
+						this.color = "red";
+						break;
+					}
+				}
+			}
+		}
+		return result;
+	}
+
 	public static void main(String[] args) throws Exception {
-		Tree tree = Tree.generate(4, 50, 6);
+		Tree tree = Tree.generate(6, 50, 6);
+		System.out.println(tree.getDiagram());
+		LinkedList maxValPath = tree.maxValuePath();
+		tree.detectPath(maxValPath);
 		System.out.println(tree.getDiagram());
 	}
 
