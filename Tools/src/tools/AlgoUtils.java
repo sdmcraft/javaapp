@@ -1,5 +1,10 @@
 package tools;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -357,6 +362,44 @@ public class AlgoUtils {
 	/* WIP */
 	private static void merge(String file, int start1, int end1, int start2,
 			int end2) {
+
+	}
+
+	class FileMarker {
+		RandomAccessFile file;
+		int marker;
+
+	}
+
+	/*WIP*/
+	private static void externalSort(RandomAccessFile inputFile,
+			RandomAccessFile outputFile, String tempDir, int[] ram)
+			throws Exception {
+		String line;
+		int i = 0;
+		int phase = 0;
+		int tempFileCount = 0;
+		PrintWriter pw = null;
+		try {
+			while ((line = inputFile.readLine()) != null) {
+				ram[i] = Integer.parseInt(line);
+				i = (i + 1) % ram.length;
+				if (i == 0) {
+					quickSort(ram);
+
+					pw = new PrintWriter(new File(tempDir,
+							Integer.toString(phase) + "-"
+									+ Integer.toString(tempFileCount)), "rw");
+					for (int value : ram)
+						pw.println(value);
+
+					tempFileCount++;
+				}
+			}
+		} finally {
+			pw.close();
+			inputFile.close();
+		}
 
 	}
 

@@ -14,7 +14,7 @@ public class Tree implements Cloneable, Serializable {
 	protected String value;
 	private String nodeID;
 	private String diagram;
-	private String color;
+	private String nodeColor;
 	private Map<String, Integer> intCount;
 	private int terminalCount;
 	private Tree sibling;
@@ -214,8 +214,15 @@ public class Tree implements Cloneable, Serializable {
 			diagram += "\"" + root.nodeID + "\"" + "->" + "\""
 					+ root.sibling.nodeID + "\"" + "[constraint=false];\n";
 		}
+
+		if (root.nodeColor != null && !root.nodeColor.isEmpty()) {
+			diagram += "\"" + root.nodeID + "\"[color=" + root.nodeColor
+					+ "];\n";
+		}
+
 		if (root.getChildren() != null && root.getChildren().size() > 0) {
 			for (Tree child : root.getChildren()) {
+				String color = null;
 				if (root instanceof BinaryTree) {
 					BinaryTree bt = (BinaryTree) root;
 
@@ -240,6 +247,7 @@ public class Tree implements Cloneable, Serializable {
 					}
 
 				}
+
 				diagram += "\"" + root.nodeID + "\"" + "->" + "\""
 						+ child.nodeID + "\""
 						+ (color != null ? "[color=" + color + "]" : "")
@@ -328,19 +336,21 @@ public class Tree implements Cloneable, Serializable {
 		}
 	}
 
-	/*WIP*/
+	/*
+	 * Detects the presence of a linked list as a path inside this tree. Colors
+	 * the path if found
+	 */
 	public boolean detectPath(LinkedList path) {
 		boolean result = false;
-		System.out.println("path is:" + path);
 		if (path.getValue().equals(this.value)) {
 			if (this.children == null || this.children.isEmpty()) {
 				result = true;
-				this.color = "red";
+				this.nodeColor = "red";
 			} else {
 				for (Tree subTree : children) {
 					result = subTree.detectPath(path.getNext());
 					if (result) {
-						this.color = "red";
+						this.nodeColor = "red";
 						break;
 					}
 				}
