@@ -65,6 +65,15 @@ public class User extends Observable implements PropertyChangeListener {
 		}
 	}
 
+	public void requestStartRecording() {
+		meetMeUser.getChannel().startMonitoring(
+				getUserId() + "_" + System.currentTimeMillis(), "wav", true);
+	}
+
+	public void requestStopRecording() {
+		meetMeUser.getChannel().stopMonitoring();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -114,7 +123,7 @@ public class User extends Observable implements PropertyChangeListener {
 	 * @return the user id
 	 */
 	public String getUserId() {
-		return AsteriskUtils.getUserPhoneNumber(meetMeUser) + "@"
+		return AsteriskUtils.getUserPhoneNumber(meetMeUser) + "_"
 				+ meetMeUser.getRoom().getRoomNumber();
 	}
 
