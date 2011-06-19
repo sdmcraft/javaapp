@@ -101,6 +101,7 @@ public class Client implements Observer {
 		for (String phoneNumber : phoneNumbers) {
 			System.out.println("User Number:"
 					+ conference.requestDialOut(phoneNumber) + " dialled out");
+			Thread.sleep(30000);
 		}
 		if (users.containsKey("SIP/6000")) {
 
@@ -113,7 +114,7 @@ public class Client implements Observer {
 			users.get("SIP/6000").requestMuteStateChange();
 			Thread.sleep(10000);
 
-			users.get("SIP/6000").requestStopRecording();
+			//users.get("SIP/6000").requestStopRecording();
 			
 			users.get("SIP/6000").requestHangUp();
 			Thread.sleep(10000);
@@ -141,7 +142,7 @@ public class Client implements Observer {
 	 *             the interrupted exception
 	 */
 	public static void main(String[] args) throws Exception {
-		new Client().demo("10.40.79.106", "admin", "P@$$w0rd", "6300",
+		new Client().demo("192.168.1.102", "admin", "P@$$w0rd", "6300",
 				new String[] { "SIP/6000" },
 				"http://10.40.79.106:8080/AsteriskExtension/service");
 	}

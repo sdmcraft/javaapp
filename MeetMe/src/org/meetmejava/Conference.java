@@ -159,10 +159,9 @@ public class Conference extends Observable {
 		dialoutAction.setTimeout(new Long(30000));
 
 		dialoutAction.setExten(meetMeRoom.getRoomNumber());
-
-		/* This blocks till the call is answered */
+		
 		context.getConnection().getManagerConnection()
-				.sendAction(dialoutAction, 30000);
+				.sendAction(dialoutAction, new DialoutActionCallback());
 
 		logger.info("Dial out was answered by " + phoneNumber);
 		return phoneNumber + "@" + meetMeRoom.getRoomNumber();

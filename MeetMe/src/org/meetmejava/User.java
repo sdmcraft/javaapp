@@ -123,7 +123,7 @@ public class User extends Observable implements PropertyChangeListener {
 	 * @return the user id
 	 */
 	public String getUserId() {
-		return AsteriskUtils.getUserPhoneNumber(meetMeUser) + "_"
+		return AsteriskUtils.getUserPhoneNumber(meetMeUser) + "@"
 				+ meetMeUser.getRoom().getRoomNumber();
 	}
 
