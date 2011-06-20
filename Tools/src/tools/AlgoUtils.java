@@ -371,36 +371,49 @@ public class AlgoUtils {
 
 	}
 
-	/*WIP*/
+	/* WIP */
 	private static void externalSort(RandomAccessFile inputFile,
 			RandomAccessFile outputFile, String tempDir, int[] ram)
 			throws Exception {
-		String line;
+		String line = "";
 		int i = 0;
 		int phase = 0;
 		int tempFileCount = 0;
 		PrintWriter pw = null;
+
 		try {
-			while ((line = inputFile.readLine()) != null) {
-				ram[i] = Integer.parseInt(line);
-				i = (i + 1) % ram.length;
-				if (i == 0) {
+			while (line != null) {
+				line = inputFile.readLine();
+				if (line != null) {
+					ram[i] = Integer.parseInt(line);
+					i = (i + 1) % ram.length;
+				}
+				if (i == 0 || line == null) {
 					quickSort(ram);
 
 					pw = new PrintWriter(new File(tempDir,
 							Integer.toString(phase) + "-"
-									+ Integer.toString(tempFileCount)), "rw");
+									+ Integer.toString(tempFileCount) + ".txt"));
 					for (int value : ram)
 						pw.println(value);
 
+					pw.close();
 					tempFileCount++;
+
+					for (int j = 0; j < ram.length; j++)
+						ram[j] = Integer.MAX_VALUE;
 				}
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			pw.close();
 			inputFile.close();
 		}
-
+		
+		phase = 1;
+		int chunkSize = ram.length/tempFileCount;
+		
 	}
 
 	private static void countingSort(int[] input) {
@@ -716,110 +729,8 @@ public class AlgoUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		// System.out.println(binarySearch(new int[] { -3, -2, -1, 1, 2, 3 },
-		// 0));
-		// System.out
-		// .println(binarySearch(new int[] { -3, -2, -1, 0, 1, 2, 3 }, 0));
-		// System.out.println(binarySearch(new int[] { -3, -2, -1 }, 0));
-		// System.out.println(binarySearch(new int[] { 1, 2, 3 }, 0));
-		// System.out.println(binarySearch(new int[] { -1, 1 }, 0));
-		// int[] input = new int[5];
-		// for (int i = 0; i < 5; i++)
-		// input[i] = (int) (Math.random() * 100);
-		//
-		// System.out.println("Initial Array:");
-		// for (int i : input)
-		// System.out.print(" " + i);
-		//
-		// System.out.println("\n");
-		// int[] rankedIndices = rankIndices(input, 2);
-		// System.out.println("Smallest 2 ranked indices: ");
-		// for (int i : rankedIndices)
-		// System.out.print(" " + i);
-		//
-		// System.out.println("\n");
-		// Thread.sleep(10000);
-		// quickSort(new int[] { 1, 1 });
-		// quickSort(input);
-
-		// System.out.println("\n");
-		// int k = 0;
-		// System.out.println(quickSelect(input, k) + " is ranked " + k);
-		//
-		// quickSort(input);
-		// System.out.println("\nSorted Array:");
-		// for (int i : input)
-		// System.out.print(" " + i);
-
-		// String input = "aabbccdddddefghijklmnopqrstuvwxyzzzzzzzzzzzzzzz";
-		// topNchars(input.toCharArray(), 3);
-		// ArrayStack stack = new ArrayStack(new String[] { "4", "1", "55", "5",
-		// "2", "4", "55" });
-		//
-		// System.out.println(stackSort(stack));
-		// int[] arr1 = new int[]{1,3,5,7,9,10};
-		// int[] arr2 = new int[]{0,2,4,6,8};
-		// int[] arr3 = merge(arr1,arr2);
-		// for(int i : arr3)
-		// System.out.println(i);
-		// int[] input1 = new int[] { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24
-		// };
-		// int[] input2 = new int[] { 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33,
-		// 36 };
-		// List<Integer>[][] store = new List[input1.length][input2.length];
-		// work = 0;
-		// List<Integer> result = longestCommonSubSequence(input1, input2,
-		// input1.length - 1, input2.length - 1, store);
-		// System.out.println(result);
-		// System.out.println("Work:" + work);
-		//
-		// work = 0;
-		// result = longestCommonSubSequence(input1, input2, input1.length - 1,
-		// input2.length - 1);
-		// System.out.println(result);
-		// System.out.println("Work:" + work);
-		// 0, 0, 0, 0, 0, 0, 10000, 10000 };
-		//
-		// countingSort(input1);
-		// for (int i : input1) {
-		// System.out.print(" " + i);
-		// }
-		//
-		// System.out.println("\n");
-		// bubbleSort(input2);
-		// for (int i : input2) {
-		// System.out.print(" " + i);
-		// }
-		//
-		//
-		// System.out.println(7/2);
-		// for (String s : longestIncSubseq(input1))
-		// System.out.println(s);;
-
-		// int[][] input = new int[][] { { 0, 0 }, { 5, 10 }, { 7, 2 }, { 2, 6
-		// },
-		// { 4, 7 }, { 1, 3 }, { 6, 1 }, { 8, 5 }, { 9, 11 }, { 1, 5 },
-		// { 4, 7 }, { 7, 8 } };
-		//
-		// String[] str = knapsack(input, 0, 12);
-		// System.out.println(str[0]);
-		// System.out.println(str[1]);
-		// System.out.println("Work:" + work);
-		//
-		// work = 0;
-		// str = knapsack(input, 0, 12, new String[input.length + 1][13][]);
-		// System.out.println(str[0]);
-		// System.out.println(str[1]);
-		// System.out.println("Work:" + work);
-		// String[] input = { "2", "-1", "3", "9", "-5", "0", "15", "-7", "-3",
-		// "-3", "31" };
-		// LinkedList list = new LinkedList(input, 0);
-		// System.out.println(list);
-		// System.out.println(segregatePlusMinus(list));
-		Map<Integer, List<BinaryTree>> store = new HashMap<Integer, List<BinaryTree>>();
-		numFullBinaryTrees2(21, store);
-		for (BinaryTree btree : store.get(21)) {
-			System.out.println(btree.getDiagram());
-		}
+		RandomAccessFile inputFile = new RandomAccessFile(
+				"D:\\temp\\input.txt", "rw");
+		externalSort(inputFile, null, "D:\\temp", new int[10]);
 	}
 }
