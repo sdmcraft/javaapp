@@ -345,6 +345,11 @@ public class AlgoUtils {
 	}
 
 	/* WIP */
+	private static int[] nMerge(int[][] input) {
+		return null;
+	}
+
+	/* WIP */
 	private static void externalSort(String file, int start, int end, int memory)
 			throws Exception {
 		if ((end - start) <= memory) {
@@ -410,10 +415,10 @@ public class AlgoUtils {
 			pw.close();
 			inputFile.close();
 		}
-		
+
 		phase = 1;
-		int chunkSize = ram.length/tempFileCount;
-		
+		int chunkSize = ram.length / tempFileCount;
+
 	}
 
 	private static void countingSort(int[] input) {
