@@ -13,6 +13,7 @@ import java.util.Map;
 import dataStructures.ArrayStack;
 import dataStructures.BinaryTree;
 import dataStructures.BitArray;
+import dataStructures.FileBackedArray;
 import dataStructures.LinkedList;
 
 public class AlgoUtils {
@@ -345,11 +346,6 @@ public class AlgoUtils {
 	}
 
 	/* WIP */
-	private static int[] nMerge(int[][] input) {
-		return null;
-	}
-
-	/* WIP */
 	private static void externalSort(String file, int start, int end, int memory)
 			throws Exception {
 		if ((end - start) <= memory) {
@@ -417,8 +413,34 @@ public class AlgoUtils {
 		}
 
 		phase = 1;
-		int chunkSize = ram.length / tempFileCount;
+		int chunkSize = ram.length / (tempFileCount + 1);
 
+	}
+
+	/* WIP */
+	/*Use FileBackedArray for input as well*/
+	private static int[] nMerge(int[][] input, int size, String tempDir) throws Exception {
+		FileBackedArray output = new FileBackedArray(size, tempDir
+				+ File.separator + "output.txt");
+		int[] marker = new int[input.length];
+		input = new int[][] { { 1, 2, 3 }, { 4, 5, 6 } };
+
+		for (int j = 0; j < input[0].length; j++) {
+			int max = 0;
+			int selectedColumn = 0;
+			for (int i = 0; i < input.length; i++) {
+				if (input[i][j] < Integer.MAX_VALUE) {					
+					if(input[i][j] > max)
+					{
+						max = input[i][j];
+						selectedColumn = i;
+					}
+				}
+			}
+			output.add(max);
+			System.out.println();
+		}
+		return null;
 	}
 
 	private static void countingSort(int[] input) {
@@ -734,8 +756,9 @@ public class AlgoUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		RandomAccessFile inputFile = new RandomAccessFile(
-				"D:\\temp\\input.txt", "rw");
-		externalSort(inputFile, null, "D:\\temp", new int[10]);
+		// RandomAccessFile inputFile = new RandomAccessFile(
+		// "D:\\temp\\input.txt", "rw");
+		// externalSort(inputFile, null, "D:\\temp", new int[10]);
+		nMerge(null, 1, null);
 	}
 }

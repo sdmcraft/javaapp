@@ -3,7 +3,10 @@ package dataStructures;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+
+import tools.IOUtils;
 
 public class FileBackedArray {
 	private final int[] array;
@@ -37,6 +40,16 @@ public class FileBackedArray {
 		}
 		array[count] = item;
 		count++;
+	}
+
+	/*WIP*/
+	public int read(int index) throws Exception {
+		if (index <= array.length)
+			return array[index];
+		else {
+			return Integer.parseInt(IOUtils.readLineFromFile(index
+					- array.length + 1, backingFile));
+		}
 	}
 
 	public void flush() throws Exception {
