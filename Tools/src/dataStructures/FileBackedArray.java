@@ -3,7 +3,6 @@ package dataStructures;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import tools.IOUtils;
@@ -12,6 +11,7 @@ public class FileBackedArray {
 	private final int[] array;
 	private final String backingFile;
 	private int count = 0;
+	private int fileEntryCount = 0;
 
 	public FileBackedArray(int size, String backingFile) {
 		super();
@@ -30,6 +30,7 @@ public class FileBackedArray {
 						backingFile, true)));
 				for (int i = 0; i < array.length; i++) {
 					pw.println(array[i]);
+					fileEntryCount++;
 					array[i] = Integer.MAX_VALUE;
 				}
 				count = 0;
@@ -42,14 +43,16 @@ public class FileBackedArray {
 		count++;
 	}
 
-	/*WIP*/
+	/* WIP */
 	public int read(int index) throws Exception {
-		if (index <= array.length)
-			return array[index];
-		else {
-			return Integer.parseInt(IOUtils.readLineFromFile(index
-					- array.length + 1, backingFile));
-		}
+		if (index + 1 <= fileEntryCount)
+			return Integer.parseInt(IOUtils.readLineFromFile(index + 1,
+					backingFile));
+		else if (index + 1 > fileEntryCount
+				&& index + 1 < fileEntryCount + array.length) {
+			return array[index - fileEntryCount - 1];
+		} else
+			throw new ArrayIndexOutOfBoundsException();
 	}
 
 	public void flush() throws Exception {
@@ -59,6 +62,7 @@ public class FileBackedArray {
 					true)));
 			for (int i = 0; i < count; i++) {
 				pw.println(array[i]);
+				fileEntryCount++;
 				array[i] = Integer.MAX_VALUE;
 			}
 			count = 0;
@@ -74,6 +78,10 @@ public class FileBackedArray {
 				"D:\\temp\\backingFile.txt");
 		for (int i = 0; i < 100; i++)
 			array.add(i);
+
+		for (int i = 0; i < 100; i++)
+			System.out.println(array.read(i));
+
 		array.flush();
 	}
 }
