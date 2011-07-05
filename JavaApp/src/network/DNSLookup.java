@@ -2,7 +2,7 @@ package network;
 
 import java.net.InetAddress;
 
-import org.xbill.DNS.Address;
+//import org.xbill.DNS.Address;
 
 public class DNSLookup {
 
@@ -11,7 +11,7 @@ public class DNSLookup {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		InetAddress addr = Address.getByName("www.dnsjava.org");
+		//InetAddress addr = Address.getByName("www.dnsjava.org");
 
 	}
 
