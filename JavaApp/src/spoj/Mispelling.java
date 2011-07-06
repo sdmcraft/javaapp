@@ -2,9 +2,8 @@ package spoj;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
 
-public class PALIN {
+public class Mispelling {
 	public static void main(String[] args) {
 		BufferedReader reader = null;
 		StringBuilder result = new StringBuilder();
@@ -15,7 +14,7 @@ public class PALIN {
 			int testCaseCount = Integer.parseInt(line);
 			for (int i = 0; i < testCaseCount; i++) {
 				line = reader.readLine();
-				result.append(method(line));
+				result.append((i+1) + " " + method(line));
 				result.append(System.getProperty("line.separator"));
 			}
 			System.out.println(result);
@@ -32,15 +31,9 @@ public class PALIN {
 	}
 
 	public static String method(String s) {
-		boolean result = false;
-		BigInteger input = new BigInteger(s);
-		StringBuilder sb = null;
-		while (!result) {
-			input = input.add(new BigInteger("1"));
-			sb = new StringBuilder(input.toString());
-			sb.reverse();
-			result = input.toString().equals(sb.toString());
-		}
+		int n = Integer.parseInt(s.split(" ")[0]);
+		StringBuilder sb = new StringBuilder(s.split(" ")[1]);
+		sb.deleteCharAt(n-1);
 		return sb.toString();
 	}
 
