@@ -10,7 +10,7 @@ import java.util.Map;
 import dataStructures.ArrayStack;
 import dataStructures.BinaryTree;
 import dataStructures.BitArray;
-import dataStructures.FileBackedArray;
+import dataStructures.FileBackedBuffer;
 import dataStructures.LinkedList;
 
 public class AlgoUtils {
@@ -415,10 +415,11 @@ public class AlgoUtils {
 	}
 
 	/* WIP */
-	/*Use FileBackedArray for input as well*/
-	private static int[] nMerge(int[][] input, int size, String tempDir) throws Exception {
-		FileBackedArray output = new FileBackedArray(size, tempDir
-				+ File.separator + "output.txt");
+	/* Use FileBackedBuffer for input as well */
+	private static int[] nMerge(int[][] input, int size, String tempDir)
+			throws Exception {
+		FileBackedBuffer output = new FileBackedBuffer(size, tempDir
+				+ File.separator + "output.txt", "w");
 		int[] marker = new int[input.length];
 		input = new int[][] { { 1, 2, 3 }, { 4, 5, 6 } };
 
@@ -426,9 +427,8 @@ public class AlgoUtils {
 			int max = 0;
 			int selectedColumn = 0;
 			for (int i = 0; i < input.length; i++) {
-				if (input[i][j] < Integer.MAX_VALUE) {					
-					if(input[i][j] > max)
-					{
+				if (input[i][j] < Integer.MAX_VALUE) {
+					if (input[i][j] > max) {
 						max = input[i][j];
 						selectedColumn = i;
 					}
