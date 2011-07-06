@@ -42,12 +42,13 @@ public class Main {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		File file = new File("\\\\connectdev1\\nas");
-		System.out.println(file.getPath());
-		System.out.println(file.isDirectory());
+		String channel = "Gtalk/connuser1@gmail.com-9ea7";
+
+		System.out.println(channel.substring(channel.indexOf("Gtalk") + 6,
+				channel.lastIndexOf(".com") + 4));
 		// HashMap<String, Integer> myMap = new HashMap<String,Integer>();
 		// HashMap<String, String> myMap2 = new HashMap<String,String>();
-		//		
+		//
 		// Integer i = new Integer(5);
 		// Integer j = new Integer(5);
 		// myMap2.put("a1", "aa");
