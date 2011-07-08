@@ -1,6 +1,9 @@
 package tools;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -370,18 +373,16 @@ public class AlgoUtils {
 	}
 
 	/* WIP */
-	private static void externalSort(RandomAccessFile inputFile,
-			RandomAccessFile outputFile, String tempDir, int[] ram)
+	private static void externalSort(File inputFile, String tempDir, int[] ram)
 			throws Exception {
 		String line = "";
 		int i = 0;
-		int phase = 0;
 		int tempFileCount = 0;
 		PrintWriter pw = null;
-
+		BufferedReader reader = new BufferedReader(new FileReader(inputFile));
 		try {
 			while (line != null) {
-				line = inputFile.readLine();
+				line = reader.readLine();
 				if (line != null) {
 					ram[i] = Integer.parseInt(line);
 					i = (i + 1) % ram.length;
@@ -389,9 +390,8 @@ public class AlgoUtils {
 				if (i == 0 || line == null) {
 					quickSort(ram);
 
-					pw = new PrintWriter(new File(tempDir,
-							Integer.toString(phase) + "-"
-									+ Integer.toString(tempFileCount) + ".txt"));
+					pw = new PrintWriter(new File(tempDir, "chunk-"
+							+ Integer.toString(tempFileCount) + ".txt"));
 					for (int value : ram)
 						pw.println(value);
 
@@ -406,38 +406,34 @@ public class AlgoUtils {
 			ex.printStackTrace();
 		} finally {
 			pw.close();
-			inputFile.close();
+			reader.close();
 		}
-
-		phase = 1;
-		int chunkSize = ram.length / (tempFileCount + 1);
-
 	}
 
 	/* WIP */
 	/* Use FileBackedBuffer for input as well */
-	private static int[] nMerge(int[][] input, int size, String tempDir)
-			throws Exception {
-		FileBackedBuffer output = new FileBackedBuffer(size, tempDir
-				+ File.separator + "output.txt", "w");
-		int[] marker = new int[input.length];
-		input = new int[][] { { 1, 2, 3 }, { 4, 5, 6 } };
+	private static int[] nMerge(String tempDir, int ramSize) throws Exception {
 
-		for (int j = 0; j < input[0].length; j++) {
-			int max = 0;
-			int selectedColumn = 0;
-			for (int i = 0; i < input.length; i++) {
-				if (input[i][j] < Integer.MAX_VALUE) {
-					if (input[i][j] > max) {
-						max = input[i][j];
-						selectedColumn = i;
-					}
-				}
-			}
-			output.add(max);
-			System.out.println();
+		FilenameFilter filter = getFilenameFilter("chunk-");
+		File[] fileList = new File(tempDir).listFiles(filter);
+		int bufferSize = ramSize / (fileList.length + 1);
+
+		FileBackedBuffer output = new FileBackedBuffer(bufferSize, tempDir
+				+ File.separator + "output.txt", "w");
+		FileBackedBuffer input[] = new FileBackedBuffer[fileList.length];
+		for (int i = 0; i < fileList.length; i++) {
+			input[i] = new FileBackedBuffer(bufferSize,
+					fileList[i].getAbsolutePath(), "r");
 		}
 		return null;
+	}
+
+	final static FilenameFilter getFilenameFilter(final String name) {
+		return new FilenameFilter() {
+			public boolean accept(File dir, String fileName) {
+				return fileName.startsWith(name);
+			}
+		};
 	}
 
 	private static void countingSort(int[] input) {
@@ -753,9 +749,5 @@ public class AlgoUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		// RandomAccessFile inputFile = new RandomAccessFile(
-		// "D:\\temp\\input.txt", "rw");
-		// externalSort(inputFile, null, "D:\\temp", new int[10]);
-		nMerge(null, 1, null);
 	}
 }
