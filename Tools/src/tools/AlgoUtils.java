@@ -412,7 +412,7 @@ public class AlgoUtils {
 
 	/* WIP */
 	/* Use FileBackedBuffer for input as well */
-	private static int[] nMerge(String tempDir, int ramSize) throws Exception {
+	private static void nMerge(String tempDir, int ramSize) throws Exception {
 
 		FilenameFilter filter = getFilenameFilter("chunk-");
 		File[] fileList = new File(tempDir).listFiles(filter);
@@ -425,7 +425,17 @@ public class AlgoUtils {
 			input[i] = new FileBackedBuffer(bufferSize,
 					fileList[i].getAbsolutePath(), "r");
 		}
-		return null;
+		int min = Integer.MAX_VALUE;
+		int minIndex = 0;
+		while (true) {
+			for (int i = 0; i < input.length; i++) {
+				if (min > input[i].peek()) {
+					min = input[i].peek();
+					minIndex = i;
+				}
+			}
+			output.add(input[minIndex].read());
+		}
 	}
 
 	final static FilenameFilter getFilenameFilter(final String name) {

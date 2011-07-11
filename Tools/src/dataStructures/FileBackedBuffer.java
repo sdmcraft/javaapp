@@ -61,6 +61,8 @@ public class FileBackedBuffer {
 			int i = 0;
 			while (buffer[i] == Integer.MAX_VALUE) {
 				i++;
+				if(i == buffer.length)
+					throw new Exception("Empty!!");
 			}
 			int returnValue = buffer[i];
 			buffer[i] = Integer.MAX_VALUE;
@@ -68,6 +70,21 @@ public class FileBackedBuffer {
 			return returnValue;
 		} else
 			throw new Exception("Cannot read unless in read mode!!");
+	}
+
+	public int peek() throws Exception {
+		if ("r".equals(this.mode)) {
+			if (bufferEntryCount == 0)
+				fill();
+			int i = 0;
+			while (buffer[i] == Integer.MAX_VALUE) {
+				i++;
+			}
+			int returnValue = buffer[i];
+			return returnValue;
+		} else
+			throw new Exception("Cannot peek unless in read mode!!");
+
 	}
 
 	private void flush() throws Exception {
@@ -86,7 +103,11 @@ public class FileBackedBuffer {
 		if ("r".equals(this.mode)) {
 			System.out.println("Filling from file");
 			for (int i = 0; i < buffer.length; i++) {
-				buffer[i] = Integer.parseInt(reader.readLine());
+				String line = reader.readLine();
+				if (line != null)
+					buffer[i] = Integer.parseInt(line);
+				else
+					buffer[i] = Integer.MAX_VALUE;
 				bufferEntryCount++;
 			}
 		} else
