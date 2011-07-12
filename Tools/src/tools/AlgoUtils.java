@@ -373,8 +373,9 @@ public class AlgoUtils {
 	}
 
 	/* WIP */
-	private static void externalSort(File inputFile, String tempDir, int[] ram)
+	private static void externalSort(File inputFile, String tempDir, int ramSize)
 			throws Exception {
+		int ram[] = new int[ramSize];
 		String line = "";
 		int i = 0;
 		int tempFileCount = 0;
@@ -408,6 +409,7 @@ public class AlgoUtils {
 			pw.close();
 			reader.close();
 		}
+		nMerge(tempDir, ramSize);
 	}
 
 	/* WIP */
@@ -427,15 +429,33 @@ public class AlgoUtils {
 		}
 		int min = Integer.MAX_VALUE;
 		int minIndex = 0;
-		while (true) {
+		boolean[] done = new boolean[input.length];
+
+		while (!allSet(done)) {
 			for (int i = 0; i < input.length; i++) {
-				if (min > input[i].peek()) {
-					min = input[i].peek();
-					minIndex = i;
+				if (!done[i]) {
+					if (min > input[i].peek()) {
+						min = input[i].peek();
+						minIndex = i;
+					}
 				}
 			}
-			output.add(input[minIndex].read());
+			try {
+				output.add(input[minIndex].read());
+			} catch (Exception ex) {
+				if ("Empty!!".equals(ex.getMessage()))
+					done[minIndex] = true;
+				else
+					throw ex;
+			}
 		}
+	}
+
+	private static boolean allSet(boolean[] arr) {
+		boolean result = true;
+		for (boolean b : arr)
+			result &= b;
+		return result;
 	}
 
 	final static FilenameFilter getFilenameFilter(final String name) {
@@ -759,5 +779,6 @@ public class AlgoUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
+		externalSort(new File("D:\\temp\\input.txt"), "D:\\temp", 5);
 	}
 }

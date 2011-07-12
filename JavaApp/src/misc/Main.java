@@ -11,8 +11,9 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception,
 			InterruptedException {
-		String path = "content/connect_events/microsites/c1/Site1/en/event/shared/event_template1";
-		System.out.println(path.substring(path.indexOf("/en/") + 1));
+		boolean[] done = new boolean[5];
+		for(boolean b : done)
+			System.out.println(b);
 	}
 
 	public static int reverse(String num) {
