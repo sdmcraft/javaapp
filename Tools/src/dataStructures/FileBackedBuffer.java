@@ -62,7 +62,7 @@ public class FileBackedBuffer {
 			while (buffer[i] == Integer.MAX_VALUE) {
 				i++;
 				if (i == buffer.length)
-					throw new Exception("Empty!!");
+					return Integer.MAX_VALUE;
 			}
 			int returnValue = buffer[i];
 			buffer[i] = Integer.MAX_VALUE;
@@ -80,7 +80,7 @@ public class FileBackedBuffer {
 			while (buffer[i] == Integer.MAX_VALUE) {
 				i++;
 				if (i == buffer.length)
-					throw new Exception("Empty!!");
+					return Integer.MAX_VALUE;
 			}
 			int returnValue = buffer[i];
 			return returnValue;

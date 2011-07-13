@@ -345,34 +345,6 @@ public class AlgoUtils {
 
 	}
 
-	/* WIP */
-	private static void externalSort(String file, int start, int end, int memory)
-			throws Exception {
-		if ((end - start) <= memory) {
-			String[] data = IOUtils.fileToArray(file, start, end);
-			int[] intData = DSUtils.stringArrayToIntArray(data);
-			quickSort(intData);
-			data = DSUtils.intArrayToStringArray(intData);
-			IOUtils.replace(file, start, data);
-			return;
-		}
-		externalSort(file, start, start + (end - start) / 2, memory);
-		externalSort(file, start + (end - start) / 2 + 1, end, memory);
-	}
-
-	/* WIP */
-	private static void merge(String file, int start1, int end1, int start2,
-			int end2) {
-
-	}
-
-	class FileMarker {
-		RandomAccessFile file;
-		int marker;
-
-	}
-
-	/* WIP */
 	private static void externalSort(File inputFile, String tempDir, int ramSize)
 			throws Exception {
 		int ram[] = new int[ramSize];
@@ -412,8 +384,6 @@ public class AlgoUtils {
 		nMerge(tempDir, ramSize);
 	}
 
-	/* WIP */
-	/* Use FileBackedBuffer for input as well */
 	private static void nMerge(String tempDir, int ramSize) throws Exception {
 
 		FilenameFilter filter = getFilenameFilter("chunk-");
@@ -427,28 +397,34 @@ public class AlgoUtils {
 			input[i] = new FileBackedBuffer(bufferSize,
 					fileList[i].getAbsolutePath(), "r");
 		}
-		int min = Integer.MAX_VALUE;
-		int minIndex = 0;
 		boolean[] done = new boolean[input.length];
 
 		while (!allSet(done)) {
+			int min = Integer.MAX_VALUE;
+			int minIndex = 0;
+
 			for (int i = 0; i < input.length; i++) {
 				if (!done[i]) {
-					if (min > input[i].peek()) {
-						min = input[i].peek();
+					int value = input[i].peek();
+					if (value == Integer.MAX_VALUE)
+						done[i] = true;
+					else if (min > value) {
+						min = value;
 						minIndex = i;
 					}
 				}
 			}
-			try {
-				output.add(input[minIndex].read());
-			} catch (Exception ex) {
-				if ("Empty!!".equals(ex.getMessage()))
-					done[minIndex] = true;
-				else
-					throw ex;
-			}
+			int value = input[minIndex].read();
+			if (value == Integer.MAX_VALUE)
+				done[minIndex] = true;
+			else
+				output.add(value);
 		}
+		output.close();
+		for (int i = 0; i < fileList.length; i++) {
+			input[i].close();
+		}
+
 	}
 
 	private static boolean allSet(boolean[] arr) {
@@ -779,6 +755,6 @@ public class AlgoUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		externalSort(new File("D:\\temp\\input.txt"), "D:\\temp", 5);
+		externalSort(new File("C:\\temp\\input.txt"), "C:\\temp", 5);
 	}
 }
