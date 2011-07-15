@@ -13,6 +13,14 @@ public class DSUtils {
 		return true;
 	}
 
+	public static int[] arrayCopy(int[] src) {
+		int[] result = new int[src.length];
+		for (int i = 0; i < src.length; i++) {
+			src[i] = result[i];
+		}
+		return result;
+	}
+
 	public static int[] stringArrayToIntArray(String[] data) {
 		int[] result = new int[data.length];
 		int i = 0;
