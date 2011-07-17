@@ -24,11 +24,13 @@ function getEventCatalog() {
 				var eventInfo = eventList[i].getElementsByTagName("event-info")[0];
 				html += "<tr>";
 				html += "<td>";
+				html += "<a href='http://www.w3schools.com'  target='_blank'>";
 				html += "<u><b>";
 				html += "<font color='blue'>";
 				html += eventName.childNodes[0].nodeValue;
 				html += "</font>";
 				html += "</u></b>";
+				html += "</a>";
 				html += "</td>";
 				html += "</tr>";
 				html += "<td>";
