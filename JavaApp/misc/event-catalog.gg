@@ -28,7 +28,8 @@ function response(obj) {
      var eventInfo = eventList[i].getElementsByTagName("event-info")[0];
      html += "<tr>";
      html += "<td>";
- 	 html += "<a href='http://www.carahsoft.com/event-detail/961/adobe/'  target='_blank'>";
+ 	 //html += "<a href='http://www.carahsoft.com/event-detail/961/adobe/'  target='_blank'>";
+ 	 html += "<a href='http://satyam-xp:4502/content/connect_events/microsites/c1/7/en/catalog.html'  target='_blank'>";
 	 html += "<u><b>";
 	 html += "<font color='blue'>";
 	 html += eventName.childNodes[0].nodeValue;
