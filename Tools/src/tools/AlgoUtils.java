@@ -307,7 +307,7 @@ public class AlgoUtils {
 		return stack2;
 	}
 
-	private static int[] mergeSort(int[] input) {
+	public static int[] mergeSort(int[] input) {
 		if (input.length == 1)
 			return input;
 		int[] firstHalf = new int[input.length / 2];
@@ -442,7 +442,7 @@ public class AlgoUtils {
 		};
 	}
 
-	private static void countingSort(int[] input) {
+	public static void countingSort(int[] input) {
 		int offset = input[0];
 		BitArray bitArray = new BitArray();
 		for (int i = 0; i < input.length; i++) {

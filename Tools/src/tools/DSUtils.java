@@ -16,7 +16,7 @@ public class DSUtils {
 	public static int[] arrayCopy(int[] src) {
 		int[] result = new int[src.length];
 		for (int i = 0; i < src.length; i++) {
-			src[i] = result[i];
+			result[i] = src[i];
 		}
 		return result;
 	}

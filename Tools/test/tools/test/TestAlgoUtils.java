@@ -11,7 +11,7 @@ import tools.DSUtils;
 
 public class TestAlgoUtils {
 
-	@Test
+	//@Test
 	public void testBinarySearch() {
 		Assert.assertEquals(3,
 				AlgoUtils.binarySearch(new int[] { -3, -2, -1, 1, 2, 3 }, 0));
@@ -23,7 +23,7 @@ public class TestAlgoUtils {
 		Assert.assertEquals(1, AlgoUtils.binarySearch(new int[] { -1, 1 }, 0));
 	}
 
-	@Test
+	//@Test
 	public void testBubbleSort() {
 		int[] arr = new int[] { -3, -2, -1, 1, 2, 3 };
 		int[] sorted = new int[] { -3, -2, -1, 1, 2, 3 };
@@ -72,7 +72,7 @@ public class TestAlgoUtils {
 
 	}
 
-	@Test
+	//@Test
 	public void testSelectionSort() {
 		int[] arr = new int[] { -3, -2, -1, 1, 2, 3 };
 		int[] sorted = new int[] { -3, -2, -1, 1, 2, 3 };
@@ -121,7 +121,7 @@ public class TestAlgoUtils {
 
 	}
 
-	@Test
+	//@Test
 	public void testInsertionSort() {
 		int[] arr = new int[] { -3, -2, -1, 1, 2, 3 };
 		int[] sorted = new int[] { -3, -2, -1, 1, 2, 3 };
@@ -170,7 +170,7 @@ public class TestAlgoUtils {
 
 	}
 
-	@Test
+	//@Test
 	public void testShellSort() {
 		int[] arr = new int[] { -3, -2, -1, 1, 2, 3 };
 		int[] sorted = new int[] { -3, -2, -1, 1, 2, 3 };
@@ -221,7 +221,7 @@ public class TestAlgoUtils {
 
 	@Test
 	public void testSort() {
-		int[] input = new int[Integer.MAX_VALUE/1000];
+		int[] input = new int[Integer.MAX_VALUE/100000];
 		for (int i = 0; i < input.length; i++) {
 			int sign = (Math.random() - 0.5) > 0 ? 1 : -1;
 			input[i] = (int) (sign * Math.random() * Integer.MAX_VALUE);
@@ -232,12 +232,53 @@ public class TestAlgoUtils {
 		}
 
 		int[] ref = DSUtils.arrayCopy(input);
+		long time = System.currentTimeMillis();
 		Arrays.sort(ref);
-
+		System.out.println("Time consumed(JDK sort):" + (System.currentTimeMillis() - time));
+		
 		int[] bubble = DSUtils.arrayCopy(input);
+		time = System.currentTimeMillis();
 		AlgoUtils.bubbleSort(bubble);
-
 		Assert.assertEquals(true, DSUtils.arrayCompare(ref, bubble));
+		System.out.println("Time consumed(Bubble sort):" + (System.currentTimeMillis() - time));
+		
+		
+		int[] quick = DSUtils.arrayCopy(input);
+		time = System.currentTimeMillis();
+		AlgoUtils.quickSort(quick);
+		Assert.assertEquals(true, DSUtils.arrayCompare(ref, quick));
+		System.out.println("Time consumed(Quick sort):" + (System.currentTimeMillis() - time));
+
+		int[] selection = DSUtils.arrayCopy(input);
+		time = System.currentTimeMillis();
+		AlgoUtils.selectionSort(selection);
+		Assert.assertEquals(true, DSUtils.arrayCompare(ref, selection));
+		System.out.println("Time consumed(selection sort):" + (System.currentTimeMillis() - time));
+
+		int[] insertion = DSUtils.arrayCopy(input);
+		time = System.currentTimeMillis();
+		AlgoUtils.insertionSort(insertion);
+		Assert.assertEquals(true, DSUtils.arrayCompare(ref, insertion));
+		System.out.println("Time consumed(insertion sort):" + (System.currentTimeMillis() - time));
+
+		int[] shell = DSUtils.arrayCopy(input);
+		time = System.currentTimeMillis();
+		AlgoUtils.shellSort(shell);
+		Assert.assertEquals(true, DSUtils.arrayCompare(ref, shell));
+		System.out.println("Time consumed(shell sort):" + (System.currentTimeMillis() - time));
+
+		int[] merge = DSUtils.arrayCopy(input);
+		time = System.currentTimeMillis();
+		merge = AlgoUtils.mergeSort(merge);
+		Assert.assertEquals(true, DSUtils.arrayCompare(ref, merge));
+		System.out.println("Time consumed(merge sort):" + (System.currentTimeMillis() - time));
+
+		int[] counting = DSUtils.arrayCopy(input);
+		time = System.currentTimeMillis();
+		AlgoUtils.countingSort(counting);
+		Assert.assertEquals(true, DSUtils.arrayCompare(ref, counting));
+		System.out.println("Time consumed(counting sort):" + (System.currentTimeMillis() - time));
+
 	}
 	/*
 	 * @Test public void testQuickSort() { int[] arr = new int[] { -3, -2, -1,
