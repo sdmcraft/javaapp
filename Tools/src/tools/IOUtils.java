@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FilenameFilter;
@@ -281,6 +282,14 @@ public class IOUtils {
 		}
 		lineReader.close();
 		return result;
+	}
+
+	public static void arrayToFile(int[] array, String file) throws Exception {
+		PrintWriter pw = new PrintWriter(file);
+		for (int i : array) {
+			pw.println(i);
+		}
+		pw.close();
 	}
 
 	public static void replace(String file, int start, String[] replacement)
