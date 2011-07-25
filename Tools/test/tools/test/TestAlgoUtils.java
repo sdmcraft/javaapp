@@ -1,5 +1,6 @@
 package tools.test;
 
+import java.io.File;
 import java.util.Arrays;
 
 import junit.framework.Assert;
@@ -8,6 +9,7 @@ import org.junit.Test;
 
 import tools.AlgoUtils;
 import tools.DSUtils;
+import tools.IOUtils;
 
 public class TestAlgoUtils {
 
@@ -220,7 +222,7 @@ public class TestAlgoUtils {
 	}
 
 	@Test
-	public void testSort() {
+	public void testSort() throws Exception {
 		int[] input = new int[Integer.MAX_VALUE/100000];
 		for (int i = 0; i < input.length; i++) {
 			int sign = (Math.random() - 0.5) > 0 ? 1 : -1;
@@ -273,10 +275,19 @@ public class TestAlgoUtils {
 		Assert.assertEquals(true, DSUtils.arrayCompare(ref, merge));
 		System.out.println("Time consumed(merge sort):" + (System.currentTimeMillis() - time));
 
-		int[] counting = DSUtils.arrayCopy(input);
+		/*int[] counting = DSUtils.arrayCopy(input);
 		time = System.currentTimeMillis();
 		AlgoUtils.countingSort(counting);
 		Assert.assertEquals(true, DSUtils.arrayCompare(ref, counting));
+		System.out.println("Time consumed(counting sort):" + (System.currentTimeMillis() - time));*/
+
+		int[] external = DSUtils.arrayCopy(input);
+		IOUtils.arrayToFile(external, "c:\\temp\\input.txt");
+		
+		time = System.currentTimeMillis();
+		AlgoUtils.externalSort(new File("c:\\temp\\input.txt"), "C:\\temp", 10000);
+		external = DSUtils.stringArrayToIntArray(IOUtils.fileToArray("C:\\temp\\output.txt"));
+		Assert.assertEquals(true, DSUtils.arrayCompare(ref, external));
 		System.out.println("Time consumed(counting sort):" + (System.currentTimeMillis() - time));
 
 	}

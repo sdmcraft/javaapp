@@ -284,6 +284,10 @@ public class IOUtils {
 		return result;
 	}
 
+	public static String[] fileToArray(String file) throws Exception {
+		return fileToArray(file, 0, Integer.MAX_VALUE);
+	}
+
 	public static void arrayToFile(int[] array, String file) throws Exception {
 		PrintWriter pw = new PrintWriter(file);
 		for (int i : array) {

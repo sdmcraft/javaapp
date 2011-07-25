@@ -345,7 +345,7 @@ public class AlgoUtils {
 
 	}
 
-	private static void externalSort(File inputFile, String tempDir, int ramSize)
+	public static void externalSort(File inputFile, String tempDir, int ramSize)
 			throws Exception {
 		int ram[] = new int[ramSize];
 		String line = "";
