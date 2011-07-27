@@ -90,8 +90,7 @@ public class FileBackedBuffer {
 	}
 
 	private void flush() throws Exception {
-		if ("w".equals(this.mode)) {
-			System.out.println("Flushing to file");
+		if ("w".equals(this.mode)) {			
 			for (int i = 0; i < bufferEntryCount; i++) {
 				writer.println(buffer[i]);
 				buffer[i] = Integer.MAX_VALUE;
@@ -102,8 +101,7 @@ public class FileBackedBuffer {
 	}
 
 	private void fill() throws Exception {
-		if ("r".equals(this.mode)) {
-			System.out.println("Filling from file");
+		if ("r".equals(this.mode)) {			
 			for (int i = 0; i < buffer.length; i++) {
 				String line = reader.readLine();
 				if (line != null)

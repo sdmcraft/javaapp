@@ -13,7 +13,7 @@ import tools.IOUtils;
 
 public class TestAlgoUtils {
 
-	//@Test
+	@Test
 	public void testBinarySearch() {
 		Assert.assertEquals(3,
 				AlgoUtils.binarySearch(new int[] { -3, -2, -1, 1, 2, 3 }, 0));
@@ -25,7 +25,7 @@ public class TestAlgoUtils {
 		Assert.assertEquals(1, AlgoUtils.binarySearch(new int[] { -1, 1 }, 0));
 	}
 
-	//@Test
+	@Test
 	public void testBubbleSort() {
 		int[] arr = new int[] { -3, -2, -1, 1, 2, 3 };
 		int[] sorted = new int[] { -3, -2, -1, 1, 2, 3 };
@@ -74,7 +74,7 @@ public class TestAlgoUtils {
 
 	}
 
-	//@Test
+	@Test
 	public void testSelectionSort() {
 		int[] arr = new int[] { -3, -2, -1, 1, 2, 3 };
 		int[] sorted = new int[] { -3, -2, -1, 1, 2, 3 };
@@ -123,7 +123,7 @@ public class TestAlgoUtils {
 
 	}
 
-	//@Test
+	@Test
 	public void testInsertionSort() {
 		int[] arr = new int[] { -3, -2, -1, 1, 2, 3 };
 		int[] sorted = new int[] { -3, -2, -1, 1, 2, 3 };
@@ -172,7 +172,7 @@ public class TestAlgoUtils {
 
 	}
 
-	//@Test
+	@Test
 	public void testShellSort() {
 		int[] arr = new int[] { -3, -2, -1, 1, 2, 3 };
 		int[] sorted = new int[] { -3, -2, -1, 1, 2, 3 };
@@ -223,7 +223,7 @@ public class TestAlgoUtils {
 
 	@Test
 	public void testSort() throws Exception {
-		int[] input = new int[Integer.MAX_VALUE/100000];
+		int[] input = new int[Integer.MAX_VALUE/10000];
 		for (int i = 0; i < input.length; i++) {
 			int sign = (Math.random() - 0.5) > 0 ? 1 : -1;
 			input[i] = (int) (sign * Math.random() * Integer.MAX_VALUE);
@@ -282,13 +282,13 @@ public class TestAlgoUtils {
 		System.out.println("Time consumed(counting sort):" + (System.currentTimeMillis() - time));*/
 
 		int[] external = DSUtils.arrayCopy(input);
-		IOUtils.arrayToFile(external, "c:\\temp\\input.txt");
+		IOUtils.arrayToFile(external, "c:\\temp1\\input.txt");
 		
 		time = System.currentTimeMillis();
-		AlgoUtils.externalSort(new File("c:\\temp\\input.txt"), "C:\\temp", 10000);
-		external = DSUtils.stringArrayToIntArray(IOUtils.fileToArray("C:\\temp\\output.txt"));
+		AlgoUtils.externalSort(new File("c:\\temp1\\input.txt"), "C:\\temp1", 10000);
+		external = DSUtils.stringArrayToIntArray(IOUtils.fileToArray("C:\\temp1\\output.txt"));
 		Assert.assertEquals(true, DSUtils.arrayCompare(ref, external));
-		System.out.println("Time consumed(counting sort):" + (System.currentTimeMillis() - time));
+		System.out.println("Time consumed(external sort):" + (System.currentTimeMillis() - time));
 
 	}
 	/*

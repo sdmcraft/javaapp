@@ -285,7 +285,20 @@ public class IOUtils {
 	}
 
 	public static String[] fileToArray(String file) throws Exception {
-		return fileToArray(file, 0, Integer.MAX_VALUE);
+		List<String> stringList = new ArrayList<String>();
+		LineNumberReader lineReader = new LineNumberReader(new BufferedReader(
+				new FileReader(file)));
+
+		String line;
+		while ((line = lineReader.readLine()) != null) {
+			stringList.add(line);
+		}
+		lineReader.close();
+		String[] result = (String[]) stringList.toArray(new String[stringList
+				.size()]);
+
+		return result;
+
 	}
 
 	public static void arrayToFile(int[] array, String file) throws Exception {
