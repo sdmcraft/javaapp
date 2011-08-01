@@ -360,7 +360,7 @@ public class IOUtils {
 		}
 		return result;
 	}
-
+	
 	public static void main(String[] args) throws Exception {
 		// List<String> result = delimitedReader("xxx", new File(
 		// "c:\\temp\\test.txt"));
