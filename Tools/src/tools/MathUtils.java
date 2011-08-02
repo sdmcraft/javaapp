@@ -39,7 +39,7 @@ public class MathUtils {
 		return result.reverse().toString();
 	}
 
-	public double[][] relativeIncrease(double[] input) {
+	public static double[][] relativeIncrease(double[] input) {
 		double[][] result = new double[input.length][input.length];
 		for (int i = 0; i < input.length; i++) {
 			for (int j = 0; j < input.length; j++) {

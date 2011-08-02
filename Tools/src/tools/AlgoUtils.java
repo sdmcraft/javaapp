@@ -15,6 +15,7 @@ import dataStructures.BinaryTree;
 import dataStructures.BitArray;
 import dataStructures.FileBackedBuffer;
 import dataStructures.LinkedList;
+import dataStructures.ValueWithId;
 
 public class AlgoUtils {
 
@@ -151,6 +152,23 @@ public class AlgoUtils {
 		quickSort(input, start, end);
 	}
 
+	public static void quickSort(ValueWithId[] input) {
+		int start = 0;
+		int end = input.length - 1;
+		quickSort(input, start, end);
+	}
+
+	private static void quickSort(ValueWithId[] input, int start, int end) {
+		ValueWithId pivot = input[(start + end) / 2];
+		int[] ptrs = partition(input, pivot, start, end, null);
+
+		if (start < ptrs[1])
+			quickSort(input, start, ptrs[1]);
+		if (ptrs[0] < end)
+			quickSort(input, ptrs[0], end);
+
+	}
+
 	private static void quickSort(int[] input, int start, int end) {
 		int pivot = input[(start + end) / 2];
 		int[] ptrs = partition(input, pivot, start, end, null);
@@ -209,6 +227,46 @@ public class AlgoUtils {
 			}
 			if (leftPtr <= rtPtr) {
 				int temp = input[leftPtr];
+				input[leftPtr] = input[rtPtr];
+				input[rtPtr] = temp;
+
+				if (origIndex != null) {
+					temp = origIndex[leftPtr];
+					origIndex[leftPtr] = origIndex[rtPtr];
+					origIndex[rtPtr] = temp;
+				}
+
+				if (pivot == input[leftPtr])
+					rank = leftPtr;
+				else if (pivot == input[rtPtr])
+					rank = rtPtr;
+
+				leftPtr++;
+				rtPtr--;
+			}
+		}
+		return new int[] { leftPtr, rtPtr, rank };
+	}
+
+	private static int[] partition(ValueWithId[] input, ValueWithId pivot, int start, int end,
+			ValueWithId[] origIndex) {
+		int leftPtr = start;
+		int rtPtr = end;
+		int rank = 0;
+
+		// System.out.println("start->" + start);
+		// System.out.println("end->" + end);
+		// System.out.println("pivot->" + pivot);
+
+		while (leftPtr <= rtPtr) {
+			while (leftPtr < end && input[leftPtr].getValue() < pivot.getValue()) {
+				leftPtr++;
+			}
+			while (start < rtPtr && input[rtPtr].getValue() > pivot.getValue()) {
+				rtPtr--;
+			}
+			if (leftPtr <= rtPtr) {
+				ValueWithId temp = input[leftPtr];
 				input[leftPtr] = input[rtPtr];
 				input[rtPtr] = temp;
 
