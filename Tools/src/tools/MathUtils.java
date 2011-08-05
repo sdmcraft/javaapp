@@ -46,7 +46,7 @@ public class MathUtils {
 				if (input[i] == 0)
 					result[i][j] = Double.MAX_VALUE;
 				else
-					result[i][j] = (input[i] - input[j]) / input[i] * 100;
+					result[i][j] = (input[j] - input[i]) / input[i] * 100;
 			}
 		}
 		return result;

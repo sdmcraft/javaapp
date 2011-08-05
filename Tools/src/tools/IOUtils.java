@@ -6,7 +6,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FilenameFilter;
@@ -309,6 +308,15 @@ public class IOUtils {
 		pw.close();
 	}
 
+	public static void arrayToFile(Object[] array, String file)
+			throws Exception {
+		PrintWriter pw = new PrintWriter(file);
+		for (Object i : array) {
+			pw.println(i.toString());
+		}
+		pw.close();
+	}
+
 	public static void replace(String file, int start, String[] replacement)
 			throws Exception {
 		LineNumberReader lineReader = new LineNumberReader(new BufferedReader(
@@ -360,7 +368,7 @@ public class IOUtils {
 		}
 		return result;
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		// List<String> result = delimitedReader("xxx", new File(
 		// "c:\\temp\\test.txt"));
