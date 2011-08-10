@@ -2,6 +2,10 @@ package dataStructures;
 
 public class BinarySearchTree extends BinaryTree {
 
+	public BinarySearchTree() {
+		super();
+	}
+
 	public BinarySearchTree(String value) {
 		super(value);
 	}
@@ -9,7 +13,7 @@ public class BinarySearchTree extends BinaryTree {
 	private void insert(String valueStr) {
 		int value = Integer.parseInt(valueStr);
 		BinarySearchTree root = this;
-		if (Integer.parseInt(this.value) <= value) {
+		if (Integer.parseInt(this.value) >= value) {
 			if (this.left == null) {
 				BinarySearchTree bst = new BinarySearchTree(valueStr);
 				this.left = bst;
@@ -45,9 +49,11 @@ public class BinarySearchTree extends BinaryTree {
 			root.insert(Integer.toString(rand));
 		}
 	}
-	
-	public static void main(String[] args) {
-		
+
+	public static void main(String[] args) throws Exception {
+		BinarySearchTree bst = new BinarySearchTree("50");
+		bst.build(10);
+		System.out.println(bst.getDiagram());
 	}
 
 }
