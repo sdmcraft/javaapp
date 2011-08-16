@@ -23,8 +23,8 @@ public class HTMLPageDownloader {
 		URL url = new URL(urlStr);
 		BufferedReader bufferedReader = null;
 		try {
-			bufferedReader = new BufferedReader(
-					new InputStreamReader(url.openStream()));
+			bufferedReader = new BufferedReader(new InputStreamReader(
+					url.openStream()));
 			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
@@ -51,8 +51,7 @@ public class HTMLPageDownloader {
 					int port = parentUrl.getPort();
 					String hostUrl = protocol + "://" + host
 							+ ((port > 0) ? ":" + port : "");
-					imageList.add(hostUrl
-							+ image.attr("src"));
+					imageList.add(hostUrl + image.attr("src"));
 				} else
 					imageList.add(pageParent + "/" + image.attr("src"));
 			} else
@@ -95,9 +94,14 @@ public class HTMLPageDownloader {
 				fos.write(oneChar);
 			}
 			return targetFile;
+		} catch (Exception ex) {
+			// ex.printStackTrace();
+			return null;
 		} finally {
-			is.close();
-			fos.close();
+			if (is != null)
+				is.close();
+			if (fos != null)
+				fos.close();
 		}
 	}
 
@@ -115,14 +119,15 @@ public class HTMLPageDownloader {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-		String pageUrl = "http://localhost:8080/image-test/a/b/image-test.html";
+	public static void downloadHtmlPageWithImages(String pageUrl,
+			String targetFolder) throws Exception {
+
 		String pageParent = pageUrl.substring(0, pageUrl.lastIndexOf("/"));
 		String htmlSource = getHtmlSource(pageUrl);
 		List<String> imageList = getReferredImages(htmlSource, pageParent);
-		String htmlFile = downloadFile(pageUrl, "temp");
+		String htmlFile = downloadFile(pageUrl, targetFolder);
 		for (String image : imageList)
-			downloadFile(image, "temp");
+			downloadFile(image, targetFolder);
 		String rewrittenHtmlSource = rewriteImagePaths(htmlSource);
 		stringToFile(rewrittenHtmlSource, htmlFile);
 	}

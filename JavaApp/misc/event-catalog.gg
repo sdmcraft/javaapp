@@ -4,7 +4,7 @@
 <Content type="html">
 <![CDATA[
 <script type="text/javascript">
-var debug = true;
+var debug = false;
 function getEventCatalog() {
    var params = {};
    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.DOM;
@@ -29,7 +29,7 @@ function response(obj) {
      html += "<tr>";
      html += "<td>";
  	 //html += "<a href='http://www.carahsoft.com/event-detail/961/adobe/'  target='_blank'>";
- 	 html += "<a href='http://satyam-xp:4502/content/connect_events/microsites/c1/7/en/catalog.html'  target='_blank'>";
+ 	 html += "<a href='http://connectdev1:4503/content/connect_events/microsites/c1/11781/en/event/shared/event_template1/event_landing.html?sco-id=11849'  target='_blank'>";
 	 html += "<u><b>";
 	 html += "<font color='blue'>";
 	 html += eventName.childNodes[0].nodeValue;

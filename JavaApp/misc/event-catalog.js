@@ -24,7 +24,8 @@ function getEventCatalog() {
 				var eventInfo = eventList[i].getElementsByTagName("event-info")[0];
 				html += "<tr>";
 				html += "<td>";
-				html += "<a href='http://www.w3schools.com'  target='_blank'>";
+				html += "<a href='http://connectdev1:4503/content/connect_events/microsites/c1/11781/en/event/shared/event_template1/event_landing.html?sco-id=11849'  " +
+						"target='_blank'>";
 				html += "<u><b>";
 				html += "<font color='blue'>";
 				html += eventName.childNodes[0].nodeValue;
