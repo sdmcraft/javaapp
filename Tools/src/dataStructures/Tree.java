@@ -12,11 +12,11 @@ public class Tree implements Cloneable, Serializable {
 
 	protected List<Tree> children;
 	protected String value;
-	private String nodeID;
-	private String diagram;
-	private String nodeColor;
+	protected String nodeID;
+	protected String diagram;
+	protected String nodeColor;
 	private Map<String, Integer> intCount;
-	private int terminalCount;
+	protected int terminalCount;
 	private Tree sibling;
 
 	protected int depth = 0;
@@ -61,6 +61,11 @@ public class Tree implements Cloneable, Serializable {
 	public void addChild(Tree child) {
 		children.add(child);
 	}
+	
+	protected void clearDiagram()
+	{
+		clearDiagram(this);
+	}
 
 	private static void clearDiagram(Tree root) {
 		if (root == null)
@@ -96,7 +101,7 @@ public class Tree implements Cloneable, Serializable {
 		return result;
 	}
 
-	private void preDiagram() {
+	protected void preDiagram() {
 		nodeID = value + "(" + depth + ")";
 		preDiagram(this);
 	}

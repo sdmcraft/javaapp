@@ -113,7 +113,7 @@ public class BinaryTree extends Tree implements Cloneable {
 		BinaryTree bt = new BinaryTree();
 		bt.build();
 		System.out.println(bt.getDiagram());
-		System.out.println(bt.isBalanced());
+		//System.out.println(bt.isBalanced());
 		// System.out.println(bt.inorder());
 		// bt.sameShapeBinaryTree();
 		// System.out.println(bt.getDiagram());
@@ -134,7 +134,7 @@ public class BinaryTree extends Tree implements Cloneable {
 	public void setLeft(BinaryTree left) {
 		if (left == null)
 			return;
-		this.left = left;		
+		this.left = left;
 		if (children.size() > 0)
 			children.remove(0);
 		children.add(0, left);
@@ -145,11 +145,38 @@ public class BinaryTree extends Tree implements Cloneable {
 		if (right == null)
 			return;
 
-		this.right = right;		
+		this.right = right;
 		if (children.size() > 1)
 			children.remove(1);
 		children.add(1, right);
 		right.parent = this;
+	}
+
+	private String getDiagram(BinaryTree root) {
+		String color = null;
+		BinaryTree leftChild = root.getLeft();
+		BinaryTree rightChild = root.getRight();
+		if (leftChild == null) {
+			diagram += "null" + terminalCount + " [shape=point];\n";
+			diagram += "\"" + root.nodeID + "\"" + "->" + "\"" + "null"
+					+ terminalCount + "\" [color=green];\n";
+			terminalCount--;
+		} else {
+			diagram += "\"" + root.nodeID + "\"" + "->" + "\""
+					+ leftChild.nodeID + "\"[color=green]\n";
+			getDiagram(leftChild);
+		}
+		if (rightChild == null) {
+			diagram += "null" + terminalCount + " [shape=point];\n";
+			diagram += "\"" + root.nodeID + "\"" + "->" + "\"" + "null"
+					+ terminalCount + "\" [color=red];\n";
+			terminalCount--;
+		} else {
+			diagram += "\"" + root.nodeID + "\"" + "->" + "\""
+					+ rightChild.nodeID + "\"[color=red]\n";
+			getDiagram(rightChild);
+		}
+		return diagram;
 	}
 
 }
