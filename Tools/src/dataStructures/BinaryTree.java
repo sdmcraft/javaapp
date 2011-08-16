@@ -151,8 +151,18 @@ public class BinaryTree extends Tree implements Cloneable {
 		children.add(1, right);
 		right.parent = this;
 	}
+	
+	@Override
+	public String getDiagram() throws Exception {
+		clearDiagram(this);
+		setLevels();
+		preDiagram();
+		getDiagram(this);
+		diagram += "}";
+		return diagram;
+	}
 
-	private String getDiagram(BinaryTree root) {
+	private String getDiagram(BinaryTree root) {		
 		String color = null;
 		BinaryTree leftChild = root.getLeft();
 		BinaryTree rightChild = root.getRight();

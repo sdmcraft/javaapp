@@ -67,7 +67,7 @@ public class Tree implements Cloneable, Serializable {
 		clearDiagram(this);
 	}
 
-	private static void clearDiagram(Tree root) {
+	protected static void clearDiagram(Tree root) {
 		if (root == null)
 			return;
 		root.diagram = "digraph G {\n";
@@ -84,7 +84,7 @@ public class Tree implements Cloneable, Serializable {
 		setLevels();
 		preDiagram();
 		// System.out.println(intCount);
-		getDiagram(this);
+		getDiagram((BinaryTree)this);
 		diagram += "}";
 		return diagram;
 	}
