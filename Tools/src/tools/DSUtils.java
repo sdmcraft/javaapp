@@ -1,5 +1,9 @@
 package tools;
 
+import dataStructures.BinarySearchTree;
+import dataStructures.BinaryTree;
+import dataStructures.DoublyLinkedList;
+
 public class DSUtils {
 	public static boolean arrayCompare(int[] src, int[] tgt) {
 		if (src == null || tgt == null || src.length != tgt.length)
@@ -63,6 +67,30 @@ public class DSUtils {
 			if (bitStr.charAt(i) == '1')
 				bits[i] = true;
 		return bits;
+	}
+	
+	public static DoublyLinkedList getDoublyLinkedList(BinaryTree bt)
+	{
+		if(bt == null)
+			return null;
+		else
+		{
+			DoublyLinkedList leftList = getDoublyLinkedList(bt.getLeft()); 
+			DoublyLinkedList rtList = getDoublyLinkedList(bt.getRight());
+			
+			DoublyLinkedList doublyLinkedList = new DoublyLinkedList(bt.getValue());
+			doublyLinkedList.setNext(rtList.getFirstNode());
+			doublyLinkedList.setPrevious(leftList.getLastNode());
+			
+			return doublyLinkedList;
+		}
+	}
+	
+	public static void main(String[] args) {
+		BinarySearchTree bst = new BinarySearchTree();
+		bst.build();
+		DoublyLinkedList doublyLinkedList = getDoublyLinkedList(bst);
+		System.out.println(doublyLinkedList);
 	}
 
 }
