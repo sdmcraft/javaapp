@@ -42,7 +42,7 @@ public class BinaryTree extends Tree implements Cloneable {
 	}
 
 	public void build() {
-		build(this, 4);
+		build(this, 6);
 	}
 
 	private static void build(BinaryTree root, int maxDepth) {
@@ -52,8 +52,6 @@ public class BinaryTree extends Tree implements Cloneable {
 
 		int randLeft = (int) (Math.random() * 100);
 		int randRight = (int) (Math.random() * 100);
-		System.out.println(randLeft);
-		System.out.println(randRight);
 
 		if (randLeft > 50) {
 			root.left = new BinaryTree(root);

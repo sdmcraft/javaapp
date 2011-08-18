@@ -9,8 +9,11 @@ public class DoublyLinkedList {
 		this.value = value;
 	}
 
-	public void insert(String value) {
-
+	public void insertAtEnd(String value) {
+		DoublyLinkedList node = new DoublyLinkedList(value);
+		DoublyLinkedList lastNode = getLastNode();
+		lastNode.next = node;
+		node.previous = lastNode;
 	}
 
 	public DoublyLinkedList getFirstNode() {
@@ -64,6 +67,13 @@ public class DoublyLinkedList {
 		}
 
 		return sb.toString();
+	}
+
+	public static void main(String[] args) {
+		DoublyLinkedList doublyLinkedList = new DoublyLinkedList("0");
+		for (int i = 1; i < 10; i++)
+			doublyLinkedList.insertAtEnd(Integer.toString(i));
+		System.out.println(doublyLinkedList);
 	}
 
 }

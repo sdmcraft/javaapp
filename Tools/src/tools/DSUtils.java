@@ -40,7 +40,7 @@ public class DSUtils {
 			result[i++] = Integer.toString(a);
 		return result;
 	}
-	
+
 	public static double[] stringArrayToDoubleArray(String[] data) {
 		double[] result = new double[data.length];
 		int i = 0;
@@ -48,7 +48,6 @@ public class DSUtils {
 			result[i++] = Double.parseDouble(s);
 		return result;
 	}
-
 
 	public static String booleanArrayToBitString(boolean[] input) {
 		StringBuilder sb = new StringBuilder();
@@ -68,27 +67,32 @@ public class DSUtils {
 				bits[i] = true;
 		return bits;
 	}
-	
-	public static DoublyLinkedList getDoublyLinkedList(BinaryTree bt)
-	{
-		if(bt == null)
+
+	public static DoublyLinkedList getDoublyLinkedList(BinaryTree bt) {
+		if (bt == null)
 			return null;
-		else
-		{
-			DoublyLinkedList leftList = getDoublyLinkedList(bt.getLeft()); 
+		else {
+			DoublyLinkedList leftList = getDoublyLinkedList(bt.getLeft());
 			DoublyLinkedList rtList = getDoublyLinkedList(bt.getRight());
-			
-			DoublyLinkedList doublyLinkedList = new DoublyLinkedList(bt.getValue());
-			doublyLinkedList.setNext(rtList.getFirstNode());
-			doublyLinkedList.setPrevious(leftList.getLastNode());
-			
+
+			DoublyLinkedList doublyLinkedList = new DoublyLinkedList(
+					bt.getValue());
+			if (rtList != null)
+			{
+				doublyLinkedList.setNext(rtList.getFirstNode());
+			}
+			if (leftList != null)
+			{
+				doublyLinkedList.setPrevious(leftList.getLastNode());
+			}
 			return doublyLinkedList;
 		}
 	}
-	
-	public static void main(String[] args) {
+
+	public static void main(String[] args) throws Exception{
 		BinarySearchTree bst = new BinarySearchTree();
-		bst.build();
+		bst.build(5);
+		System.out.println(bst.getDiagram());
 		DoublyLinkedList doublyLinkedList = getDoublyLinkedList(bst);
 		System.out.println(doublyLinkedList);
 	}
