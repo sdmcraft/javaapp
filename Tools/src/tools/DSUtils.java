@@ -80,10 +80,12 @@ public class DSUtils {
 			if (rtList != null)
 			{
 				doublyLinkedList.setNext(rtList.getFirstNode());
+				rtList.getFirstNode().setPrevious(doublyLinkedList);
 			}
 			if (leftList != null)
 			{
 				doublyLinkedList.setPrevious(leftList.getLastNode());
+				leftList.getLastNode().setNext(doublyLinkedList);
 			}
 			return doublyLinkedList;
 		}
