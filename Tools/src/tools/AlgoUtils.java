@@ -815,4 +815,12 @@ public class AlgoUtils {
 	public static void main(String[] args) throws Exception {
 		externalSort(new File("C:\\temp\\input.txt"), "C:\\temp", 5);
 	}
+	
+	/*let f(n, k) be the # of ways of choosing k integers without replacement from
+	n consecutive integers so that no two selected are consecutive.
+	a. give a recurrence for f(n, k)
+	b. efficient implementation of f(n, k)
+	
+	http://facta.junis.ni.ac.rs/mai/mai221/f221-01.pdf	
+	*/
 }
