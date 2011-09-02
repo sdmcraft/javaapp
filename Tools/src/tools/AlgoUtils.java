@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.PrintWriter;
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,7 @@ import dataStructures.BinaryTree;
 import dataStructures.BitArray;
 import dataStructures.FileBackedBuffer;
 import dataStructures.LinkedList;
+import dataStructures.Matrix;
 import dataStructures.ValueWithId;
 
 public class AlgoUtils {
@@ -814,7 +814,10 @@ public class AlgoUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		externalSort(new File("C:\\temp\\input.txt"), "C:\\temp", 5);
+		Matrix matrix = Matrix.build(5, 5);
+		System.out.println(matrix);
+		floodMatrix(matrix);
+		System.out.println(matrix);
 	}
 
 	/*
@@ -828,20 +831,32 @@ public class AlgoUtils {
 	 * = 1
 	 */
 
-	/* http://www.careercup.com/question?id=10442525 */
-	public void floodMatrix(boolean[][] matrix) {
-		for (int row = 0; row < matrix.length; row++) {
-			for (int col = 0; col < matrix[0].length; col++) {
-				if (matrix[row][col]) {
-					matrix[0][col] = true;
-					matrix[row][0] = true;
+	/* http://www.careercup.com/question?id=10442525 
+	 * Does not work here:
+false	false	false	true	false	
+true	false	false	false	false	
+false	false	true	false	false	
+true	false	true	false	true	
+false	false	false	false	true	
+
+true	false	true	true	true	
+true	false	true	true	true	
+true	false	true	true	true	
+true	false	true	true	true	
+true	false	true	true	true*/
+	public static void floodMatrix(Matrix matrix) {
+		for (int row = 0; row < matrix.numRows(); row++) {
+			for (int col = 0; col < matrix.numCols(); col++) {
+				if (matrix.get(row, col)) {
+					matrix.set(0, col, true);
+					matrix.set(row, 0, true);
 				}
 			}
 		}
 
-		for (int row = 0; row < matrix.length; row++) {
-			for (int col = 0; col < matrix[0].length; col++) {
-				matrix[row][col] = matrix[0][col] && matrix[row][0];
+		for (int row = 0; row < matrix.numRows(); row++) {
+			for (int col = 0; col < matrix.numCols(); col++) {
+				matrix.set(row, col, matrix.get(0, col) && matrix.get(row, 0));
 			}
 		}
 	}
