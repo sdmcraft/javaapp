@@ -248,8 +248,8 @@ public class AlgoUtils {
 		return new int[] { leftPtr, rtPtr, rank };
 	}
 
-	private static int[] partition(ValueWithId[] input, ValueWithId pivot, int start, int end,
-			ValueWithId[] origIndex) {
+	private static int[] partition(ValueWithId[] input, ValueWithId pivot,
+			int start, int end, ValueWithId[] origIndex) {
 		int leftPtr = start;
 		int rtPtr = end;
 		int rank = 0;
@@ -259,7 +259,8 @@ public class AlgoUtils {
 		// System.out.println("pivot->" + pivot);
 
 		while (leftPtr <= rtPtr) {
-			while (leftPtr < end && input[leftPtr].getValue() < pivot.getValue()) {
+			while (leftPtr < end
+					&& input[leftPtr].getValue() < pivot.getValue()) {
 				leftPtr++;
 			}
 			while (start < rtPtr && input[rtPtr].getValue() > pivot.getValue()) {
@@ -815,12 +816,33 @@ public class AlgoUtils {
 	public static void main(String[] args) throws Exception {
 		externalSort(new File("C:\\temp\\input.txt"), "C:\\temp", 5);
 	}
-	
-	/*let f(n, k) be the # of ways of choosing k integers without replacement from
-	n consecutive integers so that no two selected are consecutive.
-	a. give a recurrence for f(n, k)
-	b. efficient implementation of f(n, k)
-	
-	http://facta.junis.ni.ac.rs/mai/mai221/f221-01.pdf	
-	*/
+
+	/*
+	 * let f(n, k) be the # of ways of choosing k integers without replacement
+	 * from n consecutive integers so that no two selected are consecutive. a.
+	 * give a recurrence for f(n, k) b. efficient implementation of f(n, k)
+	 * 
+	 * http://facta.junis.ni.ac.rs/mai/mai221/f221-01.pdf
+	 * 
+	 * f(n,m) = f(n-2,m) + 2f(n-2,m-1) - f(n-4,m-2) f(n,0) = 1 f(n,1) = n f(3,2)
+	 * = 1
+	 */
+
+	/* http://www.careercup.com/question?id=10442525 */
+	public void floodMatrix(boolean[][] matrix) {
+		for (int row = 0; row < matrix.length; row++) {
+			for (int col = 0; col < matrix[0].length; col++) {
+				if (matrix[row][col]) {
+					matrix[0][col] = true;
+					matrix[row][0] = true;
+				}
+			}
+		}
+
+		for (int row = 0; row < matrix.length; row++) {
+			for (int col = 0; col < matrix[0].length; col++) {
+				matrix[row][col] = matrix[0][col] && matrix[row][0];
+			}
+		}
+	}
 }
