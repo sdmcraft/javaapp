@@ -816,7 +816,7 @@ public class AlgoUtils {
 	public static void main(String[] args) throws Exception {
 		Matrix matrix = Matrix.build(5, 5);
 		System.out.println(matrix);
-		floodMatrix(matrix);
+		floodMatrix2(matrix);
 		System.out.println(matrix);
 	}
 
@@ -831,33 +831,77 @@ public class AlgoUtils {
 	 * = 1
 	 */
 
-	/* http://www.careercup.com/question?id=10442525 
-	 * Does not work here:
-false	false	false	true	false	
-true	false	false	false	false	
-false	false	true	false	false	
-true	false	true	false	true	
-false	false	false	false	true	
-
-true	false	true	true	true	
-true	false	true	true	true	
-true	false	true	true	true	
-true	false	true	true	true	
-true	false	true	true	true*/
+	/*
+	 * http://www.careercup.com/question?id=10442525 Does not work here: false
+	 * false false true false true false false false false false false true
+	 * false false true false true false true false false false false true
+	 * 
+	 * true false true true true true false true true true true false true true
+	 * true true false true true true true false true true true
+	 */
 	public static void floodMatrix(Matrix matrix) {
 		for (int row = 0; row < matrix.numRows(); row++) {
 			for (int col = 0; col < matrix.numCols(); col++) {
-				if (matrix.get(row, col)) {
-					matrix.set(0, col, true);
-					matrix.set(row, 0, true);
+				if (col > 0 && matrix.get(row, col - 1) > 0
+						&& matrix.get(row, col) == 0) {
+					matrix.set(row, col, 2);
+				}
+			}
+		}
+
+		for (int row = 0; row < matrix.numRows(); row++) {
+			for (int col = matrix.numCols() - 1; col >= 0; col--) {
+				if (col < matrix.numCols() - 1 && matrix.get(row, col + 1) == 1
+						&& matrix.get(row, col) == 0) {
+					matrix.set(row, col, 2);
+				}
+			}
+		}
+
+		for (int col = 0; col < matrix.numCols(); col++) {
+			for (int row = 0; row < matrix.numCols(); row++) {
+				if (row > 0 && matrix.get(row - 1, col) > 0
+						&& matrix.get(row, col) == 0) {
+					matrix.set(row, col, 2);
+				}
+			}
+		}
+
+		for (int col = 0; col < matrix.numCols(); col++) {
+			for (int row = matrix.numRows() - 1; row >= 0; row--) {
+				if (row < matrix.numRows() - 1 && matrix.get(row + 1, col) == 1
+						&& matrix.get(row, col) == 0) {
+					matrix.set(row, col, 2);
 				}
 			}
 		}
 
 		for (int row = 0; row < matrix.numRows(); row++) {
 			for (int col = 0; col < matrix.numCols(); col++) {
-				matrix.set(row, col, matrix.get(0, col) && matrix.get(row, 0));
+				if (matrix.get(row, col) > 0) {
+					matrix.set(row, col, 1);
+				}
 			}
 		}
 	}
+
+	public static void floodMatrix2(Matrix matrix) {
+		for (int row = 0; row < matrix.numRows(); row++) {
+			for (int col = 0; col < matrix.numCols(); col++) {
+				if (matrix.get(row, col) == 1) {
+					matrix.set(row, 0, 1);
+					matrix.set(0, col, 1);
+				}
+			}
+		}
+
+		for (int row = 0; row < matrix.numRows(); row++) {
+			for (int col = 0; col < matrix.numCols(); col++) {
+				if (matrix.get(row, 0) == 1 || matrix.get(0, col) == 1) {
+					matrix.set(row, col, 1);
+				}
+			}
+		}
+	}
+
 }

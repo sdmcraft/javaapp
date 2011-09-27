@@ -1,27 +1,27 @@
 package dataStructures;
 
 public class Matrix {
-	boolean[][] data;
+	int[][] data;
 
-	public Matrix(boolean[][] data) {
+	public Matrix(int[][] data) {
 		this.data = data;
 	}
 
 	public static Matrix build(int numRows, int numCols) {
-		boolean[][] data = new boolean[numRows][numCols];
+		int[][] data = new int[numRows][numCols];
 		for (int row = 0; row < data.length; row++) {
 			for (int col = 0; col < data[0].length; col++) {
-				data[row][col] = Math.random() * 100 > 70;
+				data[row][col] = Math.random() * 100 > 80 ? 1 : 0;
 			}
 		}
 		return new Matrix(data);
 	}
 
-	public boolean get(int row, int col) {
+	public int get(int row, int col) {
 		return data[row][col];
 	}
 
-	public void set(int row, int col, boolean value) {
+	public void set(int row, int col, int value) {
 		data[row][col] = value;
 	}
 
