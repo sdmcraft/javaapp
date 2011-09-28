@@ -13,6 +13,7 @@ import dataStructures.ArrayStack;
 import dataStructures.BinaryTree;
 import dataStructures.BitArray;
 import dataStructures.FileBackedBuffer;
+import dataStructures.Heap;
 import dataStructures.LinkedList;
 import dataStructures.Matrix;
 import dataStructures.ValueWithId;
@@ -813,11 +814,22 @@ public class AlgoUtils {
 		}
 	}
 
+	public static int[] topN(int[] input, int n) {
+		int[] result = new int[n];
+		Heap heap = new Heap(n, false);
+		for (int i = 0; i < input.length; i++) {
+			heap.insert(i);
+		}
+		for (int i = 0; i < n; i++)
+			result[i] = heap.removeAsInt();
+		return result;
+	}
+
 	public static void main(String[] args) throws Exception {
-		Matrix matrix = Matrix.build(5, 5);
-		System.out.println(matrix);
-		floodMatrix2(matrix);
-		System.out.println(matrix);
+		int[] array = new int[] { 4, 1, 7, 3, 2, 8 };
+		int[] result = topN(array, 2);
+		for (int i : result)
+			System.out.println(i);
 	}
 
 	/*
@@ -830,78 +842,5 @@ public class AlgoUtils {
 	 * f(n,m) = f(n-2,m) + 2f(n-2,m-1) - f(n-4,m-2) f(n,0) = 1 f(n,1) = n f(3,2)
 	 * = 1
 	 */
-
-	/*
-	 * http://www.careercup.com/question?id=10442525 Does not work here: false
-	 * false false true false true false false false false false false true
-	 * false false true false true false true false false false false true
-	 * 
-	 * true false true true true true false true true true true false true true
-	 * true true false true true true true false true true true
-	 */
-	public static void floodMatrix(Matrix matrix) {
-		for (int row = 0; row < matrix.numRows(); row++) {
-			for (int col = 0; col < matrix.numCols(); col++) {
-				if (col > 0 && matrix.get(row, col - 1) > 0
-						&& matrix.get(row, col) == 0) {
-					matrix.set(row, col, 2);
-				}
-			}
-		}
-
-		for (int row = 0; row < matrix.numRows(); row++) {
-			for (int col = matrix.numCols() - 1; col >= 0; col--) {
-				if (col < matrix.numCols() - 1 && matrix.get(row, col + 1) == 1
-						&& matrix.get(row, col) == 0) {
-					matrix.set(row, col, 2);
-				}
-			}
-		}
-
-		for (int col = 0; col < matrix.numCols(); col++) {
-			for (int row = 0; row < matrix.numCols(); row++) {
-				if (row > 0 && matrix.get(row - 1, col) > 0
-						&& matrix.get(row, col) == 0) {
-					matrix.set(row, col, 2);
-				}
-			}
-		}
-
-		for (int col = 0; col < matrix.numCols(); col++) {
-			for (int row = matrix.numRows() - 1; row >= 0; row--) {
-				if (row < matrix.numRows() - 1 && matrix.get(row + 1, col) == 1
-						&& matrix.get(row, col) == 0) {
-					matrix.set(row, col, 2);
-				}
-			}
-		}
-
-		for (int row = 0; row < matrix.numRows(); row++) {
-			for (int col = 0; col < matrix.numCols(); col++) {
-				if (matrix.get(row, col) > 0) {
-					matrix.set(row, col, 1);
-				}
-			}
-		}
-	}
-
-	public static void floodMatrix2(Matrix matrix) {
-		for (int row = 0; row < matrix.numRows(); row++) {
-			for (int col = 0; col < matrix.numCols(); col++) {
-				if (matrix.get(row, col) == 1) {
-					matrix.set(row, 0, 1);
-					matrix.set(0, col, 1);
-				}
-			}
-		}
-
-		for (int row = 0; row < matrix.numRows(); row++) {
-			for (int col = 0; col < matrix.numCols(); col++) {
-				if (matrix.get(row, 0) == 1 || matrix.get(0, col) == 1) {
-					matrix.set(row, col, 1);
-				}
-			}
-		}
-	}
 
 }

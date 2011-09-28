@@ -8,23 +8,56 @@ class HeapNode {
 		this.data = data;
 		this.weight = weight;
 	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
 }
 
 public class Heap {
 
 	HeapNode nodes[];
 	int heapSize;
+	final boolean expandable;
 
 	/** Creates a new instance of Heap */
-	public Heap(int size) {
+	public Heap(int size, boolean expandable) {
 		nodes = new HeapNode[size];
 		this.heapSize = 0;
+		this.expandable = expandable;
 	}
 
 	public void insert(HeapNode item) {
-		if (heapSize == nodes.length)
-			expandHeap();
+		if (heapSize == nodes.length) {
+			if (expandable)
+				expandHeap();
+			else
+				heapSize--;
+		}
 		nodes[heapSize] = item;
+		trickleUp(heapSize++);
+	}
+
+	public void insert(int item) {
+		if (heapSize == nodes.length) {
+			if (expandable)
+				expandHeap();
+			else
+				heapSize--;
+		}
+		nodes[heapSize] = new HeapNode(Integer.toString(item), item);
 		trickleUp(heapSize++);
 	}
 
@@ -45,6 +78,14 @@ public class Heap {
 		nodes[heapSize] = null;
 		trickledown(0);
 		return result;
+	}
+
+	public int removeAsInt() {
+		HeapNode result = nodes[0];
+		nodes[0] = nodes[--heapSize];
+		nodes[heapSize] = null;
+		trickledown(0);
+		return result.weight;
 	}
 
 	public void trickledown(int index) {
@@ -87,7 +128,7 @@ public class Heap {
 		arr[index] = item;
 	}
 
-	public void expandHeap() {
+	private void expandHeap() {
 		HeapNode newNodes[] = new HeapNode[nodes.length * 2];
 		for (int i = 0; i < nodes.length; i++)
 			newNodes[i] = nodes[i];
@@ -168,7 +209,7 @@ public class Heap {
 				+ "enabled for your testing. For the meantime though, you will have to do dial ins";
 		// String text = "a b c b d c c";
 		String[] strings = text.split(" ");
-		Heap heap = new Heap(strings.length);
+		Heap heap = new Heap(strings.length, false);
 		for (int i = 0; i < strings.length; i++) {
 			int j;
 			boolean found = false;
