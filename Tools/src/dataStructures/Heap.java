@@ -24,6 +24,11 @@ class HeapNode {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
+
+	@Override
+	public String toString() {
+		return "[" + data + ":" + weight + "]";
+	}
 }
 
 public class Heap {

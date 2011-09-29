@@ -818,7 +818,13 @@ public class AlgoUtils {
 		int[] result = new int[n];
 		Heap heap = new Heap(n, false);
 		for (int i = 0; i < input.length; i++) {
-			heap.insert(i);
+			heap.insert(input[i]);
+			try {
+				System.out.println(heap.toBinaryTree().getDiagram());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		for (int i = 0; i < n; i++)
 			result[i] = heap.removeAsInt();
@@ -827,7 +833,7 @@ public class AlgoUtils {
 
 	public static void main(String[] args) throws Exception {
 		int[] array = new int[] { 4, 1, 7, 3, 2, 8 };
-		int[] result = topN(array, 2);
+		int[] result = topN(array, 3);
 		for (int i : result)
 			System.out.println(i);
 	}
