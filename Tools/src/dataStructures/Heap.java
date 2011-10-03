@@ -35,21 +35,16 @@ public class Heap {
 
 	HeapNode nodes[];
 	int heapSize;
-	final boolean expandable;
 
 	/** Creates a new instance of Heap */
-	public Heap(int size, boolean expandable) {
+	public Heap(int size) {
 		nodes = new HeapNode[size];
 		this.heapSize = 0;
-		this.expandable = expandable;
 	}
 
 	public void insert(HeapNode item) {
 		if (heapSize == nodes.length) {
-			if (expandable)
-				expandHeap();
-			else
-				heapSize--;
+			expandHeap();
 		}
 		nodes[heapSize] = item;
 		trickleUp(heapSize++);
@@ -57,10 +52,7 @@ public class Heap {
 
 	public void insert(int item) {
 		if (heapSize == nodes.length) {
-			if (expandable)
-				expandHeap();
-			else
-				heapSize--;
+			expandHeap();
 		}
 		nodes[heapSize] = new HeapNode(Integer.toString(item), item);
 		trickleUp(heapSize++);
@@ -214,7 +206,7 @@ public class Heap {
 				+ "enabled for your testing. For the meantime though, you will have to do dial ins";
 		// String text = "a b c b d c c";
 		String[] strings = text.split(" ");
-		Heap heap = new Heap(strings.length, false);
+		Heap heap = new Heap(strings.length);
 		for (int i = 0; i < strings.length; i++) {
 			int j;
 			boolean found = false;

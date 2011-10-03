@@ -12,6 +12,7 @@ public class Tree implements Cloneable, Serializable {
 
 	protected List<Tree> children;
 	protected String value;
+	protected List<String> contents = new ArrayList<String>();
 	protected String nodeID;
 	protected String diagram;
 	protected String nodeColor;
@@ -84,7 +85,7 @@ public class Tree implements Cloneable, Serializable {
 		setLevels();
 		preDiagram();
 		// System.out.println(intCount);
-		getDiagram((BinaryTree)this);
+		getDiagram(this);
 		diagram += "}";
 		return diagram;
 	}
