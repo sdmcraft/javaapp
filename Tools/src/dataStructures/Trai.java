@@ -26,11 +26,11 @@ public class Trai extends Tree {
 
 	private static String get(String string, int index, Tree root) {
 		for (Tree child : root.children) {
-			if (child.value.equals(string.charAt(index))) {
+			if (child.value.equals(string.charAt(index) + "")) {
 				if (index == string.length() - 1)
 					return child.contents.get(0);
 				else {
-					get(string, index++, child);
+					return get(string, ++index, child);
 				}
 			}
 		}
@@ -61,7 +61,13 @@ public class Trai extends Tree {
 		 * trai.getHeight());
 		 */
 		trai.put("a", "apple");
+		trai.put("ab", "abnormal");
+		trai.put("b", "ball");
+		trai.put("abc", "abcXXX");
 		System.out.println(trai.get("a"));
+		System.out.println(trai.get("ab"));
+		System.out.println(trai.get("b"));
+		System.out.println(trai.get("abc"));
 		System.out.println(trai.getDiagram());
 	}
 }
