@@ -11,6 +11,7 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
+import org.apache.jackrabbit.core.security.SystemPrincipal;
 import org.apache.jackrabbit.core.security.authentication.CredentialsCallback;
 
 public class MyLoginModule implements LoginModule {
@@ -31,6 +32,7 @@ public class MyLoginModule implements LoginModule {
 		System.out.println("commit called for MyLoginModule");
 		if (myPrincipal != null) {
 			subject.getPrincipals().add(myPrincipal);
+			subject.getPrincipals().add(new SystemPrincipal());
 			myPrincipal = null;
 			return true;
 		}
