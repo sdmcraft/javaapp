@@ -15,6 +15,7 @@ import javax.jcr.SimpleCredentials;
 
 import org.apache.jackrabbit.api.JackrabbitSession;
 import org.apache.jackrabbit.api.security.user.User;
+import org.apache.jackrabbit.api.security.user.UserManager;
 import org.apache.jackrabbit.core.TransientRepository;
 
 /**
@@ -28,6 +29,10 @@ public class App {
 		JackrabbitSession session = (JackrabbitSession) repository
 				.login(new SimpleCredentials("satyadeep", "P@$$w0rd"
 						.toCharArray()));
+		
+		UserManager userManager = session.getUserManager();
+		userManager.createUser("satyadeep", "P@$$w0rd");
+		session.save();
 		User user = ((User) session.getUserManager().getAuthorizable(
 				session.getUserID()));
 		try {
