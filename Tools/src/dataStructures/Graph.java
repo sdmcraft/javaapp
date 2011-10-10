@@ -66,7 +66,7 @@ public class Graph implements Cloneable, Serializable {
 			return;
 		} else {
 			this.processed = false;
-			for(Graph neighbour: neighbours)
+			for (Graph neighbour : neighbours)
 				neighbour.clearProcessedFlag();
 		}
 	}
@@ -91,7 +91,6 @@ public class Graph implements Cloneable, Serializable {
 
 	public String getDiagram() throws Exception {
 		clearDiagram(this);
-		setLevels();
 		preDiagram();
 		getDiagram(this);
 		diagram += "}";
@@ -135,66 +134,20 @@ public class Graph implements Cloneable, Serializable {
 		}
 	}
 
-	public void setLevels() throws Exception {
+	public void neighbourCount() throws Exception {
 		ArrayQueue queue = new ArrayQueue(1000);
 		queue.insert(this);
 		while (!queue.empty()) {
 			Graph root = (Graph) queue.remove();
-			for (Graph child : root.getChildren()) {
-				child.depth = root.depth + 1;
-				queue.insert(child);
+			if (!root.processed) {
+				for (Graph neighbour : root.getNeighbours()) {
+					if (!neighbour.processed)
+						queue.insert(neighbour);
+				}
+				root.processed = true;
 			}
 		}
-	}
-
-	public void childCount() throws Exception {
-		ArrayQueue queue = new ArrayQueue(1000);
-		queue.insert(this);
-		while (!queue.empty()) {
-			Graph root = (Graph) queue.remove();
-			// System.out.println(root.value + "-->" + root.children.size());
-			for (Graph child : root.getChildren()) {
-				queue.insert(child);
-			}
-		}
-	}
-
-	public boolean gapNoMoreThanOne() throws Exception {
-		this.setLevels();
-		int upper = -1;
-		int lower = -1;
-
-		/* TODO Currently limited to 100 nodes */
-		ArrayQueue queue = new ArrayQueue(1000);
-		queue.insert(this);
-		while (!queue.empty()) {
-			Graph root = (Graph) queue.remove();
-
-			/* If this is a leaf */
-			if (root.getChildren() == null || root.getChildren().size() == 0) {
-				/* This is the first leaf we are encountering */
-				if (upper == -1 && lower == -1) {
-					upper = root.depth + 1;
-					lower = root.depth - 1;
-				}
-				/* We haven't narrowed the range yet */
-				else if (upper - lower > 1) {
-					if (root.depth == upper)
-						lower = upper - 1;
-					else if (root.depth == lower)
-						upper = lower + 1;
-				}
-				/* This leaf is outside the permissible range */
-				if (root.depth < lower || root.depth > upper)
-					return false;
-			} else {
-				for (Graph child : root.getChildren()) {
-					queue.insert(child);
-				}
-			}
-		}
-		return true;
-
+		this.clearProcessedFlag();
 	}
 
 	private ArrayQueue doBFT() throws Exception {
@@ -328,8 +281,8 @@ public class Graph implements Cloneable, Serializable {
 		if (levels == 0)
 			return null;
 		else {
-			Graph tree = new Graph(
-					Integer.toString((int) (Math.random() * maxVal)));
+			Graph tree = new Graph(Integer
+					.toString((int) (Math.random() * maxVal)));
 			for (int i = 0; i < (int) (Math.random() * maxChildren); i++) {
 				Graph child = Graph.generate(levels - 1, maxVal, maxChildren);
 				if (child != null)
