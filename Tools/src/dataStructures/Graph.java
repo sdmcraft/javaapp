@@ -157,58 +157,32 @@ public class Graph implements Cloneable, Serializable {
 		resultQueue.insert(this);
 		while (!workQueue.empty()) {
 			Graph root = (Graph) workQueue.remove();
-			for (Graph child : root.getChildren()) {
-				workQueue.insert(child);
-				resultQueue.insert(child);
+			for (Graph neighbour : root.getNeighbours()) {
+				if (!neighbour.processed) {
+					workQueue.insert(neighbour);
+					resultQueue.insert(neighbour);
+				}
 			}
 		}
 		return resultQueue;
 	}
 
 	private void getDiagram(Graph root) {
-		if (root.sibling != null) {
-			diagram += "\"" + root.nodeID + "\"" + "->" + "\""
-					+ root.sibling.nodeID + "\"" + "[constraint=false];\n";
-		}
-
 		if (root.nodeColor != null && !root.nodeColor.isEmpty()) {
 			diagram += "\"" + root.nodeID + "\"[color=" + root.nodeColor
 					+ "];\n";
 		}
 
-		if (root.getChildren() != null && root.getChildren().size() > 0) {
-			for (Graph child : root.getChildren()) {
-				String color = null;
-				if (root instanceof BinaryTree) {
-					BinaryTree bt = (BinaryTree) root;
-
-					if (child == bt.getLeft())
-						color = "green";
-					else if (child == bt.getRight())
-						color = "red";
-
-					BinaryTree btChild = (BinaryTree) child;
-					if (btChild.getLeft() == null) {
-						diagram += "null" + terminalCount + " [shape=point];\n";
-						diagram += "\"" + child.nodeID + "\"" + "->" + "\""
-								+ "null" + terminalCount
-								+ "\" [color=green];\n";
-						terminalCount--;
-					}
-					if (btChild.getRight() == null) {
-						diagram += "null" + terminalCount + " [shape=point];\n";
-						diagram += "\"" + child.nodeID + "\"" + "->" + "\""
-								+ "null" + terminalCount + "\" [color=red];\n";
-						terminalCount--;
-					}
-
+		if (root.getNeighbours() != null && root.getNeighbours().size() > 0) {
+			for (Graph neighbour : root.getNeighbours()) {
+				if (!neighbour.processed) {
+					String color = null;
+					diagram += "\"" + root.nodeID + "\"" + "->" + "\""
+							+ neighbour.nodeID + "\""
+							+ (color != null ? "[color=" + color + "]" : "")
+							+ ";\n";
+					getDiagram(neighbour);
 				}
-
-				diagram += "\"" + root.nodeID + "\"" + "->" + "\""
-						+ child.nodeID + "\""
-						+ (color != null ? "[color=" + color + "]" : "")
-						+ ";\n";
-				getDiagram(child);
 			}
 		}
 	}
@@ -217,48 +191,13 @@ public class Graph implements Cloneable, Serializable {
 		if (string.length() == 0)
 			return true;
 		else {
-			Graph child = getChild(string.charAt(0));
-			if (child == null)
+			Graph neighbour = getNeighbour(string.charAt(0));
+			if (neighbour == null)
 				return false;
 			else {
-				return child.search(string.substring(1));
+				return neighbour.search(string.substring(1));
 			}
 		}
-	}
-
-	public void siblingify() throws Exception {
-		siblingify(this);
-	}
-
-	private void siblingify(Graph root) throws Exception {
-		ArrayQueue queue = doBFT();
-		boolean firstPass = true;
-		Graph lastNode = null;
-		Graph currentNode;
-		while (!queue.empty()) {
-			currentNode = (Graph) queue.remove();
-			if (!firstPass && lastNode != null
-					&& lastNode.depth == currentNode.depth) {
-				lastNode.sibling = currentNode;
-			}
-			firstPass = false;
-			lastNode = currentNode;
-		}
-	}
-
-	public int getHeight() {
-		return getHeight(this);
-	}
-
-	private int getHeight(Graph root) {
-		int maxChildHeight = 0;
-		for (Graph child : root.getChildren()) {
-			int childHeight = getHeight(child) + 1;
-			if (maxChildHeight < childHeight)
-				maxChildHeight = childHeight;
-		}
-		root.height += maxChildHeight;
-		return root.height;
 	}
 
 	public LinkedList maxValuePath() {
@@ -277,23 +216,29 @@ public class Graph implements Cloneable, Serializable {
 			return maxValuePath.prefix(new LinkedList(value, false));
 	}
 
-	public static Graph generate(int levels, int maxVal, int maxChildren) {
-		if (levels == 0)
+	public static Graph generate(int numNodes, int maxVal, int maxNeighbours) {
+		if (numNodes == 0)
 			return null;
 		else {
-			Graph tree = new Graph(Integer
-					.toString((int) (Math.random() * maxVal)));
-			for (int i = 0; i < (int) (Math.random() * maxChildren); i++) {
-				Graph child = Graph.generate(levels - 1, maxVal, maxChildren);
-				if (child != null)
-					tree.addChild(child);
+			Matrix adjacencyMatrix = Matrix.build(numNodes, numNodes, 0.5);
+			List<Graph> nodes = new ArrayList<Graph>();
+			for (int i = 0; i < numNodes; i++) {
+				nodes.add(new Graph(
+						Integer.toString((int) (Math.random() * maxVal))));
 			}
-			return tree;
+			for (int row = 0; row < adjacencyMatrix.numRows(); row++) {
+				for (int col = 0; col < adjacencyMatrix.numCols(); col++) {
+					if (adjacencyMatrix.get(row, col) == 1) {
+						nodes.get(row).addNeighbour(nodes.get(col));
+					}
+				}
+			}
+			return nodes.get(0);
 		}
 	}
 
 	/*
-	 * Detects the presence of a linked list as a path inside this tree. Colors
+	 * Detects the presence of a linked list as a path inside this graph. Colors
 	 * the path if found
 	 */
 	public boolean detectPath(LinkedList path) {
@@ -303,11 +248,13 @@ public class Graph implements Cloneable, Serializable {
 				result = true;
 				this.nodeColor = "red";
 			} else {
-				for (Graph subTree : neighbours) {
-					result = subTree.detectPath(path.getNext());
-					if (result) {
-						this.nodeColor = "red";
-						break;
+				for (Graph neighbour : neighbours) {
+					if (!neighbour.processed) {
+						result = neighbour.detectPath(path.getNext());
+						if (result) {
+							this.nodeColor = "red";
+							break;
+						}
 					}
 				}
 			}
@@ -316,11 +263,9 @@ public class Graph implements Cloneable, Serializable {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Graph tree = Graph.generate(6, 50, 6);
-		System.out.println(tree.getDiagram());
-		LinkedList maxValPath = tree.maxValuePath();
-		tree.detectPath(maxValPath);
-		System.out.println(tree.getDiagram());
+		Graph graph = Graph.generate(6, 50, 3);
+		graph.clearProcessedFlag();
+		System.out.println(graph.getDiagram());
 	}
 
 }
