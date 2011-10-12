@@ -90,7 +90,7 @@ public class Graph implements Cloneable, Serializable {
 	}
 
 	public String getDiagram() throws Exception {
-		clearDiagram(this);
+		clearDiagram();
 		preDiagram();
 		getDiagram(this);
 		diagram += "}";
@@ -112,24 +112,26 @@ public class Graph implements Cloneable, Serializable {
 	protected void preDiagram() {
 		nodeID = value;
 		preDiagram(this);
+		clearProcessedFlag();
 	}
 
 	private void preDiagram(Graph graph) {
-		if (graph == null || graph.processed)
-			return;
 		if (graph.getNeighbours() != null && graph.getNeighbours().size() > 0) {
 			for (Graph neighbour : graph.getNeighbours()) {
-				neighbour.nodeID = neighbour.getValue();
-				if (intCount.containsKey(neighbour.getValue())) {
-					int count = intCount.get(neighbour.getValue());
-					for (int i = 0; i < count; i++) {
-						neighbour.nodeID += "*";
+				if (!neighbour.processed) {
+					neighbour.nodeID = neighbour.getValue();
+					if (intCount.containsKey(neighbour.getValue())) {
+						int count = intCount.get(neighbour.getValue());
+						for (int i = 0; i < count; i++) {
+							neighbour.nodeID += "*";
+						}
+						intCount.put(neighbour.getValue(), count + 1);
+					} else {
+						intCount.put(neighbour.getValue(), 1);
 					}
-					intCount.put(neighbour.getValue(), count + 1);
-				} else {
-					intCount.put(neighbour.getValue(), 1);
+					neighbour.processed = true;
+					preDiagram(neighbour);
 				}
-				preDiagram(neighbour);
 			}
 		}
 	}
@@ -181,6 +183,7 @@ public class Graph implements Cloneable, Serializable {
 							+ neighbour.nodeID + "\""
 							+ (color != null ? "[color=" + color + "]" : "")
 							+ ";\n";
+					neighbour.processed = true;
 					getDiagram(neighbour);
 				}
 			}
@@ -221,17 +224,27 @@ public class Graph implements Cloneable, Serializable {
 			return null;
 		else {
 			Matrix adjacencyMatrix = Matrix.build(numNodes, numNodes, 0.5);
+			System.out.println(adjacencyMatrix);
 			List<Graph> nodes = new ArrayList<Graph>();
 			for (int i = 0; i < numNodes; i++) {
-				nodes.add(new Graph(
-						Integer.toString((int) (Math.random() * maxVal))));
+				Graph node = new Graph(
+						Integer.toString((int) (Math.random() * maxVal)));
+				System.out.print(node.value + ",");
+				nodes.add(node);
 			}
+			System.out.println();
 			for (int row = 0; row < adjacencyMatrix.numRows(); row++) {
 				for (int col = 0; col < adjacencyMatrix.numCols(); col++) {
 					if (adjacencyMatrix.get(row, col) == 1) {
 						nodes.get(row).addNeighbour(nodes.get(col));
 					}
 				}
+			}
+			for (Graph node : nodes) {
+				System.out.print(node.value + "->");
+				for (Graph neighbour : node.getNeighbours())
+					System.out.print(neighbour.value + ",");
+				System.out.println();
 			}
 			return nodes.get(0);
 		}
