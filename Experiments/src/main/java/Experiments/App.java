@@ -30,9 +30,9 @@ public class App {
 				.login(new SimpleCredentials("satyadeep", "P@$$w0rd"
 						.toCharArray()));
 		
-		UserManager userManager = session.getUserManager();
-		userManager.createUser("satyadeep", "P@$$w0rd");
-		session.save();
+		//UserManager userManager = session.getUserManager();
+		//userManager.createUser("satyadeep", "P@$$w0rd");
+		//session.save();
 		User user = ((User) session.getUserManager().getAuthorizable(
 				session.getUserID()));
 		try {
