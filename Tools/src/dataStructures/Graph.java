@@ -170,6 +170,10 @@ public class Graph implements Cloneable, Serializable {
 	}
 
 	private void getDiagram(Graph root) {
+		if (root.processed)
+			return;
+		else
+			root.processed = true;
 		if (root.nodeColor != null && !root.nodeColor.isEmpty()) {
 			diagram += "\"" + root.nodeID + "\"[color=" + root.nodeColor
 					+ "];\n";
@@ -177,15 +181,12 @@ public class Graph implements Cloneable, Serializable {
 
 		if (root.getNeighbours() != null && root.getNeighbours().size() > 0) {
 			for (Graph neighbour : root.getNeighbours()) {
-				if (!neighbour.processed) {
-					String color = null;
-					diagram += "\"" + root.nodeID + "\"" + "->" + "\""
-							+ neighbour.nodeID + "\""
-							+ (color != null ? "[color=" + color + "]" : "")
-							+ ";\n";
-					neighbour.processed = true;
-					getDiagram(neighbour);
-				}
+				String color = null;
+				diagram += "\"" + root.nodeID + "\"" + "->" + "\""
+						+ neighbour.nodeID + "\""
+						+ (color != null ? "[color=" + color + "]" : "")
+						+ ";\n";
+				getDiagram(neighbour);
 			}
 		}
 	}
@@ -219,11 +220,12 @@ public class Graph implements Cloneable, Serializable {
 			return maxValuePath.prefix(new LinkedList(value, false));
 	}
 
+	
 	public static Graph generate(int numNodes, int maxVal, int maxNeighbours) {
 		if (numNodes == 0)
 			return null;
 		else {
-			Matrix adjacencyMatrix = Matrix.build(numNodes, numNodes, 0.5);
+			Matrix adjacencyMatrix = Matrix.build(numNodes, numNodes, 0.7);
 			System.out.println(adjacencyMatrix);
 			List<Graph> nodes = new ArrayList<Graph>();
 			for (int i = 0; i < numNodes; i++) {

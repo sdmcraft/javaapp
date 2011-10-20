@@ -7,6 +7,10 @@ public class Matrix {
 		this.data = data;
 	}
 
+	public Matrix(int rows, int cols) {
+		this.data = new int[rows][cols];
+	}
+
 	public static Matrix build(int numRows, int numCols, double factor) {
 		int[][] data = new int[numRows][numCols];
 		for (int row = 0; row < data.length; row++) {
@@ -21,8 +25,16 @@ public class Matrix {
 		return data[row][col];
 	}
 
+	public boolean getBoolean(int row, int col) {
+		return data[row][col] > 0;
+	}
+
 	public void set(int row, int col, int value) {
 		data[row][col] = value;
+	}
+
+	public void setBoolean(int row, int col, boolean value) {
+		data[row][col] = value ? 1 : 0;
 	}
 
 	public int numRows() {
@@ -43,6 +55,39 @@ public class Matrix {
 			sb.append("\n");
 		}
 		return sb.toString();
+	}
+
+	/*
+	 * M[i][k] = M[i][k] || (M[i][j] && M[j][k]) A square adjacency matrix is
+	 * assumed
+	 */
+	public boolean isConnected() {
+		Matrix tempMatrix = new Matrix(data.length, data[0].length);
+		boolean someChange = false;
+		do {
+			someChange = false;
+			for (int row = 0; row < data.length; row++) {
+				for (int col = 0; col < data[0].length; col++) {
+					for (int pointer = 0; pointer < data.length; pointer++) {
+						boolean origValue = tempMatrix.getBoolean(row, col);
+						boolean newValue = tempMatrix.getBoolean(row, col)
+								|| (this.getBoolean(row, pointer) && this
+										.getBoolean(pointer, col));
+						if (origValue != newValue) {
+							someChange = true;
+							tempMatrix.setBoolean(row, col, newValue);
+						}
+					}
+				}
+			}
+		} while (someChange);
+		for (int row = 0; row < data.length; row++) {
+			for (int col = 0; col < data[0].length; col++) {
+				if (!tempMatrix.getBoolean(row, col))
+					return false;
+			}
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {
