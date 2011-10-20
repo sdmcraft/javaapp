@@ -13,7 +13,6 @@ import javax.security.auth.spi.LoginModule;
 
 import org.apache.jackrabbit.core.security.SystemPrincipal;
 import org.apache.jackrabbit.core.security.authentication.CredentialsCallback;
-import org.apache.jackrabbit.core.security.authentication.RepositoryCallback;
 
 public class MyLoginModule implements LoginModule {
 
@@ -59,11 +58,8 @@ public class MyLoginModule implements LoginModule {
 			callbackHandler.handle(new Callback[] { credentialsCallback });
 			SimpleCredentials credentials = (SimpleCredentials) (credentialsCallback
 					.getCredentials());
-			if ("satyadeep".equals(credentials.getUserID())
-					&& "P@$$w0rd".equals(new String(credentials.getPassword()))) {
-				myPrincipal = new MyPrincipal("satyadeep");
-				return true;
-			}
+			return Users.validate(credentials.getUserID(), new String(
+					credentials.getPassword()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

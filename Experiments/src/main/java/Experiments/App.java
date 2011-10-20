@@ -27,7 +27,7 @@ public class App {
 		Repository repository = new TransientRepository();
 //		Repository repository = JcrUtils.getRepository();
 		JackrabbitSession session = (JackrabbitSession) repository
-				.login(new SimpleCredentials("satyadeep", "P@$$w0rd"
+				.login(new SimpleCredentials("admin", "welcome"
 						.toCharArray()));
 		
 		//UserManager userManager = session.getUserManager();
