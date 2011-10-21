@@ -220,12 +220,12 @@ public class Graph implements Cloneable, Serializable {
 			return maxValuePath.prefix(new LinkedList(value, false));
 	}
 
-	
 	public static Graph generate(int numNodes, int maxVal, int maxNeighbours) {
 		if (numNodes == 0)
 			return null;
 		else {
-			Matrix adjacencyMatrix = Matrix.build(numNodes, numNodes, 0.7);
+			Matrix adjacencyMatrix = Matrix.buildConected(numNodes, numNodes,
+					0.5);
 			System.out.println(adjacencyMatrix);
 			List<Graph> nodes = new ArrayList<Graph>();
 			for (int i = 0; i < numNodes; i++) {

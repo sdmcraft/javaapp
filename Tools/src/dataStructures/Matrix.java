@@ -21,6 +21,13 @@ public class Matrix {
 		return new Matrix(data);
 	}
 
+	public static Matrix buildConected(int numRows, int numCols, double factor) {
+		Matrix matrix;
+		while (!(matrix = Matrix.build(numRows, numCols, factor)).isConnected())
+			;
+		return matrix;
+	}
+
 	public int get(int row, int col) {
 		return data[row][col];
 	}
@@ -58,8 +65,8 @@ public class Matrix {
 	}
 
 	/*
-	 * M[i][k] = M[i][k] || (M[i][j] && M[j][k]) A square adjacency matrix is
-	 * assumed
+	 * M[i][k] = M[i][k] || M[k][i] || (M[i][j] && M[j][k]) A square adjacency
+	 * matrix is assumed
 	 */
 	public boolean isConnected() {
 		Matrix tempMatrix = new Matrix(data.length, data[0].length);
@@ -71,6 +78,7 @@ public class Matrix {
 					for (int pointer = 0; pointer < data.length; pointer++) {
 						boolean origValue = tempMatrix.getBoolean(row, col);
 						boolean newValue = tempMatrix.getBoolean(row, col)
+								|| tempMatrix.getBoolean(col, row)
 								|| (this.getBoolean(row, pointer) && this
 										.getBoolean(pointer, col));
 						if (origValue != newValue) {
@@ -93,5 +101,6 @@ public class Matrix {
 	public static void main(String[] args) {
 		Matrix matrix = Matrix.build(5, 5, 0.5);
 		System.out.println(matrix);
+		System.out.println(matrix.isConnected());
 	}
 }
