@@ -111,10 +111,6 @@ public class BinaryTree extends Tree implements Cloneable {
 		BinaryTree bt = new BinaryTree();
 		bt.build();
 		System.out.println(bt.getDiagram());
-		//System.out.println(bt.isBalanced());
-		// System.out.println(bt.inorder());
-		// bt.sameShapeBinaryTree();
-		// System.out.println(bt.getDiagram());
 	}
 
 	public BinaryTree getLeft() {

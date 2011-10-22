@@ -21,9 +21,28 @@ public class Matrix {
 		return new Matrix(data);
 	}
 
+	public static Matrix cycleFreeBuild(int numRows, int numCols, double factor) {
+		int[][] data = new int[numRows][numCols];
+		for (int row = 0; row < data.length; row++) {
+			for (int col = 0; col < data[0].length; col++) {
+				if (row == col)
+					data[row][col] = 0;
+				else if (data[row][col] == -1)
+					data[row][col] = 0;
+				else {
+					data[row][col] = Math.random() > factor ? 1 : 0;
+					if (data[row][col] == 1)
+						data[col][row] = -1;
+				}
+			}
+		}
+		return new Matrix(data);
+	}
+
 	public static Matrix buildConected(int numRows, int numCols, double factor) {
 		Matrix matrix;
-		while (!(matrix = Matrix.build(numRows, numCols, factor)).isConnected())
+		while (!(matrix = Matrix.cycleFreeBuild(numRows, numCols, factor))
+				.isConnected())
 			;
 		return matrix;
 	}
@@ -64,35 +83,49 @@ public class Matrix {
 		return sb.toString();
 	}
 
+	public Matrix clone() {
+		Matrix tempMatrix = new Matrix(data.length, data[0].length);
+		for (int row = 0; row < data.length; row++) {
+			for (int col = 0; col < data[0].length; col++) {
+				tempMatrix.set(row, col, this.get(row, col));
+			}
+		}
+		return tempMatrix;
+	}
+
 	/*
 	 * M[i][k] = M[i][k] || M[k][i] || (M[i][j] && M[j][k]) A square adjacency
 	 * matrix is assumed
 	 */
 	public boolean isConnected() {
-		Matrix tempMatrix = new Matrix(data.length, data[0].length);
+		Matrix tempMatrix = this.clone();
 		boolean someChange = false;
 		do {
 			someChange = false;
 			for (int row = 0; row < data.length; row++) {
 				for (int col = 0; col < data[0].length; col++) {
+					boolean origValue = tempMatrix.getBoolean(row, col);
 					for (int pointer = 0; pointer < data.length; pointer++) {
-						boolean origValue = tempMatrix.getBoolean(row, col);
 						boolean newValue = tempMatrix.getBoolean(row, col)
 								|| tempMatrix.getBoolean(col, row)
-								|| (this.getBoolean(row, pointer) && this
+								|| (tempMatrix.getBoolean(row, pointer) && tempMatrix
 										.getBoolean(pointer, col));
-						if (origValue != newValue) {
+						if (!origValue && newValue) {
 							someChange = true;
 							tempMatrix.setBoolean(row, col, newValue);
+							break;
 						}
 					}
 				}
 			}
 		} while (someChange);
+		System.out.println(tempMatrix);
 		for (int row = 0; row < data.length; row++) {
 			for (int col = 0; col < data[0].length; col++) {
-				if (!tempMatrix.getBoolean(row, col))
+				if (!tempMatrix.getBoolean(row, col)) {
+					System.out.println("Connected:false");
 					return false;
+				}
 			}
 		}
 		return true;

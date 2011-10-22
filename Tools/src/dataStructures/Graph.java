@@ -225,16 +225,16 @@ public class Graph implements Cloneable, Serializable {
 			return null;
 		else {
 			Matrix adjacencyMatrix = Matrix.buildConected(numNodes, numNodes,
-					0.5);
-			System.out.println(adjacencyMatrix);
+					0.8);
+			//System.out.println(adjacencyMatrix);
 			List<Graph> nodes = new ArrayList<Graph>();
 			for (int i = 0; i < numNodes; i++) {
 				Graph node = new Graph(
 						Integer.toString((int) (Math.random() * maxVal)));
-				System.out.print(node.value + ",");
+				//System.out.print(node.value + ",");
 				nodes.add(node);
 			}
-			System.out.println();
+			//System.out.println();
 			for (int row = 0; row < adjacencyMatrix.numRows(); row++) {
 				for (int col = 0; col < adjacencyMatrix.numCols(); col++) {
 					if (adjacencyMatrix.get(row, col) == 1) {
@@ -242,12 +242,12 @@ public class Graph implements Cloneable, Serializable {
 					}
 				}
 			}
-			for (Graph node : nodes) {
+			/*for (Graph node : nodes) {
 				System.out.print(node.value + "->");
 				for (Graph neighbour : node.getNeighbours())
 					System.out.print(neighbour.value + ",");
 				System.out.println();
-			}
+			}*/
 			return nodes.get(0);
 		}
 	}
@@ -276,11 +276,36 @@ public class Graph implements Cloneable, Serializable {
 		}
 		return result;
 	}
+	
+	public boolean detectCycle()
+	{
+		this.clearProcessedFlag();
+		boolean result = detectCycle(this);
+		this.clearProcessedFlag();
+		return result;
+	}
+	
+	private static boolean detectCycle(Graph graph)
+	{
+		graph.processed = true;
+		for(Graph neighbour:graph.neighbours)
+		{
+			if(neighbour.processed)
+				return true;
+			else
+				return detectCycle(neighbour);
+		}
+		return false;
+	}
 
-	public static void main(String[] args) throws Exception {
+	
+	public static void main(String[] args) throws Exception{
 		Graph graph = Graph.generate(6, 50, 3);
+		while(graph.detectCycle())
+			graph = Graph.generate(6, 50, 3);
 		graph.clearProcessedFlag();
 		System.out.println(graph.getDiagram());
+		
 	}
 
 }
