@@ -7,7 +7,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -23,8 +26,8 @@ public class HTMLPageDownloader {
 		URL url = new URL(urlStr);
 		BufferedReader bufferedReader = null;
 		try {
-			bufferedReader = new BufferedReader(new InputStreamReader(
-					url.openStream()));
+			bufferedReader = new BufferedReader(new InputStreamReader(url
+					.openStream()));
 			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
@@ -105,6 +108,31 @@ public class HTMLPageDownloader {
 		}
 	}
 
+	private static String fixCSS(String rawHtml) throws Exception {
+		URL cssFixService = new URL(
+				"http://premailer.dialect.ca/api/0.1/documents");
+		URLConnection urlConnection = cssFixService.openConnection();
+		StringBuilder query = new StringBuilder();
+		query.append("html=" + URLEncoder.encode(rawHtml, "UTF-8"));
+		urlConnection.setDoOutput(true);
+		urlConnection.setDoInput(true);
+		OutputStreamWriter wr = new OutputStreamWriter(urlConnection
+				.getOutputStream());
+		wr.write(query.toString());
+		wr.flush();
+		// Get the response
+		BufferedReader rd = new BufferedReader(new InputStreamReader(
+				urlConnection.getInputStream()));
+		String line;
+		while ((line = rd.readLine()) != null) {
+			System.out.println(line);
+		}
+		wr.close();
+		rd.close();
+		return rd.toString();
+
+	}
+
 	public static void stringToFile(String string, String file)
 			throws Exception {
 		FileWriter fstream = null;
@@ -129,6 +157,11 @@ public class HTMLPageDownloader {
 		for (String image : imageList)
 			downloadFile(image, targetFolder);
 		String rewrittenHtmlSource = rewriteImagePaths(htmlSource);
+		fixCSS(rewrittenHtmlSource);
 		stringToFile(rewrittenHtmlSource, htmlFile);
+	}
+	
+	public static void main(String[] args) throws Exception {
+		downloadHtmlPageWithImages("http://satyadeep.cloudaccess.net", "temp");
 	}
 }
