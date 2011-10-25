@@ -8,6 +8,7 @@ public class Users {
 
 	static {
 		map.put("admin", "welcome");
+		map.put("admin1", "welcome");
 	}
 
 	public static void addUser(String uname, String pwd) {

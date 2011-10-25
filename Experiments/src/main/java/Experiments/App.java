@@ -15,7 +15,6 @@ import javax.jcr.SimpleCredentials;
 
 import org.apache.jackrabbit.api.JackrabbitSession;
 import org.apache.jackrabbit.api.security.user.User;
-import org.apache.jackrabbit.api.security.user.UserManager;
 import org.apache.jackrabbit.core.TransientRepository;
 
 /**
@@ -27,7 +26,7 @@ public class App {
 		Repository repository = new TransientRepository();
 //		Repository repository = JcrUtils.getRepository();
 		JackrabbitSession session = (JackrabbitSession) repository
-				.login(new SimpleCredentials("admin", "welcome"
+				.login(new SimpleCredentials("admin1", "welcome"
 						.toCharArray()));
 		
 		//UserManager userManager = session.getUserManager();
@@ -35,13 +34,14 @@ public class App {
 		//session.save();
 		User user = ((User) session.getUserManager().getAuthorizable(
 				session.getUserID()));
+		System.out.println("You are looged in as:" + user.getID());
 		try {
-			Node rootNode = session.getRootNode();
-			Node rootFolderNode = createFolder(rootNode, "root_folder");
-			Node userNode = createFolder(rootFolderNode, "satyadeep");
-			importFile(userNode, new File("temp/test.txt"), session);
-			exportToXML(new File("repositoryXML.xml"), rootFolderNode, session);
-			rootFolderNode.remove();
+//			Node rootNode = session.getRootNode();
+//			Node rootFolderNode = createFolder(rootNode, "root_folder");
+//			Node userNode = createFolder(rootFolderNode, "satyadeep");
+//			importFile(userNode, new File("temp/test.txt"), session);
+//			exportToXML(new File("repositoryXML.xml"), rootFolderNode, session);
+//			rootFolderNode.remove();
 			// session.importXML(rootNode.getPath(), new FileInputStream(new
 			// File(
 			// "repositoryXML.xml")),
