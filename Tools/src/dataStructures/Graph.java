@@ -11,6 +11,8 @@ import tools.IOUtils;
 public class Graph implements Cloneable, Serializable {
 
 	protected List<Graph> neighbours;
+	protected List<Graph> community;
+
 	protected String value;
 	protected List<String> contents = new ArrayList<String>();
 	protected boolean processed = false;
@@ -31,12 +33,14 @@ public class Graph implements Cloneable, Serializable {
 
 	public Graph() {
 		neighbours = new ArrayList<Graph>();
+		community = new ArrayList<Graph>();
 		diagram = "digraph G {\n";
 		intCount = new HashMap<String, Integer>();
 	}
 
 	public Graph(String value) {
 		neighbours = new ArrayList<Graph>();
+		community = new ArrayList<Graph>();
 		this.value = value;
 	}
 
@@ -60,39 +64,30 @@ public class Graph implements Cloneable, Serializable {
 		neighbours.add(neighbour);
 	}
 
-	private void clearProcessedFlag() {
-		if (processed == false) {
-			// Already flag is clear, return
-			return;
-		} else {
-			this.processed = false;
-			for (Graph neighbour : neighbours)
-				neighbour.clearProcessedFlag();
-		}
+	private static void clearProcessedFlag(Graph graph) {
+		for (Graph node : graph.community)
+			node.processed = false;
 	}
 
 	protected void clearDiagram() {
 		clearDiagram(this);
-		clearProcessedFlag();
+		clearProcessedFlag(this);
 	}
 
 	protected static void clearDiagram(Graph graph) {
-		if (graph == null || graph.processed)
-			return;
-		graph.diagram = "digraph G {\n";
-		graph.nodeID = null;
-		graph.intCount = new HashMap<String, Integer>();
-		graph.terminalCount = 0;
-		graph.processed = true;
-		for (Graph neighbour : graph.neighbours) {
-			clearDiagram(neighbour);
+		for (Graph node : graph.community) {
+			node.diagram = "digraph G {\n";
+			node.nodeID = null;
+			node.intCount = new HashMap<String, Integer>();
+			node.terminalCount = 0;
+			node.processed = true;
 		}
 	}
 
 	public String getDiagram() throws Exception {
 		clearDiagram();
 		preDiagram();
-		getDiagram(this);
+		getDiagramCore();
 		diagram += "}";
 		return diagram;
 	}
@@ -112,27 +107,22 @@ public class Graph implements Cloneable, Serializable {
 	protected void preDiagram() {
 		nodeID = value;
 		preDiagram(this);
-		clearProcessedFlag();
+		clearProcessedFlag(this);
 	}
 
 	private void preDiagram(Graph graph) {
-		if (graph.getNeighbours() != null && graph.getNeighbours().size() > 0) {
-			for (Graph neighbour : graph.getNeighbours()) {
-				if (!neighbour.processed) {
-					neighbour.nodeID = neighbour.getValue();
-					if (intCount.containsKey(neighbour.getValue())) {
-						int count = intCount.get(neighbour.getValue());
-						for (int i = 0; i < count; i++) {
-							neighbour.nodeID += "*";
-						}
-						intCount.put(neighbour.getValue(), count + 1);
-					} else {
-						intCount.put(neighbour.getValue(), 1);
-					}
-					neighbour.processed = true;
-					preDiagram(neighbour);
+		for (Graph node : graph.community) {
+			node.nodeID = node.getValue();
+			if (intCount.containsKey(node.getValue())) {
+				int count = intCount.get(node.getValue());
+				for (int i = 0; i < count; i++) {
+					node.nodeID += "*";
 				}
+				intCount.put(node.getValue(), count + 1);
+			} else {
+				intCount.put(node.getValue(), 1);
 			}
+
 		}
 	}
 
@@ -149,7 +139,7 @@ public class Graph implements Cloneable, Serializable {
 				root.processed = true;
 			}
 		}
-		this.clearProcessedFlag();
+		clearProcessedFlag(this);
 	}
 
 	private ArrayQueue doBFT() throws Exception {
@@ -169,24 +159,18 @@ public class Graph implements Cloneable, Serializable {
 		return resultQueue;
 	}
 
-	private void getDiagram(Graph root) {
-		if (root.processed)
-			return;
-		else
-			root.processed = true;
-		if (root.nodeColor != null && !root.nodeColor.isEmpty()) {
-			diagram += "\"" + root.nodeID + "\"[color=" + root.nodeColor
-					+ "];\n";
-		}
-
-		if (root.getNeighbours() != null && root.getNeighbours().size() > 0) {
-			for (Graph neighbour : root.getNeighbours()) {
+	private void getDiagramCore() {
+		for (Graph node : community) {
+			if (node.nodeColor != null && !node.nodeColor.isEmpty()) {
+				diagram += "\"" + node.nodeID + "\"[color=" + node.nodeColor
+						+ "];\n";
+			}
+			for (Graph neighbour : node.getNeighbours()) {
 				String color = null;
-				diagram += "\"" + root.nodeID + "\"" + "->" + "\""
+				diagram += "\"" + node.nodeID + "\"" + "->" + "\""
 						+ neighbour.nodeID + "\""
 						+ (color != null ? "[color=" + color + "]" : "")
 						+ ";\n";
-				getDiagram(neighbour);
 			}
 		}
 	}
@@ -220,21 +204,21 @@ public class Graph implements Cloneable, Serializable {
 			return maxValuePath.prefix(new LinkedList(value, false));
 	}
 
-	public static Graph generate(int numNodes, int maxVal, int maxNeighbours) {
+	public static Graph generate(int numNodes, int maxVal) {
 		if (numNodes == 0)
 			return null;
 		else {
-			Matrix adjacencyMatrix = Matrix.buildConected(numNodes, numNodes,
+			Matrix adjacencyMatrix = Matrix.buildConnected(numNodes, numNodes,
 					0.8);
-			//System.out.println(adjacencyMatrix);
+			System.out.println(adjacencyMatrix);
 			List<Graph> nodes = new ArrayList<Graph>();
 			for (int i = 0; i < numNodes; i++) {
-				Graph node = new Graph(
-						Integer.toString((int) (Math.random() * maxVal)));
-				//System.out.print(node.value + ",");
+				Graph node = new Graph(Integer
+						.toString((int) (Math.random() * maxVal)));
+				System.out.print(node.value + ",");
 				nodes.add(node);
 			}
-			//System.out.println();
+			System.out.println();
 			for (int row = 0; row < adjacencyMatrix.numRows(); row++) {
 				for (int col = 0; col < adjacencyMatrix.numCols(); col++) {
 					if (adjacencyMatrix.get(row, col) == 1) {
@@ -242,12 +226,13 @@ public class Graph implements Cloneable, Serializable {
 					}
 				}
 			}
-			/*for (Graph node : nodes) {
+			for (Graph node : nodes) {
+				node.community = nodes;
 				System.out.print(node.value + "->");
 				for (Graph neighbour : node.getNeighbours())
 					System.out.print(neighbour.value + ",");
 				System.out.println();
-			}*/
+			}
 			return nodes.get(0);
 		}
 	}
@@ -276,36 +261,33 @@ public class Graph implements Cloneable, Serializable {
 		}
 		return result;
 	}
-	
-	public boolean detectCycle()
-	{
-		this.clearProcessedFlag();
+
+	public boolean detectCycle() {
+		clearProcessedFlag(this);
 		boolean result = detectCycle(this);
-		this.clearProcessedFlag();
+		clearProcessedFlag(this);
 		return result;
 	}
-	
-	private static boolean detectCycle(Graph graph)
-	{
+
+	private static boolean detectCycle(Graph graph) {
 		graph.processed = true;
-		for(Graph neighbour:graph.neighbours)
-		{
-			if(neighbour.processed)
+		boolean result = false;
+		for (Graph neighbour : graph.neighbours) {
+			if (neighbour.processed)
 				return true;
 			else
-				return detectCycle(neighbour);
+				result |= detectCycle(neighbour);
 		}
-		return false;
+		return result;
 	}
 
-	
-	public static void main(String[] args) throws Exception{
-		Graph graph = Graph.generate(6, 50, 3);
-		while(graph.detectCycle())
-			graph = Graph.generate(6, 50, 3);
-		graph.clearProcessedFlag();
+	public static void main(String[] args) throws Exception {
+		Graph graph = Graph.generate(10, 500);
+		while (graph.detectCycle())
+			graph = Graph.generate(10, 500);
+		clearProcessedFlag(graph);
 		System.out.println(graph.getDiagram());
-		
+
 	}
 
 }

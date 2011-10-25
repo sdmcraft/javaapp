@@ -36,10 +36,16 @@ public class Matrix {
 				}
 			}
 		}
+		for (int row = 0; row < data.length; row++) {
+			for (int col = 0; col < data[0].length; col++) {
+				if (data[row][col] == -1)
+					data[row][col] = 0;
+			}
+		}
 		return new Matrix(data);
 	}
 
-	public static Matrix buildConected(int numRows, int numCols, double factor) {
+	public static Matrix buildConnected(int numRows, int numCols, double factor) {
 		Matrix matrix;
 		while (!(matrix = Matrix.cycleFreeBuild(numRows, numCols, factor))
 				.isConnected())
@@ -119,11 +125,11 @@ public class Matrix {
 				}
 			}
 		} while (someChange);
-		System.out.println(tempMatrix);
+		// System.out.println(tempMatrix);
 		for (int row = 0; row < data.length; row++) {
 			for (int col = 0; col < data[0].length; col++) {
 				if (!tempMatrix.getBoolean(row, col)) {
-					System.out.println("Connected:false");
+					// System.out.println("Connected:false");
 					return false;
 				}
 			}
