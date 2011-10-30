@@ -20,6 +20,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 public class HTMLPageDownloader {
 
 	public static String getHtmlSource(String urlStr) throws Exception {
@@ -108,29 +112,44 @@ public class HTMLPageDownloader {
 		}
 	}
 
-	private static String fixCSS(String rawHtml) throws Exception {
-		URL cssFixService = new URL(
-				"http://premailer.dialect.ca/api/0.1/documents");
-		URLConnection urlConnection = cssFixService.openConnection();
-		StringBuilder query = new StringBuilder();
-		query.append("html=" + URLEncoder.encode(rawHtml, "UTF-8"));
-		urlConnection.setDoOutput(true);
-		urlConnection.setDoInput(true);
-		OutputStreamWriter wr = new OutputStreamWriter(urlConnection
-				.getOutputStream());
-		wr.write(query.toString());
-		wr.flush();
-		// Get the response
-		BufferedReader rd = new BufferedReader(new InputStreamReader(
-				urlConnection.getInputStream()));
-		String line;
-		while ((line = rd.readLine()) != null) {
-			System.out.println(line);
+	private static String fixHtmlForEmail(String rawHtmlUrl) throws Exception {
+		OutputStreamWriter out = null;
+		BufferedReader reader = null;
+		try {
+			URL cssFixService = new URL(
+					"http://premailer.dialect.ca/api/0.1/documents");
+			URLConnection urlConnection = cssFixService.openConnection();
+			StringBuilder query = new StringBuilder();
+			query.append("url=" + URLEncoder.encode(rawHtmlUrl, "UTF-8"));
+			query.append("&preserve_styles=false");
+			query.append("&remove_classes=true");
+			urlConnection.setDoOutput(true);
+			urlConnection.setDoInput(true);
+			out = new OutputStreamWriter(urlConnection.getOutputStream());
+			out.write(query.toString());
+			out.flush();
+			// Get the response
+			reader = new BufferedReader(new InputStreamReader(urlConnection
+					.getInputStream()));
+			StringBuilder jsonResponse = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				jsonResponse.append(line + "\n");
+			}
+			JsonParser jsonParser = new JsonParser();
+			JsonElement jsonElement = jsonParser.parse(jsonResponse.toString());
+			JsonObject jsonObject = jsonElement.getAsJsonObject();
+			JsonElement documentsElement = jsonObject
+					.getAsJsonObject("documents");
+			JsonObject documentsObject = documentsElement.getAsJsonObject();
+			JsonElement htmlElement = documentsObject.get("html");
+			return htmlElement.getAsString();
+		} finally {
+			if (out != null)
+				out.close();
+			if (reader != null)
+				reader.close();
 		}
-		wr.close();
-		rd.close();
-		return rd.toString();
-
 	}
 
 	public static void stringToFile(String string, String file)
@@ -157,11 +176,11 @@ public class HTMLPageDownloader {
 		for (String image : imageList)
 			downloadFile(image, targetFolder);
 		String rewrittenHtmlSource = rewriteImagePaths(htmlSource);
-		fixCSS(rewrittenHtmlSource);
 		stringToFile(rewrittenHtmlSource, htmlFile);
 	}
-	
+
 	public static void main(String[] args) throws Exception {
-		downloadHtmlPageWithImages("http://satyadeep.cloudaccess.net", "temp");
+		String fixedHtmlUrl = fixHtmlForEmail("http://www.adobe.com");
+		downloadHtmlPageWithImages(fixedHtmlUrl, "temp");
 	}
 }
