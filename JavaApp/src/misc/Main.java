@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.mail.internet.InternetAddress;
+
 import tools.IOUtils;
 
 public class Main {
@@ -15,10 +17,22 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception,
 			InterruptedException {
-		String icalText = readFileAsString("C:\\temp\\a.txt");
-		System.out.println(icalText);
-		icalText = icalText.replaceAll("\r\n|\n", "\\\\n");
-		System.out.println(icalText);
+		InternetAddress address = new InternetAddress("\"Satya Deep\"<satyam@adobe.com>");
+		System.out.println(address.getPersonal());
+		System.out.println(address.getAddress());
+
+		address = new InternetAddress("satyam@adobe.com");
+		System.out.println(address.getPersonal());
+		System.out.println(address.getAddress());
+
+		address = new InternetAddress("Satya Deep <satyam@adobe.com>");
+		System.out.println(address.getPersonal());
+		System.out.println(address.getAddress());
+
+//		String icalText = readFileAsString("C:\\temp\\a.txt");
+//		System.out.println(icalText);
+//		icalText = icalText.replaceAll("\r\n|\n", "\\\\n");
+//		System.out.println(icalText);
 	}
 
 	private static String readFileAsString(String filePath)

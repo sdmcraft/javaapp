@@ -1,26 +1,158 @@
 package misc;
 
+import java.lang.ref.PhantomReference;
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReferenceDemo {
-	public static void main(String[] args) {
-		WeakReference<String> wr = new WeakReference<String>(new String("weak"));
-		SoftReference<String> sr = new SoftReference<String>(new String("soft"));
-		System.out.println(wr.get());
-		System.out.println(sr.get());
-		boolean b = true;
-		List<Object> list = new ArrayList<Object>();
+/**
+ * @author Stephan van Hulst
+ */
+final class ReferenceDemo {
+
+	// if true, program will test Soft references
+	private static boolean testSoft = true;
+
+	// if true, program will test resurrection in finalize()
+	private static boolean testResurrection = true;
+
+	private static volatile Object strong;
+	private static volatile Reference<?> soft, weak, phantom;
+
+	private static void pass(String descr, Runnable command)
+			throws InterruptedException {
+		System.out.println();
+		System.out.println(descr);
+
+		if (command != null)
+			command.run();
+
+		System.gc();
+		Thread.sleep(100);
+	}
+
+	private static void fillMemory() {
 		try {
-			while (b) {
-				list.add(new byte[100]);
-			}
-		} catch (OutOfMemoryError e) {
-			System.gc();
+			List<Object> list = new ArrayList<Object>();
+			while (true)
+				list.add(new byte[10000]);
+		} catch (OutOfMemoryError ex) {
+			System.out.println("  Memory full");
 		}
-		System.out.println(wr.get());
-		System.out.println(sr.get());
+	}
+
+	public static void main(String... args) throws Exception {
+
+		final ReferenceQueue<Object> queue = new ReferenceQueue<Object>();
+
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (!Thread.currentThread().isInterrupted()) {
+					try {
+						Reference<?> ref = queue.remove();
+						System.out.println("  Enqueued: " + ref);
+					} catch (InterruptedException ex) {
+						Thread.currentThread().interrupt();
+					}
+				}
+			}
+		});
+
+		thread.start();
+
+		strong = new Object() {
+			@Override
+			protected void finalize() throws Throwable { 
+				System.out.println("  Object finalized");
+
+				if (testResurrection) {
+					strong = this;
+					weak = new MyWeakReference(strong, queue);
+					if (testSoft)
+						soft = new MySoftReference(strong, queue);
+				}
+			}
+		};
+
+		phantom = new MyPhantomReference(strong, queue);
+		weak = new MyWeakReference(strong, queue);
+		if (testSoft)
+			soft = new MySoftReference(strong, queue);
+
+		System.out.println();
+		System.out.println("Start:");
+		System.out.println("  " + soft);
+		System.out.println("  " + weak);
+		System.out.println("  " + phantom);
+
+		pass("Clear variable and first GC pass:", new Runnable() {
+			public void run() {
+				strong = null;
+			}
+		});
+
+		pass("Fill memory and second GC pass:", new Runnable() {
+			public void run() {
+				fillMemory();
+			}
+		});
+
+		pass("Third GC pass:", null);
+
+		if (testResurrection) {
+			pass("Kill resurrected object and fourth GC pass:", new Runnable() {
+				public void run() {
+					strong = null;
+				}
+			});
+
+			pass("Fill memory and fifth GC pass:", new Runnable() {
+				public void run() {
+					fillMemory();
+				}
+			});
+
+			pass("Sixth GC pass:", null);
+		}
+
+		thread.interrupt();
+	}
+
+	private static final class MySoftReference extends SoftReference<Object> {
+
+		private MySoftReference(Object referent, ReferenceQueue<Object> queue) {
+			super(referent, queue);
+		}
+
+		public String toString() {
+			return "Soft --> " + get();
+		}
+	}
+
+	private static final class MyWeakReference extends WeakReference<Object> {
+
+		private MyWeakReference(Object referent, ReferenceQueue<Object> queue) {
+			super(referent, queue);
+		}
+
+		public String toString() {
+			return "Weak --> " + get();
+		}
+	}
+
+	private static final class MyPhantomReference extends
+			PhantomReference<Object> {
+
+		private MyPhantomReference(Object referent, ReferenceQueue<Object> queue) {
+			super(referent, queue);
+		}
+
+		public String toString() {
+			return "Phantom --> " + get();
+		}
 	}
 }

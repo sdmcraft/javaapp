@@ -7,27 +7,32 @@ public class RegexDemo {
 
 	/**
 	 * @param args
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-//		for(String s : "123/456-7/abc-def/".split("[/-]"))
-//		{
-//			System.out.println(s);
-//		}
-//		File f = new File("C:\\sdm\\temp\\abc\\def");
-//		f.mkdirs();
-		
-//		System.out.println(f.getAbsolutePath());
-//		System.out.println(f.getName());
-//		String path = f.getAbsolutePath();
-//		path = path.replace("test", "pest");
-//		System.out.println(path);
-//		f.renameTo(new File(path));
-		Pattern p = Pattern.compile("[0-9]+");
-		Matcher m = p.matcher("a = 100123 111/2-0 b - 200 c[30{e40}/+ d 50");
+		// for(String s : "123/456-7/abc-def/".split("[/-]"))
+		// {
+		// System.out.println(s);
+		// }
+		// File f = new File("C:\\sdm\\temp\\abc\\def");
+		// f.mkdirs();
+
+		// System.out.println(f.getAbsolutePath());
+		// System.out.println(f.getName());
+		// String path = f.getAbsolutePath();
+		// path = path.replace("test", "pest");
+		// System.out.println(path);
+		// f.renameTo(new File(path));
+		String tag = "i";
+		Pattern p = Pattern.compile("<\\s*" + tag + "\\s*[^><]*>");
+		Matcher m = p
+				.matcher("Event Information: Event Information: Event Information: Event Information: <i>dddd");
 		while (m.find()) {
 			System.out.println(m.group());
 		}
+		System.out
+				.println("Event Information: Event Information: Event Information: Event Information: <i>dddd"
+						.matches("<\\s*" + tag + "\\s*[^><]*>"));
 	}
 
 }
