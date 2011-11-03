@@ -30,8 +30,8 @@ public class HTMLPageDownloader {
 		URL url = new URL(urlStr);
 		BufferedReader bufferedReader = null;
 		try {
-			bufferedReader = new BufferedReader(new InputStreamReader(url
-					.openStream()));
+			bufferedReader = new BufferedReader(new InputStreamReader(
+					url.openStream()));
 			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
@@ -90,10 +90,7 @@ public class HTMLPageDownloader {
 		try {
 			URL url = new URL(urlStr);
 			is = new BufferedInputStream(url.openStream());
-			String localFile = null;
-			StringTokenizer st = new StringTokenizer(url.getFile(), "/");
-			while (st.hasMoreTokens())
-				localFile = st.nextToken();
+			String localFile = "test.html";
 			targetFile = target + File.separator + localFile;
 			fos = new FileOutputStream(targetFile);
 			int oneChar;
@@ -129,8 +126,8 @@ public class HTMLPageDownloader {
 			out.write(query.toString());
 			out.flush();
 			// Get the response
-			reader = new BufferedReader(new InputStreamReader(urlConnection
-					.getInputStream()));
+			reader = new BufferedReader(new InputStreamReader(
+					urlConnection.getInputStream()));
 			StringBuilder jsonResponse = new StringBuilder();
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -161,8 +158,12 @@ public class HTMLPageDownloader {
 			fstream = new FileWriter(file);
 			out = new BufferedWriter(fstream);
 			out.write(string);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
 		} finally {
-			out.close();
+			if (out != null)
+				out.close();
 		}
 	}
 
@@ -180,7 +181,7 @@ public class HTMLPageDownloader {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String fixedHtmlUrl = fixHtmlForEmail("http://www.adobe.com");
+		String fixedHtmlUrl = fixHtmlForEmail("https://sites.google.com/site/satyadeep1980/");
 		downloadHtmlPageWithImages(fixedHtmlUrl, "temp");
 	}
 }
