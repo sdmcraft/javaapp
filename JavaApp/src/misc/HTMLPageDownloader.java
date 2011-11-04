@@ -120,6 +120,7 @@ public class HTMLPageDownloader {
 			query.append("url=" + URLEncoder.encode(rawHtmlUrl, "UTF-8"));
 			query.append("&preserve_styles=false");
 			query.append("&remove_classes=true");
+			//query.append("&base_url=" + URLEncoder.encode(rawHtmlUrl, "UTF-8"));
 			urlConnection.setDoOutput(true);
 			urlConnection.setDoInput(true);
 			out = new OutputStreamWriter(urlConnection.getOutputStream());
@@ -168,11 +169,11 @@ public class HTMLPageDownloader {
 	}
 
 	public static void downloadHtmlPageWithImages(String pageUrl,
-			String targetFolder) throws Exception {
+			String imagesBaseUrl, String targetFolder) throws Exception {
 
 		String pageParent = pageUrl.substring(0, pageUrl.lastIndexOf("/"));
 		String htmlSource = getHtmlSource(pageUrl);
-		List<String> imageList = getReferredImages(htmlSource, pageParent);
+		List<String> imageList = getReferredImages(htmlSource, imagesBaseUrl);
 		String htmlFile = downloadFile(pageUrl, targetFolder);
 		for (String image : imageList)
 			downloadFile(image, targetFolder);
@@ -182,6 +183,7 @@ public class HTMLPageDownloader {
 
 	public static void main(String[] args) throws Exception {
 		String fixedHtmlUrl = fixHtmlForEmail("https://sites.google.com/site/satyadeep1980/");
-		downloadHtmlPageWithImages(fixedHtmlUrl, "temp");
+		downloadHtmlPageWithImages(fixedHtmlUrl,
+				"https://sites.google.com/site/satyadeep1980/", "temp");
 	}
 }
