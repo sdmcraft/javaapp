@@ -30,8 +30,8 @@ public class HTMLPageDownloader {
 		URL url = new URL(urlStr);
 		BufferedReader bufferedReader = null;
 		try {
-			bufferedReader = new BufferedReader(new InputStreamReader(
-					url.openStream()));
+			bufferedReader = new BufferedReader(new InputStreamReader(url
+					.openStream()));
 			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
@@ -50,7 +50,7 @@ public class HTMLPageDownloader {
 		List<String> imageList = new ArrayList<String>();
 		for (Element image : images) {
 			String src = image.attr("src");
-			if (!src.startsWith("http://")) {
+			if (!src.startsWith("http://") && !src.startsWith("https://")) {
 				if (src.startsWith("/")) {
 					URL parentUrl = new URL(pageParent);
 					String protocol = parentUrl.getProtocol();
@@ -74,6 +74,10 @@ public class HTMLPageDownloader {
 			String src = image.attr("src");
 			if (src.contains("/")) {
 				src = src.substring(src.lastIndexOf("/") + 1);
+				/* This is google sites specific hack */
+				if (src.contains("?"))
+					src = src.substring(0, src.indexOf("?"));
+
 				image.attr("src", src);
 			}
 		}
@@ -90,7 +94,14 @@ public class HTMLPageDownloader {
 		try {
 			URL url = new URL(urlStr);
 			is = new BufferedInputStream(url.openStream());
-			String localFile = "test.html";
+			String localFile = null;
+			StringTokenizer st = new StringTokenizer(url.getFile(), "/");
+			while (st.hasMoreTokens())
+				localFile = st.nextToken();
+
+			/* This is google sites specific hack */
+			if (localFile.contains("?"))
+				localFile = localFile.substring(0, localFile.indexOf("?"));
 			targetFile = target + File.separator + localFile;
 			fos = new FileOutputStream(targetFile);
 			int oneChar;
@@ -109,7 +120,7 @@ public class HTMLPageDownloader {
 		}
 	}
 
-	private static String fixHtmlForEmail(String rawHtmlUrl) throws Exception {
+	private static String inlineCSS(String rawHtmlUrl) throws Exception {
 		OutputStreamWriter out = null;
 		BufferedReader reader = null;
 		try {
@@ -120,15 +131,16 @@ public class HTMLPageDownloader {
 			query.append("url=" + URLEncoder.encode(rawHtmlUrl, "UTF-8"));
 			query.append("&preserve_styles=false");
 			query.append("&remove_classes=true");
-			//query.append("&base_url=" + URLEncoder.encode(rawHtmlUrl, "UTF-8"));
+			// query.append("&base_url=" + URLEncoder.encode(rawHtmlUrl,
+			// "UTF-8"));
 			urlConnection.setDoOutput(true);
 			urlConnection.setDoInput(true);
 			out = new OutputStreamWriter(urlConnection.getOutputStream());
 			out.write(query.toString());
 			out.flush();
 			// Get the response
-			reader = new BufferedReader(new InputStreamReader(
-					urlConnection.getInputStream()));
+			reader = new BufferedReader(new InputStreamReader(urlConnection
+					.getInputStream()));
 			StringBuilder jsonResponse = new StringBuilder();
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -168,10 +180,8 @@ public class HTMLPageDownloader {
 		}
 	}
 
-	public static void downloadHtmlPageWithImages(String pageUrl,
+	public static String downloadHtmlPageWithImages(String pageUrl,
 			String imagesBaseUrl, String targetFolder) throws Exception {
-
-		String pageParent = pageUrl.substring(0, pageUrl.lastIndexOf("/"));
 		String htmlSource = getHtmlSource(pageUrl);
 		List<String> imageList = getReferredImages(htmlSource, imagesBaseUrl);
 		String htmlFile = downloadFile(pageUrl, targetFolder);
@@ -179,11 +189,27 @@ public class HTMLPageDownloader {
 			downloadFile(image, targetFolder);
 		String rewrittenHtmlSource = rewriteImagePaths(htmlSource);
 		stringToFile(rewrittenHtmlSource, htmlFile);
+		return htmlFile;
+	}
+
+	private static void fixHtmlForEmail(String htmlFile) throws Exception {
+		Document htmlDoc = Jsoup.parse(new File(htmlFile), "UTF-8");
+		Elements scriptTags = htmlDoc.getElementsByTag("script");
+		for (Element scriptTag : scriptTags) {
+			scriptTag.remove();
+		}
+
+//		Elements styleTags = htmlDoc.getElementsByTag("style");
+//		for (Element styleTag : styleTags) {
+//			styleTag.remove();
+//		}
+		stringToFile(htmlDoc.toString(), htmlFile);
 	}
 
 	public static void main(String[] args) throws Exception {
-		String fixedHtmlUrl = fixHtmlForEmail("https://sites.google.com/site/satyadeep1980/");
-		downloadHtmlPageWithImages(fixedHtmlUrl,
+		String fixedHtmlUrl = inlineCSS("https://sites.google.com/site/satyadeep1980/");
+		String htmlFile = downloadHtmlPageWithImages(fixedHtmlUrl,
 				"https://sites.google.com/site/satyadeep1980/", "temp");
+		fixHtmlForEmail(htmlFile);
 	}
 }
