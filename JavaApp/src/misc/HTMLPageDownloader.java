@@ -30,8 +30,8 @@ public class HTMLPageDownloader {
 		URL url = new URL(urlStr);
 		BufferedReader bufferedReader = null;
 		try {
-			bufferedReader = new BufferedReader(new InputStreamReader(url
-					.openStream()));
+			bufferedReader = new BufferedReader(new InputStreamReader(
+					url.openStream()));
 			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
@@ -139,8 +139,8 @@ public class HTMLPageDownloader {
 			out.write(query.toString());
 			out.flush();
 			// Get the response
-			reader = new BufferedReader(new InputStreamReader(urlConnection
-					.getInputStream()));
+			reader = new BufferedReader(new InputStreamReader(
+					urlConnection.getInputStream()));
 			StringBuilder jsonResponse = new StringBuilder();
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -192,18 +192,28 @@ public class HTMLPageDownloader {
 		return htmlFile;
 	}
 
-	private static void fixHtmlForEmail(String htmlFile) throws Exception {
+	private static String fixHtmlForEmail(String htmlFile) throws Exception {
 		Document htmlDoc = Jsoup.parse(new File(htmlFile), "UTF-8");
 		Elements scriptTags = htmlDoc.getElementsByTag("script");
 		for (Element scriptTag : scriptTags) {
 			scriptTag.remove();
 		}
 
-//		Elements styleTags = htmlDoc.getElementsByTag("style");
-//		for (Element styleTag : styleTags) {
-//			styleTag.remove();
-//		}
-		stringToFile(htmlDoc.toString(), htmlFile);
+		// Elements styleTags = htmlDoc.getElementsByTag("style");
+		// for (Element styleTag : styleTags) {
+		// styleTag.remove();
+		// }
+		String htmlString = htmlDoc.toString();
+		stringToFile(htmlString, htmlFile);
+		return htmlString;
+	}
+
+	public static String downloadEmailTemplate(String templateUrl,
+			String downloadFolder) throws Exception {
+		String fixedHtmlUrl = inlineCSS(templateUrl);
+		String htmlFile = downloadHtmlPageWithImages(fixedHtmlUrl, templateUrl,
+				downloadFolder);
+		return fixHtmlForEmail(htmlFile);
 	}
 
 	public static void main(String[] args) throws Exception {
