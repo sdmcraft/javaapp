@@ -102,6 +102,7 @@ public class HTMLPageDownloader {
 			/* This is google sites specific hack */
 			if (localFile.contains("?"))
 				localFile = localFile.substring(0, localFile.indexOf("?"));
+
 			targetFile = target + File.separator + localFile;
 			fos = new FileOutputStream(targetFile);
 			int oneChar;
@@ -184,12 +185,14 @@ public class HTMLPageDownloader {
 			String imagesBaseUrl, String targetFolder) throws Exception {
 		String htmlSource = getHtmlSource(pageUrl);
 		List<String> imageList = getReferredImages(htmlSource, imagesBaseUrl);
-		String htmlFile = downloadFile(pageUrl, targetFolder);
+		String htmlFileStr = downloadFile(pageUrl, targetFolder);
+		File htmlFile = new File(htmlFileStr);
+		htmlFile.renameTo(new File(htmlFile.getParent(), "template.html"));
 		for (String image : imageList)
 			downloadFile(image, targetFolder);
 		String rewrittenHtmlSource = rewriteImagePaths(htmlSource);
-		stringToFile(rewrittenHtmlSource, htmlFile);
-		return htmlFile;
+		stringToFile(rewrittenHtmlSource, htmlFileStr);
+		return htmlFileStr;
 	}
 
 	private static String fixHtmlForEmail(String htmlFile) throws Exception {
