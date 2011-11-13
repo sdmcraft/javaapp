@@ -23,7 +23,7 @@ public class UserProfileUpdate extends HttpServlet {
 			System.out.println("Hello from demo servlet");
 			CreateUserRemote userCreationAction = (CreateUserRemote) jndiContext
 					.lookup("TimeRecordEnterprise-1.0/CreateUser/remote");
-			userCreationAction.createUser("Satya Deep");
+			userCreationAction.createUser("Satya Deep", new byte[0]);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
