@@ -22,17 +22,14 @@ public class User implements Serializable {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	public User() {
+	public User(String name) {
 		super();
+		this.name = name;
 		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getName() {
