@@ -42,18 +42,10 @@ public class Main {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		String channel = "Gtalk/connuser1@gmail.com-9ea7";
-
-		System.out.println(channel.substring(channel.indexOf("Gtalk") + 6,
-				channel.lastIndexOf(".com") + 4));
-		// HashMap<String, Integer> myMap = new HashMap<String,Integer>();
-		// HashMap<String, String> myMap2 = new HashMap<String,String>();
-		//
-		// Integer i = new Integer(5);
-		// Integer j = new Integer(5);
-		// myMap2.put("a1", "aa");
-		// myMap2.put("a2", "aa");
-		// System.out.println(myMap.get("a1")==myMap.get("a2"));
-		// System.out.println(myMap2.get("a1")==myMap2.get("a2"));
+		double payment = 0.125;
+		double sum = 0;
+		for(int i = 0 ; i < 10;i++)
+			sum += payment;
+		System.out.println(sum);
 	}
 }
