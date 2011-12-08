@@ -8,14 +8,15 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
+
+import com.sun.corba.se.impl.orbutil.graph.Graph;
 
 import dataStructures.ArrayStack;
 import dataStructures.BinaryTree;
 import dataStructures.BitArray;
 import dataStructures.FileBackedBuffer;
-import dataStructures.Heap;
 import dataStructures.LinkedList;
-import dataStructures.Matrix;
 import dataStructures.ValueWithId;
 
 public class AlgoUtils {
@@ -813,7 +814,7 @@ public class AlgoUtils {
 			return;
 		}
 	}
-
+	
 	public static void main(String[] args) throws Exception {
 	}
 

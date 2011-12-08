@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import tools.IOUtils;
 
 public class Graph implements Cloneable, Serializable {
@@ -21,6 +22,8 @@ public class Graph implements Cloneable, Serializable {
 	protected String nodeColor;
 	private Map<String, Integer> intCount;
 	protected int terminalCount;
+	
+	protected int tarjanIndex = -1;
 
 	@Override
 	public Object clone() {
@@ -279,6 +282,16 @@ public class Graph implements Cloneable, Serializable {
 				result |= detectCycle(neighbour);
 		}
 		return result;
+	}
+	
+	public void tarjan(Graph graph) throws Exception
+	{
+		int index = 0;
+		ArrayStack stack = new ArrayStack(community.size());
+		for(Graph node : community)
+		{
+			
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
