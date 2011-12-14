@@ -6,39 +6,36 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 public class Graph {
 
-	protected Set<GraphNode> community;
-	protected String diagram;
 	private Map<String, Integer> intCount;
-	protected int terminalCount;
-	protected Matrix adjacencyMatrix;
+	private Set<GraphNode> vertices;
+	private String diagram;
+	private Matrix adjacencyMatrix;
 
-	public Graph() {
-		community = new HashSet<GraphNode>();
+	private Graph() {
+		vertices = new HashSet<GraphNode>();
 		diagram = "digraph G {\n";
 		intCount = new HashMap<String, Integer>();
 	}
 
 	private void clearProcessedFlag() {
-		for (GraphNode node : community)
+		for (GraphNode node : vertices)
 			node.processed = false;
 	}
 
-	protected void clearDiagram() {
+	private void clearDiagram() {
 		clearProcessedFlag();
 		diagram = "digraph G {\n";
 		intCount = new HashMap<String, Integer>();
-		terminalCount = 0;
-
-		for (GraphNode node : community) {
+		for (GraphNode node : vertices) {
 			node.nodeID = null;
-			node.processed = true;
 		}
 	}
 
-	public String getDiagram() throws Exception {
+	private String getDiagram() throws Exception {
 		clearDiagram();
 		preDiagram();
 		getDiagramCore();
@@ -47,7 +44,7 @@ public class Graph {
 	}
 
 	private void preDiagram() {
-		for (GraphNode node : community) {
+		for (GraphNode node : vertices) {
 			node.nodeID = node.getValue();
 			if (intCount.containsKey(node.getValue())) {
 				int count = intCount.get(node.getValue());
@@ -62,7 +59,7 @@ public class Graph {
 	}
 
 	private void getDiagramCore() {
-		for (GraphNode node : community) {
+		for (GraphNode node : vertices) {
 			if (node.nodeColor != null && !node.nodeColor.isEmpty()) {
 				diagram += "\"" + node.nodeID + "\"[color=" + node.nodeColor
 						+ "];\n";
@@ -77,35 +74,84 @@ public class Graph {
 		}
 	}
 
-	public void generate(int numNodes, int maxVal) {
-		if (numNodes == 0)
-			return;
-		else {
-			adjacencyMatrix = Matrix.buildConnected(numNodes, numNodes, 0.8);
-			System.out.println(adjacencyMatrix);
-			List<GraphNode> nodes = new ArrayList<GraphNode>();
-			for (int i = 0; i < numNodes; i++) {
-				GraphNode node = new GraphNode(Integer.toString((int) (Math
-						.random() * maxVal)));
-				System.out.print(node.value + ",");
-				nodes.add(node);
-			}
-			System.out.println();
-			for (int row = 0; row < adjacencyMatrix.numRows(); row++) {
-				for (int col = 0; col < adjacencyMatrix.numCols(); col++) {
-					if (adjacencyMatrix.get(row, col) == 1) {
-						nodes.get(row).addNeighbour(nodes.get(col));
-					}
+	private static Graph generate(int numNodes, int maxVal) {
+		if (numNodes != 0) {
+			return build(Matrix.buildConnected(numNodes, numNodes, 0.8), maxVal);
+		} else
+			return null;
+	}
+
+	private static Graph build(Matrix adjacencyMatrix, int maxVal) {
+		Graph graph = null;
+		List<GraphNode> nodes = new ArrayList<GraphNode>();
+		for (int i = 0; i < adjacencyMatrix.numRows(); i++) {
+			GraphNode node = new GraphNode(Integer.toString((int) (Math
+					.random() * maxVal)));
+			System.out.print(node.value + ",");
+			nodes.add(node);
+		}
+		System.out.println();
+		for (int row = 0; row < graph.adjacencyMatrix.numRows(); row++) {
+			for (int col = 0; col < graph.adjacencyMatrix.numCols(); col++) {
+				if (graph.adjacencyMatrix.get(row, col) == 1) {
+					nodes.get(row).addNeighbour(nodes.get(col));
 				}
 			}
-			for (GraphNode node : nodes) {
-				System.out.print(node.value + "->");
-				for (GraphNode neighbour : node.getNeighbours())
-					System.out.print(neighbour.value + ",");
-				System.out.println();
-			}
-			community = new HashSet<GraphNode>(nodes);
 		}
+		for (GraphNode node : nodes) {
+			System.out.print(node.value + "->");
+			for (GraphNode neighbour : node.getNeighbours())
+				System.out.print(neighbour.value + ",");
+			System.out.println();
+		}
+		graph.vertices = new HashSet<GraphNode>(nodes);
+
+		return graph;
+
+	}
+
+	private void tarjan() throws Exception {
+		int index = 0;
+		Stack<GraphNode> stack = new Stack<GraphNode>();
+		for (GraphNode node : vertices) {
+			if (node.tarjanIndex != -1) {
+				Set<GraphNode> scc = strongConnect(node, index, stack);
+				if (scc != null)
+					System.out.println(scc);
+			}
+		}
+	}
+
+	private static Set<GraphNode> strongConnect(GraphNode node, int index,
+			Stack<GraphNode> stack) {
+		node.tarjanIndex = index;
+		node.tarjanLowLink = index;
+		index++;
+		stack.push(node);
+
+		for (GraphNode neighbour : node.neighbours) {
+			if (neighbour.tarjanIndex == -1) {
+				strongConnect(neighbour, index, stack);
+				node.tarjanLowLink = node.tarjanLowLink < neighbour.tarjanLowLink ? node.tarjanLowLink
+						: neighbour.tarjanLowLink;
+			} else if (stack.contains(neighbour)) {
+				node.tarjanLowLink = node.tarjanLowLink < neighbour.tarjanIndex ? node.tarjanLowLink
+						: neighbour.tarjanIndex;
+			}
+		}
+		if (node.tarjanIndex == node.tarjanLowLink) {
+			Set<GraphNode> scc = new HashSet<GraphNode>();
+			while (!stack.isEmpty()) {
+				scc.add(stack.pop());
+			}
+			return scc;
+		}
+		return null;
+	}
+
+	public static void main(String[] args) throws Exception {
+		Graph graph = generate(10, 500);
+		System.out.println(graph.getDiagram());
 	}
 
 }

@@ -13,15 +13,13 @@ import tools.IOUtils;
 
 public class GraphNode implements Cloneable, Serializable {
 
-	protected List<GraphNode> neighbours;
-	protected String value;
-	protected List<String> contents = new ArrayList<String>();
-	protected boolean processed = false;
-	protected String nodeID;
-	protected String nodeColor;
-
-	protected int tarjanIndex = -1;
-	protected int tarjanLowLink = -1;
+	List<GraphNode> neighbours;
+	String value;	
+	boolean processed = false;
+	String nodeID;
+	String nodeColor;
+	int tarjanIndex = -1;
+	int tarjanLowLink = -1;
 
 	@Override
 	public Object clone() {
@@ -143,73 +141,4 @@ public class GraphNode implements Cloneable, Serializable {
 		}
 		return result;
 	}
-
-	public boolean detectCycle() {
-		clearProcessedFlag(this);
-		boolean result = detectCycle(this);
-		clearProcessedFlag(this);
-		return result;
-	}
-
-	private static boolean detectCycle(GraphNode graphNode) {
-		graphNode.processed = true;
-		boolean result = false;
-		for (GraphNode neighbour : graphNode.neighbours) {
-			if (neighbour.processed)
-				return true;
-			else
-				result |= detectCycle(neighbour);
-		}
-		return result;
-	}
-
-	private void tarjan() throws Exception {
-		int index = 0;
-		Stack<GraphNode> stack = new Stack<GraphNode>();
-		for (GraphNode node : community) {
-			if (node.tarjanIndex != -1) {
-				Set<GraphNode> scc = strongConnect(node, index, stack);
-				if (scc != null)
-					System.out.println(scc);
-			}
-		}
-	}
-
-	private static Set<GraphNode> strongConnect(GraphNode node, int index,
-			Stack<GraphNode> stack) {
-		node.tarjanIndex = index;
-		node.tarjanLowLink = index;
-		index++;
-		stack.push(node);
-
-		for (GraphNode neighbour : node.neighbours) {
-			if (neighbour.tarjanIndex == -1) {
-				strongConnect(neighbour, index, stack);
-				node.tarjanLowLink = node.tarjanLowLink < neighbour.tarjanLowLink ? node.tarjanLowLink
-						: neighbour.tarjanLowLink;
-			} else if (stack.contains(neighbour)) {
-				node.tarjanLowLink = node.tarjanLowLink < neighbour.tarjanIndex ? node.tarjanLowLink
-						: neighbour.tarjanIndex;
-			}
-		}
-		if (node.tarjanIndex == node.tarjanLowLink) {
-			Set<GraphNode> scc = new HashSet<GraphNode>();
-			while (!stack.isEmpty()) {
-				scc.add(stack.pop());
-			}
-			return scc;
-		}
-		return null;
-	}
-
-	public static void main(String[] args) throws Exception {
-		GraphNode graphNode = GraphNode.generate(10, 500);
-		// while (graph.detectCycle())
-		// graph = GraphNode.generate(10, 500);
-		// clearProcessedFlag(graph);
-		System.out.println(graphNode.getDiagram());
-		graphNode.tarjan();
-
-	}
-
 }
