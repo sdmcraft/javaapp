@@ -74,19 +74,19 @@ public class Graph {
 		}
 	}
 
-	private static Graph generate(int numNodes, int maxVal) {
+	private static Graph generate(int numNodes) {
 		if (numNodes != 0) {
-			return build(Matrix.buildConnected(numNodes, numNodes, 0.8), maxVal);
+			return build(Matrix.buildConnected(numNodes, numNodes, 0.8));
 		} else
 			return null;
 	}
 
-	private static Graph build(Matrix adjacencyMatrix, int maxVal) {
-		Graph graph = null;
+	private static Graph build(Matrix adjacencyMatrix) {
+		Graph graph = new Graph();
+		graph.adjacencyMatrix = adjacencyMatrix;
 		List<GraphNode> nodes = new ArrayList<GraphNode>();
 		for (int i = 0; i < adjacencyMatrix.numRows(); i++) {
-			GraphNode node = new GraphNode(Integer.toString((int) (Math
-					.random() * maxVal)));
+			GraphNode node = new GraphNode(Integer.toString(i));
 			System.out.print(node.value + ",");
 			nodes.add(node);
 		}
@@ -114,7 +114,7 @@ public class Graph {
 		int index = 0;
 		Stack<GraphNode> stack = new Stack<GraphNode>();
 		for (GraphNode node : vertices) {
-			if (node.tarjanIndex != -1) {
+			if (node.tarjanIndex == -1) {
 				Set<GraphNode> scc = strongConnect(node, index, stack);
 				if (scc != null)
 					System.out.println(scc);
@@ -150,8 +150,16 @@ public class Graph {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Graph graph = generate(10, 500);
+		Matrix adjacencyMatrix = new Matrix(new int[][] { { 0, 0, 0, 1, 0 },
+				{ 0, 0, 1, 0, 1 }, { 0, 0, 0, 1, 1 }, { 0, 1, 0, 0, 1 },
+				{ 0, 0, 0, 0, 0 } });
+		/*
+		 * Matrix adjacencyMatrix = new Matrix(new int[][]{
+		 * {0,1,0},{0,0,1},{1,0,0}});
+		 */
+		Graph graph = build(adjacencyMatrix);
 		System.out.println(graph.getDiagram());
+		graph.tarjan();
 	}
 
 }

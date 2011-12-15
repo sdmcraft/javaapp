@@ -14,7 +14,7 @@ import tools.IOUtils;
 public class GraphNode implements Cloneable, Serializable {
 
 	List<GraphNode> neighbours;
-	String value;	
+	String value;
 	boolean processed = false;
 	String nodeID;
 	String nodeColor;
@@ -140,5 +140,10 @@ public class GraphNode implements Cloneable, Serializable {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return value;
 	}
 }
