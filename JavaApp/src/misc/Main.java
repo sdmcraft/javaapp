@@ -4,10 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import javax.mail.internet.InternetAddress;
-
-import tools.IOUtils;
-
 public class Main {
 
 	/**
@@ -17,22 +13,34 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception,
 			InterruptedException {
-		InternetAddress address = new InternetAddress("\"Satya Deep\"<satyam@adobe.com>");
-		System.out.println(address.getPersonal());
-		System.out.println(address.getAddress());
+		// InternetAddress address = new
+		// InternetAddress("\"Satya Deep\"<satyam@adobe.com>");
+		// System.out.println(address.getPersonal());
+		// System.out.println(address.getAddress());
+		//
+		// address = new InternetAddress("satyam@adobe.com");
+		// System.out.println(address.getPersonal());
+		// System.out.println(address.getAddress());
+		//
+		// address = new InternetAddress("Satya Deep <satyam@adobe.com>");
+		// System.out.println(address.getPersonal());
+		// System.out.println(address.getAddress());
 
-		address = new InternetAddress("satyam@adobe.com");
-		System.out.println(address.getPersonal());
-		System.out.println(address.getAddress());
+		// String icalText = readFileAsString("C:\\temp\\a.txt");
+		// System.out.println(icalText);
+		// icalText = icalText.replaceAll("\r\n|\n", "\\\\n");
+		// System.out.println(icalText);
+		System.out.println(1f / 2 * 4);
 
-		address = new InternetAddress("Satya Deep <satyam@adobe.com>");
-		System.out.println(address.getPersonal());
-		System.out.println(address.getAddress());
-
-//		String icalText = readFileAsString("C:\\temp\\a.txt");
-//		System.out.println(icalText);
-//		icalText = icalText.replaceAll("\r\n|\n", "\\\\n");
-//		System.out.println(icalText);
+		System.out
+				.println(	"SELECT"
+			    		+ " ae.filename, ae.width, ae.height, '' as mime_type"
+						+ " FROM pps_asset_entries ae, pps_sco_assets sa, pps_scos s "
+						+ " WHERE ae.asset_id = sa.asset_id"
+						+ " AND sa.sco_id = ?"
+						+ " AND sa.asset_type = ? "
+			            + " AND sa.sco_id = s.sco_id "
+			            + " AND sa.version = s.version ");
 	}
 
 	private static String readFileAsString(String filePath)
@@ -49,4 +57,5 @@ public class Main {
 		reader.close();
 		return fileData.toString();
 	}
+
 }

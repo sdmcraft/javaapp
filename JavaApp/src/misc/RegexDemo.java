@@ -24,15 +24,14 @@ public class RegexDemo {
 		// System.out.println(path);
 		// f.renameTo(new File(path));
 		String tag = "i";
-		Pattern p = Pattern.compile("<\\s*" + tag + "\\s*[^><]*>");
+		Pattern p = Pattern.compile("\\d+");
 		Matcher m = p
-				.matcher("Event Information: Event Information: Event Information: Event Information: <i>dddd");
+				.matcher("500 px");
+		m.find();
+		System.out.println(m.group());
 		while (m.find()) {
 			System.out.println(m.group());
 		}
-		System.out
-				.println("Event Information: Event Information: Event Information: Event Information: <i>dddd"
-						.matches("<\\s*" + tag + "\\s*[^><]*>"));
 	}
 
 }
