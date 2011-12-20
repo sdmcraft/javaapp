@@ -11,10 +11,10 @@ import java.util.Stack;
 
 import tools.IOUtils;
 
-public class GraphNode implements Cloneable, Serializable {
+public class GraphNode<T> implements Cloneable, Serializable {
 
-	List<GraphNode> neighbours;
-	String value;
+	List<GraphNode<T>> neighbours;
+	T value;
 	boolean processed = false;
 	String nodeID;
 	String nodeColor;
@@ -31,38 +31,38 @@ public class GraphNode implements Cloneable, Serializable {
 	}
 
 	public GraphNode() {
-		neighbours = new ArrayList<GraphNode>();
+		neighbours = new ArrayList<GraphNode<T>>();
 	}
 
-	public GraphNode(String value) {
-		neighbours = new ArrayList<GraphNode>();
+	public GraphNode(T value) {
+		neighbours = new ArrayList<GraphNode<T>>();
 		this.value = value;
 	}
 
-	public List<GraphNode> getNeighbours() {
+	public List<GraphNode<T>> getNeighbours() {
 		return neighbours;
 	}
 
-	public void setNeighbours(List<GraphNode> neighbours) {
+	public void setNeighbours(List<GraphNode<T>> neighbours) {
 		this.neighbours = neighbours;
 	}
 
-	public String getValue() {
+	public T getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(T value) {
 		this.value = value;
 	}
 
-	public void addNeighbour(GraphNode neighbour) {
+	public void addNeighbour(GraphNode<T> neighbour) {
 		neighbours.add(neighbour);
 	}
 
-	public GraphNode getNeighbour(char value) {
-		GraphNode result = null;
+	public GraphNode<T> getNeighbour(char value) {
+		GraphNode<T> result = null;
 		String valueString = new String(new char[] { value });
-		for (GraphNode neighbour : neighbours) {
+		for (GraphNode<T> neighbour : neighbours) {
 			if (valueString.equals(neighbour.getValue())) {
 				result = neighbour;
 				break;
@@ -77,8 +77,8 @@ public class GraphNode implements Cloneable, Serializable {
 		workQueue.insert(this);
 		resultQueue.insert(this);
 		while (!workQueue.empty()) {
-			GraphNode root = (GraphNode) workQueue.remove();
-			for (GraphNode neighbour : root.getNeighbours()) {
+			GraphNode<T> root = (GraphNode<T>) workQueue.remove();
+			for (GraphNode<T> neighbour : root.getNeighbours()) {
 				if (!neighbour.processed) {
 					workQueue.insert(neighbour);
 					resultQueue.insert(neighbour);
@@ -92,7 +92,7 @@ public class GraphNode implements Cloneable, Serializable {
 		if (string.length() == 0)
 			return true;
 		else {
-			GraphNode neighbour = getNeighbour(string.charAt(0));
+			GraphNode<T> neighbour = getNeighbour(string.charAt(0));
 			if (neighbour == null)
 				return false;
 			else {
@@ -104,7 +104,7 @@ public class GraphNode implements Cloneable, Serializable {
 	public LinkedList maxValuePath() {
 		LinkedList maxValuePath = null;
 		Long maxValue = 0L;
-		for (GraphNode subTree : neighbours) {
+		for (GraphNode<T> subTree : neighbours) {
 			LinkedList subList = subTree.maxValuePath();
 			if (subList.sum() > maxValue) {
 				maxValue = subList.sum();
@@ -112,9 +112,9 @@ public class GraphNode implements Cloneable, Serializable {
 			}
 		}
 		if (maxValuePath == null)
-			return new LinkedList(value, false);
+			return new LinkedList(value.toString(), false);
 		else
-			return maxValuePath.prefix(new LinkedList(value, false));
+			return maxValuePath.prefix(new LinkedList(value.toString(), false));
 	}
 
 	/*
@@ -128,7 +128,7 @@ public class GraphNode implements Cloneable, Serializable {
 				result = true;
 				this.nodeColor = "red";
 			} else {
-				for (GraphNode neighbour : neighbours) {
+				for (GraphNode<T> neighbour : neighbours) {
 					if (!neighbour.processed) {
 						result = neighbour.detectPath(path.getNext());
 						if (result) {
@@ -144,6 +144,6 @@ public class GraphNode implements Cloneable, Serializable {
 
 	@Override
 	public String toString() {
-		return value;
+		return value.toString();
 	}
 }

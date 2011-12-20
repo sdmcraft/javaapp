@@ -8,29 +8,29 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-public class Graph {
+public class Graph<T> {
 
-	private Map<String, Integer> intCount;
-	private Set<GraphNode> vertices;
+	private Map<T, Integer> intCount;
+	private Set<GraphNode<T>> vertices;
 	private String diagram;
 	private Matrix adjacencyMatrix;
 
 	private Graph() {
-		vertices = new HashSet<GraphNode>();
+		vertices = new HashSet<GraphNode<T>>();
 		diagram = "digraph G {\n";
-		intCount = new HashMap<String, Integer>();
+		intCount = new HashMap<T, Integer>();
 	}
 
 	private void clearProcessedFlag() {
-		for (GraphNode node : vertices)
+		for (GraphNode<T> node : vertices)
 			node.processed = false;
 	}
 
 	private void clearDiagram() {
 		clearProcessedFlag();
 		diagram = "digraph G {\n";
-		intCount = new HashMap<String, Integer>();
-		for (GraphNode node : vertices) {
+		intCount = new HashMap<T, Integer>();
+		for (GraphNode<T> node : vertices) {
 			node.nodeID = null;
 		}
 	}
@@ -44,8 +44,8 @@ public class Graph {
 	}
 
 	private void preDiagram() {
-		for (GraphNode node : vertices) {
-			node.nodeID = node.getValue();
+		for (GraphNode<T> node : vertices) {
+			node.nodeID = node.getValue().toString();
 			if (intCount.containsKey(node.getValue())) {
 				int count = intCount.get(node.getValue());
 				for (int i = 0; i < count; i++) {
@@ -59,12 +59,12 @@ public class Graph {
 	}
 
 	private void getDiagramCore() {
-		for (GraphNode node : vertices) {
+		for (GraphNode<T> node : vertices) {
 			if (node.nodeColor != null && !node.nodeColor.isEmpty()) {
 				diagram += "\"" + node.nodeID + "\"[color=" + node.nodeColor
 						+ "];\n";
 			}
-			for (GraphNode neighbour : node.getNeighbours()) {
+			for (GraphNode<T> neighbour : node.getNeighbours()) {
 				String color = null;
 				diagram += "\"" + node.nodeID + "\"" + "->" + "\""
 						+ neighbour.nodeID + "\""
@@ -74,19 +74,20 @@ public class Graph {
 		}
 	}
 
-	private static Graph generate(int numNodes) {
-		if (numNodes != 0) {
-			return build(Matrix.buildConnected(numNodes, numNodes, 0.8));
+	private static <T> Graph<T> generate(T[] contents) {
+		if (contents.length != 0) {
+			return build(Matrix.buildConnected(contents.length,
+					contents.length, 0.8), contents);
 		} else
 			return null;
 	}
 
-	private static Graph build(Matrix adjacencyMatrix) {
-		Graph graph = new Graph();
+	private static <T> Graph<T> build(Matrix adjacencyMatrix, T[] contents) {
+		Graph<T> graph = new Graph<T>();
 		graph.adjacencyMatrix = adjacencyMatrix;
-		List<GraphNode> nodes = new ArrayList<GraphNode>();
+		List<GraphNode<T>> nodes = new ArrayList<GraphNode<T>>();
 		for (int i = 0; i < adjacencyMatrix.numRows(); i++) {
-			GraphNode node = new GraphNode(Integer.toString(i));
+			GraphNode<T> node = new GraphNode<T>(contents[i]);
 			System.out.print(node.value + ",");
 			nodes.add(node);
 		}
@@ -98,40 +99,41 @@ public class Graph {
 				}
 			}
 		}
-		for (GraphNode node : nodes) {
+		for (GraphNode<T> node : nodes) {
 			System.out.print(node.value + "->");
-			for (GraphNode neighbour : node.getNeighbours())
+			for (GraphNode<T> neighbour : node.getNeighbours())
 				System.out.print(neighbour.value + ",");
 			System.out.println();
 		}
-		graph.vertices = new HashSet<GraphNode>(nodes);
+		graph.vertices = new HashSet<GraphNode<T>>(nodes);
 
 		return graph;
 
 	}
 
-	private void tarjan() throws Exception {
+	private boolean tarjan() throws Exception {
 		int index = 0;
-		Stack<GraphNode> stack = new Stack<GraphNode>();
-		for (GraphNode node : vertices) {
+		Stack<GraphNode<T>> stack = new Stack<GraphNode<T>>();
+		for (GraphNode<T> node : vertices) {
 			if (node.tarjanIndex == -1) {
-				Set<GraphNode> scc = strongConnect(node, index, stack);
-				if (scc != null)
-					System.out.println(scc);
+				if (strongConnect(node, index, stack))
+					return true;
 			}
 		}
+		return false;
 	}
 
-	private static Set<GraphNode> strongConnect(GraphNode node, int index,
-			Stack<GraphNode> stack) {
+	private static <T> boolean strongConnect(GraphNode<T> node, int index,
+			Stack<GraphNode<T>> stack) {
 		node.tarjanIndex = index;
 		node.tarjanLowLink = index;
 		index++;
 		stack.push(node);
 
-		for (GraphNode neighbour : node.neighbours) {
+		for (GraphNode<T> neighbour : node.neighbours) {
 			if (neighbour.tarjanIndex == -1) {
-				strongConnect(neighbour, index, stack);
+				if (strongConnect(neighbour, index, stack))
+					return true;
 				node.tarjanLowLink = node.tarjanLowLink < neighbour.tarjanLowLink ? node.tarjanLowLink
 						: neighbour.tarjanLowLink;
 			} else if (stack.contains(neighbour)) {
@@ -140,26 +142,36 @@ public class Graph {
 			}
 		}
 		if (node.tarjanIndex == node.tarjanLowLink) {
-			Set<GraphNode> scc = new HashSet<GraphNode>();
-			while (!stack.isEmpty()) {
-				scc.add(stack.pop());
-			}
-			return scc;
+			Set<GraphNode<T>> scc = new HashSet<GraphNode<T>>();
+			GraphNode<T> poppedNode = null;
+			do {
+				poppedNode = stack.pop();
+				scc.add(poppedNode);
+			} while (!node.equals(poppedNode));
+			System.out.println(scc);
+			if (scc.size() > 1)
+				return true;
 		}
-		return null;
+		return false;
 	}
 
 	public static void main(String[] args) throws Exception {
-		Matrix adjacencyMatrix = new Matrix(new int[][] { { 0, 0, 0, 1, 0 },
-				{ 0, 0, 1, 0, 1 }, { 0, 0, 0, 1, 1 }, { 0, 1, 0, 0, 1 },
-				{ 0, 0, 0, 0, 0 } });
+		Matrix adjacencyMatrix = new Matrix(new int[][] { { 0, 1, 0, 0, 0 },
+				{ 0, 0, 1, 0, 0 }, { 0, 0, 0, 1, 0 }, { 1, 0, 0, 0, 1 },
+				{ 0, 1, 0, 0, 0 } });
 		/*
 		 * Matrix adjacencyMatrix = new Matrix(new int[][]{
 		 * {0,1,0},{0,0,1},{1,0,0}});
 		 */
-		Graph graph = build(adjacencyMatrix);
+		// Graph graph = build(adjacencyMatrix);
+		Graph<String> graph;
+		do {			
+			graph = Graph.generate(new String[]{"1","2","3","4"});
+			/*
+			 * if (graph.tarjan()) System.out.println("This graph has cycle!!");
+			 */
+		} while (graph.tarjan());
 		System.out.println(graph.getDiagram());
-		graph.tarjan();
 	}
 
 }
