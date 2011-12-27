@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, TimeRecordAndroidActivity!</string>
+    <string name="app_name">TimeRecordAndroid</string>
+    <string name="no_lists">No Lists</string>
+    <string name="add_new_list">Add New List</string>
+    <string name="name">Name</string>
+    <string name="frequency">Frequency</string>
+    <string name="save">Save</string>
+    <string name="frequency_prompt">Choose a frequency</string>
+
+    <string-array name="frequency_array">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+
+</resources>
