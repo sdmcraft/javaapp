@@ -9,6 +9,7 @@
     <string name="frequency">Frequency</string>
     <string name="save">Save</string>
     <string name="frequency_prompt">Choose a frequency</string>
+    <string name="make_entry">Make Entry</string>
 
     <string-array name="frequency_array">
         <item>Daily</item>
