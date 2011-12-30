@@ -6,12 +6,18 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class TimeRecordAndroidActivity extends ListActivity {
 
 	private static final int ADD_NEW_LIST_ID = Menu.FIRST;
 	private static final int ACTIVITY_ADD_NEW_LIST = 0;
+	private static final int ACTIVITY_LIST_ENTRY = 0;
 	private TimeRecordDbAdapter mDbHelper;
 	private Cursor mListsCursor;
 
@@ -45,7 +51,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	}
 
 	private void addList() {
-		Intent i = new Intent(this, ListEdit.class);
+		Intent i = new Intent(this, ListEditActivity.class);
 		startActivityForResult(i, ACTIVITY_ADD_NEW_LIST);
 	}
 
@@ -80,8 +86,27 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 		// Now create a simple cursor adapter and set it to display
 		SimpleCursorAdapter lists = new SimpleCursorAdapter(this,
-				R.layout.list_row, mListsCursor, from, to);
+				R.layout.list_row, mListsCursor, from, to) {
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				View view = super.getView(position, convertView, parent);
+				long id = getItemId(position);
+				Button button = (Button) view.findViewById(R.id.entry);
+				button.setTag(id);
+				return view;
+			}
+		};
 		setListAdapter(lists);
 	}
 
+	public void entryButtonClickHandler(View view) {
+		Button entryButton = (Button) view;
+		// entryButton.setText(entryButton.getTag().toString());
+		Intent i = new Intent(this, ListEntryActivity.class);
+		Long listRowId = Long.parseLong(entryButton.getTag().toString());
+		i.putExtra(TimeRecordDbAdapter.KEY_ROWID, listRowId);
+		i.putExtra(TimeRecordDbAdapter.KEY_NAME, mDbHelper.fetchList(listRowId)
+				.getString(1));
+		startActivityForResult(i, ACTIVITY_LIST_ENTRY);
+	}
 }

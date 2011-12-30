@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListEdit" >
+        <activity android:name=".ListEditActivity" >
+        </activity>
+        <activity android:name=".ListEntryActivity" >
         </activity>
     </application>
 
