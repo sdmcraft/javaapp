@@ -24,8 +24,8 @@ public class ListEntriesTable {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 	}
 
-	public long insert(SQLiteDatabase db, long listId, String entryTime,
-			long value) {
+	public static long insert(SQLiteDatabase db, long listId, String entryTime,
+			String value) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(COL_LIST_ID, listId);
 		initialValues.put(COL_ENTRY_TIME, entryTime);

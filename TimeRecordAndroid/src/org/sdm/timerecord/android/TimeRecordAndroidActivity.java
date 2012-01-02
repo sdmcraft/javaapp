@@ -1,5 +1,7 @@
 package org.sdm.timerecord.android;
 
+import org.sdm.timerecord.android.model.ListEntriesTable;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,15 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 public class TimeRecordAndroidActivity extends ListActivity {
 
 	private static final int ADD_NEW_LIST_ID = Menu.FIRST;
 	private static final int ACTIVITY_ADD_NEW_LIST = 0;
-	private static final int ACTIVITY_LIST_ENTRY = 0;
+	private static final int ACTIVITY_LIST_ENTRY = 1;
 	private TimeRecordDbAdapter mDbHelper;
 	private Cursor mListsCursor;
 
@@ -64,10 +64,15 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		switch (requestCode) {
 		case ACTIVITY_ADD_NEW_LIST:
 			String name = extras.getString(TimeRecordDbAdapter.KEY_NAME);
-
 			mDbHelper.createList(name);
 			fillData();
 			break;
+        case ACTIVITY_LIST_ENTRY:
+            String entryTime = extras.getString(ListEntriesTable.COL_ENTRY_TIME);
+            Long listId = extras.getLong(ListEntriesTable.COL_LIST_ID);
+            String value = extras.getString(ListEntriesTable.COL_VALUE);
+            ListEntriesTable.insert(mDbHelper.getDBConnection(), listId, entryTime, value);            
+            break;
 		}
 	}
 
@@ -109,4 +114,5 @@ public class TimeRecordAndroidActivity extends ListActivity {
 				.getString(1));
 		startActivityForResult(i, ACTIVITY_LIST_ENTRY);
 	}
+	
 }

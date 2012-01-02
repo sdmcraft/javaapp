@@ -48,7 +48,7 @@ public class ListEntryActivity extends Activity {
 
 		hoursEntry = (EditText) findViewById(R.id.hoursEntry);
 		minutesEntry = (EditText) findViewById(R.id.hoursEntry);
-		hoursEntry = (EditText) findViewById(R.id.hoursEntry);
+		secondsEntry = (EditText) findViewById(R.id.hoursEntry);
 
 		// capture our View elements
 		mDateDisplay = (TextView) findViewById(R.id.dateDisplay);
@@ -100,7 +100,7 @@ public class ListEntryActivity extends Activity {
 		return null;
 	}
 
-	public void saveEntryClickHandler() {
+	public void saveEntryClickHandler(View view) {
 		Bundle bundle = new Bundle();
 
 		bundle.putString(ListEntriesTable.COL_ENTRY_TIME, mDateDisplay
