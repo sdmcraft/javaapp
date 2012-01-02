@@ -80,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center_vertical"
+        android:onClick="saveEntryClickHandler"
         android:text="Save" />
 
 </LinearLayout>
