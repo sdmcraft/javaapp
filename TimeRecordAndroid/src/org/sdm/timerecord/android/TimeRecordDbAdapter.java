@@ -140,7 +140,7 @@ public class TimeRecordDbAdapter {
 		return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
 	}
 
-	public SQLiteDatabase getDBConnection() {
+	public SQLiteDatabase getDB() {
 		return mDb;
 	}
 }

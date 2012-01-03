@@ -37,17 +37,24 @@ public class ListEntriesTable {
 		return db.delete(TABLE_NAME, COL_ID + "=" + rowId, null) > 0;
 	}
 
-	public Cursor query(SQLiteDatabase db) {
+	public static Cursor query(SQLiteDatabase db) {
 
 		return db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID,
 				COL_ENTRY_TIME, COL_VALUE }, null, null, null, null, null);
 	}
 
-	public Cursor query(SQLiteDatabase db, long rowId) {
+	public static Cursor query(SQLiteDatabase db, long rowId) {
 
 		return db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID,
 				COL_ENTRY_TIME, COL_VALUE }, COL_ID + "=" + rowId, null, null,
 				null, null);
+	}
+
+	public static Cursor queryByListId(SQLiteDatabase db, long listId) {
+
+		return db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID,
+				COL_ENTRY_TIME, COL_VALUE }, COL_LIST_ID + "=" + listId, null,
+				null, null, null);
 	}
 
 	/*

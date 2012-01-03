@@ -9,9 +9,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button android:id="@+id/entry" 
-	  android:text="@string/make_entry"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:onClick="entryButtonClickHandler" />
+    <Button
+        android:id="@+id/entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="entryButtonClickHandler"
+        android:text="@string/make_entry" />
+
+    <Button
+        android:id="@+id/viewEntries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="viewEntriesButtonClickHandler"
+        android:text="View Entries" />
+
 </LinearLayout>

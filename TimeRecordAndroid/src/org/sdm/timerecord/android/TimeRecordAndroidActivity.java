@@ -16,8 +16,11 @@ import android.widget.SimpleCursorAdapter;
 public class TimeRecordAndroidActivity extends ListActivity {
 
 	private static final int ADD_NEW_LIST_ID = Menu.FIRST;
+
 	private static final int ACTIVITY_ADD_NEW_LIST = 0;
 	private static final int ACTIVITY_LIST_ENTRY = 1;
+	private static final int ACTIVITY_VIEW_LIST_ENTRIES = 2;
+
 	private TimeRecordDbAdapter mDbHelper;
 	private Cursor mListsCursor;
 
@@ -29,6 +32,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		registerForContextMenu(getListView());
 		mDbHelper = new TimeRecordDbAdapter(this);
 		mDbHelper.open();
+		Globals.getInstance().setDb(mDbHelper.getDB());
 		fillData();
 	}
 
@@ -67,12 +71,14 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			mDbHelper.createList(name);
 			fillData();
 			break;
-        case ACTIVITY_LIST_ENTRY:
-            String entryTime = extras.getString(ListEntriesTable.COL_ENTRY_TIME);
-            Long listId = extras.getLong(ListEntriesTable.COL_LIST_ID);
-            String value = extras.getString(ListEntriesTable.COL_VALUE);
-            ListEntriesTable.insert(mDbHelper.getDBConnection(), listId, entryTime, value);            
-            break;
+		case ACTIVITY_LIST_ENTRY:
+			String entryTime = extras
+					.getString(ListEntriesTable.COL_ENTRY_TIME);
+			Long listId = extras.getLong(ListEntriesTable.COL_LIST_ID);
+			String value = extras.getString(ListEntriesTable.COL_VALUE);
+			ListEntriesTable
+					.insert(mDbHelper.getDB(), listId, entryTime, value);
+			break;
 		}
 	}
 
@@ -96,8 +102,13 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = super.getView(position, convertView, parent);
 				long id = getItemId(position);
-				Button button = (Button) view.findViewById(R.id.entry);
-				button.setTag(id);
+				Button entryButton = (Button) view.findViewById(R.id.entry);
+				entryButton.setTag(id);
+
+				Button viewEntriesButton = (Button) view
+						.findViewById(R.id.viewEntries);
+				viewEntriesButton.setTag(id);
+
 				return view;
 			}
 		};
@@ -114,5 +125,15 @@ public class TimeRecordAndroidActivity extends ListActivity {
 				.getString(1));
 		startActivityForResult(i, ACTIVITY_LIST_ENTRY);
 	}
-	
+
+	public void viewEntriesButtonClickHandler(View view) {
+		Button viewEntriesButton = (Button) view;
+		// entryButton.setText(entryButton.getTag().toString());
+		Intent i = new Intent(this, ViewListEntriesActivity.class);
+		Long listRowId = Long.parseLong(viewEntriesButton.getTag().toString());
+		i.putExtra(TimeRecordDbAdapter.KEY_ROWID, listRowId);
+		startActivityForResult(i, ACTIVITY_VIEW_LIST_ENTRIES);
+
+	}
+
 }
