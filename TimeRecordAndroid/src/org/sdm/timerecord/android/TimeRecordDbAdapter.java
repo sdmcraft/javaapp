@@ -16,7 +16,7 @@
 
 package org.sdm.timerecord.android;
 
-import org.sdm.timerecord.android.model.ListEntriesTable;
+import org.sdm.timerecord.android.model.ListEntry;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -57,17 +57,17 @@ public class TimeRecordDbAdapter {
 		public void onCreate(SQLiteDatabase db) {
 
 			db.execSQL(DATABASE_CREATE);
-			ListEntriesTable.create(db);
+			ListEntry.create(db);
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
 					+ newVersion + ", which will destroy all old data");
-			ListEntriesTable.drop(db);
+			ListEntry.drop(db);
 			db.execSQL("DROP TABLE IF EXISTS ts_lists");
 			onCreate(db);
-			ListEntriesTable.create(db);
+			ListEntry.create(db);
 		}
 	}
 

@@ -1,6 +1,6 @@
 package org.sdm.timerecord.android;
 
-import org.sdm.timerecord.android.model.ListEntriesTable;
+import org.sdm.timerecord.android.model.ListEntry;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -73,10 +73,10 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			break;
 		case ACTIVITY_LIST_ENTRY:
 			String entryTime = extras
-					.getString(ListEntriesTable.COL_ENTRY_TIME);
-			Long listId = extras.getLong(ListEntriesTable.COL_LIST_ID);
-			String value = extras.getString(ListEntriesTable.COL_VALUE);
-			ListEntriesTable
+					.getString(ListEntry.COL_ENTRY_TIME);
+			Long listId = extras.getLong(ListEntry.COL_LIST_ID);
+			String value = extras.getString(ListEntry.COL_VALUE);
+			ListEntry
 					.insert(mDbHelper.getDB(), listId, entryTime, value);
 			break;
 		}

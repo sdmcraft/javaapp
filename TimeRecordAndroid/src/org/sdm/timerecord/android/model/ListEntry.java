@@ -4,13 +4,26 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class ListEntriesTable {
+public class ListEntry {
 
 	public static final String TABLE_NAME = "ts_list_entries";
 	public static final String COL_ID = "_id";
 	public static final String COL_ENTRY_TIME = "entry_time";
 	public static final String COL_LIST_ID = "list_id";
 	public static final String COL_VALUE = "value";
+	
+	private long id;
+	private String entryTime;
+	private long listId;
+	private String value;
+
+	public ListEntry(long id, String entryTime, long listId, String value) {
+		super();
+		this.id = id;
+		this.entryTime = entryTime;
+		this.listId = listId;
+		this.value = value;
+	}
 
 	public static void create(SQLiteDatabase db) {
 		db.execSQL("create table " + TABLE_NAME + " (" + COL_ID
@@ -33,7 +46,7 @@ public class ListEntriesTable {
 		return db.insert(TABLE_NAME, null, initialValues);
 	}
 
-	public boolean delete(SQLiteDatabase db, long rowId) {
+	public static boolean delete(SQLiteDatabase db, long rowId) {
 		return db.delete(TABLE_NAME, COL_ID + "=" + rowId, null) > 0;
 	}
 
@@ -55,6 +68,38 @@ public class ListEntriesTable {
 		return db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID,
 				COL_ENTRY_TIME, COL_VALUE }, COL_LIST_ID + "=" + listId, null,
 				null, null, null);
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getEntryTime() {
+		return entryTime;
+	}
+
+	public void setEntryTime(String entryTime) {
+		this.entryTime = entryTime;
+	}
+
+	public long getListId() {
+		return listId;
+	}
+
+	public void setListId(long listId) {
+		this.listId = listId;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	/*

@@ -2,7 +2,7 @@ package org.sdm.timerecord.android;
 
 import java.util.Calendar;
 
-import org.sdm.timerecord.android.model.ListEntriesTable;
+import org.sdm.timerecord.android.model.ListEntry;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -103,10 +103,10 @@ public class ListEntryActivity extends Activity {
 	public void saveEntryClickHandler(View view) {
 		Bundle bundle = new Bundle();
 
-		bundle.putString(ListEntriesTable.COL_ENTRY_TIME, mDateDisplay
+		bundle.putString(ListEntry.COL_ENTRY_TIME, mDateDisplay
 				.getText().toString());
-		bundle.putLong(ListEntriesTable.COL_LIST_ID, mListId);
-		bundle.putString(ListEntriesTable.COL_VALUE, hoursEntry.getText()
+		bundle.putLong(ListEntry.COL_LIST_ID, mListId);
+		bundle.putString(ListEntry.COL_VALUE, hoursEntry.getText()
 				.toString()
 				+ ":"
 				+ minutesEntry.getText().toString()
