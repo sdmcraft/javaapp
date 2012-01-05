@@ -46,16 +46,19 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	private void fillData() {
 		// Get all of the rows from the database and create the item list
-		Cursor listsCursor = ListEntry.queryByListId(Globals
-				.getInstance().getDb(),
+		Cursor listsCursor = ListEntry.queryByListId(Globals.getInstance()
+				.getDb(),
 				getIntent().getExtras().getLong(TimeRecordDbAdapter.KEY_ROWID));
-		while(listsCursor.moveToNext())
-		{
-			Long id = listsCursor.getLong(listsCursor.getColumnIndex(ListEntry.COL_ID));
-			String entryTime = listsCursor.getString(listsCursor.getColumnIndex(ListEntry.COL_ENTRY_TIME));
-			Long listId = listsCursor.getLong(listsCursor.getColumnIndex(ListEntry.COL_LIST_ID));
-			String value = listsCursor.getString(listsCursor.getColumnIndex(ListEntry.COL_VALUE));
-			
+		while (listsCursor.moveToNext()) {
+			Long id = listsCursor.getLong(listsCursor
+					.getColumnIndex(ListEntry.COL_ID));
+			String entryTime = listsCursor.getString(listsCursor
+					.getColumnIndex(ListEntry.COL_ENTRY_TIME));
+			Long listId = listsCursor.getLong(listsCursor
+					.getColumnIndex(ListEntry.COL_LIST_ID));
+			String value = listsCursor.getString(listsCursor
+					.getColumnIndex(ListEntry.COL_VALUE));
+
 			entries.add(new ListEntry(id, entryTime, listId, value));
 		}
 		listsCursor.moveToFirst();
@@ -74,9 +77,9 @@ public class ViewListEntriesActivity extends ListActivity {
 		SimpleCursorAdapter entries = new SimpleCursorAdapter(this,
 				R.layout.entry_row, listsCursor, from, to);
 		setListAdapter(entries);
-		
+
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -99,20 +102,27 @@ public class ViewListEntriesActivity extends ListActivity {
 		String[] titles = new String[] { "Sales growth January 1995 to December 2000" };
 		List<Date[]> dates = new ArrayList<Date[]>();
 		List<double[]> values = new ArrayList<double[]>();
-		Date[] dateValues = new Date[] { new Date(95, 0, 1),
-				new Date(95, 3, 1), new Date(95, 6, 1), new Date(95, 9, 1),
-				new Date(96, 0, 1), new Date(96, 3, 1), new Date(96, 6, 1),
-				new Date(96, 9, 1), new Date(97, 0, 1), new Date(97, 3, 1),
-				new Date(97, 6, 1), new Date(97, 9, 1), new Date(98, 0, 1),
-				new Date(98, 3, 1), new Date(98, 6, 1), new Date(98, 9, 1),
-				new Date(99, 0, 1), new Date(99, 3, 1), new Date(99, 6, 1),
-				new Date(99, 9, 1), new Date(100, 0, 1), new Date(100, 3, 1),
-				new Date(100, 6, 1), new Date(100, 9, 1), new Date(100, 11, 1) };
+		Date[] dateValues = new Date[entries.size()];
+		double[] valuesDbl = new double[entries.size()];
+		for (int i = 0; i < entries.size(); i++) {
+			ListEntry entry = entries.get(i);
+			int month = Integer.parseInt(entry.getEntryTime().split("-")[0]
+					.trim()) - 1;
+			int day = Integer.parseInt(entry.getEntryTime().split("-")[1]
+					.trim());
+			int year = Integer.parseInt(entry.getEntryTime().split("-")[2]
+					.trim()) - 1900;
+			dateValues[i] = new Date(year, month, day);
+			valuesDbl[i] = Integer.parseInt(entry.getValue().split(":")[0]
+					.trim())
+					* 3600
+					+ Integer.parseInt(entry.getValue().split(":")[1].trim())
+					* 60
+					+ Integer.parseInt(entry.getValue().split(":")[2].trim());
+		}
 		dates.add(dateValues);
+		values.add(valuesDbl);
 
-		values.add(new double[] { 4.9, 5.3, 3.2, 4.5, 6.5, 4.7, 5.8, 4.3, 4,
-				2.3, -0.5, -2.9, 3.2, 5.5, 4.6, 9.4, 4.3, 1.2, 0, 0.4, 4.5,
-				3.4, 4.5, 4.3, 4 });
 		int[] colors = new int[] { Color.BLUE };
 		PointStyle[] styles = new PointStyle[] { PointStyle.POINT };
 		XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles);
@@ -125,7 +135,7 @@ public class ViewListEntriesActivity extends ListActivity {
 		startActivity(ChartFactory.getTimeChartIntent(this,
 				buildDateDataset(titles, dates, values), renderer, "MMM yyyy"));
 
-	}	
+	}
 
 	/**
 	 * Builds an XY multiple series renderer.
