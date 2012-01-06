@@ -6,20 +6,20 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/entry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:onClick="entryButtonClickHandler"
         android:text="@string/make_entry" />
 
     <Button
         android:id="@+id/viewEntries"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:onClick="viewEntriesButtonClickHandler"
         android:text="View Entries" />
 

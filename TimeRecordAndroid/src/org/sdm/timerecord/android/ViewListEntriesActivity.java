@@ -123,12 +123,12 @@ public class ViewListEntriesActivity extends ListActivity {
 		dates.add(dateValues);
 		values.add(valuesDbl);
 
-		int[] colors = new int[] { Color.BLUE };
+		int[] colors = new int[] { Color.RED };
 		PointStyle[] styles = new PointStyle[] { PointStyle.POINT };
 		XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles);
 		setChartSettings(renderer, "Sales growth", "Date", "%",
 				dateValues[0].getTime(),
-				dateValues[dateValues.length - 1].getTime(), -4, 11,
+				dateValues[dateValues.length - 1].getTime(), 0, 1000000,
 				Color.GRAY, Color.LTGRAY);
 		renderer.setYLabels(10);
 

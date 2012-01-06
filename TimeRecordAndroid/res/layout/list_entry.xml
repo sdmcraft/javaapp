@@ -8,19 +8,35 @@
         android:id="@+id/listTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text=""
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/dateDisplay"
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:stretchColumns="1" >
 
-    <Button
-        android:id="@+id/pickDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change the date" />
+        <TableRow>
+
+            <TextView
+                android:id="@+id/entryDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entry Date" />
+
+            <TextView
+                android:id="@+id/dateDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/pickDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change the date" />
+        </TableRow>
+    </TableLayout>
 
     <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

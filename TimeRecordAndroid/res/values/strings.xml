@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">Hello World, TimeRecordAndroidActivity!</string>
-    <string name="app_name">TimeRecordAndroid</string>
+    <string name="app_name">Time Record</string>
     <string name="no_lists">No Lists</string>
     <string name="add_new_list">Add New List</string>
     <string name="name">Name</string>
