@@ -59,4 +59,14 @@ public class ListEditActivity extends Activity {
 		});
 	}
 
+	@Override
+	public void onBackPressed() {
+		Bundle bundle = new Bundle();
+		Intent mIntent = new Intent();
+		mIntent.putExtras(bundle);
+		setResult(RESULT_OK, mIntent);
+		finish();
+		// super.onBackPressed();
+	}
+
 }

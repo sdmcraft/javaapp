@@ -68,16 +68,17 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		switch (requestCode) {
 		case ACTIVITY_ADD_NEW_LIST:
 			String name = extras.getString(TimeRecordDbAdapter.KEY_NAME);
-			mDbHelper.createList(name);
-			fillData();
+			if (name != null && !name.isEmpty()) {
+				mDbHelper.createList(name);
+				fillData();
+			}
 			break;
 		case ACTIVITY_LIST_ENTRY:
-			String entryTime = extras
-					.getString(ListEntry.COL_ENTRY_TIME);
+			String entryTime = extras.getString(ListEntry.COL_ENTRY_TIME);
 			Long listId = extras.getLong(ListEntry.COL_LIST_ID);
 			String value = extras.getString(ListEntry.COL_VALUE);
-			ListEntry
-					.insert(mDbHelper.getDB(), listId, entryTime, value);
+			if (entryTime != null && value != null && listId >= 0)
+				ListEntry.insert(mDbHelper.getDB(), listId, entryTime, value);
 			break;
 		}
 	}

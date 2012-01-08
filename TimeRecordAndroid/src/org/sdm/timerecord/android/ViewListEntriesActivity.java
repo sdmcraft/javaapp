@@ -99,11 +99,12 @@ public class ViewListEntriesActivity extends ListActivity {
 	}
 
 	private void viewGraph() {
-		String[] titles = new String[] { "Sales growth January 1995 to December 2000" };
+		String[] titles = new String[] { "Graphical representation of entries" };
 		List<Date[]> dates = new ArrayList<Date[]>();
 		List<double[]> values = new ArrayList<double[]>();
 		Date[] dateValues = new Date[entries.size()];
 		double[] valuesDbl = new double[entries.size()];
+		double maxVal = 0;
 		for (int i = 0; i < entries.size(); i++) {
 			ListEntry entry = entries.get(i);
 			int month = Integer.parseInt(entry.getEntryTime().split("-")[0]
@@ -119,6 +120,8 @@ public class ViewListEntriesActivity extends ListActivity {
 					+ Integer.parseInt(entry.getValue().split(":")[1].trim())
 					* 60
 					+ Integer.parseInt(entry.getValue().split(":")[2].trim());
+			if(valuesDbl[i] > maxVal)
+				maxVal = valuesDbl[i];
 		}
 		dates.add(dateValues);
 		values.add(valuesDbl);
@@ -126,14 +129,14 @@ public class ViewListEntriesActivity extends ListActivity {
 		int[] colors = new int[] { Color.RED };
 		PointStyle[] styles = new PointStyle[] { PointStyle.POINT };
 		XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles);
-		setChartSettings(renderer, "Sales growth", "Date", "%",
+		setChartSettings(renderer, "Entry", "Date", "Seconds",
 				dateValues[0].getTime(),
-				dateValues[dateValues.length - 1].getTime(), 0, 1000000,
+				dateValues[dateValues.length - 1].getTime(), 0, maxVal,
 				Color.GRAY, Color.LTGRAY);
 		renderer.setYLabels(10);
 
 		startActivity(ChartFactory.getTimeChartIntent(this,
-				buildDateDataset(titles, dates, values), renderer, "MMM yyyy"));
+				buildDateDataset(titles, dates, values), renderer, "DD-MMM-yyyy"));
 
 	}
 

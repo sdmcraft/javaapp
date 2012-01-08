@@ -1,5 +1,6 @@
 package org.sdm.timerecord.android;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.sdm.timerecord.android.model.ListEntry;
@@ -47,8 +48,8 @@ public class ListEntryActivity extends Activity {
 		}
 
 		hoursEntry = (EditText) findViewById(R.id.hoursEntry);
-		minutesEntry = (EditText) findViewById(R.id.hoursEntry);
-		secondsEntry = (EditText) findViewById(R.id.hoursEntry);
+		minutesEntry = (EditText) findViewById(R.id.minutesEntry);
+		secondsEntry = (EditText) findViewById(R.id.secondsEntry);
 
 		// capture our View elements
 		mDateDisplay = (TextView) findViewById(R.id.dateDisplay);
@@ -72,10 +73,10 @@ public class ListEntryActivity extends Activity {
 	}
 
 	private void updateDisplay() {
-		mDateDisplay.setText(new StringBuilder()
-				// Month is 0 based so add 1
-				.append(mMonth + 1).append("-").append(mDay).append("-")
-				.append(mYear).append(" "));
+		Calendar c = Calendar.getInstance();
+		c.set(mYear, mMonth, mDay);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+		mDateDisplay.setText(sdf.format(c.getTime()));
 	}
 
 	// the callback received when the user "sets" the date in the dialog
@@ -103,14 +104,11 @@ public class ListEntryActivity extends Activity {
 	public void saveEntryClickHandler(View view) {
 		Bundle bundle = new Bundle();
 
-		bundle.putString(ListEntry.COL_ENTRY_TIME, mDateDisplay
-				.getText().toString());
+		bundle.putString(ListEntry.COL_ENTRY_TIME, mDateDisplay.getText()
+				.toString());
 		bundle.putLong(ListEntry.COL_LIST_ID, mListId);
-		bundle.putString(ListEntry.COL_VALUE, hoursEntry.getText()
-				.toString()
-				+ ":"
-				+ minutesEntry.getText().toString()
-				+ ":"
+		bundle.putString(ListEntry.COL_VALUE, hoursEntry.getText().toString()
+				+ ":" + minutesEntry.getText().toString() + ":"
 				+ secondsEntry.getText().toString());
 		Intent mIntent = new Intent();
 		mIntent.putExtras(bundle);
@@ -118,4 +116,13 @@ public class ListEntryActivity extends Activity {
 		finish();
 	}
 
+	@Override
+	public void onBackPressed() {
+		Bundle bundle = new Bundle();
+		Intent mIntent = new Intent();
+		mIntent.putExtras(bundle);
+		setResult(RESULT_OK, mIntent);
+		finish();
+		// super.onBackPressed();
+	}
 }
