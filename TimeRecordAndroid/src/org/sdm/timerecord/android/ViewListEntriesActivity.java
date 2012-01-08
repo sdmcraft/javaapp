@@ -1,5 +1,7 @@
 package org.sdm.timerecord.android;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,13 +109,16 @@ public class ViewListEntriesActivity extends ListActivity {
 		double maxVal = 0;
 		for (int i = 0; i < entries.size(); i++) {
 			ListEntry entry = entries.get(i);
-			int month = Integer.parseInt(entry.getEntryTime().split("-")[0]
-					.trim()) - 1;
-			int day = Integer.parseInt(entry.getEntryTime().split("-")[1]
-					.trim());
-			int year = Integer.parseInt(entry.getEntryTime().split("-")[2]
-					.trim()) - 1900;
-			dateValues[i] = new Date(year, month, day);
+			SimpleDateFormat entryDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			
+			Date entryDate = null;
+			try {
+				entryDate = entryDateFormat.parse(entry.getEntryTime());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dateValues[i] = entryDate;
 			valuesDbl[i] = Integer.parseInt(entry.getValue().split(":")[0]
 					.trim())
 					* 3600
