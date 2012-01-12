@@ -10,6 +10,7 @@ import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.sdm.timerecord.android.model.ListEntry;
@@ -100,7 +101,7 @@ public class ViewListEntriesActivity extends ListActivity {
 		return super.onMenuItemSelected(featureId, item);
 	}
 
-	private void viewGraph() {
+	private void viewGraph1() {
 		String[] titles = new String[] { "Graphical representation of entries" };
 		List<Date[]> dates = new ArrayList<Date[]>();
 		List<double[]> values = new ArrayList<double[]>();
@@ -143,6 +144,25 @@ public class ViewListEntriesActivity extends ListActivity {
 		startActivity(ChartFactory.getTimeChartIntent(this,
 				buildDateDataset(titles, dates, values), renderer, "DD-MMM-yyyy"));
 
+	}
+	
+	private void viewGraph()
+	{
+		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+		XYSeriesRenderer seriesRenderer = new XYSeriesRenderer();
+		renderer.addSeriesRenderer(seriesRenderer);
+		
+		XYSeries series = new XYSeries("series");
+		series.add(1d,2d);
+		series.add(2d,4d);
+		series.add(3d,8d);
+		series.add(4d,16d);
+		series.add(5d,32d);
+		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		dataset.addSeries(series);
+		
+		startActivity(ChartFactory.getLineChartIntent(this, dataset, renderer));
+		
 	}
 
 	/**
