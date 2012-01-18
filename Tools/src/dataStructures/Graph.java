@@ -166,7 +166,7 @@ public class Graph<T> {
 		// Graph graph = build(adjacencyMatrix);
 		Graph<String> graph;
 		do {			
-			graph = Graph.generate(new String[]{"1","2","3","4"});
+			graph = Graph.generate(new String[]{"1","2","3","4","5","6","7","8","9","10"});
 			/*
 			 * if (graph.tarjan()) System.out.println("This graph has cycle!!");
 			 */
