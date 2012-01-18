@@ -1,5 +1,7 @@
 package annotations;
 
+import java.io.File;
+
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
@@ -10,21 +12,25 @@ public class JavassistDemo {
 	public static void main(String[] args) throws Exception {
 		ClassPool pool = ClassPool.getDefault();
 		CtClass demoClass = pool.get("annotations.Demo");
-		for(CtMethod method : demoClass.getMethods())
-		{
+		CtMethod annotatedMainMethod = null;
+		for (CtMethod method : demoClass.getMethods()) {
 			System.out.println(method.getName());
-			if(method.getAnnotation(Main.class) != null)
-			{
-				System.out.println("The method annotated as main is:" + method.getName());
+			if (method.getAnnotation(Main.class) != null) {
+				annotatedMainMethod = method;
+				System.out.println("The method annotated as main is:"
+						+ method.getName());
 				break;
 			}
 		}
-		CtMethod mainMethod = CtNewMethod.make(
-				"	public static void main(String[] args) { "
-						+ "System.out.println(\"Hello javassist!!!\");" + "}",
-				demoClass);
-		demoClass.addMethod(mainMethod);
-		//demoClass.writeFile();
-	}
 
+		if (annotatedMainMethod != null) {
+			CtMethod mainMethod = CtNewMethod
+					.make("	public static void main(String[] args) { \n"							
+							+ annotatedMainMethod.getName() + "(args);\n" + "}",
+							demoClass);
+			demoClass.addMethod(mainMethod);
+			System.out.println(System.getProperty("user.dir"));
+			demoClass.writeFile(System.getProperty("user.dir") + File.separator + "bin");
+		}
+	}
 }
