@@ -3,6 +3,7 @@ package org.sdm.timerecord.android;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -101,17 +102,19 @@ public class ViewListEntriesActivity extends ListActivity {
 		return super.onMenuItemSelected(featureId, item);
 	}
 
-	private void viewGraph1() {
+	private void viewGraph() {
 		String[] titles = new String[] { "Graphical representation of entries" };
 		List<Date[]> dates = new ArrayList<Date[]>();
 		List<double[]> values = new ArrayList<double[]>();
 		Date[] dateValues = new Date[entries.size()];
 		double[] valuesDbl = new double[entries.size()];
 		double maxVal = 0;
+		double minVal = Long.MAX_VALUE;
 		for (int i = 0; i < entries.size(); i++) {
 			ListEntry entry = entries.get(i);
-			SimpleDateFormat entryDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-			
+			SimpleDateFormat entryDateFormat = new SimpleDateFormat(
+					"dd-MMM-yyyy");
+
 			Date entryDate = null;
 			try {
 				entryDate = entryDateFormat.parse(entry.getEntryTime());
@@ -126,43 +129,89 @@ public class ViewListEntriesActivity extends ListActivity {
 					+ Integer.parseInt(entry.getValue().split(":")[1].trim())
 					* 60
 					+ Integer.parseInt(entry.getValue().split(":")[2].trim());
-			if(valuesDbl[i] > maxVal)
+			if (valuesDbl[i] > maxVal)
 				maxVal = valuesDbl[i];
+			if (valuesDbl[i] < minVal)
+				minVal = valuesDbl[i];
+
 		}
 		dates.add(dateValues);
 		values.add(valuesDbl);
 
-		int[] colors = new int[] { Color.RED };
-		PointStyle[] styles = new PointStyle[] { PointStyle.POINT };
-		XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles);
-		setChartSettings(renderer, "Entry", "Date", "Seconds",
-				dateValues[0].getTime(),
-				dateValues[dateValues.length - 1].getTime(), 0, maxVal,
-				Color.GRAY, Color.LTGRAY);
-		renderer.setYLabels(10);
+		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
+		renderer.setYAxisMin(minVal);
+		renderer.setYAxisMax(maxVal);
+		//renderer.setXLabels(dateValues.length);
+		renderer.setShowCustomTextGrid(true);
+		//renderer.setShowLabels(false);
+		XYSeriesRenderer seriesRenderer = new XYSeriesRenderer();
+		renderer.addSeriesRenderer(seriesRenderer);
 
-		startActivity(ChartFactory.getTimeChartIntent(this,
-				buildDateDataset(titles, dates, values), renderer, "DD-MMM-yyyy"));
+		XYSeries ts = new XYSeries("Dummy Title");
+
+		for (int i = 0; i < valuesDbl.length; i++) {
+			ts.add(dateValues[i].getTime(), valuesDbl[i]);
+			renderer.addXTextLabel(dateValues[i].getTime(), dateValues[i].getDay()+"/"+(dateValues[i].getMonth()+1));
+		}
+		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		dataset.addSeries(ts);
+
+		startActivity(ChartFactory.getLineChartIntent(this, dataset, renderer));
+
+		/*
+		 * int[] colors = new int[] { Color.RED }; PointStyle[] styles = new
+		 * PointStyle[] { PointStyle.POINT }; XYMultipleSeriesRenderer renderer
+		 * = buildRenderer(colors, styles); setChartSettings(renderer, "Entry",
+		 * "Date", "Seconds", dateValues[0].getTime(),
+		 * dateValues[dateValues.length - 1].getTime(), 0, maxVal, Color.GRAY,
+		 * Color.LTGRAY); renderer.setYLabels(10);
+		 * 
+		 * startActivity(ChartFactory.getTimeChartIntent(this,
+		 * buildDateDataset(titles, dates, values), renderer, "DD-MMM-yyyy"));
+		 */
 
 	}
-	
-	private void viewGraph()
-	{
+
+	private void viewGraph1() {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 		XYSeriesRenderer seriesRenderer = new XYSeriesRenderer();
 		renderer.addSeriesRenderer(seriesRenderer);
-		
+
 		XYSeries series = new XYSeries("series");
-		series.add(1d,2d);
-		series.add(2d,4d);
-		series.add(3d,8d);
-		series.add(4d,16d);
-		series.add(5d,32d);
+		series.add(1d, 2d);
+		series.add(2d, 4d);
+		series.add(3d, 8d);
+		series.add(4d, 16d);
+		series.add(5d, 32d);
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-		dataset.addSeries(series);
-		
+
+		TimeSeries ts = new TimeSeries("Dummy Title");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, 1);
+		ts.add(cal.getTime(), 1);
+
+		cal.add(Calendar.DATE, 1);
+		ts.add(cal.getTime(), 2);
+
+		cal.add(Calendar.DATE, 1);
+		ts.add(cal.getTime(), 4);
+
+		cal.add(Calendar.DATE, 1);
+		ts.add(cal.getTime(), 8);
+
+		cal.add(Calendar.DATE, 1);
+		ts.add(cal.getTime(), 4);
+
+		cal.add(Calendar.DATE, 1);
+		ts.add(cal.getTime(), 2);
+
+		cal.add(Calendar.DATE, 1);
+		ts.add(cal.getTime(), 1);
+
+		dataset.addSeries(ts);
+
 		startActivity(ChartFactory.getLineChartIntent(this, dataset, renderer));
-		
+
 	}
 
 	/**
