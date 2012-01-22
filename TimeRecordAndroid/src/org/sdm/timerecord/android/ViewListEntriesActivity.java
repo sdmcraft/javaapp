@@ -19,6 +19,7 @@ import org.sdm.timerecord.android.model.ListEntry;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -141,20 +142,31 @@ public class ViewListEntriesActivity extends ListActivity {
 		renderer.setYAxisMin(minVal);
 		renderer.setYAxisMax(maxVal);
 		renderer.setXLabels(0);
+		renderer.setYLabels(0);
 		renderer.clearXTextLabels();
 		renderer.setShowCustomTextGrid(true);	
 		renderer.setXTitle("Entry Dates");
-		renderer.setYTitle("Value(in seconds)");
+		renderer.setYTitle("Values");
 		XYSeriesRenderer seriesRenderer = new XYSeriesRenderer();
+		seriesRenderer.setColor(Color.RED);
+		renderer.setAxisTitleTextSize(25);
+		renderer.setChartTitleTextSize(25);
+		renderer.setLabelsTextSize(25);
+		renderer.setLegendTextSize(25);
+		renderer.setPointSize(10f);
+		//renderer.setMargins(new int[] { 20, 30, 15, 20 });
 		renderer.addSeriesRenderer(seriesRenderer);
 
-		XYSeries ts = new XYSeries("Dummy Title");
+		XYSeries ts = new XYSeries("");
 
 		for (int i = 0; i < valuesDbl.length; i++) {
 			ts.add(dateValues[i].getTime(), valuesDbl[i]);
 			renderer.addXTextLabel(dateValues[i].getTime(),
-					dateValues[i].getDay() + "/"
+					(dateValues[i].getDay() + 1) + "/"
 							+ (dateValues[i].getMonth() + 1));
+			Double d = valuesDbl[i];
+			Long l = d.longValue();
+			renderer.addYTextLabel(valuesDbl[i], l.toString());
 		}
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(ts);
