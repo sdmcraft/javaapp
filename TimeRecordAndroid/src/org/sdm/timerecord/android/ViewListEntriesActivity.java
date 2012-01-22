@@ -19,7 +19,6 @@ import org.sdm.timerecord.android.model.ListEntry;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -141,9 +140,11 @@ public class ViewListEntriesActivity extends ListActivity {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 		renderer.setYAxisMin(minVal);
 		renderer.setYAxisMax(maxVal);
-		//renderer.setXLabels(dateValues.length);
-		renderer.setShowCustomTextGrid(true);
-		//renderer.setShowLabels(false);
+		renderer.setXLabels(0);
+		renderer.clearXTextLabels();
+		renderer.setShowCustomTextGrid(true);	
+		renderer.setXTitle("Entry Dates");
+		renderer.setYTitle("Value(in seconds)");
 		XYSeriesRenderer seriesRenderer = new XYSeriesRenderer();
 		renderer.addSeriesRenderer(seriesRenderer);
 
@@ -151,7 +152,9 @@ public class ViewListEntriesActivity extends ListActivity {
 
 		for (int i = 0; i < valuesDbl.length; i++) {
 			ts.add(dateValues[i].getTime(), valuesDbl[i]);
-			renderer.addXTextLabel(dateValues[i].getTime(), dateValues[i].getDay()+"/"+(dateValues[i].getMonth()+1));
+			renderer.addXTextLabel(dateValues[i].getTime(),
+					dateValues[i].getDay() + "/"
+							+ (dateValues[i].getMonth() + 1));
 		}
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(ts);
