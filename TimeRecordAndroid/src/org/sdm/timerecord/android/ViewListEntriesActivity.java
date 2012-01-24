@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.achartengine.ChartFactory;
+import org.achartengine.chart.BarChart.Type;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
@@ -27,7 +28,8 @@ import android.widget.SimpleCursorAdapter;
 
 public class ViewListEntriesActivity extends ListActivity {
 
-	private static final int VIEW_GRAPH_ID = Menu.FIRST;
+	private static final int VIEW_LINE_GRAPH_ID = Menu.FIRST;
+	private static final int VIEW_BAR_GRAPH_ID = Menu.NONE;
 	private List<ListEntry> entries = new ArrayList<ListEntry>();
 
 	@Override
@@ -87,22 +89,26 @@ public class ViewListEntriesActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, VIEW_GRAPH_ID, 0, "View Graph");
+		menu.add(0, VIEW_LINE_GRAPH_ID, 0, "View Line Graph");
+		menu.add(0, VIEW_BAR_GRAPH_ID, 1, "View Bar Graph");
 		return true;
 	}
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
-		case VIEW_GRAPH_ID:
-			viewGraph();
+		case VIEW_LINE_GRAPH_ID:
+			viewGraph("line");
+			return true;
+		case VIEW_BAR_GRAPH_ID:
+			viewGraph("bar");			
 			return true;
 		}
 
 		return super.onMenuItemSelected(featureId, item);
 	}
 
-	private void viewGraph() {
+	private void viewGraph(String graphType) {
 		String[] titles = new String[] { "Graphical representation of entries" };
 		List<Date[]> dates = new ArrayList<Date[]>();
 		List<double[]> values = new ArrayList<double[]>();
@@ -122,7 +128,7 @@ public class ViewListEntriesActivity extends ListActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			dateValues[i] = entryDate;
+			dateValues[i] = entryDate;	
 			valuesDbl[i] = Integer.parseInt(entry.getValue().split(":")[0]
 					.trim())
 					* 3600
@@ -154,6 +160,7 @@ public class ViewListEntriesActivity extends ListActivity {
 		renderer.setLabelsTextSize(25);
 		renderer.setLegendTextSize(25);
 		renderer.setPointSize(10f);
+		renderer.setBarSpacing(0.5);
 		//renderer.setMargins(new int[] { 20, 30, 15, 20 });
 		renderer.addSeriesRenderer(seriesRenderer);
 
@@ -171,7 +178,11 @@ public class ViewListEntriesActivity extends ListActivity {
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(ts);
 
+		if("line".equalsIgnoreCase(graphType))
 		startActivity(ChartFactory.getLineChartIntent(this, dataset, renderer));
+		else if("bar".equalsIgnoreCase(graphType))
+		startActivity(ChartFactory.getBarChartIntent(this, dataset, renderer,Type.DEFAULT));
+		
 
 		/*
 		 * int[] colors = new int[] { Color.RED }; PointStyle[] styles = new
