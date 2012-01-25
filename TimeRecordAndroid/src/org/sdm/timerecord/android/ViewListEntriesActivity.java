@@ -52,9 +52,10 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	private void fillData() {
 		// Get all of the rows from the database and create the item list
-		Cursor listsCursor = ListEntry.queryByListId(Globals.getInstance()
-				.getDb(),
-				getIntent().getExtras().getLong(TimeRecordDbAdapter.KEY_ROWID));
+		Cursor listsCursor = ListEntry.queryByListId(
+				Globals.getInstance().getDb(),
+				getIntent().getExtras().getLong(
+						org.sdm.timerecord.android.model.List.COL_ID));
 		while (listsCursor.moveToNext()) {
 			Long id = listsCursor.getLong(listsCursor
 					.getColumnIndex(ListEntry.COL_ID));
@@ -101,7 +102,7 @@ public class ViewListEntriesActivity extends ListActivity {
 			viewGraph("line");
 			return true;
 		case VIEW_BAR_GRAPH_ID:
-			viewGraph("bar");			
+			viewGraph("bar");
 			return true;
 		}
 
@@ -128,7 +129,7 @@ public class ViewListEntriesActivity extends ListActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			dateValues[i] = entryDate;	
+			dateValues[i] = entryDate;
 			valuesDbl[i] = Integer.parseInt(entry.getValue().split(":")[0]
 					.trim())
 					* 3600
@@ -150,7 +151,7 @@ public class ViewListEntriesActivity extends ListActivity {
 		renderer.setXLabels(0);
 		renderer.setYLabels(0);
 		renderer.clearXTextLabels();
-		renderer.setShowCustomTextGrid(true);	
+		renderer.setShowCustomTextGrid(true);
 		renderer.setXTitle("Entry Dates");
 		renderer.setYTitle("Values");
 		XYSeriesRenderer seriesRenderer = new XYSeriesRenderer();
@@ -161,14 +162,15 @@ public class ViewListEntriesActivity extends ListActivity {
 		renderer.setLegendTextSize(25);
 		renderer.setPointSize(10f);
 		renderer.setBarSpacing(0.5);
-		//renderer.setMargins(new int[] { 20, 30, 15, 20 });
+		// renderer.setMargins(new int[] { 20, 30, 15, 20 });
 		renderer.addSeriesRenderer(seriesRenderer);
 
 		XYSeries ts = new XYSeries("");
 
 		for (int i = 0; i < valuesDbl.length; i++) {
 			ts.add(dateValues[i].getTime(), valuesDbl[i]);
-			renderer.addXTextLabel(dateValues[i].getTime(),
+			renderer.addXTextLabel(
+					dateValues[i].getTime(),
 					(dateValues[i].getDay() + 1) + "/"
 							+ (dateValues[i].getMonth() + 1));
 			Double d = valuesDbl[i];
@@ -178,11 +180,12 @@ public class ViewListEntriesActivity extends ListActivity {
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(ts);
 
-		if("line".equalsIgnoreCase(graphType))
-		startActivity(ChartFactory.getLineChartIntent(this, dataset, renderer));
-		else if("bar".equalsIgnoreCase(graphType))
-		startActivity(ChartFactory.getBarChartIntent(this, dataset, renderer,Type.DEFAULT));
-		
+		if ("line".equalsIgnoreCase(graphType))
+			startActivity(ChartFactory.getLineChartIntent(this, dataset,
+					renderer));
+		else if ("bar".equalsIgnoreCase(graphType))
+			startActivity(ChartFactory.getBarChartIntent(this, dataset,
+					renderer, Type.DEFAULT));
 
 		/*
 		 * int[] colors = new int[] { Color.RED }; PointStyle[] styles = new

@@ -3,6 +3,7 @@ package org.sdm.timerecord.android;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.sdm.timerecord.android.model.List;
 import org.sdm.timerecord.android.model.ListEntry;
 
 import android.app.Activity;
@@ -39,8 +40,8 @@ public class ListEntryActivity extends Activity {
 		setContentView(R.layout.list_entry);
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			mListName = extras.getString(TimeRecordDbAdapter.KEY_NAME);
-			mListId = extras.getLong(TimeRecordDbAdapter.KEY_ROWID);
+			mListName = extras.getString(List.COL_NAME);
+			mListId = extras.getLong(List.COL_ID);
 			if (mListName != null) {
 				mListTitleTextView = (TextView) findViewById(R.id.listTitle);
 				mListTitleTextView.setText(mListName);

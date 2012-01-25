@@ -1,5 +1,7 @@
 package org.sdm.timerecord.android;
 
+import org.sdm.timerecord.android.model.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,9 +34,9 @@ public class ListEditActivity extends Activity {
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			String name = extras.getString(TimeRecordDbAdapter.KEY_NAME);
+			String name = extras.getString(List.COL_NAME);
 
-			mRowId = extras.getLong(TimeRecordDbAdapter.KEY_ROWID);
+			mRowId = extras.getLong(List.COL_ID);
 
 			if (name != null) {
 				mNameText.setText(name);
@@ -45,10 +47,9 @@ public class ListEditActivity extends Activity {
 			public void onClick(View view) {
 				Bundle bundle = new Bundle();
 
-				bundle.putString(TimeRecordDbAdapter.KEY_NAME, mNameText
-						.getText().toString());
+				bundle.putString(List.COL_NAME, mNameText.getText().toString());
 				if (mRowId != null) {
-					bundle.putLong(TimeRecordDbAdapter.KEY_ROWID, mRowId);
+					bundle.putLong(List.COL_ID, mRowId);
 				}
 				Intent mIntent = new Intent();
 				mIntent.putExtras(bundle);

@@ -29,9 +29,8 @@ public class List {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 	}
 
-	public static long insert(SQLiteDatabase db, long id, String name) {
+	public static long insert(SQLiteDatabase db, String name) {
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(COL_ID, id);
 		initialValues.put(COL_NAME, name);
 		return db.insert(TABLE_NAME, null, initialValues);
 	}
@@ -50,6 +49,12 @@ public class List {
 
 		return db.query(TABLE_NAME, new String[] { COL_ID, COL_NAME }, COL_ID
 				+ "=" + rowId, null, null, null, null);
+	}
+
+	public boolean updateNote(SQLiteDatabase db, long rowId, String name) {
+		ContentValues args = new ContentValues();
+		args.put(COL_NAME, name);
+		return db.update(TABLE_NAME, args, COL_ID + "=" + rowId, null) > 0;
 	}
 
 	public long getId() {

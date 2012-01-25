@@ -1,15 +1,18 @@
 package org.sdm.timerecord.android;
 
+import org.sdm.timerecord.android.model.List;
 import org.sdm.timerecord.android.model.ListEntry;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 
@@ -34,6 +37,19 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		mDbHelper.open();
 		Globals.getInstance().setDb(mDbHelper.getDB());
 		fillData();
+		/*http://android.konreu.com/developer-how-to/click-long-press-event-listeners-list-activity/*/
+		getListView().setOnItemClickListener(
+				new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> av, View v, int pos,
+							long id) {
+						onListItemClick(v, pos, id);
+					}
+				});
+	}
+
+	protected void onListItemClick(View v, int pos, long id) {
+		Log.i("some-tag", "onListItemClick id=" + id);
 	}
 
 	@Override
@@ -67,9 +83,9 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 		switch (requestCode) {
 		case ACTIVITY_ADD_NEW_LIST:
-			String name = extras.getString(TimeRecordDbAdapter.KEY_NAME);
+			String name = extras.getString(List.COL_NAME);
 			if (name != null && !name.isEmpty()) {
-				mDbHelper.createList(name);
+				List.insert(Globals.getInstance().getDb(), name);
 				fillData();
 			}
 			break;
@@ -85,12 +101,12 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 	private void fillData() {
 		// Get all of the rows from the database and create the item list
-		mListsCursor = mDbHelper.fetchAllLists();
+		mListsCursor = List.query(Globals.getInstance().getDb());
 		startManagingCursor(mListsCursor);
 
 		// Create an array to specify the fields we want to display in the list
 		// (only TITLE)
-		String[] from = new String[] { TimeRecordDbAdapter.KEY_NAME };
+		String[] from = new String[] { List.COL_NAME };
 
 		// and an array of the fields we want to bind those fields to (in this
 		// case just text1)
@@ -121,9 +137,11 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		// entryButton.setText(entryButton.getTag().toString());
 		Intent i = new Intent(this, ListEntryActivity.class);
 		Long listRowId = Long.parseLong(entryButton.getTag().toString());
-		i.putExtra(TimeRecordDbAdapter.KEY_ROWID, listRowId);
-		i.putExtra(TimeRecordDbAdapter.KEY_NAME, mDbHelper.fetchList(listRowId)
-				.getString(1));
+		i.putExtra(List.COL_ID, listRowId);
+		i.putExtra(
+				List.COL_NAME,
+				List.query(Globals.getInstance().getDb(), listRowId).getString(
+						1));
 		startActivityForResult(i, ACTIVITY_LIST_ENTRY);
 	}
 
@@ -132,7 +150,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		// entryButton.setText(entryButton.getTag().toString());
 		Intent i = new Intent(this, ViewListEntriesActivity.class);
 		Long listRowId = Long.parseLong(viewEntriesButton.getTag().toString());
-		i.putExtra(TimeRecordDbAdapter.KEY_ROWID, listRowId);
+		i.putExtra(List.COL_ID, listRowId);
 		startActivityForResult(i, ACTIVITY_VIEW_LIST_ENTRIES);
 
 	}
