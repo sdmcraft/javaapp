@@ -1,5 +1,7 @@
 package org.sdm.timerecord.business.action.impl;
 
+import java.util.Map;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -10,9 +12,8 @@ import javax.sql.rowset.serial.SerialBlob;
 import org.sdm.timerecord.business.action.CreateUserRemote;
 import org.sdm.timerecord.business.model.User;
 
-
 @Stateless
-public class CreateUser implements CreateUserRemote{
+public class CreateUser implements CreateUserRemote {
 
 	@PersistenceContext(name = "TimeRecord")
 	EntityManager em;
@@ -23,11 +24,10 @@ public class CreateUser implements CreateUserRemote{
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void createUser(String name, byte[] image) throws Exception{
-		
-		User user = new User(name, new SerialBlob(image));
+	public void execute(Map<String, String[]> params) throws Exception {
+
+		User user = new User(params.get("name")[0], new SerialBlob(new byte[0]));
 		em.persist(user);
 	}
 
-	
 }
