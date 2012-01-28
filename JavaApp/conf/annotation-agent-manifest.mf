@@ -1,0 +1,2 @@
+Premain-Class: annotations.MyAnnotationProcessor
+Boot-Class-Path: ../lib/javassist.jar

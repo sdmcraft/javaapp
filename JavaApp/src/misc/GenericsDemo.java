@@ -30,6 +30,7 @@ public class GenericsDemo {
     public static void main(String[] args) {        
         List<? extends Gen2> list1 = null;
         List<? super Gen2> list2 = null;
+        list2.add(new Gen3());
 
         List<Gen2> list3 = (List<Gen2>) list1;
         //List<Gen1> list4 = (List<Gen1>) list1;

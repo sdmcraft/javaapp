@@ -49,7 +49,9 @@
 
 		<jar jarfile="${dist.dir}/JavaApp.jar" manifest="manifest.mf" basedir="${conf.dir}" update="true" />
 
-		<jar jarfile="${dist.dir}/Utils.jar" basedir="${build.classes}" includes= "misc/Utils*.class" />
+		<jar jarfile="${dist.dir}/Utils.jar" basedir="${build.classes}" includes="misc/Utils*.class" />
+
+		<jar jarfile="${dist.dir}/my-annotations.jar" manifest="${conf.dir}/annotation-agent-manifest.mf" basedir="${build.classes}" includes="annotations/MyAnnotationProcessor.class" />
 	</target>
 
 	<target name="clean">
