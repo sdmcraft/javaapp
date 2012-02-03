@@ -7,14 +7,14 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 public class TimeRecordAndroidActivity extends ListActivity {
 
@@ -37,19 +37,19 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		mDbHelper.open();
 		Globals.getInstance().setDb(mDbHelper.getDB());
 		fillData();
-		/*http://android.konreu.com/developer-how-to/click-long-press-event-listeners-list-activity/*/
-		getListView().setOnItemClickListener(
-				new AdapterView.OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> av, View v, int pos,
-							long id) {
-						onListItemClick(v, pos, id);
-					}
-				});
 	}
 
-	protected void onListItemClick(View v, int pos, long id) {
-		Log.i("some-tag", "onListItemClick id=" + id);
+	public void listClickHandler(View v) {
+		LinearLayout listRow = (LinearLayout) v;
+		Intent i = new Intent(this, ListEditActivity.class);
+		Long listRowId = Long.parseLong(listRow.getTag().toString());
+//		i.putExtra(List.COL_ID, listRowId);
+//		i.putExtra(
+//				List.COL_NAME,
+//				List.query(Globals.getInstance().getDb(), listRowId).getString(
+//						1));
+		startActivityForResult(i, ACTIVITY_ADD_NEW_LIST);
+
 	}
 
 	@Override
@@ -119,6 +119,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = super.getView(position, convertView, parent);
 				long id = getItemId(position);
+
 				Button entryButton = (Button) view.findViewById(R.id.entry);
 				entryButton.setTag(id);
 
@@ -126,6 +127,9 @@ public class TimeRecordAndroidActivity extends ListActivity {
 						.findViewById(R.id.viewEntries);
 				viewEntriesButton.setTag(id);
 
+				LinearLayout listRow = (LinearLayout) view
+						.findViewById(R.id.listRow);
+				listRow.setTag(id);
 				return view;
 			}
 		};
