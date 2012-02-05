@@ -28,4 +28,9 @@ public class BasicGraph<T> implements Graph<T> {
 		return edges;
 	}
 
+	@Override
+	public String getGraph() {
+		StringBuilder diagram = new StringBuilder();
+		diagram.append("digraph G {\n");
+	}
 }

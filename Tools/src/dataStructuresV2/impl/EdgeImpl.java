@@ -6,9 +6,9 @@ import dataStructuresV2.Node;
 public class EdgeImpl<T> implements Edge<T> {
 
 	private final Node<T>[] endPoints;
-	private final int weight;
+	private final Number weight;
 
-	public EdgeImpl(Node<T>[] endPoints, int weight) {
+	public EdgeImpl(Node<T>[] endPoints, Number weight) {
 		this.endPoints = endPoints;
 		this.weight = weight;
 	}
@@ -19,7 +19,7 @@ public class EdgeImpl<T> implements Edge<T> {
 	}
 
 	@Override
-	public int getWeight() {
+	public Number getWeight() {
 		return weight;
 	}
 

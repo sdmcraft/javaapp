@@ -4,5 +4,5 @@ public interface Edge<T> {
 
 	public Node<T>[] getEndpoints();
 
-	public int getWeight();
+	public Number getWeight();
 }

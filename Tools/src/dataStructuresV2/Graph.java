@@ -6,4 +6,5 @@ import java.util.Set;
 public interface Graph<T> {
 	public Set<Node<T>> getNodes();
 	public Set<Edge<T>> getEdges();
+	public String getGraph();
 }
