@@ -50,7 +50,7 @@ public class Main {
 		String[] values = { "a", "b", "c", "d" };
 		Set<String> valueSet = new HashSet<String>(Arrays.asList(values));
 
-		Graph graph = GraphFactory.getGraph(valueSet, 4);
+		Graph<String> graph = GraphFactory.getGraph(valueSet, 4);
 		System.out.println(graph.getDiagram());
 	}
 }
