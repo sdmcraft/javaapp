@@ -29,8 +29,15 @@ public class BasicGraph<T> implements Graph<T> {
 	}
 
 	@Override
-	public String getGraph() {
+	public String getDiagram() {
 		StringBuilder diagram = new StringBuilder();
 		diagram.append("digraph G {\n");
+		for (Edge<T> edge : edges) {
+			diagram.append("\"").append(edge.getEndpoints()[0].getValue().toString())
+					.append("\"->\"").append(edge.getEndpoints()[1].getValue().toString())
+					.append("\"\n");
+		}
+		diagram.append("}");
+		return diagram.toString();
 	}
 }
