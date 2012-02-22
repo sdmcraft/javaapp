@@ -20,7 +20,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 	private static final int ADD_NEW_LIST_ID = Menu.FIRST;
 
-	private static final int ACTIVITY_ADD_NEW_LIST = 0;
+	private static final int ACTIVITY_ADD_OR_EDIT_LIST = 0;
 	private static final int ACTIVITY_LIST_ENTRY = 1;
 	private static final int ACTIVITY_VIEW_LIST_ENTRIES = 2;
 
@@ -42,13 +42,14 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	public void listClickHandler(View v) {
 		LinearLayout listRow = (LinearLayout) v;
 		Intent i = new Intent(this, ListEditActivity.class);
+
 		Long listRowId = Long.parseLong(listRow.getTag().toString());
-//		i.putExtra(List.COL_ID, listRowId);
-//		i.putExtra(
-//				List.COL_NAME,
-//				List.query(Globals.getInstance().getDb(), listRowId).getString(
-//						1));
-		startActivityForResult(i, ACTIVITY_ADD_NEW_LIST);
+		i.putExtra(List.COL_ID, listRowId);
+		i.putExtra(
+				List.COL_NAME,
+				List.query(Globals.getInstance().getDb(), listRowId).getString(
+						1));
+		startActivityForResult(i, ACTIVITY_ADD_OR_EDIT_LIST);
 
 	}
 
@@ -72,7 +73,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 	private void addList() {
 		Intent i = new Intent(this, ListEditActivity.class);
-		startActivityForResult(i, ACTIVITY_ADD_NEW_LIST);
+		startActivityForResult(i, ACTIVITY_ADD_OR_EDIT_LIST);
 	}
 
 	@Override
@@ -82,19 +83,27 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		Bundle extras = intent.getExtras();
 
 		switch (requestCode) {
-		case ACTIVITY_ADD_NEW_LIST:
+		case ACTIVITY_ADD_OR_EDIT_LIST:
 			String name = extras.getString(List.COL_NAME);
+			long listId = extras.getLong(List.COL_ID, -1);
+
 			if (name != null && !name.isEmpty()) {
-				List.insert(Globals.getInstance().getDb(), name);
+				if (listId == -1) {
+					List.insert(Globals.getInstance().getDb(), name);
+				} else {
+					List.update(Globals.getInstance().getDb(), listId, name);
+				}
 				fillData();
 			}
+
 			break;
 		case ACTIVITY_LIST_ENTRY:
 			String entryTime = extras.getString(ListEntry.COL_ENTRY_TIME);
-			Long listId = extras.getLong(ListEntry.COL_LIST_ID);
+			Long entryListId = extras.getLong(ListEntry.COL_LIST_ID);
 			String value = extras.getString(ListEntry.COL_VALUE);
-			if (entryTime != null && value != null && listId >= 0)
-				ListEntry.insert(mDbHelper.getDB(), listId, entryTime, value);
+			if (entryTime != null && value != null && entryListId >= 0)
+				ListEntry.insert(mDbHelper.getDB(), entryListId, entryTime,
+						value);
 			break;
 		}
 	}

@@ -47,11 +47,13 @@ public class List {
 
 	public static Cursor query(SQLiteDatabase db, long rowId) {
 
-		return db.query(TABLE_NAME, new String[] { COL_ID, COL_NAME }, COL_ID
+		Cursor cursor = db.query(TABLE_NAME, new String[] { COL_ID, COL_NAME }, COL_ID
 				+ "=" + rowId, null, null, null, null);
+		cursor.moveToFirst();
+		return cursor;
 	}
 
-	public boolean updateNote(SQLiteDatabase db, long rowId, String name) {
+	public static boolean update(SQLiteDatabase db, long rowId, String name) {
 		ContentValues args = new ContentValues();
 		args.put(COL_NAME, name);
 		return db.update(TABLE_NAME, args, COL_ID + "=" + rowId, null) > 0;

@@ -108,9 +108,23 @@ public class ListEntryActivity extends Activity {
 		bundle.putString(ListEntry.COL_ENTRY_TIME, mDateDisplay.getText()
 				.toString());
 		bundle.putLong(ListEntry.COL_LIST_ID, mListId);
-		bundle.putString(ListEntry.COL_VALUE, hoursEntry.getText().toString()
-				+ ":" + minutesEntry.getText().toString() + ":"
-				+ secondsEntry.getText().toString());
+		String hours = "0";
+		String minutes = "0";
+		String seconds = "0";
+		if (hoursEntry.getText() != null && hoursEntry.getText().length() > 0) {
+			hours = hoursEntry.getText().toString();
+		}
+		if (minutesEntry.getText() != null
+				&& minutesEntry.getText().length() > 0) {
+			minutes = minutesEntry.getText().toString();
+		}
+		if (secondsEntry.getText() != null
+				&& secondsEntry.getText().length() > 0) {
+			seconds = secondsEntry.getText().toString();
+		}
+
+		bundle.putString(ListEntry.COL_VALUE, hours + ":" + minutes + ":"
+				+ seconds);
 		Intent mIntent = new Intent();
 		mIntent.putExtras(bundle);
 		setResult(RESULT_OK, mIntent);

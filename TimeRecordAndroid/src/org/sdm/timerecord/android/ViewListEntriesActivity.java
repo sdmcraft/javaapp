@@ -24,7 +24,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 public class ViewListEntriesActivity extends ListActivity {
 
@@ -82,9 +87,39 @@ public class ViewListEntriesActivity extends ListActivity {
 
 		// Now create a simple cursor adapter and set it to display
 		SimpleCursorAdapter entries = new SimpleCursorAdapter(this,
-				R.layout.entry_row, listsCursor, from, to);
+				R.layout.entry_row, listsCursor, from, to){
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				View view = super.getView(position, convertView, parent);
+				long id = getItemId(position);
+
+				Button deleteButton = (Button) view.findViewById(R.id.deleteEntry);
+				deleteButton.setTag(id);
+				
+
+				Button editEntryButton = (Button) view
+						.findViewById(R.id.editEntry);
+				editEntryButton.setTag(id);
+
+				LinearLayout entryRow = (LinearLayout) view
+						.findViewById(R.id.entryRow);
+				entryRow.setTag(id);
+				return view;
+			}
+		};
 		setListAdapter(entries);
 
+	}
+	
+	public void deleteEntryButtonClickHandler(View view) {
+		Button deleteButton = (Button) view;
+		long listEntryId = Long.parseLong(deleteButton.getTag().toString());
+		ListEntry.delete(Globals.getInstance().getDb(), listEntryId);
+		fillData();
+	}
+
+	public void editEntryButtonClickHandler(View view) {		
+		Toast.makeText(getApplicationContext(), "Not yet supported!!", 3).show(); 
 	}
 
 	@Override
