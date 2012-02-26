@@ -26,7 +26,7 @@
       <fontname>Dialog</fontname>
       <fontsize>12</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>Factories Class Diagram</activediagram>
+      <activediagram>Graph Class Diagram</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -42,6 +42,10 @@
               name="design_FactoriesClassDiagram.pgml"
               diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
               diagramname="Factories Class Diagram" />
+      <member type="pgml"
+              name="design_ExceptionsDiagram.pgml"
+              diagramclass="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram"
+              diagramname="Exceptions Diagram" />
       <member type="todo"
               name="design.todo" />
     </members>
@@ -58,7 +62,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Feb 05 13:56:26 IST 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Feb 26 19:30:09 IST 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -383,21 +387,6 @@
                 </UML:Parameter>
               </UML:BehavioralFeature.parameter>
             </UML:Operation>
-            <UML:Attribute xmi.id = '127-0-0-1-2e40e309:135477cde4f:-8000:0000000000000AB5'
-              name = 'newAttr' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
-              changeability = 'changeable' targetScope = 'instance'>
-              <UML:StructuralFeature.multiplicity>
-                <UML:Multiplicity xmi.id = '127-0-0-1-2e40e309:135477cde4f:-8000:0000000000000AB6'>
-                  <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '127-0-0-1-2e40e309:135477cde4f:-8000:0000000000000AB7'
-                      lower = '1' upper = '1'/>
-                  </UML:Multiplicity.range>
-                </UML:Multiplicity>
-              </UML:StructuralFeature.multiplicity>
-              <UML:StructuralFeature.type>
-                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087C'/>
-              </UML:StructuralFeature.type>
-            </UML:Attribute>
           </UML:Classifier.feature>
         </UML:Class>
         <UML:Interface xmi.id = '127-0-0-1-61ef6842:13492e1014a:-8000:0000000000000885'
@@ -602,6 +591,9 @@
             </UML:Operation>
           </UML:Classifier.feature>
         </UML:Class>
+        <UML:Signal xmi.id = '127-0-0-1-2bcdd939:135b9f21443:-8000:0000000000000ABD'
+          name = 'InvalidDataException' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false'/>
       </UML:Namespace.ownedElement>
     </UML:Model>
     <UML:Parameter xmi.id = '127-0-0-1-61ef6842:13492e1014a:-8000:0000000000000886'
@@ -614,6 +606,10 @@
       name = 'T' isSpecification = 'false'/>
     <UML:Parameter xmi.id = '127-0-0-1-61ef6842:13492e1014a:-8000:000000000000088E'
       name = 'T' isSpecification = 'false'/>
+    <UML:A_context_raisedSignal>
+      <UML:Operation xmi.idref = '127-0-0-1-7ad56baf:134939357ba:-8000:0000000000000CF6'/>
+      <UML:Signal xmi.idref = '127-0-0-1-2bcdd939:135b9f21443:-8000:0000000000000ABD'/>
+    </UML:A_context_raisedSignal>
   </XMI.content>
 </XMI>
 <pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|127-0-0-1-61ef6842:13492e1014a:-8000:0000000000000865"
@@ -1622,7 +1618,7 @@
       strokecolor="black"
     />
     <group name="Fig9.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[353, 201, 526, 53]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[353, 201, 526, 44]"
          href="127-0-0-1-61ef6842:13492e1014a:-8000:00000000000008B9"
          fill="0"
          fillcolor="white"
@@ -1636,7 +1632,7 @@
         x="353"
         y="201"
         width="526"
-        height="53"
+        height="44"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -1662,22 +1658,6 @@
         x="353"
         y="216"
         width="526"
-        height="15"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Dialog"
-        italic="false"
-        bold="false"
-        textsize="12"
-        justification="Left"
-      >edges : Set&lt;Edge&lt;T&gt;&gt;</text>
-      <text name="Fig9.4.3"
-        x="353"
-        y="231"
-        width="526"
         height="21"
         fill="0"
         fillcolor="white"
@@ -1689,11 +1669,11 @@
         bold="false"
         textsize="12"
         justification="Left"
-      >newAttr : Integer</text>
+      >edges : Set&lt;Edge&lt;T&gt;&gt;</text>
     </group>
     <rectangle name="Fig9.5"
       x="352"
-      y="253"
+      y="245"
       width="528"
       height="1"
       fill="1"
@@ -1702,7 +1682,7 @@
       strokecolor="black"
     />
     <group name="Fig9.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[353, 254, 526, 23]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[353, 246, 526, 29]"
          href="127-0-0-1-61ef6842:13492e1014a:-8000:00000000000008B9"
          fill="0"
          fillcolor="white"
@@ -1714,9 +1694,9 @@
       
       <rectangle name="Fig9.6.0"
         x="353"
-        y="254"
+        y="246"
         width="526"
-        height="23"
+        height="29"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -1724,7 +1704,7 @@
       />
       <text name="Fig9.6.1"
         x="353"
-        y="254"
+        y="246"
         width="526"
         height="21"
         fill="0"
@@ -2881,6 +2861,10 @@
       >getEdge(endPoints : Node&lt;T&gt;[2],weight : Integer) : Edge&lt;T&gt;</text>
     </group>
   </group>
+</pgml>
+<pgml description="org.argouml.uml.diagram.static_structure.ui.UMLClassDiagram|127-0-0-1-61ef6842:13492e1014a:-8000:0000000000000865"
+      name="Exceptions Diagram"
+>
 </pgml>
 <todo>
 <todolist>

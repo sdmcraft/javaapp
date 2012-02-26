@@ -15,4 +15,9 @@ public class NodeImpl<T> implements Node<T> {
 		return value;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		return value.equals(o);
+	}
+
 }
