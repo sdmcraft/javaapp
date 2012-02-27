@@ -2,12 +2,12 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-	<!-- <resource-ref>
-		<description>DB Connection</description>
+	<!--
+		<resource-ref> <description>DB Connection</description>
 		<res-ref-name>jdbc/breeze</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>-->
+		<res-auth>Container</res-auth> </resource-ref>
+	-->
 
 	<context-param>
 		<param-name>ctxParam</param-name>
@@ -221,20 +221,20 @@
 
 	<filter-mapping>
 		<filter-name>Filter1</filter-name>
-		<url-pattern>/admin/*</url-pattern>		
+		<url-pattern>/admin/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
 
 	<filter-mapping>
 		<filter-name>Filter1</filter-name>
-		<url-pattern>/admin/*</url-pattern>		
+		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
 		<filter-name>Filter2</filter-name>
-		<url-pattern>/*</url-pattern>		
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<filter-mapping>
 		<filter-name>DemoFilter</filter-name>
 		<servlet-name>FilteredServlet</servlet-name>
@@ -246,5 +246,14 @@
 	<servlet-mapping>
 		<servlet-name>FilteredServlet</servlet-name>
 		<url-pattern>/FilteredServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UploadStatusServlet</servlet-name>
+		<servlet-class>servlets.UploadStatusServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UploadStatusServlet</servlet-name>
+		<url-pattern>/UploadStatusServlet</url-pattern>
 	</servlet-mapping>
 </web-app>

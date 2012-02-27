@@ -17,6 +17,8 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import pojo.UploadProgressListener;
+
 public class FileUploadDemoServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -33,11 +35,17 @@ public class FileUploadDemoServlet extends HttpServlet {
 				out.write("<BR>We have a multipart request");
 				FileItemFactory factory = new DiskFileItemFactory();
 				ServletFileUpload upload = new ServletFileUpload(factory);
+				UploadProgressListener listener = new UploadProgressListener();
+				upload.setProgressListener(listener);
+				req.getSession().setAttribute("upload-listener", listener);
 				List<FileItem> items = upload.parseRequest(req);
 				out.write("<BR>Uploaded items count:" + items.size());
+				File contentDir = new File(getServletContext().getRealPath(
+						"/web/content/"));
+				contentDir.mkdirs();
 				for (FileItem item : items) {
 					File uploadFile = new File(getServletContext().getRealPath(
-							"/web/content/" + item.getName()));
+							"/web/content/" + item.getName()));					
 					if (uploadFile.exists())
 						uploadFile.delete();
 					uploadFile.createNewFile();
