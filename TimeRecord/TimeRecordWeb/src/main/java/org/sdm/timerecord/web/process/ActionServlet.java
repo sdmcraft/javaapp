@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.sdm.timerecord.business.action.Action;
-import org.sdm.timerecord.business.action.CreateUserRemote;
 
 public class ActionServlet extends HttpServlet {
 
@@ -46,7 +45,9 @@ public class ActionServlet extends HttpServlet {
 		try {
 			Action action = (Action) initialContext.lookup(actionMap
 					.get(request.getParameter("action")));
-			action.equals(request.getParameterMap());
+			if (action != null) {
+				action.execute(request.getParameterMap());
+			}
 		} catch (Exception ex) {
 			throw new ServletException(ex);
 		}

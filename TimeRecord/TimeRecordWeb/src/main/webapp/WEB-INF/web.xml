@@ -7,12 +7,12 @@
 		<param-value>jnp://127.0.0.1:1099</param-value>
 	</context-param>
 	<servlet>
-		<servlet-name>UserProfileUpdate</servlet-name>
-		<servlet-class>org.sdm.timerecord.web.process.UserProfileUpdate</servlet-class>
+		<servlet-name>ActionServlet</servlet-name>
+		<servlet-class>org.sdm.timerecord.web.process.ActionServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>UserProfileUpdate</servlet-name>
-		<url-pattern>/user-profile-update</url-pattern>
+		<servlet-name>ActionServlet</servlet-name>
+		<url-pattern>/service</url-pattern>
 	</servlet-mapping>
 </web-app>

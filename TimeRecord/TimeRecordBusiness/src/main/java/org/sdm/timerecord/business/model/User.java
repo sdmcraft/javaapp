@@ -26,7 +26,7 @@ public class User implements Serializable {
 	@Column(name = "IMAGE", nullable = true)
 	private Blob image;
 
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "NAME1", nullable = false)
 	private String name;
 
 	public User(String name, Blob image) {
