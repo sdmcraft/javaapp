@@ -47,10 +47,10 @@ public class Main {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		String[] values = { "a", "b", "c", "d" };
+		String[] values = { "a", "b", "c", "d" , "e", "f", "g", "h"};
 		Set<String> valueSet = new HashSet<String>(Arrays.asList(values));
 
-		Graph<String> graph = GraphFactory.getGraph(valueSet, 4);
+		Graph<String> graph = GraphFactory.getGraph(valueSet, 8);
 		System.out.println(graph.getDiagram());
 	}
 }

@@ -14,6 +14,10 @@ public class BasicGraph<T> implements Graph<T> {
 	private final Set<Node<T>> nodes = new HashSet<Node<T>>();
 	private final Set<Edge<T>> edges = new HashSet<Edge<T>>();
 
+	/*
+	 * Defensively copy the constructor arguments so that external modification
+	 * does not break encapsulation
+	 */
 	public BasicGraph(Set<Node<T>> nodes, Set<Edge<T>> edges)
 			throws InvalidDataException {
 		super();
@@ -50,12 +54,11 @@ public class BasicGraph<T> implements Graph<T> {
 	public String getDiagram() {
 		StringBuilder diagram = new StringBuilder();
 		diagram.append("digraph G {\n");
+		for (Node<T> node : nodes) {
+			diagram.append(node.getDiagramFragment()).append("\n");
+		}
 		for (Edge<T> edge : edges) {
-			diagram.append("\"").append(
-					edge.getEndpoints()[0].getValue().toString()).append(
-					"\"->\"").append(
-					edge.getEndpoints()[1].getValue().toString())
-					.append("\"\n");
+			diagram.append(edge.getDiagramFragment()).append("\n");
 		}
 		diagram.append("}");
 		return diagram.toString();

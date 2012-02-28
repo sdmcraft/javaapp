@@ -20,4 +20,19 @@ public class NodeImpl<T> implements Node<T> {
 		return value.equals(o);
 	}
 
+	@Override
+	public int hashCode() {
+		return value.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return value.toString();
+	}
+
+	@Override
+	public String getDiagramFragment() {
+		return "\"" + value.toString() + "\"";
+	}
+
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
+import dataStructuresV2.exception.InvalidDataException;
 import dataStructuresV2.impl.BasicGraph;
 
 public class GraphFactory {
@@ -23,14 +24,22 @@ public class GraphFactory {
 			nodeSet.add(node);
 		}
 		for (int i = 0; i < edges; i++) {
-			int randomIndex = (int) Math.round((nodes.size()-1) * Math.random());
+			int randomIndex = (int) Math.round((nodes.size() - 1)
+					* Math.random());
 			Node<T> endPoint1 = nodes.get(randomIndex);
-			randomIndex = (int) Math.round((nodes.size()-1) * Math.random());
+			randomIndex = (int) Math.round((nodes.size() - 1) * Math.random());
 			Node<T> endPoint2 = nodes.get(randomIndex);
 			Node<T>[] endpoints = new Node[] { endPoint1, endPoint2 };
 			Edge<T> edge = EdgeFactory.getEdge(endpoints, Math.random());
 			edgeSet.add(edge);
 		}
-		return new BasicGraph<T>(nodeSet, edgeSet);
+		try {
+			return new BasicGraph<T>(nodeSet, edgeSet);
+		} catch (InvalidDataException e) {
+			// This should ideally never happen as we are passing valid data to
+			// BasicGraph
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

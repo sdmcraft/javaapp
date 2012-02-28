@@ -23,4 +23,10 @@ public class EdgeImpl<T> implements Edge<T> {
 		return weight;
 	}
 
+	@Override
+	public String getDiagramFragment() {
+		return endPoints[0].getDiagramFragment() + "->"
+				+ endPoints[1].getDiagramFragment() + "[dir=\"none\"]";
+	}
+
 }
