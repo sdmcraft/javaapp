@@ -32,7 +32,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lists_list);
-		registerForContextMenu(getListView());
+		//registerForContextMenu(getListView());
 		mDbHelper = new TimeRecordDbAdapter(this);
 		mDbHelper.open();
 		Globals.getInstance().setDb(mDbHelper.getDB());
@@ -43,7 +43,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		LinearLayout listRow = (LinearLayout) v;
 		Intent i = new Intent(this, ListEditActivity.class);
 
-		Long listRowId = Long.parseLong(listRow.getTag().toString());
+		Long listRowId = Long.parseLong(listRow.getTag().toString());		
 		i.putExtra(List.COL_ID, listRowId);
 		i.putExtra(
 				List.COL_NAME,
