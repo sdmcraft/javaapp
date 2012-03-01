@@ -7,6 +7,9 @@ import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
 
+import org.fuin.srcgen4javassist.SgClass;
+import org.fuin.srcgen4javassist.SgClassPool;
+
 public class JavassistDemo {
 
 	public static void main(String[] args) throws Exception {
@@ -32,5 +35,9 @@ public class JavassistDemo {
 			System.out.println(System.getProperty("user.dir"));
 			demoClass.writeFile(System.getProperty("user.dir") + File.separator + "bin");
 		}
+		
+		SgClassPool sgPool = new SgClassPool();
+		SgClass sgClass = new SgClass("annotations", "Demo");
+		System.out.println(sgClass);
 	}
 }

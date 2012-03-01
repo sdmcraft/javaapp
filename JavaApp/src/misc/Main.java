@@ -33,10 +33,27 @@ public class Main
         // System.out.println(icalText);
         System.out.println(1f / 2 * 4);
 
-        System.out.println("SELECT * FROM ( " + "SELECT DISTINCT SA.Version , " + "AI.INTERACTION_ID, T.ASSET_ID, " + "AI.NAME, AI.INTERACTION_TYPE, AI.DISPLAY_SEQ, AI.DESCRIPTION " + "FROM " +
-            "(SELECT MAX(VERSION) as Version, SCO_ID, ASSET_ID " + "FROM PPS_SCO_ASSETS " + "GROUP BY SCO_ID, ASSET_ID) AS SA " + "JOIN PPS_TRANSCRIPTS T " +
-            "ON T.SCO_ID = SA.SCO_ID AND T.ASSET_ID = SA.ASSET_ID " + "JOIN PPS_TRANSCRIPT_DETAILS A " + "ON T.TRANSCRIPT_ID = A.TRANSCRIPT_ID " + "JOIN PPS_ASSET_INTERACTIONS as ai " +
-            "ON AI.INTERACTION_ID = A.INTERACTION_ID  " + "WHERE AI.INTERACTION_TYPE NOT IN(?,?,?) " + " AND T.SCO_ID = ?  " + ") A1 WHERE 1=1");
+        System.out.println("SELECT TOP " + 5000 + " " +
+                "actions.action_id, " +
+                "actions.action_type_id, " +
+                "actions.target_acl_id, " +
+                "prefs.lang, " +
+                "actions.body, " +
+                "af.field_id, " +
+                "af.value, " +
+                "actions.status, " +
+                "actions.schedule, " +
+                "actions.date_scheduled " +
+                "FROM " +
+                "pps_actions actions LEFT OUTER JOIN pps_acl_preferences prefs ON actions.target_acl_id=prefs.acl_id, " +
+                "pps_acl_fields af " +
+                "WHERE " +
+                "actions.status in ('S', 'P', 'I', 'N', 'R') " +
+                "AND actions.date_scheduled < CURRENT_TIMESTAMP " +
+                "AND actions.action_id = af.acl_id " +
+                "AND actions.zone_id = ? " +
+                "ORDER BY " +
+                "actions.date_scheduled desc, actions.target_acl_id, actions.action_type_id");
     }
 
     private static String readFileAsString(String filePath) throws java.io.IOException
