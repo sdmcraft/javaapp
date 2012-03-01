@@ -41,11 +41,13 @@ public class FileUploadDemoServlet extends HttpServlet {
 				List<FileItem> items = upload.parseRequest(req);
 				out.write("<BR>Uploaded items count:" + items.size());
 				File contentDir = new File(getServletContext().getRealPath(
-						"/web/content/"));
+						File.separator + "web" + File.separator + "content"
+								+ File.separator));
 				contentDir.mkdirs();
 				for (FileItem item : items) {
 					File uploadFile = new File(getServletContext().getRealPath(
-							"/web/content/" + item.getName()));					
+							File.separator + "web" + File.separator + "content"
+									+ File.separator + item.getName()));
 					if (uploadFile.exists())
 						uploadFile.delete();
 					uploadFile.createNewFile();

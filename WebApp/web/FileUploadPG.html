@@ -12,7 +12,7 @@
                         document.getElementById("uploadStatus").innerHTML = xmlhttp.getResponseHeader("upload-status");
                     }
                 }
-                xmlhttp.open("GET", "UploadStatusServlet", true);
+                xmlhttp.open("GET", "/WebApp/UploadStatusServlet", true);
                 xmlhttp.send();
             }
 
@@ -24,7 +24,7 @@
     </head>
     
     <body>
-        <form id="uploadForm" action="/WebApp/FileUploadDemoServlet" method="post"
+        <form id="uploadForm" name="uploadForm" action="/WebApp/FileUploadDemoServlet" method="post"
         enctype="multipart/form-data">
             <input type="file" name="datafile" />
             <input type="button" value="Upload" onclick="uploadButtonClick()" />
