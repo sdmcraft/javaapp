@@ -15,7 +15,7 @@ import org.sdm.timerecord.business.model.User;
 @Stateless
 public class CreateUser implements CreateUserRemote {
 
-	@PersistenceContext(name = "TimeRecord")
+	@PersistenceContext(unitName = "TimeRecord")
 	EntityManager em;
 
 	public void method() {
