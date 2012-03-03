@@ -7,14 +7,16 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 public class TimeRecordAndroidActivity extends ListActivity {
 
@@ -32,11 +34,11 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lists_list);
-		//registerForContextMenu(getListView());
+		registerForContextMenu(getListView());
 		mDbHelper = new TimeRecordDbAdapter(this);
 		mDbHelper.open();
 		Globals.getInstance().setDb(mDbHelper.getDB());
-		fillData();
+		fillData();		
 	}
 
 	public void listClickHandler(View v) {
@@ -60,6 +62,13 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		return true;
 	}
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	                                ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    menu.add("Hello Menu World!!");
+	}
+	
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
