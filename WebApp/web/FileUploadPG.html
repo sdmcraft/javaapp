@@ -8,8 +8,9 @@
             function checkProgress() {
                 xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    if (xmlhttp.readyState == 4) {
                         document.getElementById("uploadStatus").innerHTML = xmlhttp.getResponseHeader("upload-status");
+                        setTimeout("checkProgress()",1000);
                     }
                 }
                 xmlhttp.open("GET", "/WebApp/UploadStatusServlet", true);

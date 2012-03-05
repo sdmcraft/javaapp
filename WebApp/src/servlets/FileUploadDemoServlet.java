@@ -59,6 +59,7 @@ public class FileUploadDemoServlet extends HttpServlet {
 							8192);
 					byte[] buffer = new byte[8192];
 					while (fileIn.read(buffer) != -1) {
+						Thread.sleep(1000);
 						fileOut.write(buffer);
 					}
 					out.write("<BR>Uploaded:" + item.getName());
