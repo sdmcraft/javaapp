@@ -51,6 +51,23 @@ public class BasicGraph<T> implements Graph<T> {
 	}
 
 	@Override
+	public Set<Edge<T>> getEdges(Node<T> node) throws InvalidDataException {
+		if (nodes.contains(node)) {
+			Set<Edge<T>> nodeEdges = new HashSet<Edge<T>>();
+			for (Edge<T> edge : edges) {
+				if (edge.getEndpoints()[0].equals(node)
+						|| edge.getEndpoints()[1].equals(node)) {
+					nodeEdges.add(edge);
+				}
+			}
+			return Collections.unmodifiableSet(nodeEdges);
+		} else {
+			throw new InvalidDataException(
+					"Specified node does not belong to this graph:" + node);
+		}
+	}
+
+	@Override
 	public String getDiagram() {
 		StringBuilder diagram = new StringBuilder();
 		diagram.append("digraph G {\n");
