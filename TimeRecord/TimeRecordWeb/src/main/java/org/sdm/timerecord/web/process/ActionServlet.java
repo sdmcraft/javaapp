@@ -20,7 +20,7 @@ public class ActionServlet extends HttpServlet {
 	private static final Map<String, String> actionMap = new HashMap<String, String>();
 	static {
 		actionMap.put("user-profile-update",
-				"TimeRecordEnterprise-1.0/CreateUser/remote");
+				"TimeRecordEnterprise-1.0/UpdateUser/remote");
 	}
 
 	@Override
