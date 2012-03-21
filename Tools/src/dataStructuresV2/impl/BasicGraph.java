@@ -68,6 +68,20 @@ public class BasicGraph<T> implements Graph<T> {
 	}
 
 	@Override
+	public Set<Node<T>> getNeighbours(Node<T> node) throws InvalidDataException {
+		Set<Edge<T>> nodeEdges = getEdges(node);
+		Set<Node<T>> neighbours = new HashSet<Node<T>>();
+		for (Edge<T> edge : nodeEdges) {
+			if (!edge.getEndpoints()[0].equals(node)) {
+				neighbours.add(edge.getEndpoints()[0]);
+			} else if (!edge.getEndpoints()[1].equals(node)) {
+				neighbours.add(edge.getEndpoints()[1]);
+			}
+		}
+		return neighbours;
+	}
+
+	@Override
 	public String getDiagram() {
 		StringBuilder diagram = new StringBuilder();
 		diagram.append("digraph G {\n");

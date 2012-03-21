@@ -12,5 +12,7 @@ public interface Graph<T> {
 
 	public Set<Edge<T>> getEdges(Node<T> node) throws InvalidDataException;
 
+	public Set<Node<T>> getNeighbours(Node<T> node) throws InvalidDataException;
+
 	public String getDiagram();
 }
