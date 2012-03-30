@@ -10,7 +10,7 @@
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4) {
                         document.getElementById("uploadStatus").innerHTML = xmlhttp.getResponseHeader("upload-status");
-                        setTimeout("checkProgress()",1000);
+                        setTimeout("checkProgress()", 1000);
                     }
                 }
                 xmlhttp.open("GET", "/WebApp/UploadStatusServlet", true);
@@ -25,13 +25,30 @@
     </head>
     
     <body>
-        <form id="uploadForm" name="uploadForm" action="/WebApp/FileUploadDemoServlet" method="post"
-        enctype="multipart/form-data">
+        <form id="uploadForm" name="uploadForm" action="/WebApp/FileUploadDemoServlet"
+        method="post" enctype="multipart/form-data">
             <input type="file" name="datafile" />
             <input type="button" value="Upload" onclick="uploadButtonClick()" />
             <input type="submit" />
         </form>
         <div id="uploadStatus"></div>
+        <table border="0" width="100%">
+            <tr>
+                <td>
+                    <font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                        <b>Uploading:</b>
+                    </font>
+                </td>
+            </tr>
+            <tr bgcolor="#999999">
+                <td>
+                    <table border="0" width="50%" cellspacing="1" bgcolor="#0033FF">
+                        <tr>
+                            <td>
+                                <font size="1">&nbsp;</font>
+                            </td>
+                        </tr>
+                    </table>
     </body>
 
 </html>
