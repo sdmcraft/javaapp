@@ -94,4 +94,29 @@ public class BasicGraph<T> implements Graph<T> {
 		diagram.append("}");
 		return diagram.toString();
 	}
+
+	@Override
+	public void addNode(Node<T> node) throws InvalidDataException {
+		if (!nodes.add(node)) {
+			throw new InvalidDataException("This graph already has this node!!");
+		}
+	}
+
+	@Override
+	public void addEdge(Edge<T> edge) throws InvalidDataException {
+		if (!canAdd(edge)) {
+			throw new InvalidDataException(
+					"An endpoint of this edge is not present in the graph!!");
+		}
+
+		if (!edges.add(edge)) {
+			throw new InvalidDataException("This graph already has this edge!!");
+		}
+
+	}
+
+	protected boolean canAdd(Edge<T> edge) {
+		return nodes.contains(edge.getEndpoints()[0])
+				&& nodes.contains(edge.getEndpoints()[1]);
+	}
 }

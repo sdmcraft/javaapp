@@ -62,9 +62,12 @@ public class GraphFactory {
 				int randomIndex = (int) Math.round((nodes.size() - 1)
 						* Math.random());
 				Node<T> endPoint1 = nodes.get(randomIndex);
-				randomIndex = (int) Math.round((nodes.size() - 1)
-						* Math.random());
-				Node<T> endPoint2 = nodes.get(randomIndex);
+				Node<T> endPoint2 = null;
+				do {
+					randomIndex = (int) Math.round((nodes.size() - 1)
+							* Math.random());
+					endPoint2 = nodes.get(randomIndex);
+				} while (endPoint1 != null);
 				Node<T>[] endpoints = new Node[] { endPoint1, endPoint2 };
 				Edge<T> edge = EdgeFactory.getEdge(endpoints, Math.random());
 				edgeSet.add(edge);
@@ -80,5 +83,4 @@ public class GraphFactory {
 		}
 		return null;
 	}
-
 }
