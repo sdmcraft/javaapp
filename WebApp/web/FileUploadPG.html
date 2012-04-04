@@ -10,6 +10,7 @@
                 xmlhttp.onreadystatechange = function () {
                     if (xmlhttp.readyState == 4) {
                         document.getElementById("uploadStatus").innerHTML = xmlhttp.getResponseHeader("upload-status");
+                        document.getElementById("inner-tbl").width = xmlhttp.getResponseHeader("upload-status");
                         setTimeout("checkProgress()", 1000);
                     }
                 }
@@ -42,7 +43,7 @@
             </tr>
             <tr bgcolor="#999999">
                 <td>
-                    <table border="0" width="50%" cellspacing="1" bgcolor="#0033FF">
+                    <table id="inner-tbl" border="0" width="50%" cellspacing="1" bgcolor="#0033FF">
                         <tr>
                             <td>
                                 <font size="1">&nbsp;</font>
