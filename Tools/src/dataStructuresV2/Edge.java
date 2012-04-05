@@ -4,5 +4,5 @@ public interface Edge<T> {
 
 	public Node<T>[] getEndpoints();
 	public String getDiagramFragment();
-	public Number getWeight();
+	public Number getWeight();		
 }

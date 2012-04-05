@@ -21,21 +21,16 @@ public class BasicGraph<T> implements Graph<T> {
 	public BasicGraph(Set<Node<T>> nodes, Set<Edge<T>> edges)
 			throws InvalidDataException {
 		super();
-		for (Node<T> node : nodes) {
-			this.nodes.add(node);
-		}
-		for (Edge<T> edge : edges) {
-			Node<T>[] endpoints = edge.getEndpoints();
-			for (Node<T> endpoint : endpoints) {
-				if (!this.nodes.contains(endpoint)) {
-					this.nodes.clear();
-					this.edges.clear();
-					throw new InvalidDataException(
-							"Edge endpoint does not belong to graph nodes: "
-									+ endpoint);
-				}
+		try {
+			for (Node<T> node : nodes) {
+				addNode(node);
 			}
-			this.edges.add(edge);
+			for (Edge<T> edge : edges) {
+				addEdge(edge);
+			}
+		} catch (InvalidDataException ex) {
+			nodes.clear();
+			edges.clear();
 		}
 	}
 
@@ -96,14 +91,14 @@ public class BasicGraph<T> implements Graph<T> {
 	}
 
 	@Override
-	public void addNode(Node<T> node) throws InvalidDataException {
+	final public void addNode(Node<T> node) throws InvalidDataException {
 		if (!nodes.add(node)) {
 			throw new InvalidDataException("This graph already has this node!!");
 		}
 	}
 
 	@Override
-	public void addEdge(Edge<T> edge) throws InvalidDataException {
+	final public void addEdge(Edge<T> edge) throws InvalidDataException {
 		if (!canAdd(edge)) {
 			throw new InvalidDataException(
 					"An endpoint of this edge is not present in the graph!!");

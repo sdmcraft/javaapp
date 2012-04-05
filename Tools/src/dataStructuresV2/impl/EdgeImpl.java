@@ -29,4 +29,21 @@ public class EdgeImpl<T> implements Edge<T> {
 				+ endPoints[1].getDiagramFragment() + "[dir=\"none\"]";
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		boolean equal;
+		equal = o instanceof Edge;
+		if (equal) {
+			Edge<?> edge = (Edge<?>) o;
+			equal = this.endPoints[0].equals(edge.getEndpoints()[0]);
+			if (equal) {
+				equal = this.endPoints[1].equals(edge.getEndpoints()[1]);
+			}
+			if (equal) {
+				equal = this.weight.equals(edge.getWeight());
+			}
+		}
+		return equal;
+	}
+
 }
