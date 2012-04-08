@@ -13,6 +13,17 @@
 			<artifactId>org.osgi.core</artifactId>
 			<version>1.4.0</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0-alpha-1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -23,7 +34,8 @@
 				<configuration>
 					<instructions>
 						<Bundle-Activator>org.sdm.osgi.demo.Activator</Bundle-Activator>
-						<Import-Package>org.osgi.framework</Import-Package>
+						<Import-Package>org.osgi.framework,javax.servlet.*,org.osgi.service.http</Import-Package>
+						<Export-Package>org.sdm.osgi.demo</Export-Package>
 					</instructions>
 				</configuration>
 			</plugin>
