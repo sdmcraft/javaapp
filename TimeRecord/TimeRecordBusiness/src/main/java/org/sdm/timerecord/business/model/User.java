@@ -2,6 +2,7 @@ package org.sdm.timerecord.business.model;
 
 import java.io.Serializable;
 import java.sql.Blob;
+import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -22,17 +23,16 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
 	private Integer id;
-	
+
 	@Column(name = "IMAGE", nullable = true)
 	private Blob image;
 
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	public User(String name, Blob image) {
+	public User(String name) {
 		super();
 		this.name = name;
-		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getId() {
@@ -46,8 +46,9 @@ public class User implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@Lob @Basic(fetch = FetchType.EAGER) 
+
+	@Lob
+	@Basic(fetch = FetchType.EAGER)
 	public Blob getImage() {
 		return image;
 	}
@@ -56,6 +57,12 @@ public class User implements Serializable {
 		this.image = image;
 	}
 
-
+	public void reset(Map<String, String[]> params) {
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
+			if ("name".equals(entry.getKey())) {
+				setName(entry.getValue()[0]);
+			}
+		}
+	}
 
 }

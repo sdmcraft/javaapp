@@ -7,7 +7,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.sql.rowset.serial.SerialBlob;
 
 import org.sdm.timerecord.business.action.UpdateUserRemote;
 import org.sdm.timerecord.business.model.User;
@@ -27,9 +26,10 @@ public class UpdateUser implements UpdateUserRemote {
 	public void execute(Map<String, String[]> params) throws Exception {
 		User user = null;
 		if (params.containsKey("id")) {
-			user = em.find(User.class, params.get("id")[0]);			
+			user = em.find(User.class, params.get("id")[0]);
+			user.reset(params);
 		} else {
-			user = new User(params.get("name")[0], new SerialBlob(new byte[0]));
+			user = new User(params.get("name")[0]);
 		}
 		em.persist(user);
 	}
