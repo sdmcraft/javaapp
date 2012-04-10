@@ -11,8 +11,8 @@ import dataStructuresV2.exception.InvalidDataException;
 
 public class BasicGraph<T> implements Graph<T> {
 
-	private final Set<Node<T>> nodes = new HashSet<Node<T>>();
-	private final Set<Edge<T>> edges = new HashSet<Edge<T>>();
+	protected final Set<Node<T>> nodes = new HashSet<Node<T>>();
+	protected final Set<Edge<T>> edges = new HashSet<Edge<T>>();
 
 	/*
 	 * Defensively copy the constructor arguments so that external modification
@@ -60,6 +60,25 @@ public class BasicGraph<T> implements Graph<T> {
 			throw new InvalidDataException(
 					"Specified node does not belong to this graph:" + node);
 		}
+	}
+
+	@Override
+	public Set<Edge<T>> getEdges(Node<T> node1, Node<T> node2)
+			throws InvalidDataException {
+		if (!nodes.contains(node1))
+			throw new InvalidDataException(
+					"Specified node does not belong to this graph:" + node1);
+		if (!nodes.contains(node2))
+			throw new InvalidDataException(
+					"Specified node does not belong to this graph:" + node2);
+		Set<Edge<T>> node1Edges = getEdges(node1);
+		Set<Edge<T>> edges = new HashSet<Edge<T>>();
+		for (Edge<T> edge : node1Edges) {
+			if (edge.getEndpoints()[0].equals(node2)
+					|| edge.getEndpoints()[1].equals(node2))
+				edges.add(edge);
+		}
+		return Collections.unmodifiableSet(edges);
 	}
 
 	@Override
@@ -114,4 +133,5 @@ public class BasicGraph<T> implements Graph<T> {
 		return nodes.contains(edge.getEndpoints()[0])
 				&& nodes.contains(edge.getEndpoints()[1]);
 	}
+
 }

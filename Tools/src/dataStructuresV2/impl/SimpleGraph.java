@@ -19,6 +19,7 @@ public class SimpleGraph<T> extends BasicGraph<T> {
 		if (canAddEdge) {
 			canAddEdge = !edge.getEndpoints()[0].equals(edge.getEndpoints()[1]);
 			if (canAddEdge) {
+				canAddEdge = !edges.contains(edge);
 			}
 		}
 		return canAddEdge;

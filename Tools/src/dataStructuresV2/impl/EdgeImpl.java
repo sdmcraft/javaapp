@@ -15,7 +15,11 @@ public class EdgeImpl<T> implements Edge<T> {
 
 	@Override
 	public Node<T>[] getEndpoints() {
-		return endPoints;
+		/*
+		 * Return a copy so that external modifications do not change the edge
+		 * end points
+		 */
+		return new Node[] { endPoints[0], endPoints[1] };
 	}
 
 	@Override
