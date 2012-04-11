@@ -30,6 +30,10 @@ public class User implements Serializable {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
+	public User() {
+		super();		
+	}
+	
 	public User(String name) {
 		super();
 		this.name = name;

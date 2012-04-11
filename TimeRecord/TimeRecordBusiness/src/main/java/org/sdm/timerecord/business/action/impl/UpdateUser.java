@@ -26,8 +26,12 @@ public class UpdateUser implements UpdateUserRemote {
 	public void execute(Map<String, String[]> params) throws Exception {
 		User user = null;
 		if (params.containsKey("id")) {
-			user = em.find(User.class, params.get("id")[0]);
-			user.reset(params);
+			user = em.find(User.class, Integer.parseInt(params.get("id")[0]));
+			if (user != null)
+				user.reset(params);
+			else
+				throw new Exception("Unable to find user with id:"
+						+ params.get("id")[0]);
 		} else {
 			user = new User(params.get("name")[0]);
 		}
