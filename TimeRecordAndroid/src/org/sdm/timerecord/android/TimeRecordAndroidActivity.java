@@ -10,13 +10,17 @@ import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class TimeRecordAndroidActivity extends ListActivity {
 
@@ -33,19 +37,19 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.lists_list);
-		registerForContextMenu(getListView());
+		// setContentView(R.layout.lists_list);
+		// registerForContextMenu(getListView());
 		mDbHelper = new TimeRecordDbAdapter(this);
 		mDbHelper.open();
 		Globals.getInstance().setDb(mDbHelper.getDB());
-		fillData();		
+		fillData();
 	}
 
 	public void listClickHandler(View v) {
 		LinearLayout listRow = (LinearLayout) v;
 		Intent i = new Intent(this, ListEditActivity.class);
 
-		Long listRowId = Long.parseLong(listRow.getTag().toString());		
+		Long listRowId = Long.parseLong(listRow.getTag().toString());
 		i.putExtra(List.COL_ID, listRowId);
 		i.putExtra(
 				List.COL_NAME,
@@ -64,11 +68,11 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
-	                                ContextMenuInfo menuInfo) {
-	    super.onCreateContextMenu(menu, v, menuInfo);
-	    menu.add("Hello Menu World!!");
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add("Hello Menu World!!");
 	}
-	
+
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
@@ -145,13 +149,30 @@ public class TimeRecordAndroidActivity extends ListActivity {
 						.findViewById(R.id.viewEntries);
 				viewEntriesButton.setTag(id);
 
+				TextView listName = (TextView) view.findViewById(R.id.name);
+				registerForContextMenu(listName);
+				/*
+				 * listName.setOnLongClickListener(new
+				 * View.OnLongClickListener() {
+				 * 
+				 * @Override public boolean onLongClick(View v) {
+				 * Toast.makeText(getApplicationContext(), "Hello!", 3) .show();
+				 * return false; } });
+				 */
 				LinearLayout listRow = (LinearLayout) view
 						.findViewById(R.id.listRow);
 				listRow.setTag(id);
 				return view;
 			}
 		};
+
+		ListAdapter listAdapter = new ArrayAdapter<String>(this,
+				R.layout.list_item);
+		((ArrayAdapter<String>) listAdapter).add("Text1");
+		((ArrayAdapter<String>) listAdapter).add("Text2");
+
 		setListAdapter(lists);
+
 	}
 
 	public void entryButtonClickHandler(View view) {
