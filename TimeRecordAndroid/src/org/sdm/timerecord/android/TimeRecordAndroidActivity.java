@@ -13,18 +13,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TimeRecordAndroidActivity extends ListActivity {
 
 	private static final int ADD_NEW_LIST_ID = Menu.FIRST;
+
+	private static final int EDIT_LIST = 0;
+	private static final int VIEW_LIST_ENTRIES = 1;
+	private static final int DELETE_LIST = 2;
 
 	private static final int ACTIVITY_ADD_OR_EDIT_LIST = 0;
 	private static final int ACTIVITY_LIST_ENTRY = 1;
@@ -70,7 +73,9 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.add("Hello Menu World!!");
+		menu.add(0, EDIT_LIST, 0, "Edit");
+		menu.add(0, VIEW_LIST_ENTRIES, 1, "View Entries");
+		menu.add(0, DELETE_LIST, 2, "Delete");
 	}
 
 	@Override
@@ -82,6 +87,25 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		}
 
 		return super.onMenuItemSelected(featureId, item);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
+		switch (item.getItemId()) {
+		case EDIT_LIST:
+			listClickHandler(info.targetView);
+			return true;
+		case VIEW_LIST_ENTRIES:
+
+			return true;
+		case DELETE_LIST:
+
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
 	}
 
 	private void addList() {
