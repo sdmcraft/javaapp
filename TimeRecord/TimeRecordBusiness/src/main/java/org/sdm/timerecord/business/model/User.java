@@ -30,13 +30,17 @@ public class User implements Serializable {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
+	@Column(name = "PASSWORD", nullable = false)
+	private String password;
+
 	public User() {
-		super();		
+		super();
 	}
-	
-	public User(String name) {
+
+	public User(String name, String password) {
 		super();
 		this.name = name;
+		this.password = password;
 	}
 
 	public Integer getId() {
@@ -45,10 +49,6 @@ public class User implements Serializable {
 
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Lob
@@ -63,9 +63,10 @@ public class User implements Serializable {
 
 	public void reset(Map<String, String[]> params) {
 		for (Map.Entry<String, String[]> entry : params.entrySet()) {
-			if ("name".equals(entry.getKey())) {
-				setName(entry.getValue()[0]);
-			}
+			if ("name".equals(entry.getKey()))
+				name = entry.getValue()[0];
+			else if ("password".equals(entry.getKey()))
+				password = entry.getValue()[0];
 		}
 	}
 

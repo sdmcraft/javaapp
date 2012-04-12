@@ -33,7 +33,7 @@ public class UpdateUser implements UpdateUserRemote {
 				throw new Exception("Unable to find user with id:"
 						+ params.get("id")[0]);
 		} else {
-			user = new User(params.get("name")[0]);
+			user = new User(params.get("name")[0], params.get("password")[0]);
 		}
 		em.persist(user);
 	}
