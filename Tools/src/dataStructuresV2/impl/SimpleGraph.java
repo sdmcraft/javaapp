@@ -8,9 +8,8 @@ import dataStructuresV2.exception.InvalidDataException;
 
 public class SimpleGraph<T> extends BasicGraph<T> {
 
-	public SimpleGraph(Set<Node<T>> nodes, Set<Edge<T>> edges)
-			throws InvalidDataException {
-		super(nodes, edges);
+	public SimpleGraph(Set<Node<T>> nodes) throws InvalidDataException {
+		super(nodes);
 	}
 
 	@Override

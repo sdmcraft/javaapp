@@ -11,8 +11,21 @@ import dataStructuresV2.exception.InvalidDataException;
 
 public class BasicGraph<T> implements Graph<T> {
 
-	protected final Set<Node<T>> nodes = new HashSet<Node<T>>();
+	protected final Set<Node<T>> nodes;
 	protected final Set<Edge<T>> edges = new HashSet<Edge<T>>();
+
+	/*
+	 * Defensively copy the constructor arguments so that external modification
+	 * does not break encapsulation
+	 */
+	public BasicGraph(Set<Node<T>> nodes) throws InvalidDataException {
+		this.nodes = new HashSet<Node<T>>();
+
+		for (Node<T> node : nodes) {
+			addNode(node);
+		}
+
+	}
 
 	/*
 	 * Defensively copy the constructor arguments so that external modification
@@ -20,7 +33,7 @@ public class BasicGraph<T> implements Graph<T> {
 	 */
 	public BasicGraph(Set<Node<T>> nodes, Set<Edge<T>> edges)
 			throws InvalidDataException {
-		super();
+		this.nodes = new HashSet<Node<T>>();
 		try {
 			for (Node<T> node : nodes) {
 				addNode(node);

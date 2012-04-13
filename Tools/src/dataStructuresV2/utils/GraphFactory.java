@@ -10,6 +10,7 @@ import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
 import dataStructuresV2.exception.InvalidDataException;
 import dataStructuresV2.impl.BasicGraph;
+import dataStructuresV2.impl.SimpleGraph;
 
 public class GraphFactory {
 
@@ -50,7 +51,6 @@ public class GraphFactory {
 					"Numbers of edges exceeds the maximum possible for a simple graph");
 		} else {
 			Set<Node<T>> nodeSet = new HashSet<Node<T>>();
-			Set<Edge<T>> edgeSet = new HashSet<Edge<T>>();
 
 			List<Node<T>> nodes = new ArrayList<Node<T>>();
 			for (T value : values) {
@@ -58,29 +58,27 @@ public class GraphFactory {
 				nodes.add(node);
 				nodeSet.add(node);
 			}
-			for (int i = 0; i < edges; i++) {
+			SimpleGraph<T> simpleGraph = new SimpleGraph<T>(nodeSet);
+			for (int i = 0; i < edges;) {
 				int randomIndex = (int) Math.round((nodes.size() - 1)
 						* Math.random());
 				Node<T> endPoint1 = nodes.get(randomIndex);
 				Node<T> endPoint2 = null;
-				do {
-					randomIndex = (int) Math.round((nodes.size() - 1)
-							* Math.random());
-					endPoint2 = nodes.get(randomIndex);
-				} while (endPoint1 != null);
+
+				randomIndex = (int) Math.round((nodes.size() - 1)
+						* Math.random());
+				endPoint2 = nodes.get(randomIndex);
+
 				Node<T>[] endpoints = new Node[] { endPoint1, endPoint2 };
 				Edge<T> edge = EdgeFactory.getEdge(endpoints, Math.random());
-				edgeSet.add(edge);
+				try {
+					simpleGraph.addEdge(edge);
+					i++;
+				} catch (Exception ex) {
+					// Failed to edge, try again with other endpoints
+				}
 			}
-			try {
-				return new BasicGraph<T>(nodeSet, edgeSet);
-			} catch (InvalidDataException e) {
-				// This should ideally never happen as we are passing valid data
-				// to
-				// BasicGraph
-				e.printStackTrace();
-			}
+			return simpleGraph;
 		}
-		return null;
 	}
 }
