@@ -25,9 +25,10 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 	private static final int ADD_NEW_LIST_ID = Menu.FIRST;
 
-	private static final int EDIT_LIST = 0;
+	private static final int MAKE_ENTRY = 0;
 	private static final int VIEW_LIST_ENTRIES = 1;
-	private static final int DELETE_LIST = 2;
+	private static final int EDIT_LIST = 2;
+	private static final int DELETE_LIST = 3;
 
 	private static final int ACTIVITY_ADD_OR_EDIT_LIST = 0;
 	private static final int ACTIVITY_LIST_ENTRY = 1;
@@ -46,6 +47,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		mDbHelper.open();
 		Globals.getInstance().setDb(mDbHelper.getDB());
 		fillData();
+		registerForContextMenu(getListView());
 	}
 
 	public void listClickHandler(View v) {
@@ -73,9 +75,10 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.add(0, EDIT_LIST, 0, "Edit");
+		menu.add(0, MAKE_ENTRY, 0, "Make Entry");
 		menu.add(0, VIEW_LIST_ENTRIES, 1, "View Entries");
-		menu.add(0, DELETE_LIST, 2, "Delete");
+		menu.add(0, EDIT_LIST, 2, "Edit");
+		menu.add(0, DELETE_LIST, 3, "Delete");
 	}
 
 	@Override
@@ -160,40 +163,59 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 		// Now create a simple cursor adapter and set it to display
 		SimpleCursorAdapter lists = new SimpleCursorAdapter(this,
-				R.layout.list_row, mListsCursor, from, to) {
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				View view = super.getView(position, convertView, parent);
-				long id = getItemId(position);
-
-				Button entryButton = (Button) view.findViewById(R.id.entry);
-				entryButton.setTag(id);
-
-				Button viewEntriesButton = (Button) view
-						.findViewById(R.id.viewEntries);
-				viewEntriesButton.setTag(id);
-
-				TextView listName = (TextView) view.findViewById(R.id.name);
-				registerForContextMenu(listName);
-				/*
-				 * listName.setOnLongClickListener(new
-				 * View.OnLongClickListener() {
-				 * 
-				 * @Override public boolean onLongClick(View v) {
-				 * Toast.makeText(getApplicationContext(), "Hello!", 3) .show();
-				 * return false; } });
-				 */
-				LinearLayout listRow = (LinearLayout) view
-						.findViewById(R.id.listRow);
-				listRow.setTag(id);
-				return view;
-			}
-		};
-
-		ListAdapter listAdapter = new ArrayAdapter<String>(this,
-				R.layout.list_item);
-		((ArrayAdapter<String>) listAdapter).add("Text1");
-		((ArrayAdapter<String>) listAdapter).add("Text2");
+				R.layout.list_row, mListsCursor, from, to) /*
+															 * {
+															 * 
+															 * @Override public
+															 * View getView(int
+															 * position, View
+															 * convertView,
+															 * ViewGroup parent)
+															 * { View view =
+															 * super
+															 * .getView(position
+															 * , convertView,
+															 * parent); long id
+															 * =
+															 * getItemId(position
+															 * );
+															 * 
+															 * Button
+															 * entryButton =
+															 * (Button)
+															 * view.findViewById
+															 * (R.id.entry);
+															 * entryButton
+															 * .setTag(id);
+															 * 
+															 * Button
+															 * viewEntriesButton
+															 * = (Button) view
+															 * .findViewById
+															 * (R.id
+															 * .viewEntries);
+															 * viewEntriesButton
+															 * .setTag(id);
+															 * 
+															 * TextView listName
+															 * = (TextView)
+															 * view.
+															 * findViewById(
+															 * R.id.name);
+															 * listName
+															 * .setTag(id);
+															 * registerForContextMenu
+															 * (listName);
+															 * LinearLayout
+															 * listRow =
+															 * (LinearLayout)
+															 * view
+															 * .findViewById
+															 * (R.id.listRow);
+															 * listRow
+															 * .setTag(id);
+															 * return view; } }
+															 */;
 
 		setListAdapter(lists);
 
