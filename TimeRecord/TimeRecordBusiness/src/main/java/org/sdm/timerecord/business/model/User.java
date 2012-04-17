@@ -13,9 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "TR_USER")
+@Table(name = "TR_USER", uniqueConstraints = { @UniqueConstraint(columnNames = {
+		"NAME", "PASSWORD" }) })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
