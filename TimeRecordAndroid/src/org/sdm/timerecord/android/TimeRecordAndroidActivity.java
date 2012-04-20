@@ -7,19 +7,16 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 public class TimeRecordAndroidActivity extends ListActivity {
 
@@ -94,6 +91,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+		Log.i("####################","##################");
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		switch (item.getItemId()) {
