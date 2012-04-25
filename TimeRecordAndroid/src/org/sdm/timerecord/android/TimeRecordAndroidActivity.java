@@ -47,15 +47,12 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		registerForContextMenu(getListView());
 	}
 
-	public void listClickHandler(View v) {
-		LinearLayout listRow = (LinearLayout) v;
+	public void editList(Long listId) {
 		Intent i = new Intent(this, ListEditActivity.class);
-
-		Long listRowId = Long.parseLong(listRow.getTag().toString());
-		i.putExtra(List.COL_ID, listRowId);
+		i.putExtra(List.COL_ID, listId);
 		i.putExtra(
 				List.COL_NAME,
-				List.query(Globals.getInstance().getDb(), listRowId).getString(
+				List.query(Globals.getInstance().getDb(), listId).getString(
 						1));
 		startActivityForResult(i, ACTIVITY_ADD_OR_EDIT_LIST);
 
@@ -90,13 +87,12 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		Log.i("####################","##################");
+	public boolean onContextItemSelected(MenuItem item) {		
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		switch (item.getItemId()) {
 		case EDIT_LIST:
-			listClickHandler(info.targetView);
+			editList(info.id);
 			return true;
 		case VIEW_LIST_ENTRIES:
 
