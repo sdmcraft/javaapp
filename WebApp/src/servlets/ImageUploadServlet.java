@@ -47,7 +47,6 @@ public class ImageUploadServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException {
 		try {
-			init();
 			boolean isMultipart = ServletFileUpload.isMultipartContent(req);
 			if (isMultipart) {
 				FileItemFactory factory = new DiskFileItemFactory();

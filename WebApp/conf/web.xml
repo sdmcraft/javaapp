@@ -39,11 +39,6 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>PageA</servlet-name>
-		<jsp-file>/web/PageA.jsp</jsp-file>
-	</servlet>
-
-	<servlet>
 		<servlet-name>BeanDemoPG</servlet-name>
 		<jsp-file>/web/BeanDemoPG.jsp</jsp-file>
 	</servlet>
@@ -88,16 +83,6 @@
 		<url-pattern>/FileDownloadServlet</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>JSTLDemoPG</servlet-name>
-		<jsp-file>/web/JSTLdemoPG.jsp</jsp-file>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>JSTLDemoPG</servlet-name>
-		<url-pattern>/JSTLDemoPG</url-pattern>
-	</servlet-mapping>
-
 	<servlet-mapping>
 		<servlet-name>JMSservlet</servlet-name>
 		<url-pattern>/JMSservlet</url-pattern>
@@ -121,11 +106,6 @@
 	<servlet-mapping>
 		<servlet-name>ServletC</servlet-name>
 		<url-pattern>/ServletC</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>PageA</servlet-name>
-		<url-pattern>/PageA</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
