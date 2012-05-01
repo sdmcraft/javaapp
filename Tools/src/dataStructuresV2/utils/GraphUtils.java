@@ -1,21 +1,20 @@
 package dataStructuresV2.utils;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
 
+import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
 
 public class GraphUtils {
 
 	public final <T> List<Node<T>> shortestDistance(Graph<T> graph,
-			Node<T> startNode, Node<T> endNode) {
+			Node<T> startNode, Node<T> endNode) throws Exception{
 		Set<Node<T>> visitedNodes = new HashSet<>();
-		Map<Node<T>, Integer> distanceMap = new HashMap<>();
+		
 
 		class NodeDistance implements Comparable<NodeDistance> {
 			private final Node<T> node;
@@ -42,9 +41,37 @@ public class GraphUtils {
 
 		}
 
+		List<NodeDistance> nodeList = new ArrayList<>();
 		NodeDistance nodeDistance = new NodeDistance(startNode, 0);
-		PriorityQueue<NodeDistance> queue = new PriorityQueue<>();
-		queue.offer(nodeDistance);
+		nodeList.add(nodeDistance);
+		while(nodeList.size() > 0)
+		{
+			Node<T> node = nodeList.remove(0).node;
+			Set<Node<T>> neighbours = graph.getNeighbours(node);
+			NodeDistance neighbourDistance = null;
+			for(Node<T> neighbour : neighbours)
+			{
+				int neighbourIndex = nodeList.indexOf(neighbour);
+				if(neighbourIndex == -1)
+				{
+					Set<Edge<T>> edgesToNeighbour = graph.getEdges(node, neighbour);
+					int minEdgeWeight = Integer.MAX_VALUE;					
+					for(Edge<T> edge : edgesToNeighbour)
+					{
+						if(edge.getWeight().intValue() < minEdgeWeight)
+						{
+							minEdgeWeight = edge.getWeight().intValue();							
+						}
+					}
+					neighbourDistance = new NodeDistance(neighbour, minEdgeWeight);
+				}
+				else
+				{
+					// Add code here 01-May-2012
+				}
+						
+			}
+		}
 
 		return null;
 	}
