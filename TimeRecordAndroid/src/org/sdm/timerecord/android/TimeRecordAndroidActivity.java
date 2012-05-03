@@ -7,7 +7,6 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -15,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 
 public class TimeRecordAndroidActivity extends ListActivity {
@@ -50,10 +48,8 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	public void editList(Long listId) {
 		Intent i = new Intent(this, ListEditActivity.class);
 		i.putExtra(List.COL_ID, listId);
-		i.putExtra(
-				List.COL_NAME,
-				List.query(Globals.getInstance().getDb(), listId).getString(
-						1));
+		i.putExtra(List.COL_NAME,
+				List.query(Globals.getInstance().getDb(), listId).getString(1));
 		startActivityForResult(i, ACTIVITY_ADD_OR_EDIT_LIST);
 
 	}
@@ -87,7 +83,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {		
+	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		switch (item.getItemId()) {
@@ -114,30 +110,19 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		Bundle extras = intent.getExtras();
+		//Bundle extras = intent.getExtras();
 
 		switch (requestCode) {
 		case ACTIVITY_ADD_OR_EDIT_LIST:
-			String name = extras.getString(List.COL_NAME);
-			long listId = extras.getLong(List.COL_ID, -1);
-
-			if (name != null && !name.isEmpty()) {
-				if (listId == -1) {
-					List.insert(Globals.getInstance().getDb(), name);
-				} else {
-					List.update(Globals.getInstance().getDb(), listId, name);
-				}
-				fillData();
-			}
-
+			fillData();
 			break;
 		case ACTIVITY_LIST_ENTRY:
-			String entryTime = extras.getString(ListEntry.COL_ENTRY_TIME);
+			/*String entryTime = extras.getString(ListEntry.COL_ENTRY_TIME);
 			Long entryListId = extras.getLong(ListEntry.COL_LIST_ID);
 			String value = extras.getString(ListEntry.COL_VALUE);
 			if (entryTime != null && value != null && entryListId >= 0)
 				ListEntry.insert(mDbHelper.getDB(), entryListId, entryTime,
-						value);
+						value);*/
 			break;
 		}
 	}

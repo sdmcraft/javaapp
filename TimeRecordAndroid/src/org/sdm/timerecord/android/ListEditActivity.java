@@ -13,12 +13,22 @@ import android.widget.Spinner;
 
 public class ListEditActivity extends Activity {
 
-	private EditText mNameText;
-	private Long mRowId;
+	private String listName;
+	private Long listId;
+	private EditText listNameEditText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			listName = extras.getString(List.COL_NAME);
+			listId = extras.getLong(List.COL_ID);
+		}
+		render();
+	}
+
+	private void render() {
 		setContentView(R.layout.list_edit);
 		Spinner spinner = (Spinner) findViewById(R.id.spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -26,48 +36,37 @@ public class ListEditActivity extends Activity {
 				android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
-
-		mNameText = (EditText) findViewById(R.id.name);
-
-		Button confirmButton = (Button) findViewById(R.id.save);
-		mRowId = null;
-
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			String name = extras.getString(List.COL_NAME);
-
-			mRowId = extras.getLong(List.COL_ID);
-
-			if (name != null) {
-				mNameText.setText(name);
-			}
+		listNameEditText = (EditText) findViewById(R.id.name);
+		if (listName != null) {
+			listNameEditText.setText(listName);
 		}
+		Button confirmButton = (Button) findViewById(R.id.save);
 		confirmButton.setOnClickListener(new View.OnClickListener() {
-
 			public void onClick(View view) {
-				Bundle bundle = new Bundle();
-
-				bundle.putString(List.COL_NAME, mNameText.getText().toString());
-				if (mRowId != null) {
-					bundle.putLong(List.COL_ID, mRowId);
-				}
-				Intent mIntent = new Intent();
-				mIntent.putExtras(bundle);
-				setResult(RESULT_OK, mIntent);
-				finish();
+				save();
+				exitActivity();
 			}
-
 		});
+	}
+
+	private void save() {
+		if (listId == null || listId == -1) {
+			List.insert(Globals.getInstance().getDb(), listNameEditText
+					.getText().toString());
+		} else {
+			List.update(Globals.getInstance().getDb(), listId, listNameEditText
+					.getText().toString());
+		}
+	}
+
+	private void exitActivity() {
+		setResult(RESULT_OK);
+		finish();
 	}
 
 	@Override
 	public void onBackPressed() {
-		Bundle bundle = new Bundle();
-		Intent mIntent = new Intent();
-		mIntent.putExtras(bundle);
-		setResult(RESULT_OK, mIntent);
-		finish();
-		// super.onBackPressed();
+		exitActivity();
 	}
 
 }
