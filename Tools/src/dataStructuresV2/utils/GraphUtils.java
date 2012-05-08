@@ -1,6 +1,7 @@
 package dataStructuresV2.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,9 +13,8 @@ import dataStructuresV2.Node;
 public class GraphUtils {
 
 	public final <T> List<Node<T>> shortestDistance(Graph<T> graph,
-			Node<T> startNode, Node<T> endNode) throws Exception{
+			Node<T> startNode, Node<T> endNode) throws Exception {
 		Set<Node<T>> visitedNodes = new HashSet<>();
-		
 
 		class NodeDistance implements Comparable<NodeDistance> {
 			private final Node<T> node;
@@ -29,10 +29,6 @@ public class GraphUtils {
 				this.distance = distance;
 			}
 
-			private void setDistance(int distance) {
-				this.distance = distance;
-			}
-
 			@Override
 			public int compareTo(NodeDistance o) {
 				return Integer.valueOf(distance).compareTo(
@@ -44,33 +40,44 @@ public class GraphUtils {
 		List<NodeDistance> nodeList = new ArrayList<>();
 		NodeDistance nodeDistance = new NodeDistance(startNode, 0);
 		nodeList.add(nodeDistance);
-		while(nodeList.size() > 0)
-		{
-			Node<T> node = nodeList.remove(0).node;
+		while (nodeList.size() > 0) {
+			NodeDistance currentNodeDistance = nodeList.remove(0);
+			Node<T> node = currentNodeDistance.node;
 			Set<Node<T>> neighbours = graph.getNeighbours(node);
-			NodeDistance neighbourDistance = null;
-			for(Node<T> neighbour : neighbours)
-			{
-				int neighbourIndex = nodeList.indexOf(neighbour);
-				if(neighbourIndex == -1)
-				{
-					Set<Edge<T>> edgesToNeighbour = graph.getEdges(node, neighbour);
-					int minEdgeWeight = Integer.MAX_VALUE;					
-					for(Edge<T> edge : edgesToNeighbour)
-					{
-						if(edge.getWeight().intValue() < minEdgeWeight)
-						{
-							minEdgeWeight = edge.getWeight().intValue();							
-						}
+
+			for (Node<T> neighbour : neighbours) {
+
+				Set<Edge<T>> edgesToNeighbour = graph.getEdges(node, neighbour);
+				int minEdgeWeight = Integer.MAX_VALUE;
+				for (Edge<T> edge : edgesToNeighbour) {
+					if (edge.getWeight().intValue() < minEdgeWeight) {
+						minEdgeWeight = edge.getWeight().intValue();
 					}
-					neighbourDistance = new NodeDistance(neighbour, minEdgeWeight);
 				}
-				else
-				{
-					// Add code here 01-May-2012
+
+				int neighbourIndex = -1;
+				for (NodeDistance nd : nodeList) {
+					if (neighbour.equals(nd.node)
+							&& !visitedNodes.contains(nd.node)) {
+						neighbourIndex = nodeList.indexOf(nd);
+						break;
+					}
 				}
-						
+
+				if (neighbourIndex == -1) {
+					NodeDistance neighbourDistance = new NodeDistance(
+							neighbour, minEdgeWeight);
+					nodeList.add(neighbourDistance);
+				} else {
+					if (nodeList.get(neighbourIndex).distance > currentNodeDistance.distance
+							+ minEdgeWeight) {
+						nodeList.get(neighbourIndex).distance = currentNodeDistance.distance
+								+ minEdgeWeight;
+					}
+				}
 			}
+			visitedNodes.add(node);
+			Collections.sort(nodeList);
 		}
 
 		return null;

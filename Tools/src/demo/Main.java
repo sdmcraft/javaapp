@@ -44,16 +44,18 @@ public class Main {
 	 * @param args
 	 * @throws IOException
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		BufferedReader in = null;
-		for (int i = 20; i < 25; i++) {
+		String scoId = "16694";
+		for (int i = 1; i <= 1000; i++) {
 			URL url = new URL(
-					"http://satyam7-win7.corp.adobe.com/api/xml?action=event-register&sco-id=11159&password=1234&password-verify=1234&login=user" + i + "@adobe.com&name=newuser" + i);
+					"http://satyam7-win7.corp.adobe.com/api/xml?action=event-register&sco-id=" + scoId  + "&password=breeze&password-verify=breeze&login=" + i + "-" + scoId + "@adobe.com&name=newuser" + i);
 			URLConnection yc = url.openConnection();
 			in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 			String inputLine;
 			while ((inputLine = in.readLine()) != null)
 				System.out.println(inputLine);
+			Thread.sleep(100);
 		}
 		in.close();
 	}
