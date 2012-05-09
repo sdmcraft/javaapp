@@ -15,6 +15,9 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.sdm.timerecord.business.Constants;
+import org.sdm.timerecord.business.Utils;
+
 @Entity
 @Table(name = "TR_USER", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"NAME", "PASSWORD" }) })
@@ -39,10 +42,11 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(String name, String password) {
+	public User(String name, String password) throws Exception {
 		super();
 		this.name = name;
-		this.password = password;
+		this.password = Utils.encrypt(password, Constants.ENCRYPTION_ALGORITHM,
+				Constants.ENCRYPTION_ENCODING);
 	}
 
 	public Integer getId() {
@@ -63,12 +67,14 @@ public class User implements Serializable {
 		this.image = image;
 	}
 
-	public void reset(Map<String, String[]> params) {
+	public void reset(Map<String, String[]> params) throws Exception {
 		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			if ("name".equals(entry.getKey()))
 				name = entry.getValue()[0];
 			else if ("password".equals(entry.getKey()))
-				password = entry.getValue()[0];
+				password = Utils.encrypt(entry.getValue()[0],
+						Constants.ENCRYPTION_ALGORITHM,
+						Constants.ENCRYPTION_ENCODING);
 		}
 	}
 
