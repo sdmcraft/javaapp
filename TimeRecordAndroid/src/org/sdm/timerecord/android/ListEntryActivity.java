@@ -40,12 +40,24 @@ public class ListEntryActivity extends Activity {
 		setContentView(R.layout.list_entry);
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			mListName = extras.getString(List.COL_NAME);
 			mListId = extras.getLong(List.COL_ID);
-			if (mListName != null) {
-				mListTitleTextView = (TextView) findViewById(R.id.listTitle);
-				mListTitleTextView.setText(mListName);
-			}
+			mListName = List.query(Globals.getInstance().getDb(), mListId)
+					.getString(1);
+		}
+		render();
+	}
+
+	private void resetEntryDate() {
+		Calendar c = Calendar.getInstance();
+		c.set(mYear, mMonth, mDay);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+		mDateDisplay.setText(sdf.format(c.getTime()));
+	}
+
+	private void render() {
+		if (mListName != null) {
+			mListTitleTextView = (TextView) findViewById(R.id.listTitle);
+			mListTitleTextView.setText(mListName);
 		}
 
 		hoursEntry = (EditText) findViewById(R.id.hoursEntry);
@@ -70,14 +82,7 @@ public class ListEntryActivity extends Activity {
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 
 		// display the current date (this method is below)
-		updateDisplay();
-	}
-
-	private void updateDisplay() {
-		Calendar c = Calendar.getInstance();
-		c.set(mYear, mMonth, mDay);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-		mDateDisplay.setText(sdf.format(c.getTime()));
+		resetEntryDate();
 	}
 
 	// the callback received when the user "sets" the date in the dialog
@@ -88,7 +93,7 @@ public class ListEntryActivity extends Activity {
 			mYear = year;
 			mMonth = monthOfYear;
 			mDay = dayOfMonth;
-			updateDisplay();
+			resetEntryDate();
 		}
 	};
 
@@ -103,11 +108,6 @@ public class ListEntryActivity extends Activity {
 	}
 
 	public void saveEntryClickHandler(View view) {
-		Bundle bundle = new Bundle();
-
-		bundle.putString(ListEntry.COL_ENTRY_TIME, mDateDisplay.getText()
-				.toString());
-		bundle.putLong(ListEntry.COL_LIST_ID, mListId);
 		String hours = "0";
 		String minutes = "0";
 		String seconds = "0";
@@ -123,11 +123,14 @@ public class ListEntryActivity extends Activity {
 			seconds = secondsEntry.getText().toString();
 		}
 
-		bundle.putString(ListEntry.COL_VALUE, hours + ":" + minutes + ":"
-				+ seconds);
-		Intent mIntent = new Intent();
-		mIntent.putExtras(bundle);
-		setResult(RESULT_OK, mIntent);
+		ListEntry.insert(Globals.getInstance().getDb(), mListId.longValue(),
+				mDateDisplay.getText().toString(), hours + ":" + minutes + ":"
+						+ seconds);
+		exitActivity();
+	}
+
+	private void exitActivity() {
+		setResult(RESULT_OK);
 		finish();
 	}
 

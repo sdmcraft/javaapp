@@ -3,7 +3,6 @@ package org.sdm.timerecord.android;
 import org.sdm.timerecord.android.model.List;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,9 +20,9 @@ public class ListEditActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			listName = extras.getString(List.COL_NAME);
+		if (extras != null) {			
 			listId = extras.getLong(List.COL_ID);
+			listName = List.query(Globals.getInstance().getDb(), listId).getString(1);
 		}
 		render();
 	}

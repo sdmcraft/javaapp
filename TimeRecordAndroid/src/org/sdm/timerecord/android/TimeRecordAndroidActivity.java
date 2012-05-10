@@ -48,10 +48,13 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	public void editList(Long listId) {
 		Intent i = new Intent(this, ListEditActivity.class);
 		i.putExtra(List.COL_ID, listId);
-		i.putExtra(List.COL_NAME,
-				List.query(Globals.getInstance().getDb(), listId).getString(1));
 		startActivityForResult(i, ACTIVITY_ADD_OR_EDIT_LIST);
+	}
 
+	public void listEntry(Long listId) {
+		Intent i = new Intent(this, ListEntryActivity.class);
+		i.putExtra(List.COL_ID, listId);
+		startActivityForResult(i, ACTIVITY_LIST_ENTRY);
 	}
 
 	@Override
@@ -90,8 +93,9 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		case EDIT_LIST:
 			editList(info.id);
 			return true;
+		case MAKE_ENTRY:
+			listEntry(info.id);
 		case VIEW_LIST_ENTRIES:
-
 			return true;
 		case DELETE_LIST:
 
@@ -110,19 +114,21 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		//Bundle extras = intent.getExtras();
+		// Bundle extras = intent.getExtras();
 
 		switch (requestCode) {
 		case ACTIVITY_ADD_OR_EDIT_LIST:
 			fillData();
 			break;
 		case ACTIVITY_LIST_ENTRY:
-			/*String entryTime = extras.getString(ListEntry.COL_ENTRY_TIME);
-			Long entryListId = extras.getLong(ListEntry.COL_LIST_ID);
-			String value = extras.getString(ListEntry.COL_VALUE);
-			if (entryTime != null && value != null && entryListId >= 0)
-				ListEntry.insert(mDbHelper.getDB(), entryListId, entryTime,
-						value);*/
+			/*
+			 * String entryTime = extras.getString(ListEntry.COL_ENTRY_TIME);
+			 * Long entryListId = extras.getLong(ListEntry.COL_LIST_ID); String
+			 * value = extras.getString(ListEntry.COL_VALUE); if (entryTime !=
+			 * null && value != null && entryListId >= 0)
+			 * ListEntry.insert(mDbHelper.getDB(), entryListId, entryTime,
+			 * value);
+			 */
 			break;
 		}
 	}
@@ -198,19 +204,6 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 		setListAdapter(lists);
 
-	}
-
-	public void entryButtonClickHandler(View view) {
-		Button entryButton = (Button) view;
-		// entryButton.setText(entryButton.getTag().toString());
-		Intent i = new Intent(this, ListEntryActivity.class);
-		Long listRowId = Long.parseLong(entryButton.getTag().toString());
-		i.putExtra(List.COL_ID, listRowId);
-		i.putExtra(
-				List.COL_NAME,
-				List.query(Globals.getInstance().getDb(), listRowId).getString(
-						1));
-		startActivityForResult(i, ACTIVITY_LIST_ENTRY);
 	}
 
 	public void viewEntriesButtonClickHandler(View view) {
