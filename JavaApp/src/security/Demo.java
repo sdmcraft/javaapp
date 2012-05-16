@@ -13,7 +13,7 @@ public class Demo {
 
 		Subject subject = null;
 		try {
-
+			System.out.println(System.getProperty("user.dir"));
 			System.out.print("User ID:");
 			String user = (new BufferedReader(new InputStreamReader(
 					System.in))).readLine();
