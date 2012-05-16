@@ -2,8 +2,10 @@ package dataStructuresV2.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import dataStructuresV2.Edge;
@@ -15,7 +17,7 @@ public class GraphUtils {
 	public final <T> List<Node<T>> shortestDistance(Graph<T> graph,
 			Node<T> startNode, Node<T> endNode) throws Exception {
 		Set<Node<T>> visitedNodes = new HashSet<>();
-
+		Map<Node<T>, List<Node<T>>> pathMap = new HashMap<Node<T>, List<Node<T>>>();
 		class NodeDistance implements Comparable<NodeDistance> {
 			private final Node<T> node;
 			private int distance = Integer.MAX_VALUE;
@@ -68,11 +70,16 @@ public class GraphUtils {
 					NodeDistance neighbourDistance = new NodeDistance(
 							neighbour, minEdgeWeight);
 					nodeList.add(neighbourDistance);
+					List<Node<T>> path = new ArrayList<>();
+					path.add(neighbour);
+					pathMap.put(neighbour, path);
 				} else {
 					if (nodeList.get(neighbourIndex).distance > currentNodeDistance.distance
 							+ minEdgeWeight) {
 						nodeList.get(neighbourIndex).distance = currentNodeDistance.distance
 								+ minEdgeWeight;
+						pathMap.get(neighbour).add(
+								nodeList.get(neighbourIndex).node);
 					}
 				}
 			}

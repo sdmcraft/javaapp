@@ -75,7 +75,7 @@ public class GraphFactory {
 					simpleGraph.addEdge(edge);
 					i++;
 				} catch (Exception ex) {
-					// Failed to edge, try again with other endpoints
+					// Failed to add edge, try again with other endpoints
 				}
 			}
 			return simpleGraph;
