@@ -21,6 +21,8 @@ public class ActionServlet extends HttpServlet {
 	static {
 		actionMap.put("user-profile-update",
 				"TimeRecordEnterprise-1.0/UpdateUser/remote");
+		actionMap.put("principal-update",
+				"TimeRecordEnterprise-1.0/UpdatePrincipal/remote");
 	}
 
 	@Override
