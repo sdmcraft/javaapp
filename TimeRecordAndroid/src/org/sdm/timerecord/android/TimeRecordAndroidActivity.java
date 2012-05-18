@@ -1,7 +1,6 @@
 package org.sdm.timerecord.android;
 
 import org.sdm.timerecord.android.model.List;
-import org.sdm.timerecord.android.model.ListEntry;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -57,6 +56,12 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		startActivityForResult(i, ACTIVITY_LIST_ENTRY);
 	}
 
+	public void viewEntries(Long listId) {
+		Intent i = new Intent(this, ViewListEntriesActivity.class);
+		i.putExtra(List.COL_ID, listId);
+		startActivityForResult(i, ACTIVITY_VIEW_LIST_ENTRIES);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -69,7 +74,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, MAKE_ENTRY, 0, "Make Entry");
-		menu.add(0, VIEW_LIST_ENTRIES, 1, "View Entries");
+		menu.add(0, VIEW_LIST_ENTRIES, 1, "View Entries123");
 		menu.add(0, EDIT_LIST, 2, "Edit");
 		menu.add(0, DELETE_LIST, 3, "Delete");
 	}
@@ -95,10 +100,11 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			return true;
 		case MAKE_ENTRY:
 			listEntry(info.id);
+			return true;
 		case VIEW_LIST_ENTRIES:
+			viewEntries(info.id);
 			return true;
 		case DELETE_LIST:
-
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -203,16 +209,6 @@ public class TimeRecordAndroidActivity extends ListActivity {
 															 */;
 
 		setListAdapter(lists);
-
-	}
-
-	public void viewEntriesButtonClickHandler(View view) {
-		Button viewEntriesButton = (Button) view;
-		// entryButton.setText(entryButton.getTag().toString());
-		Intent i = new Intent(this, ViewListEntriesActivity.class);
-		Long listRowId = Long.parseLong(viewEntriesButton.getTag().toString());
-		i.putExtra(List.COL_ID, listRowId);
-		startActivityForResult(i, ACTIVITY_VIEW_LIST_ENTRIES);
 
 	}
 
