@@ -31,49 +31,107 @@ public class ARITH {
 		}
 	}
 
-	public static String method(String s) {
+	public static String method(String expression) {
+		StringBuilder finalResult = new StringBuilder();
 		BigInteger operand1 = null;
 		BigInteger operand2 = null;
 		BigInteger result = null;
 		String operation = null;
-		if (s.contains("+")) {
-			operand1 = new BigInteger(s.split("\\+")[0]);
-			operand2 = new BigInteger(s.split("\\+")[1]);
-			operation = "add";
+		int maxLen = 0;
+		StringBuilder firstLine = new StringBuilder();
+		StringBuilder secondLine = new StringBuilder();
+		StringBuilder partialsSb = new StringBuilder();
+		operand1 = new BigInteger(expression.split("[\\+\\-\\*]")[0]);
+		operand2 = new BigInteger(expression.split("[\\+\\-\\*]")[1]);
+
+		StringBuilder operand1Sb = new StringBuilder(operand1.toString());
+		StringBuilder operand2Sb = new StringBuilder(operand2.toString());
+		StringBuilder[] partials = new StringBuilder[operand2Sb.length()];
+
+		if (expression.contains("+")) {
+			operation = "+";
 			result = operand1.add(operand2);
-		} else if (s.contains("-")) {
-			operand1 = new BigInteger(s.split("-")[0]);
-			operand2 = new BigInteger(s.split("-")[1]);
-			operation = "subtract";
+		} else if (expression.contains("-")) {
+			operation = "-";
 			result = operand1.subtract(operand2);
-		} else if (s.contains("*")) {
-			operand1 = new BigInteger(s.split("\\*")[0]);
-			operand2 = new BigInteger(s.split("\\*")[1]);
-			operation = "multiply";
+		} else if (expression.contains("*")) {
+			operation = "*";
 			result = operand1.multiply(operand2);
 		}
-		String operand1Str = operand1.toString();
-		String operand2Str = operand2.toString();
-		String resultStr = result.toString();
-		if ("add".equals(operation) || "subtract".equals(operation)) {
-			int maxLen = max(operand1Str.length(), operand2Str.length(),
-					resultStr.length());
+
+		StringBuilder resultSb = new StringBuilder(result.toString());
+
+		if ("*".equals(operation)) {
+			for (int i = operand2Sb.length() - 1, j = 0; i >= 0; i--, j++) {
+
+				BigInteger bi = new BigInteger(operand2Sb.charAt(i) + "");
+				partials[j] = new StringBuilder(operand1.multiply(bi)
+						.toString());
+				partials[j] = new StringBuilder(rightPad(partials[j], j));
+			}
+			maxLen = max(partials);
+			operand2Sb.insert(0, operation);
+			if (maxLen < operand1Sb.length()) {
+				maxLen = operand1Sb.length();
+			}
+			if (maxLen < operand2Sb.length()) {
+				maxLen = operand2Sb.length();
+			}
+
+			if (partials.length > 1) {
+				leftPad(secondLine, partials[partials.length - 2].length(), '-');
+				leftPad(secondLine, resultSb.length(), '-');
+			}
+			
+			leftPad(firstLine, operand2Sb.length(), '-');
+			leftPad(firstLine, partials[0].length(), '-');
+
+			for (int i = 0; i < partials.length; i++) {
+				leftPad(partials[i], maxLen);
+				partialsSb.append(partials[i]).append('\n');
+			}
 		}
-		return null;
+		
+		if ("+".equals(operation) || "-".equals(operation)) {
+			operand2Sb.insert(0, operation);
+			maxLen = max(operand1Sb.length(), operand2Sb.length(), resultSb
+					.length());
+			leftPad(firstLine, operand2Sb.length(), '-');
+			leftPad(firstLine, resultSb.length(), '-');
+		}
+
+		leftPad(firstLine, maxLen);
+		leftPad(operand1Sb, maxLen);
+		leftPad(operand2Sb, maxLen);
+		leftPad(resultSb, maxLen);
+		finalResult.append(operand1Sb).append('\n').append(operand2Sb).append(
+				'\n').append(firstLine).append('\n');
+		if (partialsSb.length() > 0 && partials.length > 1) {
+			finalResult.append(partialsSb);
+		}
+
+		if (secondLine.length() > 0) {
+			leftPad(secondLine, maxLen);
+			finalResult.append(secondLine).append('\n');
+		}
+		finalResult.append(resultSb);
+		return finalResult.append('\n').toString();
 	}
 
-	private static String leftPad(String s, int length) {
-		int strLength = s.length();
-		for (int i = 0; i < length - strLength; i++)
-			s = " " + s;
-		return s;
+	private static void leftPad(StringBuilder sb, int length) {
+		leftPad(sb, length, ' ');
 	}
 
-	private static String rightPad(String s, int length) {
-		int strLength = s.length();
+	private static void leftPad(StringBuilder sb, int length, char c) {
+		int strLength = sb.length();
 		for (int i = 0; i < length - strLength; i++)
-			s = s + " ";
-		return s;
+			sb.insert(0, c);
+	}
+
+	private static StringBuilder rightPad(StringBuilder sb, int length) {
+		for (int i = 0; i < length; i++)
+			sb.append(" ");
+		return sb;
 	}
 
 	private static int max(int a, int b, int c) {
@@ -86,4 +144,12 @@ public class ARITH {
 		return -1;
 	}
 
+	private static int max(StringBuilder[] arr) {
+		int max = Integer.MIN_VALUE;
+		for (StringBuilder s : arr) {
+			if (max < s.length())
+				max = s.length();
+		}
+		return max;
+	}
 }
