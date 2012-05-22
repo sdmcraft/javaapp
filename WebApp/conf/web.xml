@@ -49,6 +49,16 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>ImageUploadPG</servlet-name>
+		<jsp-file>/web/ImageUploadPG.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ImageUploadPG</servlet-name>
+		<url-pattern>/ImageUploadPG</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>SecureServlet</servlet-name>
 		<servlet-class>servlets.SecureServlet</servlet-class>
 	</servlet>
