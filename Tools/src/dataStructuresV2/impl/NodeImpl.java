@@ -16,16 +16,6 @@ public class NodeImpl<T> implements Node<T> {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		return value.equals(o);
-	}
-
-	@Override
-	public int hashCode() {
-		return value.hashCode();
-	}
-
-	@Override
 	public String toString() {
 		return value.toString();
 	}
