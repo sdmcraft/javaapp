@@ -74,20 +74,19 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, MAKE_ENTRY, 0, "Make Entry");
-		menu.add(0, VIEW_LIST_ENTRIES, 1, "View Entries123");
+		menu.add(0, VIEW_LIST_ENTRIES, 1, "View Entries");
 		menu.add(0, EDIT_LIST, 2, "Edit");
 		menu.add(0, DELETE_LIST, 3, "Delete");
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case ADD_NEW_LIST_ID:
 			addList();
 			return true;
 		}
-
-		return super.onMenuItemSelected(featureId, item);
+		return false;
 	}
 
 	@Override
