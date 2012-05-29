@@ -8,21 +8,24 @@ import java.net.URLConnection;
 public class LoadTestXmlApi {
 
 	public static void main(String[] args) throws Exception {
-		String scoId = "24600";
-		for (int i = 1; i <= 3; i++) {
-			RegisterTask registerTask = new RegisterTask(scoId, i);
+		String scoId = "831369502";
+		String eventName = "event8";
+		for (int i = 1; i <= 200; i++) {
+			RegisterTask registerTask = new RegisterTask(scoId, eventName, i);
 			new Thread(registerTask).start();
-			Thread.sleep(300);
+			Thread.sleep(200);
 		}
 	}
 
 	static class RegisterTask implements Runnable {
 		String scoId;
+		String eventName;
 		int num;
 
-		public RegisterTask(String scoId, int num) {
+		public RegisterTask(String scoId, String eventName, int num) {
 			this.scoId = scoId;
 			this.num = num;
+			this.eventName = eventName;
 		}
 
 		@Override
@@ -34,8 +37,8 @@ public class LoadTestXmlApi {
 						"http://satyam7-win7.corp.adobe.com/api/xml?action=event-register&sco-id="
 								+ scoId
 								+ "&password=breeze&password-verify=breeze&login="
-								+ num + "-" + scoId + "@adobe.com&name=newuser"
-								+ num);
+								+ eventName + "-" + num
+								+ "@adobe.com&name=newuser" + num);
 				URLConnection yc = url.openConnection();
 				in = new BufferedReader(new InputStreamReader(
 						yc.getInputStream()));
