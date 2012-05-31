@@ -70,7 +70,7 @@ public class GraphFactory {
 				endPoint2 = nodes.get(randomIndex);
 
 				Node<T>[] endpoints = new Node[] { endPoint1, endPoint2 };
-				Edge<T> edge = EdgeFactory.getEdge(endpoints, Math.random());
+				Edge<T> edge = EdgeFactory.getEdge(endpoints);
 				try {
 					simpleGraph.addEdge(edge);
 					i++;

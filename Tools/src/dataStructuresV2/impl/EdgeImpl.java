@@ -13,6 +13,11 @@ public class EdgeImpl<T> implements Edge<T> {
 		this.weight = weight;
 	}
 
+	public EdgeImpl(Node<T>[] endPoints) {
+		this.endPoints = endPoints;
+		this.weight = null;
+	}
+
 	@Override
 	public Node<T>[] getEndpoints() {
 		/*
@@ -39,12 +44,13 @@ public class EdgeImpl<T> implements Edge<T> {
 		equal = o instanceof Edge;
 		if (equal) {
 			Edge<?> edge = (Edge<?>) o;
-			equal = this.endPoints[0].equals(edge.getEndpoints()[0]);
+			equal = (this.endPoints[0].equals(edge.getEndpoints()[0]) && this.endPoints[1].equals(edge.getEndpoints()[1])) ||
+					(this.endPoints[0].equals(edge.getEndpoints()[1]) && this.endPoints[1].equals(edge.getEndpoints()[0]));
 			if (equal) {
-				equal = this.endPoints[1].equals(edge.getEndpoints()[1]);
-			}
-			if (equal) {
-				equal = this.weight.equals(edge.getWeight());
+				equal = this.weight == edge.getWeight();
+				if (!equal) {
+					equal = this.weight.equals(edge.getWeight());
+				}
 			}
 		}
 		return equal;

@@ -16,5 +16,6 @@ public class Main {
 		valueSet.add("d");
 		Graph<String> graph = GraphFactory.getSimpleGraph(valueSet, 5);
 		System.out.println(graph.getDiagram());
+		System.out.println(null == null);
 	}
 }
