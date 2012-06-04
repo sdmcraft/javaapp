@@ -2,6 +2,7 @@ package org.sdm.timerecord.android;
 
 import org.sdm.timerecord.android.model.List;
 
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,6 +28,8 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	private static final int ACTIVITY_ADD_OR_EDIT_LIST = 0;
 	private static final int ACTIVITY_LIST_ENTRY = 1;
 	private static final int ACTIVITY_VIEW_LIST_ENTRIES = 2;
+
+	static final int DIALOG_DELETE_LIST = 0;
 
 	private TimeRecordDbAdapter mDbHelper;
 	private Cursor mListsCursor;
@@ -104,10 +107,18 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			viewEntries(info.id);
 			return true;
 		case DELETE_LIST:
+			List.delete(Globals.getInstance().getDb(), info.id);
+			fillData();
 			return true;
 		default:
 			return super.onContextItemSelected(item);
 		}
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id, Bundle args) {
+		// TODO Auto-generated method stub
+		return super.onCreateDialog(id, args);
 	}
 
 	private void addList() {
