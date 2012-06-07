@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLConnection;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -49,11 +50,13 @@ public class ImageDisplayServlet extends HttpServlet {
 					.prepareStatement("SELECT image FROM images where id = ?");
 			ps.setInt(1, Integer.parseInt(req.getParameter("image-id")));
 			ResultSet rs = ps.executeQuery();
-			if(rs.first())
-			{
+			if (rs.first()) {
 				Blob imageBlob = rs.getBlob("image");
-				
-				InputStream in = new BufferedInputStream(imageBlob.getBinaryStream());
+
+				InputStream in = new BufferedInputStream(
+						imageBlob.getBinaryStream());
+				String mimeType = URLConnection.guessContentTypeFromStream(in);
+				System.out.println("Mime Type:" + mimeType);
 				OutputStream out = resp.getOutputStream();
 				byte b;
 				while ((b = (byte) in.read()) != -1) {

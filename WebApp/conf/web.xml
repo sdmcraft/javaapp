@@ -183,6 +183,16 @@
 		<url-pattern>/ImageUpload</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>ImageDisplay</servlet-name>
+		<servlet-class>servlets.ImageDisplayServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ImageDisplay</servlet-name>
+		<url-pattern>/ImageDisplay</url-pattern>
+	</servlet-mapping>
+	
 	<login-config>
 		<auth-method>BASIC</auth-method>
 	</login-config>
