@@ -1,5 +1,7 @@
 package dataStructuresV2.impl;
 
+import java.util.Arrays;
+
 import dataStructuresV2.Edge;
 import dataStructuresV2.Node;
 
@@ -38,14 +40,16 @@ public class EdgeImpl<T> implements Edge<T> {
 				+ endPoints[1].getDiagramFragment() + "[dir=\"none\"]";
 	}
 
-	@Override
-	public boolean equals(Object o) {
+	// @Override
+	public boolean equals1(Object o) {
 		boolean equal;
 		equal = o instanceof Edge;
 		if (equal) {
 			Edge<?> edge = (Edge<?>) o;
-			equal = (this.endPoints[0].equals(edge.getEndpoints()[0]) && this.endPoints[1].equals(edge.getEndpoints()[1])) ||
-					(this.endPoints[0].equals(edge.getEndpoints()[1]) && this.endPoints[1].equals(edge.getEndpoints()[0]));
+			equal = (this.endPoints[0].equals(edge.getEndpoints()[0]) && this.endPoints[1]
+					.equals(edge.getEndpoints()[1]))
+					|| (this.endPoints[0].equals(edge.getEndpoints()[1]) && this.endPoints[1]
+							.equals(edge.getEndpoints()[0]));
 			if (equal) {
 				equal = this.weight == edge.getWeight();
 				if (!equal) {
@@ -54,6 +58,37 @@ public class EdgeImpl<T> implements Edge<T> {
 			}
 		}
 		return equal;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(endPoints);
+		result = prime * result + ((weight == null) ? 0 : weight.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EdgeImpl other = (EdgeImpl) obj;
+
+		Node<T>[] reverseEndPoints = new Node[] { other.endPoints[1],
+				other.endPoints[0] };
+		if (!Arrays.equals(endPoints, other.endPoints) && !Arrays.equals(endPoints, reverseEndPoints))
+			return false;
+		if (weight == null) {
+			if (other.weight != null)
+				return false;
+		} else if (!weight.equals(other.weight))
+			return false;
+		return true;
 	}
 
 }
