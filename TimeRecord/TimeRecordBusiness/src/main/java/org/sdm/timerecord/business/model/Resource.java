@@ -28,9 +28,6 @@ public abstract class Resource implements Serializable {
 	@Column(name = "ID", nullable = false)
 	private Integer id;
 
-	@Column(name = "PARENT_ID", nullable = true)
-	private Integer parent_id;
-
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "PARENT_ID", referencedColumnName = "ID")
 	private Resource parent;
