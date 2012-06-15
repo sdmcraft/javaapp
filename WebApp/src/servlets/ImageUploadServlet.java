@@ -28,13 +28,13 @@ public class ImageUploadServlet extends HttpServlet {
 	public void init() {
 		
 		String url = "jdbc:mysql://localhost:3306/";
-//		String dbName = "test";
-		String dbName = "TimeRecord";
+		String dbName = "test";
+//		String dbName = "TimeRecord";
 		String driver = "com.mysql.jdbc.Driver";
-//		String userName = "root";
-//		String password = "welcome";
-		String userName = "admin";
-		String password = "admin";
+		String userName = "root";
+		String password = "welcome";
+//		String userName = "admin";
+//		String password = "admin";
 
 		try {
 			Class.forName(driver).newInstance();

@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/*create table images(id int not null AUTO_INCREMENT, image LONGBLOB, primary key(id));*/
+
 public class ImageDisplayServlet extends HttpServlet {
 
 	Connection dbConnection = null;
@@ -31,7 +33,7 @@ public class ImageDisplayServlet extends HttpServlet {
 		String password = "welcome";
 		// String userName = "admin";
 		// String password = "admin";
-
+		int test;
 		try {
 			Class.forName(driver).newInstance();
 			dbConnection = DriverManager.getConnection(url + dbName, userName,
@@ -40,6 +42,7 @@ public class ImageDisplayServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
