@@ -20,7 +20,8 @@ public class Main {
 	public static void main(String[] args) throws Exception,
 			InterruptedException {
 		//testSSLSocket();
-		writeLoginCsv();
+		//writeLoginCsv();
+		printSQL();
 	}
 
 	private static String readFileAsString(String filePath)
@@ -59,9 +60,34 @@ public class Main {
 	private static void writeLoginCsv() throws Exception
 	{
 		PrintWriter pw = new PrintWriter("c:\\temp\\users.csv");
-		for(int i=1;i<=100;i++)
-			pw.println("event-15-" + i + "@adobe.com,breeze");
+		for(int i=1;i<=20;i++)
+			pw.println("sdmimgtest-" + i + "@adobe.com,breeze");
 		pw.close();
+	}
+	
+	private static void printSQL()
+	{
+		System.out.println( "SELECT TOP " + 100 + " " +
+            "actions.action_id, " +
+            "actions.action_type_id, " +
+            "actions.target_acl_id, " +
+            "prefs.lang, " +
+            "actions.body, " +
+            "af.field_id, " +
+            "af.value, " +
+            "actions.status, " +
+            "actions.schedule, " +
+            "actions.date_scheduled " +
+            "FROM " +
+            "pps_actions actions LEFT OUTER JOIN pps_acl_preferences prefs ON actions.target_acl_id=prefs.acl_id, " +
+            "pps_acl_fields af " +
+            "WHERE " +
+            "actions.status in ('N', 'R')" +
+            "AND actions.date_scheduled < CURRENT_TIMESTAMP " +
+            "AND actions.action_id = af.acl_id " +
+            "AND actions.zone_id = ? " +
+            "ORDER BY " +
+            "actions.date_scheduled desc, actions.target_acl_id, actions.action_type_id");
 	}
 
 }
