@@ -64,7 +64,7 @@ public class EdgeImpl<T> implements Edge<T> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Arrays.hashCode(endPoints);
+		result = prime * result + endPoints[0].hashCode() + endPoints[1].hashCode();
 		result = prime * result + ((weight == null) ? 0 : weight.hashCode());
 		return result;
 	}
