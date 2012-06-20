@@ -2,8 +2,10 @@ package org.sdm.timerecord.android;
 
 import org.sdm.timerecord.android.model.List;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -13,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 
 public class TimeRecordAndroidActivity extends ListActivity {
@@ -65,6 +66,11 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		startActivityForResult(i, ACTIVITY_VIEW_LIST_ENTRIES);
 	}
 
+	public void deleteList(Long listId) {
+		List.delete(Globals.getInstance().getDb(), listId);
+		fillData();
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -107,8 +113,9 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			viewEntries(info.id);
 			return true;
 		case DELETE_LIST:
-			List.delete(Globals.getInstance().getDb(), info.id);
-			fillData();
+			Bundle args = new Bundle();
+			args.putLong("list-id", info.id);
+			showDialog(DELETE_LIST, args);
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -116,9 +123,31 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	}
 
 	@Override
-	protected Dialog onCreateDialog(int id, Bundle args) {
-		// TODO Auto-generated method stub
-		return super.onCreateDialog(id, args);
+	protected Dialog onCreateDialog(int id, final Bundle args) {
+		switch (id) {
+		case DELETE_LIST:
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("Are you sure you want to delete?")
+					.setCancelable(false)
+					.setPositiveButton("Yes",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									deleteList(args.getLong("list-id"));
+								}
+							})
+					.setNegativeButton("No",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									dialog.cancel();
+								}
+							});
+			AlertDialog alert = builder.create();
+			return alert;
+		default:
+			return super.onCreateDialog(id);
+		}
 	}
 
 	private void addList() {
