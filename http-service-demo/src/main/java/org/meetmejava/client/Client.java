@@ -143,7 +143,7 @@ public class Client implements Observer {
 	 */
 	public static void main(String[] args) throws Exception {
 		new Client().demo("10.40.61.65", "admin", "P@$$w0rd", "6300",
-				new String[] { "SIP/6000" },
+				new String[] { "SIP/1000" },
 				"http://10.40.79.106:8080/AsteriskExtension/service");
 	}
 }

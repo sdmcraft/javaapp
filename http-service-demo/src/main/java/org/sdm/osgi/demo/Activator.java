@@ -14,7 +14,7 @@ public class Activator implements BundleActivator, ServiceListener {
 
 	public void start(BundleContext context) throws Exception {
 		System.out.println("Starting the bundle YODA YODA2!!");
-		bundleCtx = context;
+		bundleCtx = context;		
 		ServiceReference sRef = bundleCtx
 				.getServiceReference(HttpService.class.getName());
 		if (sRef != null) {
