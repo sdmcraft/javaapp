@@ -68,6 +68,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 	public void deleteList(Long listId) {
 		List.delete(Globals.getInstance().getDb(), listId);
+		removeDialog(DELETE_LIST);
 		fillData();
 	}
 
@@ -115,15 +116,16 @@ public class TimeRecordAndroidActivity extends ListActivity {
 		case DELETE_LIST:
 			Bundle args = new Bundle();
 			args.putLong("list-id", info.id);
-			showDialog(DELETE_LIST, args);
+			showDialog(DELETE_LIST, args);			
 			return true;
 		default:
 			return super.onContextItemSelected(item);
 		}
 	}
 
+	
 	@Override
-	protected Dialog onCreateDialog(int id, final Bundle args) {
+	protected Dialog onCreateDialog(final int id,  final Bundle args) {
 		switch (id) {
 		case DELETE_LIST:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -143,12 +145,13 @@ public class TimeRecordAndroidActivity extends ListActivity {
 									dialog.cancel();
 								}
 							});
-			AlertDialog alert = builder.create();
+			AlertDialog alert = builder.create();	
 			return alert;
 		default:
-			return super.onCreateDialog(id);
+			return super.onCreateDialog(id, args);
 		}
 	}
+
 
 	private void addList() {
 		Intent i = new Intent(this, ListEditActivity.class);
