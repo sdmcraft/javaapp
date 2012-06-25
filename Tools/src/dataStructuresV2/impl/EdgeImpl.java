@@ -64,7 +64,8 @@ public class EdgeImpl<T> implements Edge<T> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + endPoints[0].hashCode() + endPoints[1].hashCode();
+		result = prime * result + endPoints[0].hashCode()
+				+ endPoints[1].hashCode();
 		result = prime * result + ((weight == null) ? 0 : weight.hashCode());
 		return result;
 	}
@@ -81,7 +82,8 @@ public class EdgeImpl<T> implements Edge<T> {
 
 		Node<T>[] reverseEndPoints = new Node[] { other.endPoints[1],
 				other.endPoints[0] };
-		if (!Arrays.equals(endPoints, other.endPoints) && !Arrays.equals(endPoints, reverseEndPoints))
+		if (!Arrays.equals(endPoints, other.endPoints)
+				&& !Arrays.equals(endPoints, reverseEndPoints))
 			return false;
 		if (weight == null) {
 			if (other.weight != null)
@@ -89,6 +91,12 @@ public class EdgeImpl<T> implements Edge<T> {
 		} else if (!weight.equals(other.weight))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return endPoints[0] + "--" + weight + "-->" + endPoints[1];
+
 	}
 
 }
