@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.sdm.timerecord.business.action.UpdateUserRemote;
-import org.sdm.timerecord.business.model.User;
+import org.sdm.timerecord.business.model.db.User;
 
 @Stateless
 public class UpdateUser implements UpdateUserRemote {

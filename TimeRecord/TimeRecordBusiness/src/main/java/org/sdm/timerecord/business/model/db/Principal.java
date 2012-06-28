@@ -1,4 +1,4 @@
-package org.sdm.timerecord.business.model;
+package org.sdm.timerecord.business.model.db;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -9,9 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.sdm.timerecord.business.model.ResourceType;
+
 @Entity
-@DiscriminatorValue("PRINCIPAL")
-@Table(name = "TR_PRINCIPAL", uniqueConstraints = { @UniqueConstraint(columnNames = { "NAME" }) })
+@Table(name = "TR_PRINCIPALS", uniqueConstraints = { @UniqueConstraint(columnNames = { "NAME" }) })
 public class Principal extends Resource implements Serializable, java.security.Principal  {
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +26,7 @@ public class Principal extends Resource implements Serializable, java.security.P
 	public Principal(String name) throws Exception {
 		super();
 		this.name = name;
+		this.resourceType = ResourceType.PRINCIPAL;
 	}
 
 	public String getName() {

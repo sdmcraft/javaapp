@@ -1,4 +1,4 @@
-package org.sdm.timerecord.business.model;
+package org.sdm.timerecord.business.model.db;
 
 import java.io.Serializable;
 import java.sql.Blob;
@@ -19,7 +19,7 @@ import org.sdm.timerecord.business.Constants;
 import org.sdm.timerecord.business.Utils;
 
 @Entity
-@Table(name = "TR_USER", uniqueConstraints = { @UniqueConstraint(columnNames = {
+@Table(name = "TR_USERS", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"NAME", "PASSWORD" }) })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;

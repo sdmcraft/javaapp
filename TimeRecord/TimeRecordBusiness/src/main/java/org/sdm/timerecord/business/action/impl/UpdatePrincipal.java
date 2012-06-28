@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.sdm.timerecord.business.action.UpdatePrincipalRemote;
-import org.sdm.timerecord.business.model.Principal;
+import org.sdm.timerecord.business.model.db.Principal;
 
 @Stateless
 public class UpdatePrincipal implements UpdatePrincipalRemote {

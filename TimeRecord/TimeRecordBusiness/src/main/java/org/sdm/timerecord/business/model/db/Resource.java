@@ -1,4 +1,4 @@
-package org.sdm.timerecord.business.model;
+package org.sdm.timerecord.business.model.db;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -16,10 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.sdm.timerecord.business.model.ResourceType;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "RESOURCE_TYPE")
-@Table(name = "TR_RESOURCE")
+@Table(name = "TR_RESOURCES")
 public abstract class Resource implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,6 +28,9 @@ public abstract class Resource implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
 	private Integer id;
+	
+	@Column(name = "RESOURCE_TYPE", nullable = false)
+	protected ResourceType resourceType;
 
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "PARENT_ID", referencedColumnName = "ID")
