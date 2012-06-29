@@ -23,30 +23,6 @@
 			<artifactId>org.osgi.compendium</artifactId>
 			<version>1.4.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.asteriskjava</groupId>
-			<artifactId>asterisk-java</artifactId>
-			<version>1.0.0.M3</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<version>2.0.1</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -59,8 +35,8 @@
 						<Bundle-Activator>org.sdm.osgi.demo.Activator</Bundle-Activator>
 						<Import-Package>*;resolution:=optional</Import-Package>
 						<Export-Package>org.sdm.osgi.demo</Export-Package>
-						<Bundle-ClassPath>.,{maven-dependencies},lib/jdom-2.0.1.jar</Bundle-ClassPath>
-						<Include-Resource>{maven-resources},{maven-dependencies},lib/jdom-2.0.1.jar</Include-Resource>					
+						<Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
+						<Include-Resource>{maven-resources},{maven-dependencies}</Include-Resource>					
 					</instructions>
 				</configuration>
 			</plugin>
