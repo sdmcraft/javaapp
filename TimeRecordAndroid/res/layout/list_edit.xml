@@ -47,11 +47,8 @@
                 android:text="Description" />
 
             <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:lines="10"
-                android:singleLine="false" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </TableRow>
     </TableLayout>
 
