@@ -8,9 +8,9 @@ import java.net.URLConnection;
 public class LoadTestXmlApi {
 
 	public static void main(String[] args) throws Exception {
-		String scoId = "665673780";
-		String eventName = "sdmimgtest";
-		for (int i = 1; i <= 20; i++) {
+		String scoId = "77026";
+		String eventName = "event54";
+		for (int i = 1; i <= 750; i++) {
 			RegisterTask registerTask = new RegisterTask(scoId, eventName, i);
 			new Thread(registerTask).start();
 			Thread.sleep(200);
@@ -34,11 +34,11 @@ public class LoadTestXmlApi {
 			try {
 				BufferedReader in = null;
 				URL url = new URL(
-						"http://connectpro38125358.adobeconnect.com/api/xml?action=event-register&sco-id="
+						"http://satyam7-win7.corp.adobe.com/api/xml?action=event-register&sco-id="
 								+ scoId
 								+ "&password=breeze&password-verify=breeze&login="
-								+ eventName + "-" + num
-								+ "@adobe.com&name=newuser" + num);
+								+ eventName + "apirant" + num
+								+ "@adobe.com&name=" + eventName + "aspirant" + num);
 				URLConnection yc = url.openConnection();
 				in = new BufferedReader(new InputStreamReader(
 						yc.getInputStream()));

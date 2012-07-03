@@ -99,12 +99,18 @@ public class HTMLMailDemo {
 		 * PasswordAuthenticator("m.satyadeep@gmail.com","xxx"));
 		 */
 
-		props.put("mail.smtp.host", "inner-relay-1.corp.adobe.com");
+		/*props.put("mail.smtp.host", "inner-relay-1.corp.adobe.com");
+		props.put("mail.smtp.from", "satyam@adobe.com");
+		props.put("mail.smtp.auth", "true");
+		Session session = Session.getInstance(props, new PasswordAuthenticator(
+				"spuri@adobe.com", "breeze"));*/
+
+		props.put("mail.smtp.host", "localhost");
 		props.put("mail.smtp.from", "satyam@adobe.com");
 		props.put("mail.smtp.auth", "true");
 		Session session = Session.getInstance(props, new PasswordAuthenticator(
 				"spuri@adobe.com", "breeze"));
-
+		
 		MimeMessage mimeMessage = new MimeMessage(session);
 		mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(
 				"m.satyadeep@gmail.com"));
