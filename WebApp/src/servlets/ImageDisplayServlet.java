@@ -59,12 +59,13 @@ public class ImageDisplayServlet extends HttpServlet {
 				InputStream in = new BufferedInputStream(
 						imageBlob.getBinaryStream());
 				String mimeType = URLConnection.guessContentTypeFromStream(in);
+				in.close();
 				System.out.println("Mime Type:" + mimeType);
+				
+				byte[] imgData = imageBlob.getBytes(1,(int)imageBlob.length());				
 				OutputStream out = resp.getOutputStream();
-				byte b;
-				while ((b = (byte) in.read()) != -1) {
-					out.write(b);
-				}
+				out.write(imgData);
+				out.flush();
 				out.close();
 			}
 		} catch (Exception e) {
