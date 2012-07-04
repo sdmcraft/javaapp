@@ -16,8 +16,19 @@ public class GraphUtils {
 
 	public static final <T> List<Node<T>> shortestDistance(Graph<T> graph,
 			Node<T> startNode, Node<T> endNode) throws Exception {
+		/*
+		 * Set of nodes which have been processed and should be skipped while
+		 * processing
+		 */
 		Set<Node<T>> visitedNodes = new HashSet<>();
+
+		/*
+		 * A map of a target node to the path from the source node to this
+		 * target node
+		 */
 		Map<Node<T>, List<Node<T>>> pathMap = new HashMap<Node<T>, List<Node<T>>>();
+
+		/* A class to keep the minimum cost of reaching a node */
 		class NodeDistance implements Comparable<NodeDistance> {
 			private final Node<T> node;
 			private int distance = Integer.MAX_VALUE;
@@ -40,17 +51,38 @@ public class GraphUtils {
 
 		}
 
+		/* The node processing queue */
 		List<NodeDistance> nodeList = new ArrayList<>();
-		NodeDistance nodeDistance = new NodeDistance(startNode, 0);
-		nodeList.add(nodeDistance);
-		while (nodeList.size() > 0) {
-			NodeDistance currentNodeDistance = nodeList.remove(0);
-			Node<T> node = currentNodeDistance.node;
-			Set<Node<T>> neighbours = graph.getNeighbours(node);
 
+		/* The start node is trivially at 0 cost to itself */
+		NodeDistance nodeDistance = new NodeDistance(startNode, 0);
+
+		/* Enqueue it for processing */
+		nodeList.add(nodeDistance);
+
+		/* Loop while we have nodes to process */
+		while (nodeList.size() > 0) {
+
+			/* Pick the first node for processing */
+			NodeDistance currentNodeDistance = nodeList.remove(0);
+			Node<T> currentNode = currentNodeDistance.node;
+			/* Get all its neighbors */
+			Set<Node<T>> neighbours = graph.getNeighbours(currentNode);
+
+			/* Iterate over the neighbors to process them */
 			for (Node<T> neighbour : neighbours) {
 
-				Set<Edge<T>> edgesToNeighbour = graph.getEdges(node, neighbour);
+				/* Continue to next one if this neighbor is already processed */
+				if (visitedNodes.contains(neighbour)) {
+					continue;
+				}
+
+				/*
+				 * If there a multiple edges to a neighbor, get the one with
+				 * minimum cost
+				 */
+				Set<Edge<T>> edgesToNeighbour = graph.getEdges(currentNode,
+						neighbour);
 				int minEdgeWeight = Integer.MAX_VALUE;
 				for (Edge<T> edge : edgesToNeighbour) {
 					if (edge.getWeight().intValue() < minEdgeWeight) {
@@ -58,15 +90,22 @@ public class GraphUtils {
 					}
 				}
 
+				/*
+				 * Check if this neighbor is already present in the processing
+				 * queue. If yes, get its index.
+				 */
 				int neighbourIndex = -1;
 				for (NodeDistance nd : nodeList) {
-					if (neighbour.equals(nd.node)
-							&& !visitedNodes.contains(nd.node)) {
+					if (neighbour.equals(nd.node)) {
 						neighbourIndex = nodeList.indexOf(nd);
 						break;
 					}
 				}
 
+				/*
+				 * If the neighbor was not already present in the processing
+				 * queue, add it.
+				 */
 				if (neighbourIndex == -1) {
 					NodeDistance neighbourDistance = new NodeDistance(
 							neighbour, minEdgeWeight);
@@ -74,7 +113,11 @@ public class GraphUtils {
 					List<Node<T>> path = new ArrayList<>();
 					path.add(neighbour);
 					pathMap.put(neighbour, path);
-				} else {
+				} /*
+				 * The neighbor was already present in the list. If we have a
+				 * lesser cost via the current node to this neighbor than what
+				 * the neighbor already has, update it with this lesser cost.
+				 */else {
 					if (nodeList.get(neighbourIndex).distance > currentNodeDistance.distance
 							+ minEdgeWeight) {
 						nodeList.get(neighbourIndex).distance = currentNodeDistance.distance
@@ -84,7 +127,17 @@ public class GraphUtils {
 					}
 				}
 			}
-			visitedNodes.add(node);
+			/*
+			 * Current node is processed as all its neighbors have been
+			 * considered. Add it to processed nodes list.
+			 */
+			visitedNodes.add(currentNode);
+			System.out.println("Node:" + currentNode + " Minimum Cost:"
+					+ currentNodeDistance.distance);
+			/*
+			 * Sort the processing queue to bring the minimum distance node to
+			 * the front
+			 */
 			Collections.sort(nodeList);
 		}
 		System.out.println(nodeList);
