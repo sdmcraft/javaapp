@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +27,7 @@ public abstract class Resource implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID", nullable = false)
 	private Integer id;
-	
+
 	@Column(name = "RESOURCE_TYPE", nullable = false)
 	protected ResourceType resourceType;
 
@@ -38,6 +37,9 @@ public abstract class Resource implements Serializable {
 
 	@OneToMany(mappedBy = "parent")
 	private Collection<Resource> children;
+
+	@OneToMany(mappedBy = "resource")
+	private Collection<AclEntry> acl;
 
 	public Resource() {
 		super();
