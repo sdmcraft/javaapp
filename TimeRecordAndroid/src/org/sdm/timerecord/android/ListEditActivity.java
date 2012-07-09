@@ -13,16 +13,21 @@ import android.widget.Spinner;
 public class ListEditActivity extends Activity {
 
 	private String listName;
+	private String listDescription;
 	private Long listId;
 	private EditText listNameEditText;
+	private EditText listDescriptionEditText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle extras = getIntent().getExtras();
-		if (extras != null) {			
+		if (extras != null) {
 			listId = extras.getLong(List.COL_ID);
-			listName = List.query(Globals.getInstance().getDb(), listId).getString(1);
+			listName = List.query(Globals.getInstance().getDb(), listId)
+					.getString(1);
+			listDescription = List.query(Globals.getInstance().getDb(), listId)
+					.getString(2);
 		}
 		render();
 	}
@@ -39,6 +44,12 @@ public class ListEditActivity extends Activity {
 		if (listName != null) {
 			listNameEditText.setText(listName);
 		}
+
+		listDescriptionEditText = (EditText) findViewById(R.id.description);
+		if (listDescription != null) {
+			listDescriptionEditText.setText(listDescription);
+		}
+
 		Button confirmButton = (Button) findViewById(R.id.save);
 		confirmButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -51,10 +62,12 @@ public class ListEditActivity extends Activity {
 	private void save() {
 		if (listId == null || listId == -1) {
 			List.insert(Globals.getInstance().getDb(), listNameEditText
-					.getText().toString());
+					.getText().toString(), listDescriptionEditText.getText()
+					.toString());
 		} else {
 			List.update(Globals.getInstance().getDb(), listId, listNameEditText
-					.getText().toString());
+					.getText().toString(), listDescriptionEditText.getText()
+					.toString());
 		}
 	}
 
