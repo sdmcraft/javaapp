@@ -31,7 +31,7 @@ public class DBBean {
 	}
 
 	public List<Integer> getImageList() throws Exception {
-		List<Integer> imageList = new ArrayList<>();
+		List<Integer> imageList = new ArrayList<Integer>();
 		PreparedStatement ps = dbConnection
 				.prepareStatement("SELECT id FROM images");
 		ResultSet rs = ps.executeQuery();
