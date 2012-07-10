@@ -1,6 +1,7 @@
 package dataStructuresV2.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,6 +43,35 @@ public class GraphFactory {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static <T> Graph<T> getGraph(int[][] adjMatrix, T[] values)
+			throws InvalidDataException {
+		BasicGraph<T> basicGraph = null;
+		if (adjMatrix.length < 1 || adjMatrix.length != adjMatrix[0].length
+				|| adjMatrix.length != values.length) {
+			throw new InvalidDataException(
+					"Invalid adjacency matrix for making a graph!!");
+		} else {
+			List<Node<T>> nodeList = new ArrayList<Node<T>>();
+			for (T value : values) {
+				nodeList.add(NodeFactory.getNode(value));
+			}
+			basicGraph = new BasicGraph<>(new HashSet<>(nodeList));
+			for (int i = 0; i < adjMatrix.length; i++) {
+				for (int j = 0; j < adjMatrix.length; j++) {
+					if (adjMatrix[i][j] != Integer.MAX_VALUE) {
+						Edge edge = EdgeFactory
+								.getEdge(
+										new Node[] { nodeList.get(i),
+												nodeList.get(j) },
+										adjMatrix[i][j]);
+						basicGraph.addEdge(edge);
+					}
+				}
+			}
+		}
+		return basicGraph;
 	}
 
 	public static <T> Graph<T> getSimpleGraph(Set<T> values, int edges)
