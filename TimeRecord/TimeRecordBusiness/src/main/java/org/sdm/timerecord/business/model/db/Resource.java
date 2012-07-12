@@ -41,6 +41,10 @@ public abstract class Resource implements Serializable {
 	@OneToMany(mappedBy = "resource")
 	private Collection<AclEntry> acl;
 
+	public Collection<AclEntry> getAcl() {
+		return acl;
+	}
+
 	public Resource() {
 		super();
 	}
