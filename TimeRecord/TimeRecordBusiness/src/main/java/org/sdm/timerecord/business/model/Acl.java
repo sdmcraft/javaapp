@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.security.acl.AclEntry;
 import java.security.acl.LastOwnerException;
 import java.security.acl.NotOwnerException;
+import java.security.acl.Owner;
 import java.security.acl.Permission;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -11,6 +12,8 @@ import java.util.Enumeration;
 public class Acl implements java.security.acl.Acl {
 	
 	private Collection<AclEntry> aclEntries;
+	private Collection<Owner> owners;
+	
 	public Acl(Collection<AclEntry> aclEntries)
 	{
 		this.aclEntries = aclEntries;
