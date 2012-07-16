@@ -1,11 +1,11 @@
 package dataStructuresV2.utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dataStructuresV2.DirectedEdge;
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
@@ -61,11 +61,9 @@ public class GraphFactory {
 			for (int i = 0; i < adjMatrix.length; i++) {
 				for (int j = 0; j < adjMatrix.length; j++) {
 					if (adjMatrix[i][j] != Integer.MAX_VALUE) {
-						Edge edge = EdgeFactory
-								.getEdge(
-										new Node[] { nodeList.get(i),
-												nodeList.get(j) },
-										adjMatrix[i][j]);
+						DirectedEdge edge = EdgeFactory
+								.getDirectedEdge(new Node[] { nodeList.get(i),
+										nodeList.get(j) }, adjMatrix[i][j]);
 						basicGraph.addEdge(edge);
 					}
 				}
