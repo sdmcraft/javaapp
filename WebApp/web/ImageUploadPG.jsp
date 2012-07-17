@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 
 <head>
@@ -11,9 +11,18 @@
 		<input type="file" name="datafile" /> <input type="submit" />
 	</form>
 	<jsp:useBean id="dbBean" scope="request" class="beans.DBBean"></jsp:useBean>
-	<c:forEach var="imageId" items="${dbBean.ImageList}">
-		<h1>${imageId}</h1>
-	</c:forEach>
+	<table>
+		<tr>
+			<c:forEach var="imageId" items="${dbBean.imageList}"
+				varStatus="status">
+				<c:if test="${status.count%4 == 0} }">
+		</tr>
+		<tr>
+			</c:if>
+			<td><img width="25%" height="25%"
+				src="/WebApp/ImageDisplay?image-id=${imageId}" /> </c:forEach></td>
+		</tr>
+	</table>
 </body>
 
 </html>
