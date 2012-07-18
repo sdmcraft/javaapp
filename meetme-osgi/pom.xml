@@ -51,10 +51,10 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-Activator>org.sdm.osgi.demo.Activator</Bundle-Activator>
+						<Bundle-Activator>org.sdm.meetme.osgi.Activator</Bundle-Activator>
 						<Import-Package>*;resolution:=optional</Import-Package>
-						<Export-Package>org.sdm.meetme</Export-Package>
-						<Bundle-ClassPath>.,{maven-dependencies},lib/jdom-2.0.1.jar</Bundle-ClassPath>
+						<Export-Package>org.sdm.meetme.client</Export-Package>
+						<Bundle-ClassPath>.,{maven-dependencies},jdom-2.0.1.jar</Bundle-ClassPath>						
 						<Include-Resource>{maven-resources},{maven-dependencies},lib/jdom-2.0.1.jar</Include-Resource>					
 					</instructions>
 				</configuration>
