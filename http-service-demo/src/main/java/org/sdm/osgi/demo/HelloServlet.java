@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.meetmejava.client.Client;
+import org.sdm.meetme.client.Client;
 
 public class HelloServlet extends HttpServlet {
 	@Override
@@ -16,7 +16,7 @@ public class HelloServlet extends HttpServlet {
 		resp.getWriter().write("Hello World");
 		try {
 			new Client().demo("10.40.61.65", "admin", "P@$$w0rd", "6300",
-					new String[] { "SIP/6000" },
+					new String[] { "SIP/1000" },
 					"http://10.40.79.106:8080/AsteriskExtension/service");
 		} catch (Exception ex) {
 			throw new ServletException(ex);

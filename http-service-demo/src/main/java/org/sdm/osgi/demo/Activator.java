@@ -13,7 +13,7 @@ public class Activator implements BundleActivator, ServiceListener {
 	private BundleContext bundleCtx = null;
 
 	public void start(BundleContext context) throws Exception {
-		System.out.println("Starting the bundle YODA YODA2!!");
+		System.out.println("Starting the bundle YODA1 YODA2!!");
 		bundleCtx = context;		
 		ServiceReference sRef = bundleCtx
 				.getServiceReference(HttpService.class.getName());
