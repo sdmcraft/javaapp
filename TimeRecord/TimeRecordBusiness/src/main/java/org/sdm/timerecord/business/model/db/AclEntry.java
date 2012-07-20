@@ -1,6 +1,6 @@
 package org.sdm.timerecord.business.model.db;
 
-import java.security.Principal;
+
 import java.security.acl.Permission;
 import java.util.Enumeration;
 
@@ -30,7 +30,7 @@ public class AclEntry implements java.security.acl.AclEntry {
 	@JoinColumn(name = "RESOURCE_ID", referencedColumnName = "ID")
 	private final Resource resource;
 
-	private final Enumeration<Permission> permissions;
+	transient private final Enumeration<Permission> permissions;
 
 	public AclEntry(Principal principal, Resource resource,
 			Enumeration<Permission> permissions) {
@@ -89,6 +89,12 @@ public class AclEntry implements java.security.acl.AclEntry {
 			ex.printStackTrace();
 		}
 		return null;
+	}
+
+
+	public boolean setPrincipal(java.security.Principal arg0) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
