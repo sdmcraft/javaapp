@@ -20,7 +20,7 @@ public class ListTestActivity extends ListActivity {
 		setListAdapter(listAdapter);
 		ListView lv = getListView();
 		lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
+			
 			public boolean onItemLongClick(AdapterView<?> av, View v, int pos,
 					long id) {
 				Toast.makeText(getApplicationContext(), "Hello!", 3).show();

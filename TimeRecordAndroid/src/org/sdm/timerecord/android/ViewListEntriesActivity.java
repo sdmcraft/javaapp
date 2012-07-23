@@ -87,15 +87,15 @@ public class ViewListEntriesActivity extends ListActivity {
 
 		// Now create a simple cursor adapter and set it to display
 		SimpleCursorAdapter entries = new SimpleCursorAdapter(this,
-				R.layout.entry_row, listsCursor, from, to){
+				R.layout.entry_row, listsCursor, from, to) {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = super.getView(position, convertView, parent);
 				long id = getItemId(position);
 
-				Button deleteButton = (Button) view.findViewById(R.id.deleteEntry);
+				Button deleteButton = (Button) view
+						.findViewById(R.id.deleteEntry);
 				deleteButton.setTag(id);
-				
 
 				Button editEntryButton = (Button) view
 						.findViewById(R.id.editEntry);
@@ -110,7 +110,7 @@ public class ViewListEntriesActivity extends ListActivity {
 		setListAdapter(entries);
 
 	}
-	
+
 	public void deleteEntryButtonClickHandler(View view) {
 		Button deleteButton = (Button) view;
 		long listEntryId = Long.parseLong(deleteButton.getTag().toString());
@@ -118,8 +118,9 @@ public class ViewListEntriesActivity extends ListActivity {
 		fillData();
 	}
 
-	public void editEntryButtonClickHandler(View view) {		
-		Toast.makeText(getApplicationContext(), "Not yet supported!!", 3).show(); 
+	public void editEntryButtonClickHandler(View view) {
+		Toast.makeText(getApplicationContext(), "Not yet supported!!", 3)
+				.show();
 	}
 
 	@Override
@@ -172,20 +173,20 @@ public class ViewListEntriesActivity extends ListActivity {
 					* 60
 					+ Integer.parseInt(entry.getValue().split(":")[2].trim());
 			if (valuesDbl[i] > maxVal)
-				maxVal = valuesDbl[i];
+				maxVal = valuesDbl[i] * 1.1;
 			if (valuesDbl[i] < minVal)
-				minVal = valuesDbl[i];
+				minVal = valuesDbl[i] * 0.9;
 
 		}
 		dates.add(dateValues);
 		values.add(valuesDbl);
 
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-		renderer.setYAxisMin(minVal);
-		renderer.setYAxisMax(maxVal);
-		renderer.setXLabels(0);
-		renderer.setYLabels(0);
-		renderer.clearXTextLabels();
+		//renderer.setYAxisMin(0);
+		//renderer.setYAxisMax(maxVal);
+		//renderer.setXLabels(0);
+		//renderer.setYLabels(0);
+		//renderer.clearXTextLabels();
 		renderer.setShowCustomTextGrid(true);
 		renderer.setXTitle("Entry Dates");
 		renderer.setYTitle("Values");
@@ -200,17 +201,17 @@ public class ViewListEntriesActivity extends ListActivity {
 		// renderer.setMargins(new int[] { 20, 30, 15, 20 });
 		renderer.addSeriesRenderer(seriesRenderer);
 
-		XYSeries ts = new XYSeries("");
+		TimeSeries ts = new TimeSeries("");
 
 		for (int i = 0; i < valuesDbl.length; i++) {
-			ts.add(dateValues[i].getTime(), valuesDbl[i]);
-			renderer.addXTextLabel(
+			ts.add(dateValues[i], valuesDbl[i]);			
+			/*renderer.addXTextLabel(
 					dateValues[i].getTime(),
 					(dateValues[i].getDay() + 1) + "/"
-							+ (dateValues[i].getMonth() + 1));
+							+ (dateValues[i].getMonth() + 1));*/
 			Double d = valuesDbl[i];
 			Long l = d.longValue();
-			renderer.addYTextLabel(valuesDbl[i], l.toString());
+			//renderer.addYTextLabel(valuesDbl[i], l.toString());
 		}
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(ts);
