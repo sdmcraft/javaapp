@@ -8,9 +8,9 @@ import java.net.URLConnection;
 public class LoadTestXmlApi {
 
 	public static void main(String[] args) throws Exception {
-		String scoId = "77026";
-		String eventName = "event54";
-		for (int i = 1; i <= 750; i++) {
+		String scoId = "33200";
+		String eventName = "event2";
+		for (int i = 1; i <= 50; i++) {
 			RegisterTask registerTask = new RegisterTask(scoId, eventName, i);
 			new Thread(registerTask).start();
 			Thread.sleep(200);

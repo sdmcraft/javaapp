@@ -91,13 +91,12 @@ public class HTMLMailDemo {
 
 		Properties props = new Properties();
 
-		/*
-		 * props.put("mail.smtp.host", "smtp.gmail.com");
-		 * props.put("mail.smtp.starttls.enable", "true");
-		 * props.put("mail.smtp.auth", "true"); Session session =
-		 * Session.getDefaultInstance(props, new
-		 * PasswordAuthenticator("m.satyadeep@gmail.com","xxx"));
-		 */
+		
+		 props.put("mail.smtp.host", "smtp.gmail.com");
+		 props.put("mail.smtp.starttls.enable", "true");
+		 props.put("mail.smtp.auth", "true"); Session session =
+		 Session.getDefaultInstance(props, new PasswordAuthenticator("m.satyadeep@gmail.com","xxx"));
+		 
 
 		/*props.put("mail.smtp.host", "inner-relay-1.corp.adobe.com");
 		props.put("mail.smtp.from", "satyam@adobe.com");
@@ -105,16 +104,17 @@ public class HTMLMailDemo {
 		Session session = Session.getInstance(props, new PasswordAuthenticator(
 				"spuri@adobe.com", "breeze"));*/
 
-		props.put("mail.smtp.host", "localhost");
+		/*props.put("mail.smtp.host", "localhost");
 		props.put("mail.smtp.from", "satyam@adobe.com");
 		props.put("mail.smtp.auth", "true");
 		Session session = Session.getInstance(props, new PasswordAuthenticator(
-				"spuri@adobe.com", "breeze"));
+				"spuri@adobe.com", "breeze"));*/
 		
 		MimeMessage mimeMessage = new MimeMessage(session);
 		mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(
 				"m.satyadeep@gmail.com"));
 		mimeMessage.setSubject("Test Email");
+		mimeMessage.setText("Hello World!!");
 		MimeMultipart mimeMultipart = new MimeMultipart();
 		mimeMultipart.setSubType("mixed");
 

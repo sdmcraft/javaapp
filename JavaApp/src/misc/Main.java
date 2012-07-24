@@ -23,7 +23,7 @@ public class Main {
 		// writeLoginCsv();
 		// printSQL();
 		//writeUserList("event53", 1500);
-		writeGuestList("event54", 750);
+		writeGuestList("event1", 10);
 		// appendToFile("C:\\temp\\text.txt", "Hello");
 		// appendToFile("C:\\temp\\text.txt", "World");
 		// Class.forName("misc.Main");
