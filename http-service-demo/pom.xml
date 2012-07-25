@@ -18,12 +18,13 @@
 			<artifactId>org.osgi.compendium</artifactId>
 			<version>1.4.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.sdm.meetme</groupId>
 			<artifactId>meetme-osgi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency> 
-		
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -41,7 +42,8 @@
 					</instructions>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
-	
+
 </project>
