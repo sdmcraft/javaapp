@@ -154,7 +154,7 @@ public class Conference extends Observable {
 		dialoutAction.setChannel(phoneNumber);
 
 		/* TODO Remove these hardcodings */
-		dialoutAction.setContext("local");
+		dialoutAction.setContext("default");
 		dialoutAction.setPriority(new Integer(1));
 		dialoutAction.setTimeout(new Long(30000));
 
