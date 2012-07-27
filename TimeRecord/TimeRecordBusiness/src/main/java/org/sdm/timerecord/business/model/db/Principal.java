@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -13,7 +14,9 @@ import org.sdm.timerecord.business.model.ResourceType;
 
 @Entity
 @Table(name = "TR_PRINCIPALS", uniqueConstraints = { @UniqueConstraint(columnNames = { "NAME" }) })
-public class Principal extends Resource implements Serializable, java.security.Principal  {
+@NamedQueries({ @NamedQuery(name = "Principal.listAll", query = "SELECT p FROM Principal p") })
+public class Principal extends Resource implements Serializable,
+		java.security.Principal {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "NAME", nullable = false)
