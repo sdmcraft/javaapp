@@ -265,4 +265,14 @@
 		<servlet-name>UploadStatusServlet</servlet-name>
 		<url-pattern>/UploadStatusServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ServerSentEventDemoServlet</servlet-name>
+		<servlet-class>servlets.ServerSentEventDemoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServerSentEventDemoServlet</servlet-name>
+		<url-pattern>/ServerSentEventDemoServlet</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
