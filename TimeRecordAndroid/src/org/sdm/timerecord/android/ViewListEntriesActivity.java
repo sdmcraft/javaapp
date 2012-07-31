@@ -182,11 +182,11 @@ public class ViewListEntriesActivity extends ListActivity {
 		values.add(valuesDbl);
 
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-		//renderer.setYAxisMin(0);
-		//renderer.setYAxisMax(maxVal);
-		//renderer.setXLabels(0);
-		//renderer.setYLabels(0);
-		//renderer.clearXTextLabels();
+		// renderer.setYAxisMin(0);
+		// renderer.setYAxisMax(maxVal);
+		renderer.setXLabels(0);
+		// renderer.setYLabels(0);
+		// renderer.clearXTextLabels();
 		renderer.setShowCustomTextGrid(true);
 		renderer.setXTitle("Entry Dates");
 		renderer.setYTitle("Values");
@@ -202,16 +202,18 @@ public class ViewListEntriesActivity extends ListActivity {
 		renderer.addSeriesRenderer(seriesRenderer);
 
 		TimeSeries ts = new TimeSeries("");
+		renderer.clearXTextLabels();
 
+		Calendar calendar = Calendar.getInstance();
 		for (int i = 0; i < valuesDbl.length; i++) {
-			ts.add(dateValues[i], valuesDbl[i]);			
-			/*renderer.addXTextLabel(
-					dateValues[i].getTime(),
-					(dateValues[i].getDay() + 1) + "/"
-							+ (dateValues[i].getMonth() + 1));*/
+			calendar.setTime(dateValues[i]);
+			ts.add(dateValues[i], valuesDbl[i]);
+			renderer.addXTextLabel(dateValues[i].getTime(),
+					(calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar
+							.get(Calendar.MONTH) + 1));
 			Double d = valuesDbl[i];
 			Long l = d.longValue();
-			//renderer.addYTextLabel(valuesDbl[i], l.toString());
+			// renderer.addYTextLabel(valuesDbl[i], l.toString());
 		}
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		dataset.addSeries(ts);
