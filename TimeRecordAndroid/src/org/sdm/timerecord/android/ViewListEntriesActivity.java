@@ -209,8 +209,8 @@ public class ViewListEntriesActivity extends ListActivity {
 			calendar.setTime(dateValues[i]);
 			ts.add(dateValues[i], valuesDbl[i]);
 			renderer.addXTextLabel(dateValues[i].getTime(),
-					(calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar
-							.get(Calendar.MONTH) + 1));
+					(calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar
+							.get(Calendar.MONTH) + 1)));
 			Double d = valuesDbl[i];
 			Long l = d.longValue();
 			// renderer.addYTextLabel(valuesDbl[i], l.toString());
