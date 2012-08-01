@@ -1,6 +1,8 @@
 package demo;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
@@ -9,11 +11,18 @@ import dataStructuresV2.utils.GraphUtils;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		/*
-		 * Set<String> valueSet = new HashSet<>(); valueSet.add("a");
-		 * valueSet.add("b"); valueSet.add("c"); valueSet.add("d");
-		 * Graph<String> graph = GraphFactory.getSimpleGraph(valueSet, 5);
-		 */
+
+		// Set<String> valueSet = new HashSet<>();
+		// valueSet.add("a");
+		// valueSet.add("b");
+		// valueSet.add("c");
+		// valueSet.add("d");
+		// valueSet.add("e");
+		// valueSet.add("f");
+		// valueSet.add("g");
+		// valueSet.add("h");
+		// Graph<String> graph = GraphFactory.getSimpleGraph(valueSet, 8);
+
 		Graph<String> graph = GraphFactory.getGraph(new int[][] {
 				{ Integer.MAX_VALUE, 1, 1, Integer.MAX_VALUE },
 				{ Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
@@ -21,6 +30,7 @@ public class Main {
 						Integer.MAX_VALUE },
 				{ 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE } }, new String[] {
 				"a", "b", "c", "d" }, false);
+
 		System.out.println(graph.getDiagram());
 
 		Iterator<Node<String>> itr = graph.getNodes().iterator();

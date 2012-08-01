@@ -108,9 +108,12 @@ public class GraphUtils {
 				 */
 				if (neighbourIndex == -1) {
 					NodeDistance neighbourDistance = new NodeDistance(
-							neighbour, minEdgeWeight);
+							neighbour, currentNodeDistance.distance
+									+ minEdgeWeight);
 					nodeList.add(neighbourDistance);
-					List<Node<T>> path = new ArrayList<>();
+					List<Node<T>> path = pathMap.containsKey(currentNode) ? pathMap
+							.get(currentNode) : new ArrayList<Node<T>>();
+
 					path.add(neighbour);
 					pathMap.put(neighbour, path);
 				} /*
@@ -141,6 +144,7 @@ public class GraphUtils {
 			Collections.sort(nodeList);
 		}
 		System.out.println(nodeList);
+		System.out.println(pathMap);
 		return null;
 	}
 }
