@@ -22,11 +22,9 @@ import org.osgi.service.component.ComponentContext;
 
 @Component(metatype = false, label = "Demo Authentication Handler", description = "Demo Authentication Handler")
 @Service(value = AuthenticationHandler.class)
-@Properties({
+@Properties( {
 		@Property(name = "authtype", value = "demo", propertyPrivate = true),
-		@Property(name = "path", value = { "/content/connect", "/" }) })
-
-
+		@Property(name = "path", value = { "/content/mynode" }) })
 public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 
 	@Reference
@@ -36,21 +34,18 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 		super();
 	}
 
-	
 	public void dropCredentials(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws IOException {
 		// TODO Auto-generated method stub
 
 	}
 
-	
-	public AuthenticationInfo extractCredentials(HttpServletRequest arg0,
-			HttpServletResponse arg1) {
-		// TODO Auto-generated method stub
-		return null;
+	public AuthenticationInfo extractCredentials(HttpServletRequest req,
+			HttpServletResponse resp) {
+		return new AuthenticationInfo("demo", req.getParameter("name"), req
+				.getParameter("pwd").toCharArray());
 	}
 
-	
 	public boolean requestCredentials(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws IOException {
 		// TODO Auto-generated method stub
@@ -59,13 +54,26 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
+		try {
+			createUser("test", "test");			
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			createUser("test1", "test1");			
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
-	
-	private void createUser() throws RepositoryException
-	{
-		JackrabbitSession session = (JackrabbitSession)repository.loginAdministrative(null);
+
+	private void createUser(String uid, String pwd) throws RepositoryException {
+		JackrabbitSession session = (JackrabbitSession) repository
+				.loginAdministrative(null);
 		UserManager userManager = session.getUserManager();
-		userManager.createUser("test", "test");
+		userManager.createUser(uid, pwd);
 		session.save();
 		session.logout();
 	}

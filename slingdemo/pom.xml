@@ -64,6 +64,12 @@
 			<artifactId>jackrabbit-jcr-commons</artifactId>
 			<version>2.5.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-api</artifactId>
+			<version>2.1.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -74,7 +80,7 @@
 				<configuration>
 					<instructions>
 						<!-- <Bundle-Activator>org.sdm.osgi.demo.Activator</Bundle-Activator> -->
-						<Import-Package>*;resolution:=optional</Import-Package>
+						<!-- <Import-Package>*;resolution:=optional</Import-Package> -->
 						<!-- <Export-Package>org.sdm.osgi.demo</Export-Package> -->
 						<Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
 						<Include-Resource>{maven-resources},{maven-dependencies}</Include-Resource>					
