@@ -7,6 +7,8 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
 
+import org.apache.jackrabbit.api.JackrabbitSession;
+import org.apache.jackrabbit.api.security.user.UserManager;
 import org.apache.jackrabbit.core.TransientRepository;
 
 /**
@@ -40,4 +42,13 @@ public class App {
 			session.logout();
 		}
 	}
+
+	private void createUser(String uid, String pwd, Repository repository,
+			JackrabbitSession session) throws RepositoryException {
+		UserManager userManager = session.getUserManager();
+		userManager.createUser(uid, pwd);
+		session.save();
+		session.logout();
+	}
+
 }
