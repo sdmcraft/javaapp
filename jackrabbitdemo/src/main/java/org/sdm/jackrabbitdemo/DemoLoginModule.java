@@ -54,7 +54,7 @@ public class DemoLoginModule implements LoginModule {
 		try {
 			callbackHandler.handle(new Callback[] { repositoryCb });
 			JackrabbitSession jcrSession = (JackrabbitSession) repositoryCb.getSession();
-			//UserManager jcrUserManager = jcrSession.getUserManager();
+			UserManager jcrUserManager = jcrSession.getUserManager();
 			//jcrUserManager.getAuthorizable("admin");
 			return true;
 		} catch (Exception e) {
