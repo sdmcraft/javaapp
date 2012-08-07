@@ -2,29 +2,36 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ServerSentEventDemoServlet extends HttpServlet {
+public class SessionNotificationServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		HttpSession session = req.getSession();
+		Object lock = session.getAttribute("lock");
+		if (lock == null) {
+			lock = new Object();
+			session.setAttribute("lock", lock);
+		}
 		resp.setContentType("text/event-stream");
 		PrintWriter out = resp.getWriter();
-		while (true) {			
-			Date date = new Date();
-			out.print("event: server-time\n");
-			out.print("data: " + date.toString() + "\n\n");
-			out.flush();
+		synchronized (lock) {
 			try {
-				Thread.sleep(1000);
+				lock.wait();
+				out.print("event: session-state\n");
+				out.print("data: session-expired\n\n");
+				out.flush();
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				out.close();
 			}
 		}
 	}
