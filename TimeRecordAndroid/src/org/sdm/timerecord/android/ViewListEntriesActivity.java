@@ -40,9 +40,9 @@ public class ViewListEntriesActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.entries_list);
-		registerForContextMenu(getListView());
+		// setContentView(R.layout.entries_list);
 		fillData();
+		registerForContextMenu(getListView());
 	}
 
 	@Override
@@ -78,35 +78,15 @@ public class ViewListEntriesActivity extends ListActivity {
 
 		// Create an array to specify the fields we want to display in the list
 		// (only TITLE)
-		String[] from = new String[] { ListEntry.COL_ENTRY_TIME,
-				ListEntry.COL_VALUE };
+		String[] from = new String[] { ListEntry.COL_ENTRY_TIME };
 
 		// and an array of the fields we want to bind those fields to (in this
 		// case just text1)
-		int[] to = new int[] { R.id.entryTime, R.id.entryValue };
+		int[] to = new int[] { R.id.entryTime };
 
 		// Now create a simple cursor adapter and set it to display
 		SimpleCursorAdapter entries = new SimpleCursorAdapter(this,
-				R.layout.entry_row, listsCursor, from, to) {
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				View view = super.getView(position, convertView, parent);
-				long id = getItemId(position);
-
-				Button deleteButton = (Button) view
-						.findViewById(R.id.deleteEntry);
-				deleteButton.setTag(id);
-
-				Button editEntryButton = (Button) view
-						.findViewById(R.id.editEntry);
-				editEntryButton.setTag(id);
-
-				LinearLayout entryRow = (LinearLayout) view
-						.findViewById(R.id.entryRow);
-				entryRow.setTag(id);
-				return view;
-			}
-		};
+				R.layout.entry_row, listsCursor, from, to);
 		setListAdapter(entries);
 
 	}

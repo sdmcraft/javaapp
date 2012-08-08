@@ -196,59 +196,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 		// Now create a simple cursor adapter and set it to display
 		SimpleCursorAdapter lists = new SimpleCursorAdapter(this,
-				R.layout.list_row, mListsCursor, from, to) /*
-															 * {
-															 * 
-															 * @Override public
-															 * View getView(int
-															 * position, View
-															 * convertView,
-															 * ViewGroup parent)
-															 * { View view =
-															 * super
-															 * .getView(position
-															 * , convertView,
-															 * parent); long id
-															 * =
-															 * getItemId(position
-															 * );
-															 * 
-															 * Button
-															 * entryButton =
-															 * (Button)
-															 * view.findViewById
-															 * (R.id.entry);
-															 * entryButton
-															 * .setTag(id);
-															 * 
-															 * Button
-															 * viewEntriesButton
-															 * = (Button) view
-															 * .findViewById
-															 * (R.id
-															 * .viewEntries);
-															 * viewEntriesButton
-															 * .setTag(id);
-															 * 
-															 * TextView listName
-															 * = (TextView)
-															 * view.
-															 * findViewById(
-															 * R.id.name);
-															 * listName
-															 * .setTag(id);
-															 * registerForContextMenu
-															 * (listName);
-															 * LinearLayout
-															 * listRow =
-															 * (LinearLayout)
-															 * view
-															 * .findViewById
-															 * (R.id.listRow);
-															 * listRow
-															 * .setTag(id);
-															 * return view; } }
-															 */;
+				R.layout.list_row, mListsCursor, from, to);
 
 		setListAdapter(lists);
 
