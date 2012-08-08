@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
@@ -18,17 +19,19 @@ import org.apache.sling.auth.core.spi.AbstractAuthenticationHandler;
 import org.apache.sling.auth.core.spi.AuthenticationHandler;
 import org.apache.sling.auth.core.spi.AuthenticationInfo;
 import org.apache.sling.jcr.api.SlingRepository;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 
 @Component(metatype = false, label = "Demo Authentication Handler", description = "Demo Authentication Handler")
 @Service(value = AuthenticationHandler.class)
-@Properties( {
+@Properties({
 		@Property(name = "authtype", value = "demo", propertyPrivate = true),
 		@Property(name = "path", value = { "/content/mynode" }) })
 public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 
 	@Reference
 	private SlingRepository repository;
+	private ServiceRegistration loginModule;
 
 	public DemoAuthenticationHandler() {
 		super();
@@ -42,8 +45,10 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 
 	public AuthenticationInfo extractCredentials(HttpServletRequest req,
 			HttpServletResponse resp) {
-		return new AuthenticationInfo("demo", req.getParameter("name"), req
-				.getParameter("pwd").toCharArray());
+		AuthenticationInfo authInfo = new AuthenticationInfo("demo",
+				req.getParameter("name"), req.getParameter("pwd").toCharArray());
+		authInfo.put("demo", "demo");
+		return authInfo;
 	}
 
 	public boolean requestCredentials(HttpServletRequest arg0,
@@ -55,18 +60,40 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 	@Activate
 	protected void activate(ComponentContext componentContext) {
 		try {
-			createUser("test", "test");			
+			createUser("aa", "11");
 		} catch (RepositoryException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			createUser("test1", "test1");			
+			createUser("bb", "22");
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			createUser("cc", "xxx");
 		} catch (RepositoryException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		this.loginModule = null;
+		try {
+			this.loginModule = DemoLoginModulePlugin.register(this,
+					componentContext.getBundleContext());
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+
+	}
+
+	@Deactivate
+	protected void deactivate(ComponentContext componentContext) {
+		if (loginModule != null) {
+			loginModule.unregister();
+			loginModule = null;
+		}
 	}
 
 	private void createUser(String uid, String pwd) throws RepositoryException {
