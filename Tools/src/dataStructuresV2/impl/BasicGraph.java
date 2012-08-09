@@ -137,7 +137,7 @@ public class BasicGraph<T> implements Graph<T> {
 		}
 
 		if (!edges.add(edge)) {
-			throw new InvalidDataException("This graph already has this edge!!");
+			System.out.println("This graph already has this edge!!");
 		}
 
 	}

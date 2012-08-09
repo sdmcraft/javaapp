@@ -52,30 +52,40 @@ public class GraphFactory {
 				|| adjMatrix.length != values.length) {
 			throw new InvalidDataException(
 					"Invalid adjacency matrix for making a graph!!");
-		} else {
-			List<Node<T>> nodeList = new ArrayList<Node<T>>();
-			for (T value : values) {
-				nodeList.add(NodeFactory.getNode(value));
-			}
-			basicGraph = new BasicGraph<>(new HashSet<>(nodeList));
+		}
+		if (!directed) {
 			for (int i = 0; i < adjMatrix.length; i++) {
 				for (int j = 0; j < adjMatrix.length; j++) {
-					if (adjMatrix[i][j] != Integer.MAX_VALUE) {
-						Edge edge = null;
-						if (directed) {
-							edge = EdgeFactory.getDirectedEdge(new Node[] {
-									nodeList.get(i), nodeList.get(j) },
-									adjMatrix[i][j]);
-						} else {
-							edge = EdgeFactory.getEdge(
-									new Node[] { nodeList.get(i),
-											nodeList.get(j) }, adjMatrix[i][j]);
-						}
-						basicGraph.addEdge(edge);
+					if (adjMatrix[i][j] != adjMatrix[j][i]) {
+						throw new InvalidDataException(
+								"Invalid adjacency matrix for making a non-directional graph. It is not symmetric across the diagonal!!");
 					}
 				}
 			}
 		}
+		List<Node<T>> nodeList = new ArrayList<Node<T>>();
+		for (T value : values) {
+			nodeList.add(NodeFactory.getNode(value));
+		}
+		basicGraph = new BasicGraph<>(new HashSet<>(nodeList));
+		for (int i = 0; i < adjMatrix.length; i++) {
+			for (int j = 0; j < adjMatrix.length; j++) {
+				if (i != j && adjMatrix[i][j] != Integer.MAX_VALUE) {
+					Edge edge = null;
+					if (directed) {
+						edge = EdgeFactory.getDirectedEdge(new Node[] {
+								nodeList.get(i), nodeList.get(j) },
+								adjMatrix[i][j]);
+					} else {
+						edge = EdgeFactory.getEdge(new Node[] {
+								nodeList.get(i), nodeList.get(j) },
+								adjMatrix[i][j]);
+					}
+					basicGraph.addEdge(edge);
+				}
+			}
+		}
+
 		return basicGraph;
 	}
 

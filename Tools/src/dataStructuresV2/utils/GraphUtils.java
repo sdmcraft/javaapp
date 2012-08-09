@@ -14,8 +14,8 @@ import dataStructuresV2.Node;
 
 public class GraphUtils {
 
-	public static final <T> List<Node<T>> shortestDistance(Graph<T> graph,
-			Node<T> startNode, Node<T> endNode) throws Exception {
+	public static final <T> List<Node<T>> getDistances(Graph<T> graph,
+			Node<T> startNode) throws Exception {
 		/*
 		 * Set of nodes which have been processed and should be skipped while
 		 * processing
@@ -56,7 +56,7 @@ public class GraphUtils {
 
 		/* The start node is trivially at 0 cost to itself */
 		NodeDistance nodeDistance = new NodeDistance(startNode, 0);
-
+		pathMap.put(startNode, new ArrayList<Node<T>>());
 		/* Enqueue it for processing */
 		nodeList.add(nodeDistance);
 
@@ -111,9 +111,11 @@ public class GraphUtils {
 							neighbour, currentNodeDistance.distance
 									+ minEdgeWeight);
 					nodeList.add(neighbourDistance);
-					List<Node<T>> path = pathMap.containsKey(currentNode) ? pathMap
-							.get(currentNode) : new ArrayList<Node<T>>();
-
+					List<Node<T>> tempPath = pathMap.get(currentNode);
+					List<Node<T>> path = new ArrayList<>();
+					for (Node<T> node : tempPath) {
+						path.add(node);
+					}
 					path.add(neighbour);
 					pathMap.put(neighbour, path);
 				} /*
@@ -123,6 +125,7 @@ public class GraphUtils {
 				 */else {
 					if (nodeList.get(neighbourIndex).distance > currentNodeDistance.distance
 							+ minEdgeWeight) {
+						System.out.println("Branch hit");
 						nodeList.get(neighbourIndex).distance = currentNodeDistance.distance
 								+ minEdgeWeight;
 						pathMap.get(neighbour).add(
