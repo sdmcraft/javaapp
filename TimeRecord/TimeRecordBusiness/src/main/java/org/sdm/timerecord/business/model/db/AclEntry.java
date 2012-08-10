@@ -84,6 +84,10 @@ public class AclEntry implements java.security.acl.AclEntry {
 		return false;
 	}
 
+	public Enumeration<Permission> getPermissions() {
+		return permissions;
+	}
+
 	@Override
 	public Object clone() {
 		try {
@@ -110,4 +114,5 @@ public class AclEntry implements java.security.acl.AclEntry {
 		return result;
 	}
 
+	
 }
