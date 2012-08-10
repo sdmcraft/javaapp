@@ -1,7 +1,9 @@
 package org.sdm.jackrabbitdemo;
 
+import java.security.Principal;
 import java.util.Map;
 
+import javax.jcr.SimpleCredentials;
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
@@ -10,13 +12,14 @@ import javax.security.auth.spi.LoginModule;
 
 import org.apache.jackrabbit.api.JackrabbitSession;
 import org.apache.jackrabbit.api.security.user.UserManager;
+import org.apache.jackrabbit.core.security.authentication.CredentialsCallback;
 import org.apache.jackrabbit.core.security.authentication.RepositoryCallback;
-import org.cyberneko.html.HTMLTagBalancer.Info;
+
 
 public class DemoLoginModule implements LoginModule {
 
 	CallbackHandler callbackHandler;
-	MyPrincipal myPrincipal;
+	Principal myPrincipal;
 	Subject subject;
 
 	
@@ -50,12 +53,13 @@ public class DemoLoginModule implements LoginModule {
 		System.out.println("login called for DemoLoginModule");
 		// Setup default callback handlers.
         RepositoryCallback repositoryCb = new RepositoryCallback();
-        
+        CredentialsCallback credentialsCb = new CredentialsCallback();
 		try {
-			callbackHandler.handle(new Callback[] { repositoryCb });
+			callbackHandler.handle(new Callback[] { repositoryCb, credentialsCb });
+			SimpleCredentials simpleCredentials = (SimpleCredentials)credentialsCb.getCredentials();
 			JackrabbitSession jcrSession = (JackrabbitSession) repositoryCb.getSession();
 			UserManager jcrUserManager = jcrSession.getUserManager();
-			//jcrUserManager.getAuthorizable("admin");
+			myPrincipal = jcrUserManager.getAuthorizable(simpleCredentials.getUserID()).getPrincipal();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
