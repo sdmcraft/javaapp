@@ -7,12 +7,12 @@ public class MySessionListener implements HttpSessionListener {
 
 	@Override
 	public void sessionCreated(HttpSessionEvent arg0) {
-		// TODO Auto-generated method stub
-
+		System.out.println("MySessionListener#sessionCreated");
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent sessionEvent) {
+		System.out.println("MySessionListener#sessionDestroyed");
 		Object lock = sessionEvent.getSession().getAttribute("lock");
 		if (lock != null)
 			lock.notify();

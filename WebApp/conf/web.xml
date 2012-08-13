@@ -13,6 +13,11 @@
 		<param-name>ctxParam</param-name>
 		<param-value>"I am a ctx param"</param-value>
 	</context-param>
+	
+	<listener>
+      <listener-class>listeners.MySessionListener</listener-class>
+   	</listener>
+   	
 	<servlet>
 		<servlet-name>JMSservlet</servlet-name>
 		<servlet-class>servlets.JMSservlet</servlet-class>
@@ -274,5 +279,17 @@
 		<servlet-name>ServerSentEventDemoServlet</servlet-name>
 		<url-pattern>/ServerSentEventDemoServlet</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SessionNotificationServlet</servlet-name>
+		<servlet-class>servlets.SessionNotificationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SessionNotificationServlet</servlet-name>
+		<url-pattern>/SessionNotificationServlet</url-pattern>
+	</servlet-mapping>
 	
+	<session-config>
+      <session-timeout>1</session-timeout> 
+    </session-config>
 </web-app>

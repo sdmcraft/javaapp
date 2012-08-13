@@ -11,9 +11,18 @@
 			document.getElementById('ticker').innerHTML = e.data;
 		}, false);
 	}
+	
+	function registerSessionExpiryNotification() {
+		var source = new EventSource(
+				"http://localhost:8080/WebApp/SessionNotificationServlet");
+		source.addEventListener('session-state', function(e) {
+			alert("Your session has expired!!");
+		}, false);
+	}
+
 </script>
 </head>
-<body onload="registerSSE()">
+<body onload="registerSSE();registerSessionExpiryNotification()">
 	<div id="ticker">[TIME]</div>
 </body>
 </html>
