@@ -122,16 +122,22 @@ public class GraphUtils {
 				 * The neighbor was already present in the list. If we have a
 				 * lesser cost via the current node to this neighbor than what
 				 * the neighbor already has, update it with this lesser cost.
-				 */else {
-					if (nodeList.get(neighbourIndex).distance > currentNodeDistance.distance
-							+ minEdgeWeight) {
-						System.out.println("Branch hit");
-						nodeList.get(neighbourIndex).distance = currentNodeDistance.distance
-								+ minEdgeWeight;
-						pathMap.get(neighbour).add(
-								nodeList.get(neighbourIndex).node);
+				 */else if (nodeList.get(neighbourIndex).distance > currentNodeDistance.distance
+						+ minEdgeWeight) {
+					System.out.println("Branch hit");
+					nodeList.get(neighbourIndex).distance = currentNodeDistance.distance
+							+ minEdgeWeight;
+
+					List<Node<T>> tempPath = pathMap.get(currentNode);
+					List<Node<T>> path = new ArrayList<>();
+					for (Node<T> node : tempPath) {
+						path.add(node);
 					}
+					path.add(neighbour);
+					pathMap.put(neighbour, path);
+
 				}
+
 			}
 			/*
 			 * Current node is processed as all its neighbors have been

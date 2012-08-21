@@ -21,14 +21,20 @@ public class Main {
 		// valueSet.add("h");
 		// Graph<String> graph = GraphFactory.getSimpleGraph(valueSet, 8);
 
+		// Graph<String> graph = GraphFactory.getGraph(new int[][] {
+		// { 0, 1, 1, 1 }, { 1, 0, 1, Integer.MAX_VALUE }, { 1, 1, 0, 1 },
+		// { 1, Integer.MAX_VALUE, 1, 0 } }, new String[] { "a", "b", "c",
+		// "d" }, false);
+
 		Graph<String> graph = GraphFactory.getGraph(new int[][] {
-				{ 0, 1, 1, 1 }, { 1, 0, 1, Integer.MAX_VALUE }, { 1, 1, 0, 1 },
-				{ 1, Integer.MAX_VALUE, 1, 0 } }, new String[] { "a", "b", "c",
-				"d" }, false);
+				{ Integer.MAX_VALUE, 1, 3 }, { 1, Integer.MAX_VALUE, 1 },
+				{ 3, 1, Integer.MAX_VALUE } }, new String[] { "a", "b", "c", },
+				false);
 
 		System.out.println(graph.getDiagram());
 
 		Iterator<Node<String>> itr = graph.getNodes().iterator();
+		itr.next();
 		Node<String> node1 = itr.next();
 		GraphUtils.getDistances(graph, node1);
 
