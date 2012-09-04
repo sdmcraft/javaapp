@@ -91,9 +91,9 @@ public class Client implements Observer {
 	 *             the interrupted exception
 	 */
 	public void demo(String ip, String admin, String pwd,
-			String conferenceNumber, String[] phoneNumbers, String extensionUrl)
+			String conferenceNumber, String[] phoneNumbers)
 			throws Exception {
-		Context context = Context.getInstance(ip, admin, pwd, extensionUrl);
+		Context context = Context.getInstance(ip, admin, pwd);
 		Conference conference = Conference.getInstance(conferenceNumber,
 				context);
 		conference.addObserver(this);
@@ -143,7 +143,7 @@ public class Client implements Observer {
 	 */
 	public static void main(String[] args) throws Exception {
 		new Client().demo("10.40.61.65", "admin", "P@$$w0rd", "6300",
-				new String[] { "SIP/1000" },
-				"http://10.40.79.106:8080/AsteriskExtension/service");
+				new String[] { "SIP/1000" });
 	}
+	
 }

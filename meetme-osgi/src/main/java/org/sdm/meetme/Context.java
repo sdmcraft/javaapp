@@ -45,8 +45,6 @@ public class Context extends Observable {
 	/** The asterisk password. */
 	private final String asteriskPassword;
 
-	private final String extensionURL;
-
 	/** The live event handler. */
 	private LiveEventHandler liveEventHandler;
 
@@ -76,10 +74,9 @@ public class Context extends Observable {
 	 *             the timeout exception
 	 */
 	private Context(String asteriskIp, String asteriskAdmin,
-			String asteriskPassword, String extensionURL) throws Exception {
+			String asteriskPassword) throws Exception {
 		try {
-			logger.fine("Creating a new context for " + asteriskIp + ","
-					+ extensionURL);
+			logger.fine("Creating a new context for " + asteriskIp);
 			this.asteriskIp = asteriskIp;
 			this.asteriskAdmin = asteriskAdmin;
 			this.asteriskPassword = asteriskPassword;
@@ -88,7 +85,6 @@ public class Context extends Observable {
 			connection.connect();
 			asteriskServer = new DefaultAsteriskServer(
 					connection.getManagerConnection());
-			this.extensionURL = extensionURL;
 		} catch (Exception ex) {
 			throw new Exception(ex);
 		}
@@ -124,27 +120,13 @@ public class Context extends Observable {
 	 *             the timeout exception
 	 */
 	public static Context getInstance(String asteriskIp, String asteriskAdmin,
-			String asteriskPassword, String extensionUrl) throws Exception {
+			String asteriskPassword) throws Exception {
 		Context context = new Context(asteriskIp, asteriskAdmin,
-				asteriskPassword, extensionUrl);
+				asteriskPassword);
 		context.init();
 		return context;
 	}
 
-	public boolean validateRoomNumber(String roomNumber) throws Exception {
-		URL url = new URL(extensionURL
-				+ "?context=confirm&action=meetme-room&room-number="
-				+ URLEncoder.encode(roomNumber, "UTF-8"));
-		logger.info("Posting URL: " + url);
-		URLConnection httpConn = url.openConnection();
-		httpConn.connect();
-		Document response = new SAXBuilder().build(httpConn.getInputStream());
-		logger.info(xmlOutputter.outputString(response));
-		if (!"true".equals(response.getRootElement().getValue())) {
-			return false;
-		}
-		return true;
-	}
 
 	public void handleChannelHangup(String channelId) {
 		logger.info("Handling call rejection");
