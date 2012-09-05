@@ -1,8 +1,10 @@
 package org.sdm.timerecord.business.model.db;
 
 import java.security.acl.Permission;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -103,6 +105,7 @@ public class AclEntry implements java.security.acl.AclEntry {
 		return false;
 	}
 
+	//TODO Needs unit test
 	private static final long permissionsToLong(
 			Enumeration<Permission> permissions) {
 		long result = 0;
@@ -114,5 +117,21 @@ public class AclEntry implements java.security.acl.AclEntry {
 		return result;
 	}
 
-	
+	//TODO Needs unit test
+	private static final Enumeration<Permission> longToPermissions(long value) {
+		List<Permission> permissions = new ArrayList<Permission>();
+		StringBuilder binarySb = new StringBuilder(Long.toBinaryString(value));
+		binarySb.reverse();
+		StringBuilder zeros = new StringBuilder();
+		for (int i = 0; i < binarySb.length(); i++) {
+			if (binarySb.charAt(i) == '1') {
+				Permission permission = new org.sdm.timerecord.business.model.Permission(
+						Long.parseLong(zeros.insert(0, '1').toString(), 2));
+				if (permission != null)
+					permissions.add(permission);
+			}
+		}
+		return Collections.enumeration(permissions);
+	}
+
 }
