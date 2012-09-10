@@ -58,7 +58,7 @@
 				<configuration>
 					<instructions>
 						<Bundle-Activator>org.sdm.meetme.osgi.Activator</Bundle-Activator>
-						<Import-Package>*;resolution:=optional</Import-Package>
+						<Import-Package>*,org.jaxen;resolution:=optional,org.jaxen.saxpath;resolution:=optional,org.jaxen.util;resolution:=optional</Import-Package>
 						<Export-Package>org.sdm.meetme.client</Export-Package>
 						<Bundle-ClassPath>.,{maven-dependencies},jdom-2.0.1.jar</Bundle-ClassPath>						
 						<Include-Resource>{maven-resources},{maven-dependencies},lib/jdom-2.0.1.jar</Include-Resource>					
