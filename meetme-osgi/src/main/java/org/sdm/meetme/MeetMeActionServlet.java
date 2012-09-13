@@ -145,6 +145,8 @@ public class MeetMeActionServlet extends HttpServlet implements Observer {
 			}
 		} catch (Exception ex) {
 			throw new ServletException(ex);
+		} finally {
+			int q = 1;
 		}
 	}
 
