@@ -15,7 +15,7 @@ public class MySessionListener implements HttpSessionListener {
 		System.out.println("MySessionListener#sessionDestroyed");
 		Object lock = sessionEvent.getSession().getAttribute("lock");
 		if (lock != null)
-			lock.notify();
+			lock.notifyAll();
 	}
 
 }
