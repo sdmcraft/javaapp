@@ -24,14 +24,14 @@ public class DemoLoginModule implements LoginModule {
 
 	
 	public boolean abort() throws LoginException {
-		System.out.println("abort called for FirstLoginModule");
+		System.out.println("abort called for DemoLoginModule");
 		subject.getPrincipals().remove(myPrincipal);
 		return true;
 	}
 
 	
 	public boolean commit() throws LoginException {
-		System.out.println("commit called for FirstLoginModule");
+		System.out.println("commit called for DemoLoginModule");
 		if (myPrincipal != null) {
 			subject.getPrincipals().add(myPrincipal);
 			myPrincipal = null;
@@ -72,7 +72,7 @@ public class DemoLoginModule implements LoginModule {
 
 	
 	public boolean logout() throws LoginException {
-		System.out.println("logout called for FirstLoginModule");
+		System.out.println("logout called for DemoLoginModule");
 		subject.getPrincipals().remove(myPrincipal);
 		return true;
 	}

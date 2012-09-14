@@ -1,7 +1,5 @@
 package org.sdm.jackrabbitdemo;
 
-import java.util.NoSuchElementException;
-
 import javax.jcr.LoginException;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
@@ -15,7 +13,6 @@ import javax.jcr.security.Privilege;
 import org.apache.jackrabbit.api.JackrabbitSession;
 import org.apache.jackrabbit.api.security.user.UserManager;
 import org.apache.jackrabbit.core.TransientRepository;
-import org.apache.jackrabbit.core.security.principal.EveryonePrincipal;
 
 /**
  * Hello world!
