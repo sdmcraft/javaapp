@@ -105,7 +105,7 @@ public class AclEntry implements java.security.acl.AclEntry {
 		return false;
 	}
 
-	//TODO Needs unit test
+	//This method has a unit test
 	private static final long permissionsToLong(
 			Enumeration<Permission> permissions) {
 		long result = 0;
