@@ -17,6 +17,8 @@ public class BasicGraph<T> implements Graph<T> {
 	/*
 	 * Defensively copy the constructor arguments so that external modification
 	 * does not break encapsulation
+	 * 
+	 * This method has a unit test
 	 */
 	public BasicGraph(Set<Node<T>> nodes) throws InvalidDataException {
 		this.nodes = new HashSet<Node<T>>();
@@ -34,16 +36,11 @@ public class BasicGraph<T> implements Graph<T> {
 	public BasicGraph(Set<Node<T>> nodes, Set<Edge<T>> edges)
 			throws InvalidDataException {
 		this.nodes = new HashSet<Node<T>>();
-		try {
-			for (Node<T> node : nodes) {
-				addNode(node);
-			}
-			for (Edge<T> edge : edges) {
-				addEdge(edge);
-			}
-		} catch (InvalidDataException ex) {
-			nodes.clear();
-			edges.clear();
+		for (Node<T> node : nodes) {
+			addNode(node);
+		}
+		for (Edge<T> edge : edges) {
+			addEdge(edge);
 		}
 	}
 
