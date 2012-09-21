@@ -11,10 +11,10 @@ import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
 import org.apache.jackrabbit.api.JackrabbitSession;
+import org.apache.jackrabbit.api.security.user.Authorizable;
 import org.apache.jackrabbit.api.security.user.UserManager;
 import org.apache.jackrabbit.core.security.authentication.CredentialsCallback;
 import org.apache.jackrabbit.core.security.authentication.RepositoryCallback;
-
 
 public class DemoLoginModule implements LoginModule {
 
@@ -22,14 +22,12 @@ public class DemoLoginModule implements LoginModule {
 	Principal myPrincipal;
 	Subject subject;
 
-	
 	public boolean abort() throws LoginException {
 		System.out.println("abort called for DemoLoginModule");
 		subject.getPrincipals().remove(myPrincipal);
 		return true;
 	}
 
-	
 	public boolean commit() throws LoginException {
 		System.out.println("commit called for DemoLoginModule");
 		if (myPrincipal != null) {
@@ -40,7 +38,6 @@ public class DemoLoginModule implements LoginModule {
 		return true;
 	}
 
-	
 	public void initialize(Subject subject, CallbackHandler callbackHandler,
 			Map<String, ?> sharedState, Map<String, ?> options) {
 		this.callbackHandler = callbackHandler;
@@ -48,34 +45,64 @@ public class DemoLoginModule implements LoginModule {
 		System.out.println("initialize called for DemoLoginModule");
 	}
 
-	
 	public boolean login() throws LoginException {
 		System.out.println("login called for DemoLoginModule");
 		// Setup default callback handlers.
-        RepositoryCallback repositoryCb = new RepositoryCallback();
-        CredentialsCallback credentialsCb = new CredentialsCallback();
+		RepositoryCallback repositoryCb = new RepositoryCallback();
+		CredentialsCallback credentialsCb = new CredentialsCallback();
 		try {
-			callbackHandler.handle(new Callback[] { repositoryCb, credentialsCb });
-			SimpleCredentials simpleCredentials = (SimpleCredentials)credentialsCb.getCredentials();
-			JackrabbitSession jcrSession = (JackrabbitSession) repositoryCb.getSession();
+			callbackHandler
+					.handle(new Callback[] { repositoryCb, credentialsCb });
+			SimpleCredentials simpleCredentials = (SimpleCredentials) credentialsCb
+					.getCredentials();
+			JackrabbitSession jcrSession = (JackrabbitSession) repositoryCb
+					.getSession();
 			UserManager jcrUserManager = jcrSession.getUserManager();
-			myPrincipal = jcrUserManager.getAuthorizable(simpleCredentials.getUserID()).getPrincipal();
+			Authorizable authorizable = jcrUserManager
+					.getAuthorizable(simpleCredentials.getUserID());
+			if (authorizable != null)
+				myPrincipal = authorizable.getPrincipal();
+			else {
+				System.out.println("User not found, creating a new one");
+				myPrincipal = jcrUserManager.createUser(
+						simpleCredentials.getUserID(),
+						new String(simpleCredentials.getPassword()))
+						.getPrincipal();
+//				Node root = jcrSession.getRootNode();
+//				Node privateNode = root.addNode(simpleCredentials.getUserID());
+//				jcrSession.save();
+//				AccessControlManager aMgr = jcrSession
+//						.getAccessControlManager();
+//				Privilege[] privileges = new Privilege[] { aMgr
+//						.privilegeFromName(Privilege.JCR_ALL) };
+//				AccessControlList acl = null;
+//				AccessControlPolicy[] acp = aMgr.getPolicies(privateNode
+//						.getPath());
+//
+//				acl = (AccessControlList) (acp[0]);
+//				// remove all existing entries
+//				for (AccessControlEntry e : acl.getAccessControlEntries()) {
+//					acl.removeAccessControlEntry(e);
+//				}
+//				acl.addAccessControlEntry(myPrincipal, privileges);
+//
+//				// the policy must be re-set
+//				aMgr.setPolicy(privateNode.getPath(), acl);
+//
+				jcrSession.save();
+			}
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new LoginException(e.getMessage());
 		}
 
-		
-
 	}
 
-	
 	public boolean logout() throws LoginException {
-		System.out.println("logout called for DemoLoginModule");
 		subject.getPrincipals().remove(myPrincipal);
+		System.out.println("logout called for DemoLoginModule");
 		return true;
 	}
-
 
 }

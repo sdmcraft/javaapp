@@ -30,7 +30,7 @@ public class App {
 					.login(new SimpleCredentials("admin", "admin".toCharArray()));
 			// createUser("user3", "user3", repository, adminSession);
 			userSession = (JackrabbitSession) repository
-					.login(new SimpleCredentials("user3", "user3".toCharArray()));
+					.login(new SimpleCredentials("user8", "user8".toCharArray()));
 		} finally {
 			adminSession.logout();
 			userSession.logout();
@@ -58,9 +58,8 @@ public class App {
 		// }
 	}
 
-	private static void createUser(String uid, String pwd,
-			Repository repository, JackrabbitSession session)
-			throws RepositoryException {
+	public static void createUser(String uid, String pwd,
+			JackrabbitSession session) throws RepositoryException {
 		UserManager userManager = session.getUserManager();
 		userManager.createUser(uid, pwd);
 		AccessControlManager aMgr = session.getAccessControlManager();
