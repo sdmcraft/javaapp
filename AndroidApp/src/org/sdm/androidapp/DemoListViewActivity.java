@@ -24,11 +24,12 @@ public class DemoListViewActivity extends Activity {
 		// Second parameter - Layout for the row
 		// Third parameter - ID of the TextView to which the data is written
 		// Forth - the Array of data
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, android.R.id.text1, values);
+//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_list_item_1, android.R.id.text1, values);
+		MyArrayAdapter myArrayAdapter = new MyArrayAdapter(this, values);
 
 		// Assign adapter to ListView
-		listView.setAdapter(adapter);
+		listView.setAdapter(myArrayAdapter);
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
