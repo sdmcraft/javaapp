@@ -53,7 +53,7 @@ public class DemoLoginModule implements LoginModule {
 		try {
 			callbackHandler
 					.handle(new Callback[] { repositoryCb, credentialsCb });
-			SimpleCredentials simpleCredentials = (SimpleCredentials) credentialsCb
+			final SimpleCredentials simpleCredentials = (SimpleCredentials) credentialsCb
 					.getCredentials();
 			JackrabbitSession jcrSession = (JackrabbitSession) repositoryCb
 					.getSession();
@@ -64,10 +64,17 @@ public class DemoLoginModule implements LoginModule {
 				myPrincipal = authorizable.getPrincipal();
 			else {
 				System.out.println("User not found, creating a new one");
-				myPrincipal = jcrUserManager.createUser(
-						simpleCredentials.getUserID(),
-						new String(simpleCredentials.getPassword()))
-						.getPrincipal();
+				App.createUser(simpleCredentials.getUserID(), new String(simpleCredentials.getPassword()), jcrSession);
+//				myPrincipal = new Principal() {
+//					@Override
+//					public String getName() {
+//						return simpleCredentials.getUserID();
+//					}
+//				};
+//				myPrincipal = jcrUserManager.createUser(
+//						simpleCredentials.getUserID(),
+//						new String(simpleCredentials.getPassword()), myPrincipal, null)
+//						.getPrincipal();
 				jcrSession.save();
 			}
 			return true;

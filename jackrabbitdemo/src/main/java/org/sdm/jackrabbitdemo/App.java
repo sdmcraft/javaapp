@@ -28,12 +28,38 @@ public class App {
 			repository = new TransientRepository();
 			adminSession = (JackrabbitSession) repository
 					.login(new SimpleCredentials("admin", "admin".toCharArray()));
-			// createUser("user3", "user3", repository, adminSession);
+			//createUser("user10", "user10", adminSession);
 			userSession = (JackrabbitSession) repository
-					.login(new SimpleCredentials("user8", "user8".toCharArray()));
+					.login(new SimpleCredentials("user12", "user12".toCharArray()));
 		} finally {
 			adminSession.logout();
 			userSession.logout();
 
 		}
+	}
+	
+	public static void createUser(String uid, String pwd,
+			JackrabbitSession session) throws RepositoryException {
+		Session adminSession = session.impersonate(new SimpleCredentials("admin", "admin".toCharArray()));
+		UserManager userManager = session.getUserManager();
+		userManager.createUser(uid, pwd);
+		AccessControlManager aMgr = session.getAccessControlManager();
+		Privilege[] privileges = new Privilege[] { aMgr
+				.privilegeFromName(Privilege.JCR_ALL) };
+		AccessControlList acl;
+		acl = (AccessControlList) aMgr.getPolicies("/")[0];
+		// remove all existing entries
+		for (AccessControlEntry e : acl.getAccessControlEntries()) {
+			acl.removeAccessControlEntry(e);
+		}
+
+		acl.addAccessControlEntry(userManager.getAuthorizable(uid)
+				.getPrincipal(), privileges);
+
+		// the policy must be re-set
+		aMgr.setPolicy("/", acl);
+		session.save();
+		session.logout();
+	}
+
 }
