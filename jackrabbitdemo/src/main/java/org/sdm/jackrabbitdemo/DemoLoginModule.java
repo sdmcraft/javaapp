@@ -68,27 +68,6 @@ public class DemoLoginModule implements LoginModule {
 						simpleCredentials.getUserID(),
 						new String(simpleCredentials.getPassword()))
 						.getPrincipal();
-//				Node root = jcrSession.getRootNode();
-//				Node privateNode = root.addNode(simpleCredentials.getUserID());
-//				jcrSession.save();
-//				AccessControlManager aMgr = jcrSession
-//						.getAccessControlManager();
-//				Privilege[] privileges = new Privilege[] { aMgr
-//						.privilegeFromName(Privilege.JCR_ALL) };
-//				AccessControlList acl = null;
-//				AccessControlPolicy[] acp = aMgr.getPolicies(privateNode
-//						.getPath());
-//
-//				acl = (AccessControlList) (acp[0]);
-//				// remove all existing entries
-//				for (AccessControlEntry e : acl.getAccessControlEntries()) {
-//					acl.removeAccessControlEntry(e);
-//				}
-//				acl.addAccessControlEntry(myPrincipal, privileges);
-//
-//				// the policy must be re-set
-//				aMgr.setPolicy(privateNode.getPath(), acl);
-//
 				jcrSession.save();
 			}
 			return true;

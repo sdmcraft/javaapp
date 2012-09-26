@@ -36,49 +36,4 @@ public class App {
 			userSession.logout();
 
 		}
-		// try {
-		// Node root = session.getRootNode();
-
-		// Store content
-		// Node hello = root.addNode("hello2");
-		// Node world = hello.addNode("world2");
-		// world.setProperty("message", "Hello, World2!");
-		// session.save();
-
-		// Retrieve content
-		// Node node = root.getNode("hello/world");
-		// System.out.println(node.getPath());
-		// System.out.println(node.getProperty("message").getString());
-
-		// Remove content
-		// root.getNode("hello").remove();
-		// session.save();
-		// } finally {
-		// session.logout();
-		// }
-	}
-
-	public static void createUser(String uid, String pwd,
-			JackrabbitSession session) throws RepositoryException {
-		UserManager userManager = session.getUserManager();
-		userManager.createUser(uid, pwd);
-		AccessControlManager aMgr = session.getAccessControlManager();
-		Privilege[] privileges = new Privilege[] { aMgr
-				.privilegeFromName(Privilege.JCR_ALL) };
-		AccessControlList acl;
-		acl = (AccessControlList) aMgr.getPolicies("/")[0];
-		// remove all existing entries
-		for (AccessControlEntry e : acl.getAccessControlEntries()) {
-			acl.removeAccessControlEntry(e);
-		}
-
-		acl.addAccessControlEntry(userManager.getAuthorizable(uid)
-				.getPrincipal(), privileges);
-
-		// the policy must be re-set
-		aMgr.setPolicy("/", acl);
-		session.save();
-		session.logout();
-	}
-
 }
