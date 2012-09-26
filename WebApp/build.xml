@@ -2,8 +2,7 @@
 
 	<property environment="env" />
 
-	<property name="src.dir" value="src" />
-	<property name="test.dir" value="test" />
+	<property name="src.dir" value="src" />	
 	<property name="dist.dir" value="dist" />
 	<property name="conf.dir" value="conf" />
 	<property name="web.dir" value="web" />
@@ -40,8 +39,7 @@
 
 	<target name="build" depends="prepare">
 		<javac classpathref="mylibs" destdir="${build.classes}" debug="on" debuglevel="lines,vars,source" deprecation="on">
-			<src path="${src.dir}" />
-			<src path="${test.dir}" />
+			<src path="${src.dir}" />			
 		</javac>
 
 		<jar destfile="${build.web.dir}/applets.jar" basedir="${build.classes}" includes="applets/**" />

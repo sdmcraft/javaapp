@@ -16,10 +16,12 @@ public class MySessionListener implements HttpSessionListener {
 	public void sessionDestroyed(HttpSessionEvent sessionEvent) {
 		System.out.println("MySessionListener#sessionDestroyed");
 		Object lock = sessionEvent.getSession().getAttribute("lock");
-		System.out.println("Sign:"
-				+ ((HashMap<String, String>) lock).get("sign"));
-		if (lock != null)
-			lock.notifyAll();
+		synchronized (lock) {
+			System.out.println("Sign:"
+					+ ((HashMap<String, String>) lock).get("sign"));
+			if (lock != null)
+				lock.notifyAll();
+		}
 	}
 
 }
