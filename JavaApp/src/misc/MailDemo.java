@@ -29,7 +29,8 @@ public class MailDemo {
 	public static void main(String[] args) throws Exception {
 		Properties props = new Properties();
 		// props.put("mail.smtp.host", "smtp.sflab.macromedia.com");
-		props.put("mail.smtp.host", "smtp.gmail.com");
+		//props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.host", "localhost");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.auth", "true");
 		Authenticator auth = new SMTPAuthenticator();
@@ -39,13 +40,13 @@ public class MailDemo {
 		message.setFrom(new InternetAddress("m.satyadeep@gmail.com"));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(
 				"m.satyadeep@gmail.com"));
-		message.setSubject("ééişşöäあああ ééişşöäあああ");
+		message.setSubject("Test");
 		// message.setText("Hi Dear Fans!!Hope you all are doing well!! \n"
 		// + "Best Wishes.");
 		MimeBodyPart messageBodyPart = new MimeBodyPart();
 
 		// fill message
-		messageBodyPart.setText("ééişşöäあああ ééişşöäあああ");
+		messageBodyPart.setText("Test Body");
 
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(messageBodyPart);
@@ -69,7 +70,7 @@ public class MailDemo {
 
 		public PasswordAuthentication getPasswordAuthentication() {
 			String username = "m.satyadeep";
-			String password = "$12S28m6";
+			String password = "xxxxxx";
 			return new PasswordAuthentication(username, password);
 		}
 	}
