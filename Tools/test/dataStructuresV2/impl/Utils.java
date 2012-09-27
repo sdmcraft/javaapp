@@ -22,7 +22,7 @@ public class Utils {
 		return set;
 	}
 
-	public static Set<Edge> createMockEdges(Set<Node> nodeSet) {
+	public static Set<Edge> createMockEdges(int n) {
 
 		Set<Edge> set = new HashSet<Edge>();
 		

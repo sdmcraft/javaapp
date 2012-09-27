@@ -1,15 +1,12 @@
 package dataStructuresV2.impl;
 
-import java.util.Set;
-
 import dataStructuresV2.Edge;
-import dataStructuresV2.Node;
 import dataStructuresV2.exception.InvalidDataException;
 
 public class SimpleGraph<T> extends BasicGraph<T> {
 
-	public SimpleGraph(Set<Node<T>> nodes) throws InvalidDataException {
-		super(nodes);
+	public SimpleGraph() throws InvalidDataException {
+		super();
 	}
 
 	@Override
