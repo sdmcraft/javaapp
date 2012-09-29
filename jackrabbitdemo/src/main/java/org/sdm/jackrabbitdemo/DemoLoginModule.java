@@ -3,92 +3,100 @@ package org.sdm.jackrabbitdemo;
 import java.security.Principal;
 import java.util.Map;
 
+import javax.jcr.Credentials;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
-import javax.security.auth.Subject;
-import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginException;
-import javax.security.auth.spi.LoginModule;
 
 import org.apache.jackrabbit.api.JackrabbitSession;
 import org.apache.jackrabbit.api.security.user.Authorizable;
+import org.apache.jackrabbit.api.security.user.User;
 import org.apache.jackrabbit.api.security.user.UserManager;
-import org.apache.jackrabbit.core.security.authentication.CredentialsCallback;
-import org.apache.jackrabbit.core.security.authentication.RepositoryCallback;
+import org.apache.jackrabbit.core.security.authentication.DefaultLoginModule;
 
-public class DemoLoginModule implements LoginModule {
+public class DemoLoginModule extends DefaultLoginModule {
 
-	CallbackHandler callbackHandler;
-	Principal myPrincipal;
-	Subject subject;
+	Session session;
+	UserManager userManager;
 
-	public boolean abort() throws LoginException {
-		System.out.println("abort called for DemoLoginModule");
-		subject.getPrincipals().remove(myPrincipal);
-		return true;
-	}
-
-	public boolean commit() throws LoginException {
-		System.out.println("commit called for DemoLoginModule");
-		if (myPrincipal != null) {
-			subject.getPrincipals().add(myPrincipal);
-			myPrincipal = null;
-			return true;
-		}
-		return true;
-	}
-
-	public void initialize(Subject subject, CallbackHandler callbackHandler,
-			Map<String, ?> sharedState, Map<String, ?> options) {
-		this.callbackHandler = callbackHandler;
-		this.subject = subject;
-		System.out.println("initialize called for DemoLoginModule");
-	}
-
-	public boolean login() throws LoginException {
-		System.out.println("login called for DemoLoginModule");
-		// Setup default callback handlers.
-		RepositoryCallback repositoryCb = new RepositoryCallback();
-		CredentialsCallback credentialsCb = new CredentialsCallback();
+	@Override
+	protected void doInit(CallbackHandler callbackHandler, Session session,
+			Map options) throws LoginException {
+		super.doInit(callbackHandler, session, options);
+		this.session = session;
 		try {
-			callbackHandler
-					.handle(new Callback[] { repositoryCb, credentialsCb });
-			final SimpleCredentials simpleCredentials = (SimpleCredentials) credentialsCb
-					.getCredentials();
-			JackrabbitSession jcrSession = (JackrabbitSession) repositoryCb
-					.getSession();
-			UserManager jcrUserManager = jcrSession.getUserManager();
-			Authorizable authorizable = jcrUserManager
-					.getAuthorizable(simpleCredentials.getUserID());
-			if (authorizable != null)
-				myPrincipal = authorizable.getPrincipal();
-			else {
-				System.out.println("User not found, creating a new one");
-				App.createUser(simpleCredentials.getUserID(), new String(simpleCredentials.getPassword()), jcrSession);
-//				myPrincipal = new Principal() {
-//					@Override
-//					public String getName() {
-//						return simpleCredentials.getUserID();
-//					}
-//				};
-//				myPrincipal = jcrUserManager.createUser(
-//						simpleCredentials.getUserID(),
-//						new String(simpleCredentials.getPassword()), myPrincipal, null)
-//						.getPrincipal();
-				jcrSession.save();
-			}
-			return true;
+			userManager = ((JackrabbitSession) session).getUserManager();
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new LoginException(e.getMessage());
+			throw new LoginException("Unable to initialize LoginModule: "
+					+ e.getMessage());
 		}
-
 	}
 
-	public boolean logout() throws LoginException {
-		subject.getPrincipals().remove(myPrincipal);
-		System.out.println("logout called for DemoLoginModule");
-		return true;
+	// @Override
+	// protected Principal getPrincipal(final Credentials credentials) {
+	//
+	// final String userId = getUserID(credentials);
+	// Principal principal = principalProvider.getPrincipal(userId);
+	// try {
+	// userManager = ((JackrabbitSession) session).getUserManager();
+	//
+	// if (principal == null) {
+	// System.out.println("Creating a new principal");
+	// principal = new Principal() {
+	// @Override
+	// public String getName() {
+	// return userId;
+	// }
+	// };
+	// SimpleCredentials simpleCredentials = (SimpleCredentials) credentials;
+	// principal = userManager.createUser(userId,
+	// new String(simpleCredentials.getPassword()), principal,
+	// null).getPrincipal();
+	//
+	// }
+	// user = (User) userManager.getAuthorizable(principal);
+	// } catch (Exception ex) {
+	// ex.printStackTrace();
+	// }
+	// return principal;
+	// }
+
+	@Override
+	protected Principal getPrincipal(Credentials credentials) {
+		Principal principal = null;
+		final String userId = getUserID(credentials);
+		try {
+			Authorizable authrz = userManager.getAuthorizable(userId);
+			if (authrz == null) {
+				System.out.println("Creating a new principal");
+				principal = new Principal() {
+					@Override
+					public String getName() {
+						return userId;
+					}
+				};
+				SimpleCredentials simpleCredentials = (SimpleCredentials) credentials;
+				user = userManager.createUser(userId, new String(
+						simpleCredentials.getPassword()), principal, null);
+			} else if (authrz != null && !authrz.isGroup()) {
+				user = (User) authrz;
+				if (user.isDisabled()) {
+					// log message and return null -> login module returns
+					// false.
+					System.out
+							.println("User " + userId + " has been disabled.");
+				}
+			}
+			principal = user.getPrincipal();
+
+		} catch (RepositoryException e) {
+			// should not get here
+			System.out.println("Error while retrieving principal."
+					+ e.getMessage());
+		}
+		return principal;
 	}
 
 }

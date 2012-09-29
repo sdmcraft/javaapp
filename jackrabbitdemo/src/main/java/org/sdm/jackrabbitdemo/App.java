@@ -28,19 +28,23 @@ public class App {
 			repository = new TransientRepository();
 			adminSession = (JackrabbitSession) repository
 					.login(new SimpleCredentials("admin", "admin".toCharArray()));
-			//createUser("user10", "user10", adminSession);
+			// createUser("user10", "user10", adminSession);
 			userSession = (JackrabbitSession) repository
-					.login(new SimpleCredentials("user12", "user12".toCharArray()));
+					.login(new SimpleCredentials("user18", "user17"
+							.toCharArray()));
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			adminSession.logout();
 			userSession.logout();
 
 		}
 	}
-	
+
 	public static void createUser(String uid, String pwd,
 			JackrabbitSession session) throws RepositoryException {
-		Session adminSession = session.impersonate(new SimpleCredentials("admin", "admin".toCharArray()));
+		Session adminSession = session.impersonate(new SimpleCredentials(
+				"admin", "admin".toCharArray()));
 		UserManager userManager = session.getUserManager();
 		userManager.createUser(uid, pwd);
 		AccessControlManager aMgr = session.getAccessControlManager();
