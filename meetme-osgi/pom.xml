@@ -57,7 +57,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-Activator>org.sdm.meetme.osgi.Activator</Bundle-Activator>
+						<!-- <Bundle-Activator>org.sdm.meetme.osgi.Activator</Bundle-Activator> -->
 						<Import-Package>*,org.jaxen;resolution:=optional,org.jaxen.saxpath;resolution:=optional,org.jaxen.util;resolution:=optional</Import-Package>
 						<Export-Package>org.sdm.meetme.client</Export-Package>
 						<Bundle-ClassPath>.,{maven-dependencies},jdom-2.0.1.jar</Bundle-ClassPath>						
@@ -83,4 +83,25 @@
 		</plugins>
 	</build>
 	
+	<reporting>
+	    <plugins>
+	      <plugin>
+	        <groupId>org.codehaus.mojo</groupId>
+	        <artifactId>findbugs-maven-plugin</artifactId>
+	        <version>2.5.2</version>
+	        <configuration>
+	          <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
+	          <includeFilterFile>findbugs-include.xml</includeFilterFile>
+	        </configuration>
+	      </plugin>
+	      
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-project-info-reports-plugin</artifactId>
+	        <version>2.0.1</version>
+	      </plugin>
+	      
+	    </plugins>
+  	</reporting>
+  
 </project>
