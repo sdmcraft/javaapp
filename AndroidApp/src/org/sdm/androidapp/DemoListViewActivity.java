@@ -1,21 +1,23 @@
 package org.sdm.androidapp;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class DemoListViewActivity extends Activity {
+public class DemoListViewActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.demolistview);
-
-		ListView listView = (ListView) findViewById(R.id.mylist);
+		
+		//This is not necessary when extending ListActivity
+		//setContentView(R.layout.demolistview);
+		//ListView listView = (ListView) findViewById(R.id.mylist);
+		
+		ListView listView = getListView();
 		String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
 				"Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
 				"Linux", "OS/2" };
@@ -31,13 +33,22 @@ public class DemoListViewActivity extends Activity {
 		// Assign adapter to ListView
 		listView.setAdapter(myArrayAdapter);
 
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Toast.makeText(getApplicationContext(),
-						"Click ListItem Number " + position, Toast.LENGTH_LONG)
-						.show();
-			}
-		});
+		//This is not necessary when extending ListActivity
+//		listView.setOnItemClickListener(new OnItemClickListener() {
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				Toast.makeText(getApplicationContext(),
+//						"Click ListItem Number " + position, Toast.LENGTH_LONG)
+//						.show();
+//			}
+//		});
+	}
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Toast.makeText(getApplicationContext(),
+				"Click ListItem Number " + position, Toast.LENGTH_LONG)
+				.show();
 	}
 }
