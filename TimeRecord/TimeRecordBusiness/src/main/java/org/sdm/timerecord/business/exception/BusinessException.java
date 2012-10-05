@@ -6,5 +6,9 @@ public class BusinessException extends Exception {
 	public BusinessException(FailureCode code) {
 		this.code = code;
 	}
+
+	public FailureCode getCode() {
+		return code;
+	}
 	
 }

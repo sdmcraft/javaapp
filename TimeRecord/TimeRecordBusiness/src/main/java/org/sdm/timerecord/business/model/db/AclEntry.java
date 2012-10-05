@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.sdm.timerecord.business.exception.BusinessException;
+import org.sdm.timerecord.business.exception.FailureCode;
 
 @Entity
 @Table(name = "TR_ACL")
@@ -120,7 +121,7 @@ public class AclEntry implements java.security.acl.AclEntry {
 	}
 
 	// This method has a unit test
-	private static final Enumeration<Permission> longToPermissions(long value) {
+	private static final Enumeration<Permission> longToPermissions(long value) throws BusinessException {
 		Long mask = 1L;
 		List<Permission> permissions = new ArrayList<Permission>();
 
@@ -130,7 +131,8 @@ public class AclEntry implements java.security.acl.AclEntry {
 				permission = new org.sdm.timerecord.business.model.Permission(
 						value & mask);
 			} catch (BusinessException ex) {
-				// TODO Handle this
+				if (ex.getCode() != FailureCode.INVALID_DATA)
+					throw ex;
 			}
 			if (permission != null)
 				permissions.add(permission);
