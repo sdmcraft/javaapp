@@ -52,11 +52,12 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 	}
 
 	public void addPrincipals(Set arg0) {
-		// TODO Auto-generated method stub
+		System.out.println("addPrincipals is called");
 
 	}
 
 	public boolean canHandle(Credentials credentials) {
+		System.out.println("canHandle is called");
 		if (credentials instanceof SimpleCredentials) {
 			SimpleCredentials creds = (SimpleCredentials) credentials;
 			return "demo".equals(creds.getAttribute("demo"));
@@ -66,15 +67,17 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 
 	public void doInit(CallbackHandler arg0, Session arg1, Map arg2)
 			throws LoginException {
-		// TODO Auto-generated method stub
+		System.out.println("doInit is called");
 
 	}
 
 	public AuthenticationPlugin getAuthentication(Principal arg0,
 			Credentials arg1) throws RepositoryException {
-		return new AuthenticationPlugin() {
+		System.out.println("getAuthentication is called");
+		return new AuthenticationPlugin() {			
 			public boolean authenticate(Credentials credentials)
 					throws RepositoryException {
+				System.out.println("AuthenticationPlugin.authenticate is called");
 				if (credentials instanceof SimpleCredentials) {
 					String user = ((SimpleCredentials) credentials).getUserID();
 					return new String(
@@ -90,12 +93,13 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 	}
 
 	public Principal getPrincipal(Credentials arg0) {
-		// TODO Auto-generated method stub
+		System.out.println("getPrincipal is called");
 		return null;
 	}
 
 	public int impersonate(Principal arg0, Credentials arg1)
 			throws RepositoryException, FailedLoginException {
+		System.out.println("impersonate is called");
 		return LoginModulePlugin.IMPERSONATION_DEFAULT;
 	}
 
