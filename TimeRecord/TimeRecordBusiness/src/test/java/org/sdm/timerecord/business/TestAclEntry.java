@@ -30,4 +30,56 @@ public class TestAclEntry {
 		}
 	}
 
+	@Test
+	public void testLongToPermissions() {
+		try {
+			Enumeration<org.sdm.timerecord.business.model.Permission> result = (Enumeration<org.sdm.timerecord.business.model.Permission>) Util
+					.invokeMethod(null, AclEntry.class, "longToPermissions",
+							new Class[] { Long.TYPE }, new Object[] { 0L });
+
+			Assert.assertEquals(false, result.hasMoreElements());
+
+			result = (Enumeration<org.sdm.timerecord.business.model.Permission>) Util
+					.invokeMethod(null, AclEntry.class, "longToPermissions",
+							new Class[] { Long.TYPE }, new Object[] { 1L });
+
+			Assert.assertEquals(PermissionType.READ, result.nextElement().type);
+			Assert.assertEquals(false, result.hasMoreElements());
+
+			result = (Enumeration<org.sdm.timerecord.business.model.Permission>) Util
+					.invokeMethod(null, AclEntry.class, "longToPermissions",
+							new Class[] { Long.TYPE }, new Object[] { 2L });
+
+			Assert.assertEquals(PermissionType.MODIFY,
+					result.nextElement().type);
+			Assert.assertEquals(false, result.hasMoreElements());
+
+			result = (Enumeration<org.sdm.timerecord.business.model.Permission>) Util
+					.invokeMethod(null, AclEntry.class, "longToPermissions",
+							new Class[] { Long.TYPE }, new Object[] { 3L });
+
+			Assert.assertEquals(PermissionType.READ, result.nextElement().type);
+			Assert.assertEquals(PermissionType.MODIFY,
+					result.nextElement().type);
+			Assert.assertEquals(false, result.hasMoreElements());
+
+			result = (Enumeration<org.sdm.timerecord.business.model.Permission>) Util
+					.invokeMethod(null, AclEntry.class, "longToPermissions",
+							new Class[] { Long.TYPE }, new Object[] { 4L });
+
+			Assert.assertEquals(false, result.hasMoreElements());
+
+			result = (Enumeration<org.sdm.timerecord.business.model.Permission>) Util
+					.invokeMethod(null, AclEntry.class, "longToPermissions",
+							new Class[] { Long.TYPE }, new Object[] { 5L });
+
+			Assert.assertEquals(PermissionType.READ, result.nextElement().type);
+			Assert.assertEquals(false, result.hasMoreElements());
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Assert.fail();
+		}
+	}
+
 }

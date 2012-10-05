@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.sdm.timerecord.business.exception.BusinessException;
+
 @Entity
 @Table(name = "TR_ACL")
 public class AclEntry implements java.security.acl.AclEntry {
@@ -105,7 +107,7 @@ public class AclEntry implements java.security.acl.AclEntry {
 		return false;
 	}
 
-	//This method has a unit test
+	// This method has a unit test
 	private static final long permissionsToLong(
 			Enumeration<Permission> permissions) {
 		long result = 0;
@@ -117,19 +119,23 @@ public class AclEntry implements java.security.acl.AclEntry {
 		return result;
 	}
 
-	//TODO Needs unit test
+	// This method has a unit test
 	private static final Enumeration<Permission> longToPermissions(long value) {
+		Long mask = 1L;
 		List<Permission> permissions = new ArrayList<Permission>();
-		StringBuilder binarySb = new StringBuilder(Long.toBinaryString(value));
-		binarySb.reverse();
-		StringBuilder zeros = new StringBuilder();
-		for (int i = 0; i < binarySb.length(); i++) {
-			if (binarySb.charAt(i) == '1') {
-				Permission permission = new org.sdm.timerecord.business.model.Permission(
-						Long.parseLong(zeros.insert(0, '1').toString(), 2));
-				if (permission != null)
-					permissions.add(permission);
+
+		for (int i = 0; i < Long.toBinaryString(value).length(); i++) {
+			Permission permission = null;
+			try {
+				permission = new org.sdm.timerecord.business.model.Permission(
+						value & mask);
+			} catch (BusinessException ex) {
+				// TODO Handle this
 			}
+			if (permission != null)
+				permissions.add(permission);
+
+			mask = mask << 1;
 		}
 		return Collections.enumeration(permissions);
 	}
