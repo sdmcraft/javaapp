@@ -47,8 +47,7 @@
             security manager:
             class: FQN of class implementing the JackrabbitSecurityManager interface
         -->
-         <SecurityManager class="org.apache.jackrabbit.core.DefaultSecurityManager" workspaceName="security">
-
+        <SecurityManager class="org.apache.jackrabbit.core.DefaultSecurityManager" workspaceName="security">
             <!--
             workspace access:
             class: FQN of class implementing the WorkspaceAccessManager interface
@@ -143,4 +142,11 @@
         <param name="path" value="${rep.home}/repository/index"/>
         <param name="supportHighlighting" value="true"/>
     </SearchIndex>
+
+    <!--
+        Run with a cluster journal
+    -->
+    <Cluster id="node1">
+        <Journal class="org.apache.jackrabbit.core.journal.MemoryJournal"/>
+    </Cluster>
 </Repository>

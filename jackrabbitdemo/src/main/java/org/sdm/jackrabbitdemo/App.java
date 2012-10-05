@@ -1,10 +1,15 @@
 package org.sdm.jackrabbitdemo;
 
 import javax.jcr.LoginException;
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
+import javax.jcr.Value;
 import javax.jcr.security.AccessControlEntry;
 import javax.jcr.security.AccessControlList;
 import javax.jcr.security.AccessControlManager;
@@ -29,9 +34,13 @@ public class App {
 			adminSession = (JackrabbitSession) repository
 					.login(new SimpleCredentials("admin", "admin".toCharArray()));
 			// createUser("user10", "user10", adminSession);
+			Node root = adminSession.getRootNode();
+			dump(root);
+			// Store content
+			// Node users = root.addNode("users");
+			// adminSession.save();
 			userSession = (JackrabbitSession) repository
-					.login(new SimpleCredentials("user18", "user17"
-							.toCharArray()));
+					.login(new SimpleCredentials("user2", "user2".toCharArray()));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -64,6 +73,39 @@ public class App {
 		aMgr.setPolicy("/", acl);
 		session.save();
 		session.logout();
+	}
+
+	private static void dump(Node node) throws RepositoryException {
+		// First output the node path
+		System.out.println(node.getPath());
+		// Skip the virtual (and large!) jcr:system subtree
+		if (node.getName().equals("jcr:system")) {
+			return;
+		}
+
+		// Then output the properties
+		PropertyIterator properties = node.getProperties();
+		while (properties.hasNext()) {
+			Property property = properties.nextProperty();
+			if (property.getDefinition().isMultiple()) {
+				// A multi-valued property, print all values
+				Value[] values = property.getValues();
+				for (int i = 0; i < values.length; i++) {
+					System.out.println(property.getPath() + " = "
+							+ values[i].getString());
+				}
+			} else {
+				// A single-valued property
+				System.out.println(property.getPath() + " = "
+						+ property.getString());
+			}
+		}
+
+		// Finally output all the child nodes recursively
+		NodeIterator nodes = node.getNodes();
+		while (nodes.hasNext()) {
+			dump(nodes.nextNode());
+		}
 	}
 
 }

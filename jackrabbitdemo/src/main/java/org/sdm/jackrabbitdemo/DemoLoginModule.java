@@ -79,7 +79,7 @@ public class DemoLoginModule extends DefaultLoginModule {
 				};
 				SimpleCredentials simpleCredentials = (SimpleCredentials) credentials;
 				user = userManager.createUser(userId, new String(
-						simpleCredentials.getPassword()), principal, null);
+						simpleCredentials.getPassword()), principal, "/users");
 			} else if (authrz != null && !authrz.isGroup()) {
 				user = (User) authrz;
 				if (user.isDisabled()) {
@@ -87,6 +87,12 @@ public class DemoLoginModule extends DefaultLoginModule {
 					// false.
 					System.out
 							.println("User " + userId + " has been disabled.");
+				} else {
+					try {
+						System.out.println("Found a user at:" + user.getPath());
+					} catch (Exception ex) {
+						//
+					}
 				}
 			}
 			principal = user.getPrincipal();
