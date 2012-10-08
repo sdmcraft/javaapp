@@ -24,7 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import pojo.MyListener;
 
@@ -36,7 +36,7 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 		javax.servlet.Servlet {
 
 	static final long serialVersionUID = 1L;
-	final static Logger logger = Logger.getLogger(JMSservlet.class);
+	//final static Logger logger = Logger.getLogger(JMSservlet.class);
 	/*
 	 * (non-Java-doc)
 	 * 
@@ -47,7 +47,7 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 	}
 
 	public void init() {
-		logger.info("init(+)");
+		//logger.info("init(+)");
 		Integer hits = 0;
 		getServletContext().setAttribute("hits", hits);
 
@@ -77,7 +77,7 @@ public class JMSservlet extends javax.servlet.http.HttpServlet implements
 		}
 		finally
 		{
-			logger.info("init(-)");
+			//logger.info("init(-)");
 		}
 	}
 
