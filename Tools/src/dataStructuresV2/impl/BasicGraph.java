@@ -27,6 +27,7 @@ public class BasicGraph<T> implements Graph<T> {
 	}
 
 	@Override
+	//UT:TestBasicGraph.testGetEdgesSingleNode
 	public Set<Edge<T>> getEdges(Node<T> node) throws InvalidDataException {
 		if (nodes.contains(node)) {
 			Set<Edge<T>> nodeEdges = new HashSet<Edge<T>>();

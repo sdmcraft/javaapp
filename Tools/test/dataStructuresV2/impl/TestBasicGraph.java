@@ -23,7 +23,7 @@ public class TestBasicGraph {
 	}
 
 	@Test
-	public void testGetEdges() {
+	public void testGetEdgesSingleNode() {
 		BasicGraph<String> basicGraph = new BasicGraph<String>();
 
 		// ////////////////////////////////////////////
