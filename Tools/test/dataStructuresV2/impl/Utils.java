@@ -25,7 +25,7 @@ public class Utils {
 	public static Set<Edge> createMockEdges(int n) {
 
 		Set<Edge> set = new HashSet<Edge>();
-		
+
 		for (int i = 0; i < n; i++) {
 			Edge edge = EasyMock.createMock(Edge.class);
 			set.add(edge);
@@ -33,11 +33,26 @@ public class Utils {
 		return set;
 	}
 
+	public static Edge createMockEdge(Node node1, Node node2) {
+		Edge edge = EasyMock.createMock(Edge.class);
+		EasyMock.expect(edge.getEndpoints()).andReturn(
+				new Node[] { node1, node2 }).anyTimes();
+		EasyMock.replay(edge);
+		return edge;
+	}
+
 	public static Object getField(Object object, Class clazz, String fieldName)
 			throws Exception {
 		Field field = clazz.getDeclaredField(fieldName);
 		field.setAccessible(true);
 		return field.get(object);
+	}
+
+	public static void setField(Object object, Class clazz, String fieldName,
+			Object value) throws Exception {
+		Field field = clazz.getDeclaredField(fieldName);
+		field.setAccessible(true);
+		field.set(object, value);
 	}
 
 }
