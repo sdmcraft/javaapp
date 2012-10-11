@@ -11,6 +11,10 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
 	private final Context context;
 	private final String[] values;
 
+	static class ViewHolder {
+		public TextView text;
+	}
+
 	public MyArrayAdapter(Context context, String[] values) {
 		super(context, R.layout.demolistrow, values);
 		this.context = context;
@@ -19,11 +23,18 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowView = inflater.inflate(R.layout.demolistrow, parent, false);
-		TextView textView = (TextView) rowView.findViewById(R.id.myText);
-		textView.setText(values[position]);
+		View rowView = convertView;
+		if (rowView == null) {
+			LayoutInflater inflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			rowView = inflater.inflate(R.layout.demolistrow, parent, false);
+			ViewHolder viewHolder = new ViewHolder();
+			viewHolder.text = (TextView) rowView.findViewById(R.id.myText);
+			rowView.setTag(viewHolder);
+		}
+		ViewHolder holder = (ViewHolder) rowView.getTag();
+		String s = values[position];
+		holder.text.setText(s);
 		return rowView;
 	}
 }
