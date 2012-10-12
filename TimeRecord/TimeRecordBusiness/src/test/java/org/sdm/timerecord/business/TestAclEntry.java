@@ -24,6 +24,28 @@ public class TestAclEntry {
 					"permissionsToLong", new Class[] { Enumeration.class },
 					new Object[] { Collections.enumeration(permissions) });
 			Assert.assertEquals(3L, result);
+			// ///////////////////////////////////
+			permissions = new ArrayList<Permission>();
+			result = (Long) Util.invokeMethod(null, AclEntry.class,
+					"permissionsToLong", new Class[] { Enumeration.class },
+					new Object[] { Collections.enumeration(permissions) });
+
+			Assert.assertEquals(0L, result);
+			// ///////////////////////////////////
+			permissions = new ArrayList<Permission>();
+			permissions.add(MockStore.getMockPermission(PermissionType.READ));			
+			result = (Long) Util.invokeMethod(null, AclEntry.class,
+					"permissionsToLong", new Class[] { Enumeration.class },
+					new Object[] { Collections.enumeration(permissions) });
+			Assert.assertEquals(1L, result);
+			// ///////////////////////////////////
+			permissions = new ArrayList<Permission>();
+			permissions.add(MockStore.getMockPermission(PermissionType.MODIFY));			
+			result = (Long) Util.invokeMethod(null, AclEntry.class,
+					"permissionsToLong", new Class[] { Enumeration.class },
+					new Object[] { Collections.enumeration(permissions) });
+			Assert.assertEquals(2L, result);
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Assert.fail();
@@ -75,7 +97,7 @@ public class TestAclEntry {
 
 			Assert.assertEquals(PermissionType.READ, result.nextElement().type);
 			Assert.assertEquals(false, result.hasMoreElements());
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Assert.fail();
