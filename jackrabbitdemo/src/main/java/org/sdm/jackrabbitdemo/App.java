@@ -40,7 +40,7 @@ public class App {
 			// Node users = root.addNode("users");
 			// adminSession.save();
 			userSession = (JackrabbitSession) repository
-					.login(new SimpleCredentials("user2", "user2".toCharArray()));
+					.login(new SimpleCredentials("user3", "user3".toCharArray()));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -79,9 +79,9 @@ public class App {
 		// First output the node path
 		System.out.println(node.getPath());
 		// Skip the virtual (and large!) jcr:system subtree
-		if (node.getName().equals("jcr:system")) {
-			return;
-		}
+//		if (node.getName().equals("jcr:system")) {
+//			return;
+//		}
 
 		// Then output the properties
 		PropertyIterator properties = node.getProperties();
