@@ -10,6 +10,7 @@ public class SimpleGraph<T> extends BasicGraph<T> {
 	}
 
 	@Override
+	//TODO:Needs UT
 	protected boolean canAdd(Edge<T> edge) {
 		boolean canAddEdge = super.canAdd(edge);
 		if (canAddEdge) {

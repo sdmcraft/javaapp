@@ -15,6 +15,7 @@ import dataStructuresV2.impl.SimpleGraph;
 
 public class GraphFactory {
 
+	// TODO Needs UT
 	public static <T> Graph<T> getGraph(Set<T> values, int edges)
 			throws InvalidDataException {
 		Set<Edge<T>> edgeSet = new HashSet<Edge<T>>();
@@ -44,6 +45,7 @@ public class GraphFactory {
 		return graph;
 	}
 
+	//TODO:Needs UT
 	public static <T> Graph<T> getGraph(int[][] adjMatrix, T[] values,
 			boolean directed) throws InvalidDataException {
 		BasicGraph<T> basicGraph = new BasicGraph<T>();
@@ -89,6 +91,7 @@ public class GraphFactory {
 		return basicGraph;
 	}
 
+	//TODO:Needs UT
 	public static <T> Graph<T> getSimpleGraph(Set<T> values, int edges)
 			throws InvalidDataException {
 		if (edges > values.size() * (values.size() - 1) / 2) {

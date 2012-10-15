@@ -14,7 +14,6 @@ public class BasicGraph<T> implements Graph<T> {
 	protected final Set<Node<T>> nodes = new HashSet<Node<T>>();
 	protected final Set<Edge<T>> edges = new HashSet<Edge<T>>();
 
-
 	@Override
 	public Set<Node<T>> getNodes() {
 
@@ -27,7 +26,7 @@ public class BasicGraph<T> implements Graph<T> {
 	}
 
 	@Override
-	//UT:TestBasicGraph.testGetEdgesSingleNode
+	// UT:TestBasicGraph.testGetEdgesSingleNode
 	public Set<Edge<T>> getEdges(Node<T> node) throws InvalidDataException {
 		if (nodes.contains(node)) {
 			Set<Edge<T>> nodeEdges = new HashSet<Edge<T>>();
@@ -106,7 +105,7 @@ public class BasicGraph<T> implements Graph<T> {
 		}
 
 		if (!edges.add(edge)) {
-			System.out.println("This graph already has this edge!!");
+			throw new InvalidDataException("This graph already has this edge!!");
 		}
 
 	}
