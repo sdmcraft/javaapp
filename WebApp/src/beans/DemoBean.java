@@ -11,4 +11,8 @@ public class DemoBean {
 		this.name = name;
 	}
 
+	public String oddMethod() {
+		return "I am an odd method!!";
+	}
+
 }

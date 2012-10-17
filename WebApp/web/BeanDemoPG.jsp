@@ -10,5 +10,7 @@
 <jsp:useBean id="demoBean" scope="request" class="beans.DemoBean"></jsp:useBean>
 <jsp:setProperty name="demoBean" property="name" value="Bean World!!" />
 <h1>Hello <jsp:getProperty name="demoBean" property="name" /></h1>
+Here's the EL: ${demoBean.name}
+Here's another EL: ${demoBean.oddMethod()}
 </body>
 </html>
