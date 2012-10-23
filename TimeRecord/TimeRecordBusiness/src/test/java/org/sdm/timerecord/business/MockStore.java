@@ -10,10 +10,12 @@ public class MockStore {
 		Permission mockPermission = EasyMock.createMock(Permission.class);
 		switch (permissionType) {
 		case MODIFY:
-			EasyMock.expect(mockPermission.getLong()).andReturn(1L << 1);
+			EasyMock.expect(mockPermission.getLong()).andReturn(1L << 1).anyTimes();
+			EasyMock.expect(mockPermission.getType()).andReturn(PermissionType.MODIFY).anyTimes();
 			break;
 		case READ:
-			EasyMock.expect(mockPermission.getLong()).andReturn(1L << 0);
+			EasyMock.expect(mockPermission.getLong()).andReturn(1L << 0).anyTimes();
+			EasyMock.expect(mockPermission.getType()).andReturn(PermissionType.READ).anyTimes();
 			break;
 		}
 		EasyMock.replay(mockPermission);

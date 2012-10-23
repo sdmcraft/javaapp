@@ -4,7 +4,9 @@ import java.security.acl.Permission;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,23 +37,36 @@ public class AclEntry implements java.security.acl.AclEntry {
 	@JoinColumn(name = "RESOURCE_ID", referencedColumnName = "ID")
 	private final Resource resource;
 
-	private transient final Enumeration<Permission> permissions;
-
 	@Column(name = "PERMISSIONS", nullable = false)
 	private long permissionValue;
 
 	public AclEntry(Principal principal, Resource resource,
-			Enumeration<Permission> permissions) {
+			Set<Permission> permissions) {
 		super();
 		this.principal = principal;
 		this.resource = resource;
-		this.permissions = permissions;
 		this.permissionValue = permissionsToLong(permissions);
 	}
 
-	public boolean addPermission(Permission arg0) {
-		// TODO Auto-generated method stub
-		return false;
+	// This method has a unit test
+	@Override
+	public boolean addPermission(Permission permission) {
+		try {
+			Enumeration<Permission> currentPermissions = longToPermissions(permissionValue);
+			while (currentPermissions.hasMoreElements()) {
+				if (currentPermissions.nextElement().equals(permission)) {
+					return false;
+				}
+			}
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Set<Permission> permissionSet = new HashSet<Permission>();
+		permissionSet.add(permission);
+		permissionValue += permissionsToLong(permissionSet);
+		return true;
 	}
 
 	public boolean checkPermission(Permission arg0) {
@@ -89,8 +104,8 @@ public class AclEntry implements java.security.acl.AclEntry {
 		return false;
 	}
 
-	public Enumeration<Permission> getPermissions() {
-		return permissions;
+	public Enumeration<Permission> getPermissions() throws BusinessException {
+		return longToPermissions(permissionValue);
 	}
 
 	@Override
@@ -109,11 +124,9 @@ public class AclEntry implements java.security.acl.AclEntry {
 	}
 
 	// This method has a unit test
-	private static final long permissionsToLong(
-			Enumeration<Permission> permissions) {
+	private static final long permissionsToLong(Set<Permission> permissions) {
 		long result = 0;
-		while (permissions.hasMoreElements()) {
-			Permission permission = permissions.nextElement();
+		for (Permission permission : permissions) {
 			result += ((org.sdm.timerecord.business.model.Permission) permission)
 					.getLong();
 		}
@@ -121,7 +134,8 @@ public class AclEntry implements java.security.acl.AclEntry {
 	}
 
 	// This method has a unit test
-	private static final Enumeration<Permission> longToPermissions(long value) throws BusinessException {
+	private static final Enumeration<Permission> longToPermissions(long value)
+			throws BusinessException {
 		Long mask = 1L;
 		List<Permission> permissions = new ArrayList<Permission>();
 

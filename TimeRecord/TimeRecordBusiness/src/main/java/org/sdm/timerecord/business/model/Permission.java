@@ -52,12 +52,14 @@ public class Permission implements java.security.acl.Permission {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
 		Permission other = (Permission) obj;
-		if (type != other.type)
+		if (type != other.getType())
 			return false;
 		return true;
+	}
+
+	public PermissionType getType() {
+		return type;
 	}
 
 }
