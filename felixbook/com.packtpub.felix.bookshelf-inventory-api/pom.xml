@@ -37,7 +37,7 @@
 						<Export-Package>com.packtpub.felix.bookshelf.inventory.api</Export-Package>
 					</instructions>
 					<remoteOBR>repo-rel</remoteOBR>
-					<prefixUrl>file:///C:/svn/javaapp.googlecode.com/com.packtpub.felix.bookshelf-inventory-api/releases</prefixUrl>
+					<prefixUrl>file:///C:/svn/javaapp.googlecode.com/felixbook/releases</prefixUrl>
 				</configuration>
 			</plugin>
 			<plugin>
