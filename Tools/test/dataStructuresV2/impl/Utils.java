@@ -22,6 +22,18 @@ public class Utils {
 		return set;
 	}
 
+	public static Set<Node> createMockNodes(Object[] values) {
+
+		Set<Node> set = new HashSet<Node>();
+		for (int i = 0; i < values.length; i++) {
+			Node node = EasyMock.createMock(Node.class);
+			EasyMock.expect(node.getValue()).andReturn(values[i]);
+			set.add(node);
+			EasyMock.replay(node);
+		}
+		return set;
+	}
+
 	public static Set<Edge> createMockEdges(int n) {
 
 		Set<Edge> set = new HashSet<Edge>();

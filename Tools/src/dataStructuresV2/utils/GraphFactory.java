@@ -15,7 +15,7 @@ import dataStructuresV2.impl.SimpleGraph;
 
 public class GraphFactory {
 
-	// TODO Needs UT
+	// This method has a unit test
 	public static <T> Graph<T> getGraph(Set<T> values, int edges)
 			throws InvalidDataException {
 		Set<Edge<T>> edgeSet = new HashSet<Edge<T>>();
