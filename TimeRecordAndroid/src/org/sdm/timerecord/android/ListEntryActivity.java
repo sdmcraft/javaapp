@@ -108,24 +108,26 @@ public class ListEntryActivity extends Activity {
 	}
 
 	public void saveEntryClickHandler(View view) {
-		String hours = "0";
-		String minutes = "0";
-		String seconds = "0";
+		int hours = 0;
+		int minutes = 0;
+		int seconds = 0;
 		if (hoursEntry.getText() != null && hoursEntry.getText().length() > 0) {
-			hours = hoursEntry.getText().toString();
+			hours = Integer.parseInt(hoursEntry.getText().toString());
 		}
 		if (minutesEntry.getText() != null
 				&& minutesEntry.getText().length() > 0) {
-			minutes = minutesEntry.getText().toString();
+			minutes = Integer.parseInt(minutesEntry.getText().toString());
 		}
 		if (secondsEntry.getText() != null
 				&& secondsEntry.getText().length() > 0) {
-			seconds = secondsEntry.getText().toString();
+			seconds = Integer.parseInt(secondsEntry.getText().toString());
 		}
 
+		Calendar c = Calendar.getInstance();
+		c.set(hours, minutes, seconds);
+
 		ListEntry.insert(Globals.getInstance().getDb(), mListId.longValue(),
-				mDateDisplay.getText().toString(), hours + ":" + minutes + ":"
-						+ seconds);
+				mDateDisplay.getText().toString(), c.getTimeInMillis());
 		exitActivity();
 	}
 

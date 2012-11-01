@@ -68,7 +68,7 @@ public class ViewListEntriesActivity extends ListActivity {
 					.getColumnIndex(ListEntry.COL_ENTRY_TIME));
 			Long listId = listsCursor.getLong(listsCursor
 					.getColumnIndex(ListEntry.COL_LIST_ID));
-			String value = listsCursor.getString(listsCursor
+			long value = listsCursor.getLong(listsCursor
 					.getColumnIndex(ListEntry.COL_VALUE));
 
 			entries.add(new ListEntry(id, entryTime, listId, value));
@@ -146,12 +146,7 @@ public class ViewListEntriesActivity extends ListActivity {
 				e.printStackTrace();
 			}
 			dateValues[i] = entryDate;
-			valuesDbl[i] = Integer.parseInt(entry.getValue().split(":")[0]
-					.trim())
-					* 3600
-					+ Integer.parseInt(entry.getValue().split(":")[1].trim())
-					* 60
-					+ Integer.parseInt(entry.getValue().split(":")[2].trim());
+			valuesDbl[i] = entry.getValue();
 			if (valuesDbl[i] > maxVal)
 				maxVal = valuesDbl[i] * 1.1;
 			if (valuesDbl[i] < minVal)

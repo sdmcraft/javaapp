@@ -15,9 +15,9 @@ public class ListEntry {
 	private long id;
 	private String entryTime;
 	private long listId;
-	private String value;
+	private long value;
 
-	public ListEntry(long id, String entryTime, long listId, String value) {
+	public ListEntry(long id, String entryTime, long listId, long value) {
 		super();
 		this.id = id;
 		this.entryTime = entryTime;
@@ -29,7 +29,7 @@ public class ListEntry {
 		db.execSQL("create table " + TABLE_NAME + " (" + COL_ID
 				+ " integer primary key autoincrement, " + COL_ENTRY_TIME
 				+ "  text not null, " + COL_LIST_ID + " integer not null, "
-				+ COL_VALUE + " integer, " + "foreign key(" + COL_LIST_ID
+				+ COL_VALUE + " long, " + "foreign key(" + COL_LIST_ID
 				+ ") references ts_lists(_id));");
 	}
 
@@ -38,7 +38,7 @@ public class ListEntry {
 	}
 
 	public static long insert(SQLiteDatabase db, long listId, String entryTime,
-			String value) {
+			long value) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(COL_LIST_ID, listId);
 		initialValues.put(COL_ENTRY_TIME, entryTime);
@@ -94,11 +94,11 @@ public class ListEntry {
 		this.listId = listId;
 	}
 
-	public String getValue() {
+	public long getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(long value) {
 		this.value = value;
 	}
 
