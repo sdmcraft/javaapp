@@ -47,8 +47,9 @@
             security manager:
             class: FQN of class implementing the JackrabbitSecurityManager interface
         -->
-        <SecurityManager class="org.apache.jackrabbit.core.DefaultSecurityManager" workspaceName="security">
-            <!--<UserManager class="org.apache.jackrabbit.core.security.user.UserPerWorkspaceUserManager">
+        <!--<SecurityManager class="org.apache.jackrabbit.core.DefaultSecurityManager" workspaceName="security">-->
+        <SecurityManager class="org.apache.jackrabbit.core.UserPerWorkspaceSecurityManager">
+            <UserManager class="org.apache.jackrabbit.core.security.user.UserPerWorkspaceUserManager">
                 <param name="usersPath" value="/home/users"/>
                 <param name="groupsPath" value="/home/groups"/>
                 <param name="defaultDepth" value="1"/>
@@ -57,7 +58,7 @@
                   <param name="groupPrivilegeNames" value="jcr:read"/>
                   <param name="userPrivilegeNames" value="jcr:all"/>
                 </AuthorizableAction>                
-            </UserManager>-->
+            </UserManager>
 
             <!--
             workspace access:

@@ -75,7 +75,7 @@ public class App {
 		session.logout();
 	}
 
-	private static void dump(Node node) throws RepositoryException {
+	public static void dump(Node node) throws RepositoryException {
 		// First output the node path
 		System.out.println(node.getPath());
 		// Skip the virtual (and large!) jcr:system subtree

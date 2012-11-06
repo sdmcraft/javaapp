@@ -27,6 +27,12 @@ public class DemoLoginModule extends DefaultLoginModule {
 		super.doInit(callbackHandler, session, options);
 		this.session = session;
 		try {
+			App.dump(session.getRootNode());
+		} catch (RepositoryException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
 			userManager = ((JackrabbitSession) session).getUserManager();
 		} catch (Exception e) {
 			throw new LoginException("Unable to initialize LoginModule: "
