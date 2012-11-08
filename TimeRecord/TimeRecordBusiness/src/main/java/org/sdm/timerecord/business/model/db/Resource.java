@@ -33,7 +33,7 @@ public abstract class Resource implements Serializable {
 
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "PARENT_ID", referencedColumnName = "ID")
-	private Resource parent;
+	protected Resource parent;
 
 	@OneToMany(mappedBy = "parent")
 	private Collection<Resource> children;

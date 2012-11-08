@@ -14,7 +14,9 @@ import org.sdm.timerecord.business.model.ResourceType;
 
 @Entity
 @Table(name = "TR_PRINCIPALS", uniqueConstraints = { @UniqueConstraint(columnNames = { "NAME" }) })
-@NamedQueries({ @NamedQuery(name = "Principal.listAll", query = "SELECT p FROM Principal p") })
+@NamedQueries({
+		@NamedQuery(name = "Principal.listAll", query = "SELECT p FROM Principal p"),
+		@NamedQuery(name = "Principal.getRoot", query = "SELECT p FROM Principal p WHERE p.name='root'") })
 public class Principal extends Resource implements Serializable,
 		java.security.Principal {
 	private static final long serialVersionUID = 1L;
@@ -26,10 +28,11 @@ public class Principal extends Resource implements Serializable,
 		super();
 	}
 
-	public Principal(String name) throws Exception {
+	public Principal(String name, Principal parent) throws Exception {
 		super();
 		this.name = name;
 		this.resourceType = ResourceType.PRINCIPAL;
+		this.parent = parent;
 	}
 
 	public String getName() {
