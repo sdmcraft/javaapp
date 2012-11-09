@@ -10,12 +10,13 @@ import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
 import dataStructuresV2.exception.InvalidDataException;
+import dataStructuresV2.exception.InvalidDataException.Code;
 import dataStructuresV2.impl.BasicGraph;
 import dataStructuresV2.impl.SimpleGraph;
 
 public class GraphFactory {
 
-	// This method has a unit test
+	// UT:TestGraphFactory.testGetGraph
 	public static <T> Graph<T> getGraph(Set<T> values, int edges)
 			throws InvalidDataException {
 		Set<Edge<T>> edgeSet = new HashSet<Edge<T>>();
@@ -39,19 +40,19 @@ public class GraphFactory {
 				graph.addEdge(edge);
 				i++;
 			} catch (InvalidDataException ex) {
-				//Ignore and try with another edge
+				// Ignore and try with another edge
 			}
 		}
 		return graph;
 	}
 
-	//TODO:Needs UT
+	// TODO:Needs UT
 	public static <T> Graph<T> getGraph(int[][] adjMatrix, T[] values,
 			boolean directed) throws InvalidDataException {
 		BasicGraph<T> basicGraph = new BasicGraph<T>();
 		if (adjMatrix.length < 1 || adjMatrix.length != adjMatrix[0].length
 				|| adjMatrix.length != values.length) {
-			throw new InvalidDataException(
+			throw new InvalidDataException(InvalidDataException.Code.INVALID,
 					"Invalid adjacency matrix for making a graph!!");
 		}
 		if (!directed) {
@@ -59,6 +60,7 @@ public class GraphFactory {
 				for (int j = 0; j < adjMatrix.length; j++) {
 					if (adjMatrix[i][j] != adjMatrix[j][i]) {
 						throw new InvalidDataException(
+								InvalidDataException.Code.INVALID,
 								"Invalid adjacency matrix for making a non-directional graph. It is not symmetric across the diagonal!!");
 					}
 				}
@@ -69,7 +71,7 @@ public class GraphFactory {
 			Node<T> node = NodeFactory.getNode(value);
 			nodeList.add(node);
 			basicGraph.addNode(node);
-		}		
+		}
 		for (int i = 0; i < adjMatrix.length; i++) {
 			for (int j = 0; j < adjMatrix.length; j++) {
 				if (i != j && adjMatrix[i][j] != Integer.MAX_VALUE) {
@@ -83,7 +85,12 @@ public class GraphFactory {
 								nodeList.get(i), nodeList.get(j) },
 								adjMatrix[i][j]);
 					}
-					basicGraph.addEdge(edge);
+					try {
+						basicGraph.addEdge(edge);
+					} catch (InvalidDataException ex) {
+						if (ex.code != Code.DUPLICATE)
+							throw ex;
+					}
 				}
 			}
 		}
@@ -91,11 +98,11 @@ public class GraphFactory {
 		return basicGraph;
 	}
 
-	//TODO:Needs UT
+	// TODO:Needs UT
 	public static <T> Graph<T> getSimpleGraph(Set<T> values, int edges)
 			throws InvalidDataException {
 		if (edges > values.size() * (values.size() - 1) / 2) {
-			throw new InvalidDataException(
+			throw new InvalidDataException(InvalidDataException.Code.INVALID,
 					"Numbers of edges exceeds the maximum possible for a simple graph");
 		} else {
 			SimpleGraph<T> simpleGraph = new SimpleGraph<T>();
@@ -104,7 +111,7 @@ public class GraphFactory {
 				Node<T> node = NodeFactory.getNode(value);
 				nodes.add(node);
 				simpleGraph.addNode(node);
-			}			
+			}
 			for (int i = 0; i < edges;) {
 				int randomIndex = (int) Math.round((nodes.size() - 1)
 						* Math.random());

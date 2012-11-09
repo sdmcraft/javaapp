@@ -38,19 +38,20 @@ public class BasicGraph<T> implements Graph<T> {
 			}
 			return Collections.unmodifiableSet(nodeEdges);
 		} else {
-			throw new InvalidDataException(
+			throw new InvalidDataException(InvalidDataException.Code.INVALID,
 					"Specified node does not belong to this graph:" + node);
 		}
 	}
 
 	@Override
+	// UT:TestBasicGraph.testGetEdgesDoubleNode
 	public Set<Edge<T>> getEdges(Node<T> node1, Node<T> node2)
 			throws InvalidDataException {
 		if (!nodes.contains(node1))
-			throw new InvalidDataException(
+			throw new InvalidDataException(InvalidDataException.Code.INVALID,
 					"Specified node does not belong to this graph:" + node1);
 		if (!nodes.contains(node2))
-			throw new InvalidDataException(
+			throw new InvalidDataException(InvalidDataException.Code.INVALID,
 					"Specified node does not belong to this graph:" + node2);
 		Set<Edge<T>> node1Edges = getEdges(node1);
 		Set<Edge<T>> edges = new HashSet<Edge<T>>();
@@ -63,6 +64,7 @@ public class BasicGraph<T> implements Graph<T> {
 	}
 
 	@Override
+	// UT:TestBasicGraph.testGetNeighbours
 	public Set<Node<T>> getNeighbours(Node<T> node) throws InvalidDataException {
 		Set<Edge<T>> nodeEdges = getEdges(node);
 		Set<Node<T>> neighbours = new HashSet<Node<T>>();
@@ -91,25 +93,30 @@ public class BasicGraph<T> implements Graph<T> {
 	}
 
 	@Override
+	// UT:TestBasicGraph.testAddNode
 	final public void addNode(Node<T> node) throws InvalidDataException {
 		if (!nodes.add(node)) {
-			throw new InvalidDataException("This graph already has this node!!");
+			throw new InvalidDataException(InvalidDataException.Code.DUPLICATE,
+					"This graph already has this node!!");
 		}
 	}
 
 	@Override
+	// UT:TestBasicGraph.testAddEdge
 	final public void addEdge(Edge<T> edge) throws InvalidDataException {
 		if (!canAdd(edge)) {
-			throw new InvalidDataException(
+			throw new InvalidDataException(InvalidDataException.Code.MISSING,
 					"An endpoint of this edge is not present in the graph!!");
 		}
 
 		if (!edges.add(edge)) {
-			throw new InvalidDataException("This graph already has this edge!!");
+			throw new InvalidDataException(InvalidDataException.Code.DUPLICATE,
+					"This graph already has this edge!!");
 		}
 
 	}
 
+	// UT:TestBasicGraph.testCanAdd
 	protected boolean canAdd(Edge<T> edge) {
 		return nodes.contains(edge.getEndpoints()[0])
 				&& nodes.contains(edge.getEndpoints()[1]);

@@ -52,4 +52,17 @@ public class TestGraphFactory {
 		}
 	}
 
+	@Test
+	public void testGetGraphWithAdjMatrix() {
+		int[][] adjMatrix = new int[][] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+		String[] values = new String[] { "1", "2", "3" };
+		boolean directed = false;
+		try {
+			GraphFactory.getGraph(adjMatrix, values, directed);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Assert.fail();
+		}
+	}
+
 }

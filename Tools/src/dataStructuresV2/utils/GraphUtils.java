@@ -21,7 +21,7 @@ public class GraphUtils {
 		 * Set of nodes which have been processed and should be skipped while
 		 * processing
 		 */
-		Set<Node<T>> visitedNodes = new HashSet<>();
+		Set<Node<T>> visitedNodes = new HashSet<Node<T>>();
 
 		/*
 		 * A map of a target node to the path from the source node to this
@@ -53,7 +53,7 @@ public class GraphUtils {
 		}
 
 		/* The node processing queue */
-		List<NodeDistance> nodeList = new ArrayList<>();
+		List<NodeDistance> nodeList = new ArrayList<NodeDistance>();
 
 		/* The start node is trivially at 0 cost to itself */
 		NodeDistance nodeDistance = new NodeDistance(startNode, 0);
@@ -113,7 +113,7 @@ public class GraphUtils {
 									+ minEdgeWeight);
 					nodeList.add(neighbourDistance);
 					List<Node<T>> tempPath = pathMap.get(currentNode);
-					List<Node<T>> path = new ArrayList<>();
+					List<Node<T>> path = new ArrayList<Node<T>>();
 					for (Node<T> node : tempPath) {
 						path.add(node);
 					}
@@ -130,7 +130,7 @@ public class GraphUtils {
 							+ minEdgeWeight;
 
 					List<Node<T>> tempPath = pathMap.get(currentNode);
-					List<Node<T>> path = new ArrayList<>();
+					List<Node<T>> path = new ArrayList<Node<T>>();
 					for (Node<T> node : tempPath) {
 						path.add(node);
 					}
