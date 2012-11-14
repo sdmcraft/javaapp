@@ -85,7 +85,7 @@ public class ViewListEntriesActivity extends ListActivity {
 		int[] to = new int[] { R.id.entryTime, R.id.entryValue };
 
 		// Now create a simple cursor adapter and set it to display
-		SimpleCursorAdapter entries = new SimpleCursorAdapter(this,
+		EntriesListAdapter entries = new EntriesListAdapter(this,
 				R.layout.entry_row, listsCursor, from, to);
 		setListAdapter(entries);
 
