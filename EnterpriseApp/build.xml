@@ -23,6 +23,16 @@
 		<fileset dir="${jboss.default}/lib">
 			<patternset refid="java.libs" />
 		</fileset>
+		<fileset dir="${env.JBOSS_HOME}/lib">
+			<patternset refid="java.libs" />
+		</fileset>
+		<fileset dir="${env.JBOSS_HOME}/client">
+			<patternset refid="java.libs" />
+		</fileset>
+		<fileset dir="${env.JBOSS_HOME}/common/lib">
+			<patternset refid="java.libs" />
+		</fileset>
+								
 	</path>
 
 	<target name="prepare">
@@ -77,18 +87,18 @@
 				
 	</target>
 	
-	<target name="all" depends="deploy" />
+	<target name="all" depends="cleanall,build,deploy" />
 
 	<target name="clean">
-		<delete>
+		<delete quiet="true">
 			<fileset dir="${build.dir}" includes="**/*" />
 			<fileset dir="${temp.dir}" includes="**/*" />
 		</delete>
 	</target>
 
 	<target name="cleanall" depends="clean">
-		<delete dir="${build.dir}" />
-		<delete dir="${temp.dir}" />
+		<delete quiet="true" dir="${build.dir}" />
+		<delete quiet="true" dir="${temp.dir}" />
 	</target>
 
 	<target name="deploy">
