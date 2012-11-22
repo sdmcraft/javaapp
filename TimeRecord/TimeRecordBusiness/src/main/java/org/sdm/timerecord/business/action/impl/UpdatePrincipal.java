@@ -30,7 +30,7 @@ public class UpdatePrincipal implements UpdatePrincipalRemote {
 				throw new Exception("Unable to find principal with id:"
 						+ params.get("id")[0]);
 		} else {
-			principal = new Principal(params.get("name")[0]);
+			principal = new Principal(params.get("name")[0], null);
 		}
 		em.persist(principal);
 		List<java.security.Principal> list = Queries.getPrincipalList();
