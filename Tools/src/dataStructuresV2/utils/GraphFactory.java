@@ -50,10 +50,17 @@ public class GraphFactory {
 	public static <T> Graph<T> getGraph(int[][] adjMatrix, T[] values,
 			boolean directed) throws InvalidDataException {
 		BasicGraph<T> basicGraph = new BasicGraph<T>();
-		if (adjMatrix.length < 1 || adjMatrix.length != adjMatrix[0].length
-				|| adjMatrix.length != values.length) {
+		if (adjMatrix.length < 1 || adjMatrix.length != values.length) {
 			throw new InvalidDataException(InvalidDataException.Code.INVALID,
 					"Invalid adjacency matrix for making a graph!!");
+		}
+
+		for (int i = 0; i < adjMatrix.length; i++) {
+			if (adjMatrix.length != adjMatrix[i].length) {
+				throw new InvalidDataException(
+						InvalidDataException.Code.INVALID,
+						"Invalid adjacency matrix for making a graph!!");
+			}
 		}
 		if (!directed) {
 			for (int i = 0; i < adjMatrix.length; i++) {

@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
+import dataStructuresV2.exception.InvalidDataException;
 import dataStructuresV2.utils.GraphFactory;
 import dataStructuresV2.utils.NodeFactory;
 
@@ -54,15 +55,69 @@ public class TestGraphFactory {
 
 	@Test
 	public void testGetGraphWithAdjMatrix() {
-		int[][] adjMatrix = new int[][] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
-		String[] values = new String[] { "1", "2", "3" };
+		int[][] adjMatrix = new int[0][0];
+		String[] values = new String[] { "1", "2", "3", "4" };
 		boolean directed = false;
+
+		try {
+			GraphFactory.getGraph(adjMatrix, values, directed);
+			Assert.fail();
+		} catch (Exception ex) {
+			Assert.assertEquals(InvalidDataException.Code.INVALID,
+					((InvalidDataException) ex).code);
+		}
+
+		adjMatrix = new int[3][2];
+
+		try {
+			GraphFactory.getGraph(adjMatrix, values, directed);
+			Assert.fail();
+		} catch (Exception ex) {
+			Assert.assertEquals(InvalidDataException.Code.INVALID,
+					((InvalidDataException) ex).code);
+		}
+
+		adjMatrix = new int[3][3];
+
+		try {
+			GraphFactory.getGraph(adjMatrix, values, directed);
+			Assert.fail();
+		} catch (Exception ex) {
+			Assert.assertEquals(InvalidDataException.Code.INVALID,
+					((InvalidDataException) ex).code);
+		}
+
+		adjMatrix = new int[][] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+		values = new String[] { "1", "2", "3", };
+		Set<Node> expected = Utils.createMockNodes(values);
+		try {
+			Graph graph = GraphFactory.getGraph(adjMatrix, values, directed);
+			Assert.assertEquals(3, graph.getEdges().size());
+			Assert.assertEquals(expected, graph.getNodes());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Assert.fail();
+		}
+
+		adjMatrix = new int[][] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+		try {
+			GraphFactory.getGraph(adjMatrix, values, directed);
+			Assert.fail();
+		} catch (Exception ex) {
+			Assert.assertEquals(InvalidDataException.Code.INVALID,
+					((InvalidDataException) ex).code);
+		}
+
+		adjMatrix = new int[][] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+		directed = true;
 		try {
 			GraphFactory.getGraph(adjMatrix, values, directed);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Assert.fail();
 		}
+
 	}
 
 }
