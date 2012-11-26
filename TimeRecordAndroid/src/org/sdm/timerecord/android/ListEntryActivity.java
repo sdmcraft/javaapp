@@ -123,11 +123,9 @@ public class ListEntryActivity extends Activity {
 			seconds = Integer.parseInt(secondsEntry.getText().toString());
 		}
 
-		Calendar c = Calendar.getInstance();
-		c.set(hours, minutes, seconds);
-
 		ListEntry.insert(Globals.getInstance().getDb(), mListId.longValue(),
-				mDateDisplay.getText().toString(), c.getTimeInMillis());
+				mDateDisplay.getText().toString(), hours * 60 * 60 * 1000
+						+ minutes * 60 * 1000 + seconds * 1000);
 		exitActivity();
 	}
 
