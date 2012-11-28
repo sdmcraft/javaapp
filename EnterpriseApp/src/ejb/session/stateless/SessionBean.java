@@ -13,7 +13,7 @@ import ejb.persistance.entities.Employee;
 @Stateless
 public class SessionBean implements SessionBeanLocal, SessionBeanRemote, Serializable {
 
-	@PersistenceContext(name = "EnterpriseApp")
+	@PersistenceContext(unitName = "EnterpriseApp")
 	EntityManager em;
 
 	public void method() {
