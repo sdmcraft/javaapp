@@ -29,6 +29,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			com.packtpub.felix.bookshelf-inventory-api</artifactId>
 			<version>1.5.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>4.2.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -41,7 +46,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 					<instructions>
 						<Bundle-Category>sample</Bundle-Category>
 						<Bundle-SymbolicName>${artifactId}</Bundle-SymbolicName>
+						<Bundle-Activator>com.packtpub.felix.bookshelf.inventory.impl.mock.activator.BookInventoryMockImplActivator</Bundle-Activator>
 						<Export-Package>com.packtpub.felix.bookshelf.inventory.impl.mock</Export-Package>
+						<Private-Package>com.packtpub.felix.bookshelf.inventory.impl.mock.activator</Private-Package>
 					</instructions>
 					<remoteOBR>repo-rel</remoteOBR>
 					<prefixUrl>file:///C:/svn/javaapp.googlecode.com/felixbook/releases</prefixUrl>

@@ -9,5 +9,5 @@ public interface MutableBook extends Book {
 
 	void setCategory(String category);
 
-	void setRating(String rating);
+	void setRating(int rating);
 }
