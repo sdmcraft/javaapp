@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ public abstract class Resource implements Serializable {
 	@Column(name = "ID", nullable = false)
 	private Integer id;
 
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "RESOURCE_TYPE", nullable = false)
 	protected ResourceType resourceType;
 
