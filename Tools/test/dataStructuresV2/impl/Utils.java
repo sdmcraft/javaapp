@@ -8,6 +8,7 @@ import org.easymock.EasyMock;
 
 import dataStructuresV2.Edge;
 import dataStructuresV2.Node;
+import dataStructuresV2.utils.NodeFactory;
 
 public class Utils {
 
@@ -28,13 +29,23 @@ public class Utils {
 		for (int i = 0; i < values.length; i++) {
 			Node node = EasyMock.createMock(Node.class);
 			EasyMock.expect(node.getValue()).andReturn(values[i]);
+			EasyMock.expect(node.hashCode()).andReturn(
+					31 * 1 + ((values[i] == null) ? 0 : values[i].hashCode()));
 			set.add(node);
 			EasyMock.replay(node);
 		}
 		return set;
 	}
-	
 
+	public static Set<Node> createNodes(Object[] values) {
+
+		Set<Node> set = new HashSet<Node>();
+		for (int i = 0; i < values.length; i++) {
+			Node node = NodeFactory.getNode(values[i]);
+			set.add(node);
+		}
+		return set;
+	}
 
 	public static Set<Edge> createMockEdges(int n) {
 
@@ -49,8 +60,8 @@ public class Utils {
 
 	public static Edge createMockEdge(Node node1, Node node2) {
 		Edge edge = EasyMock.createMock(Edge.class);
-		EasyMock.expect(edge.getEndpoints()).andReturn(
-				new Node[] { node1, node2 }).anyTimes();
+		EasyMock.expect(edge.getEndpoints())
+				.andReturn(new Node[] { node1, node2 }).anyTimes();
 		EasyMock.replay(edge);
 		return edge;
 	}

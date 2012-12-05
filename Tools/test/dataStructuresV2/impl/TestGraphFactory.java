@@ -89,7 +89,7 @@ public class TestGraphFactory {
 
 		adjMatrix = new int[][] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
 		values = new String[] { "1", "2", "3", };
-		Set<Node> expected = Utils.createMockNodes(values);
+		Set<Node> expected = Utils.createNodes(values);
 		try {
 			Graph graph = GraphFactory.getGraph(adjMatrix, values, directed);
 			Assert.assertEquals(3, graph.getEdges().size());
@@ -101,6 +101,15 @@ public class TestGraphFactory {
 		}
 
 		adjMatrix = new int[][] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
+		try {
+			GraphFactory.getGraph(adjMatrix, values, directed);
+			Assert.fail();
+		} catch (Exception ex) {
+			Assert.assertEquals(InvalidDataException.Code.INVALID,
+					((InvalidDataException) ex).code);
+		}
+
+		adjMatrix = new int[][] { { 0, 0, 1 }, { 1, 1}, { 1, 1, 1 } };
 		try {
 			GraphFactory.getGraph(adjMatrix, values, directed);
 			Assert.fail();
