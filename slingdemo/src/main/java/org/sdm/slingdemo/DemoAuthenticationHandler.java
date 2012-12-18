@@ -45,6 +45,11 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 
 	public AuthenticationInfo extractCredentials(HttpServletRequest req,
 			HttpServletResponse resp) {
+		
+		if(req.getParameter("name") == null || req.getParameter("pwd") == null)
+		{
+			return AuthenticationInfo.FAIL_AUTH;
+		}
 		AuthenticationInfo authInfo = new AuthenticationInfo("demo",
 				req.getParameter("name"), req.getParameter("pwd").toCharArray());
 		authInfo.put("demo", "demo");
@@ -53,7 +58,6 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 
 	public boolean requestCredentials(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws IOException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
