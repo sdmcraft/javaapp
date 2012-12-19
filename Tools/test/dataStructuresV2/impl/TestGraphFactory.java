@@ -7,6 +7,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
 import dataStructuresV2.exception.InvalidDataException;
@@ -109,7 +110,7 @@ public class TestGraphFactory {
 					((InvalidDataException) ex).code);
 		}
 
-		adjMatrix = new int[][] { { 0, 0, 1 }, { 1, 1}, { 1, 1, 1 } };
+		adjMatrix = new int[][] { { 0, 0, 1 }, { 1, 1 }, { 1, 1, 1 } };
 		try {
 			GraphFactory.getGraph(adjMatrix, values, directed);
 			Assert.fail();
@@ -118,10 +119,24 @@ public class TestGraphFactory {
 					((InvalidDataException) ex).code);
 		}
 
+		adjMatrix = new int[][] { { Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+				{ Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+				{ 1, Integer.MAX_VALUE, Integer.MAX_VALUE } };
+		directed = true;
+		try {
+			Graph graph = GraphFactory.getGraph(adjMatrix, values, directed);
+			Assert.assertEquals(3, graph.getEdges().size());
+			Edge edge1 = Utils.createEdge("1", "2", 1);
+			Assert.assertEquals(true, graph.getEdges().contains(edge1));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Assert.fail();
+		}
+
 		adjMatrix = new int[][] { { 0, 0, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
 		directed = true;
 		try {
-			GraphFactory.getGraph(adjMatrix, values, directed);
+			Graph graph = GraphFactory.getGraph(adjMatrix, values, directed);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Assert.fail();
