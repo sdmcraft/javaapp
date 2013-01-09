@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.sdm.timerecord.business.model.Acl;
 import org.sdm.timerecord.business.model.ResourceType;
 
 @Entity
@@ -42,10 +43,10 @@ public abstract class Resource implements Serializable {
 	private Collection<Resource> children;
 
 	@OneToMany(mappedBy = "resource")
-	private Collection<AclEntry> acl;
+	private Collection<java.security.acl.AclEntry> acl;
 
-	public Collection<AclEntry> getAcl() {
-		return acl;
+	public Acl getAcl() {
+		return new Acl(acl);
 	}
 
 	public Resource() {

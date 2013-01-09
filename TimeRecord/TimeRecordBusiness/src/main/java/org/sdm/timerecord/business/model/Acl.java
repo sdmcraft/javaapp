@@ -9,13 +9,14 @@ import java.security.acl.Permission;
 import java.util.Collection;
 import java.util.Enumeration;
 
+import org.sdm.timerecord.business.model.db.Resource;
+
 public class Acl implements java.security.acl.Acl {
-	
+
 	private Collection<AclEntry> aclEntries;
 	private Collection<Owner> owners;
-	
-	public Acl(Collection<AclEntry> aclEntries)
-	{
+
+	public Acl(Collection<AclEntry> aclEntries, Resource resource) {
 		this.aclEntries = aclEntries;
 	}
 
@@ -42,8 +43,16 @@ public class Acl implements java.security.acl.Acl {
 		return false;
 	}
 
-	public boolean checkPermission(Principal arg0, Permission arg1) {
-		// TODO Auto-generated method stub
+	public boolean checkPermission(Principal principal, Permission permission) {
+		for (AclEntry aclEntry : aclEntries) {
+			if (aclEntry.getPrincipal().equals(principal)) {
+				while (aclEntry.permissions().hasMoreElements()) {
+					if (aclEntry.permissions().nextElement().equals(permission)) {
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 

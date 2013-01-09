@@ -45,6 +45,10 @@ public class UpdatePrincipal implements UpdatePrincipalRemote {
 						.createNamedQuery("Principal.getRoot");
 				parent = (Principal) rootPrincipalQuery.getSingleResult();
 			}
+			/*
+			if (ctx.checkPermission(parent,PermissionType.MODIFY);
+			}*/
+
 			principal = new Principal(params.get("name")[0], parent);
 		}
 		em.persist(principal);

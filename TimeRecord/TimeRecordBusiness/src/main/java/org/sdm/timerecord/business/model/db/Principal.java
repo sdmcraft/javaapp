@@ -1,6 +1,8 @@
 package org.sdm.timerecord.business.model.db;
 
 import java.io.Serializable;
+import java.security.acl.Acl;
+import java.security.acl.Permission;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -10,6 +12,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.sdm.timerecord.business.exception.BusinessException;
+import org.sdm.timerecord.business.exception.FailureCode;
+import org.sdm.timerecord.business.model.Permission.PermissionType;
 import org.sdm.timerecord.business.model.ResourceType;
 
 @Entity
