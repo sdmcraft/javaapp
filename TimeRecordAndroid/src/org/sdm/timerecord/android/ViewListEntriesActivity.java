@@ -22,16 +22,21 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class ViewListEntriesActivity extends ListActivity {
+
+	private static final int EDIT = 0;
+	private static final int DELETE = 1;
+
+	private static final int ACTIVITY_EDIT_LIST_ENTRY = 0;
 
 	private static final int VIEW_LINE_GRAPH_ID = Menu.FIRST;
 	private static final int VIEW_BAR_GRAPH_ID = Menu.NONE;
@@ -78,7 +83,8 @@ public class ViewListEntriesActivity extends ListActivity {
 
 		// Create an array to specify the fields we want to display in the list
 		// (only TITLE)
-		String[] from = new String[] { ListEntry.COL_ENTRY_TIME , ListEntry.COL_VALUE};
+		String[] from = new String[] { ListEntry.COL_ENTRY_TIME,
+				ListEntry.COL_VALUE };
 
 		// and an array of the fields we want to bind those fields to (in this
 		// case just text1)
@@ -123,6 +129,39 @@ public class ViewListEntriesActivity extends ListActivity {
 		}
 
 		return super.onMenuItemSelected(featureId, item);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.add(0, EDIT, 0, "Edit");
+		menu.add(0, DELETE, 1, "Delete");
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
+		switch (item.getItemId()) {
+		case EDIT:
+			editEntry(info.id);
+			return true;
+		case DELETE:
+			deleteEntry(info.id);
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
+	}
+
+	public void editEntry(Long listEntryId) {
+		Intent i = new Intent(this, ListEntryActivity.class);
+		i.putExtra(ListEntry.COL_ID, listEntryId);
+		startActivityForResult(i, ACTIVITY_EDIT_LIST_ENTRY);
+	}
+
+	public void deleteEntry(Long listId) {
 	}
 
 	private void viewGraph(String graphType) {

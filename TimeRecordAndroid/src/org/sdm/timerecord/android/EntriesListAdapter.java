@@ -62,7 +62,7 @@ public class EntriesListAdapter extends SimpleCursorAdapter {
 						throw new IllegalStateException(
 								v.getClass().getName()
 										+ " is not a "
-										+ " view that can be bounds by this SimpleCursorAdapter");
+										+ " view that can be bound by this SimpleCursorAdapter");
 					}
 				}
 			}
