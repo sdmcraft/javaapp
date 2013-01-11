@@ -16,7 +16,7 @@ public class Acl implements java.security.acl.Acl {
 	private Collection<AclEntry> aclEntries;
 	private Collection<Owner> owners;
 
-	public Acl(Collection<AclEntry> aclEntries, Resource resource) {
+	public Acl(Collection<AclEntry> aclEntries) {
 		this.aclEntries = aclEntries;
 	}
 
