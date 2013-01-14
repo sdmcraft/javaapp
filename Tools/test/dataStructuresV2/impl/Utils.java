@@ -67,10 +67,17 @@ public class Utils {
 		return edge;
 	}
 
-	public static <T>Edge<T> createEdge(T value1, T value2, int weight) {
+	public static <T> Edge<T> createEdge(T value1, T value2, int weight,
+			boolean directed) {
 		Node<T> node1 = NodeFactory.getNode(value1);
 		Node<T> node2 = NodeFactory.getNode(value2);
-		return EdgeFactory.getEdge(new Node[] {node1, node2}, weight);
+		if (!directed) {
+			return EdgeFactory.getEdge(new Node[] { node1, node2 }, weight);
+		} else {
+			return EdgeFactory.getDirectedEdge(new Node[] { node1, node2 },
+					weight);
+		}
+
 	}
 
 	public static Object getField(Object object, Class clazz, String fieldName)

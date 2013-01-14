@@ -126,7 +126,7 @@ public class TestGraphFactory {
 		try {
 			Graph graph = GraphFactory.getGraph(adjMatrix, values, directed);
 			Assert.assertEquals(3, graph.getEdges().size());
-			Edge edge1 = Utils.createEdge("1", "2", 1);
+			Edge edge1 = Utils.createEdge("1", "2", 1, true);
 			Assert.assertEquals(true, graph.getEdges().contains(edge1));
 		} catch (Exception ex) {
 			ex.printStackTrace();

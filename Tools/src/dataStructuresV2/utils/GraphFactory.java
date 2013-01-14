@@ -46,7 +46,7 @@ public class GraphFactory {
 		return graph;
 	}
 
-	// TODO:Needs UT
+	// UT:TestGraphFactory.testGetGraphWithAdjMatrix
 	public static <T> Graph<T> getGraph(int[][] adjMatrix, T[] values,
 			boolean directed) throws InvalidDataException {
 		BasicGraph<T> basicGraph = new BasicGraph<T>();
