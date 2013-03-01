@@ -288,6 +288,15 @@
 		<servlet-name>SessionNotificationServlet</servlet-name>
 		<url-pattern>/SessionNotificationServlet</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DataStoreServlet</servlet-name>
+		<servlet-class>servlets.DataStoreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DataStoreServlet</servlet-name>
+		<url-pattern>/DataStoreServlet</url-pattern>
+	</servlet-mapping>
 	
 	<session-config>
       <session-timeout>1</session-timeout> 
