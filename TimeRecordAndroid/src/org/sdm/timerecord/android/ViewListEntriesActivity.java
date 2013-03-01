@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -111,21 +112,22 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
+		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> onCreateOptionsMenu");		
 		menu.add(0, VIEW_LINE_GRAPH_ID, 0, "View Line Graph");
 		menu.add(0, VIEW_BAR_GRAPH_ID, 1, "View Bar Graph");
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> onMenuItemSelected");		
 		switch (item.getItemId()) {
 		case VIEW_LINE_GRAPH_ID:
 			viewGraph("line");
-			return true;
+			break;
 		case VIEW_BAR_GRAPH_ID:
 			viewGraph("bar");
-			return true;
+			break;
 		}
 
 		return super.onMenuItemSelected(featureId, item);
@@ -134,6 +136,7 @@ public class ViewListEntriesActivity extends ListActivity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
+		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> onCreateContextMenu");
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, EDIT, 0, "Edit");
 		menu.add(0, DELETE, 1, "Delete");
@@ -141,21 +144,22 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> onContextItemSelected");		
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		switch (item.getItemId()) {
 		case EDIT:
 			editEntry(info.id);
-			return true;
+			break;
 		case DELETE:
 			deleteEntry(info.id);
-			return true;
-		default:
-			return super.onContextItemSelected(item);
+			break;			
 		}
+		return super.onContextItemSelected(item);
 	}
 
 	public void editEntry(Long listEntryId) {
+		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> editEntry");
 		Intent i = new Intent(this, ListEntryActivity.class);
 		i.putExtra(ListEntry.COL_ID, listEntryId);
 		startActivityForResult(i, ACTIVITY_EDIT_LIST_ENTRY);
