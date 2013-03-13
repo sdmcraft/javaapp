@@ -41,12 +41,16 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	private static final int VIEW_LINE_GRAPH_ID = Menu.FIRST;
 	private static final int VIEW_BAR_GRAPH_ID = Menu.NONE;
+
+	private long mListId;
 	private List<ListEntry> entries = new ArrayList<ListEntry>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// setContentView(R.layout.entries_list);
+		mListId = getIntent().getExtras().getLong(
+				org.sdm.timerecord.android.model.List.COL_ID);
 		fillData();
 		registerForContextMenu(getListView());
 	}
@@ -63,10 +67,8 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	private void fillData() {
 		// Get all of the rows from the database and create the item list
-		Cursor listsCursor = ListEntry.queryByListId(
-				Globals.getInstance().getDb(),
-				getIntent().getExtras().getLong(
-						org.sdm.timerecord.android.model.List.COL_ID));
+		Cursor listsCursor = ListEntry.queryByListId(Globals.getInstance()
+				.getDb(), mListId);
 		while (listsCursor.moveToNext()) {
 			Long id = listsCursor.getLong(listsCursor
 					.getColumnIndex(ListEntry.COL_ID));
@@ -112,7 +114,8 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> onCreateOptionsMenu");		
+		Log.d("TimeRecordAndroid",
+				"Enter ViewListEntriesActivity --> onCreateOptionsMenu");
 		menu.add(0, VIEW_LINE_GRAPH_ID, 0, "View Line Graph");
 		menu.add(0, VIEW_BAR_GRAPH_ID, 1, "View Bar Graph");
 		return super.onCreateOptionsMenu(menu);
@@ -120,7 +123,8 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> onMenuItemSelected");		
+		Log.d("TimeRecordAndroid",
+				"Enter ViewListEntriesActivity --> onMenuItemSelected");
 		switch (item.getItemId()) {
 		case VIEW_LINE_GRAPH_ID:
 			viewGraph("line");
@@ -136,7 +140,8 @@ public class ViewListEntriesActivity extends ListActivity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
-		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> onCreateContextMenu");
+		Log.d("TimeRecordAndroid",
+				"Enter ViewListEntriesActivity --> onCreateContextMenu");
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, EDIT, 0, "Edit");
 		menu.add(0, DELETE, 1, "Delete");
@@ -144,7 +149,8 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> onContextItemSelected");		
+		Log.d("TimeRecordAndroid",
+				"Enter ViewListEntriesActivity --> onContextItemSelected");
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		switch (item.getItemId()) {
@@ -153,15 +159,18 @@ public class ViewListEntriesActivity extends ListActivity {
 			break;
 		case DELETE:
 			deleteEntry(info.id);
-			break;			
+			break;
 		}
 		return super.onContextItemSelected(item);
 	}
 
 	public void editEntry(Long listEntryId) {
-		Log.d("TimeRecordAndroid", "Enter ViewListEntriesActivity --> editEntry");
+		Log.d("TimeRecordAndroid",
+				"Enter ViewListEntriesActivity --> editEntry Args:"
+						+ listEntryId);
 		Intent i = new Intent(this, ListEntryActivity.class);
-		i.putExtra(ListEntry.COL_ID, listEntryId);
+		i.putExtra("ListId", mListId);
+		i.putExtra("ListEntryId", listEntryId);
 		startActivityForResult(i, ACTIVITY_EDIT_LIST_ENTRY);
 	}
 

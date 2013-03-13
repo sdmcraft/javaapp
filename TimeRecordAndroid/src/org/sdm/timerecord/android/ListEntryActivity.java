@@ -40,7 +40,7 @@ public class ListEntryActivity extends Activity {
 		setContentView(R.layout.list_entry);
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			mListId = extras.getLong(List.COL_ID);
+			mListId = extras.getLong("ListId");
 			mListName = List.query(Globals.getInstance().getDb(), mListId)
 					.getString(1);
 		}
