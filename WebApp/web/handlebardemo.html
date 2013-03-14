@@ -3,14 +3,40 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<script id="entry-template" type="text/x-handlebars-template">
-  template content
+<script type="text/javascript"
+	src="scripts/3rdparty/handlebars-1.0.rc.1.js"></script>
+<script type="text/javascript" src="scripts/3rdparty/jquery-min.js"></script>
+<script id="Handlebars-Template" type="text/x-handlebars-template">
+<div>
+Peson Name: {{name}}
+Peson Age: {{age}}
+Messages:
+<ul>
+{{#each messages}}
+               <li>{{this}}</li>
+            {{/each}}
+</ul>
+</div>
+      </script>
+<script type="text/javascript">
+	var globalVar = 1;
+	var person = {
+		"age" : 100,
+		"name" : "john",
+		"messages" : [ "msg 1", "msg 2", "msg 3" ]
+	}
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var source = $("#Handlebars-Template").html();
+		var template = Handlebars.compile(source);
+		var html = template(person);
+		$('#handlebarsResult').html(html)
+	});
 </script>
 </head>
 <body>
-	<div class="entry">
-		<h1>{{title}}</h1>
-		<div class="body">{{body}}</div>
-	</div>
+	Handlebars results:
+	<div id='handlebarsResult'></div>
 </body>
 </html>
