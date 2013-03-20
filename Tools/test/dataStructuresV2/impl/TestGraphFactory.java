@@ -144,4 +144,29 @@ public class TestGraphFactory {
 
 	}
 
+	@Test
+	public void testGetSimpleGraph() {
+		try {
+			GraphFactory.getSimpleGraph(new HashSet<>(), 0);
+
+			Set<String> values = new HashSet<String>();
+			values.add("a");
+			try {
+				GraphFactory.getSimpleGraph(values, 2);
+				Assert.fail();
+			} catch (InvalidDataException e) {
+				Assert.assertEquals(InvalidDataException.Code.INVALID, e.code);
+			}
+			
+			values.clear();
+			values.add("a");
+			values.add("b");
+			GraphFactory.getSimpleGraph(values, 1);
+			
+		} catch (InvalidDataException e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+
 }
