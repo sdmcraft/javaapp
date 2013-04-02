@@ -202,7 +202,7 @@ public class TestGraphFactory {
 			expected.add(node4);
 			expected.add(node5);
 
-			Graph<String> graph = GraphFactory.getGraph(strings, 5);
+			Graph<String> graph = GraphFactory.getSimpleGraph(strings, 5);
 			Assert.assertEquals(5, graph.getEdges().size());
 			Assert.assertEquals(expected, graph.getNodes());
 
