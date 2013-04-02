@@ -105,7 +105,7 @@ public class GraphFactory {
 		return basicGraph;
 	}
 
-	// TODO:Needs UT
+	// UT:TestGraphFactory.testGetSimpleGraph
 	public static <T> Graph<T> getSimpleGraph(Set<T> values, int edges)
 			throws InvalidDataException {
 		if (edges > values.size() * (values.size() - 1) / 2) {
