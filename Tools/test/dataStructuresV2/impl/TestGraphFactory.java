@@ -144,10 +144,28 @@ public class TestGraphFactory {
 
 	}
 
+	/*
+	 * 1.Failure on passing more than (n-1)/2 edges
+	 * 
+	 * 2.Validate that all passed values get added as nodes
+	 * 
+	 * 3.Validate that the number of edges in the graph is the same as the
+	 * number of edges passed.
+	 * 
+	 * Edge tests:
+	 * 
+	 * 1.Passing empty values set.
+	 * 
+	 * 2.Passing negative/0 edge number
+	 * 
+	 * 3.
+	 */
+
 	@Test
 	public void testGetSimpleGraph() {
 		try {
-			GraphFactory.getSimpleGraph(new HashSet<>(), 0);
+			GraphFactory.getSimpleGraph(new HashSet<Object>(), 0);
+			GraphFactory.getSimpleGraph(new HashSet<Object>(), -1);
 
 			Set<String> values = new HashSet<String>();
 			values.add("a");
@@ -157,12 +175,37 @@ public class TestGraphFactory {
 			} catch (InvalidDataException e) {
 				Assert.assertEquals(InvalidDataException.Code.INVALID, e.code);
 			}
-			
-			values.clear();
-			values.add("a");
-			values.add("b");
-			GraphFactory.getSimpleGraph(values, 1);
-			
+
+			String string1 = "a";
+			String string2 = "b";
+			String string3 = "c";
+			String string4 = "d";
+			String string5 = "e";
+
+			Set<String> strings = new HashSet<String>();
+			strings.add(string1);
+			strings.add(string2);
+			strings.add(string3);
+			strings.add(string4);
+			strings.add(string5);
+
+			Node node1 = NodeFactory.getNode(string1);
+			Node node2 = NodeFactory.getNode(string2);
+			Node node3 = NodeFactory.getNode(string3);
+			Node node4 = NodeFactory.getNode(string4);
+			Node node5 = NodeFactory.getNode(string5);
+
+			Set<Node> expected = new HashSet<Node>();
+			expected.add(node1);
+			expected.add(node2);
+			expected.add(node3);
+			expected.add(node4);
+			expected.add(node5);
+
+			Graph<String> graph = GraphFactory.getGraph(strings, 5);
+			Assert.assertEquals(5, graph.getEdges().size());
+			Assert.assertEquals(expected, graph.getNodes());
+
 		} catch (InvalidDataException e) {
 			e.printStackTrace();
 			Assert.fail();
