@@ -43,7 +43,7 @@ public abstract class Resource implements Serializable {
 	private Collection<Resource> children;
 
 	@OneToMany(mappedBy = "resource")
-	private Collection<java.security.acl.AclEntry> acl;
+	private Collection<org.sdm.timerecord.business.model.db.AclEntry> acl;
 
 	public Acl getAcl() {
 		return new Acl(acl);

@@ -1,20 +1,19 @@
 package org.sdm.timerecord.business.model.db;
 
 import java.io.Serializable;
-import java.security.acl.Acl;
-import java.security.acl.Permission;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.sdm.timerecord.business.exception.BusinessException;
-import org.sdm.timerecord.business.exception.FailureCode;
-import org.sdm.timerecord.business.model.Permission.PermissionType;
 import org.sdm.timerecord.business.model.ResourceType;
 
 @Entity
@@ -28,6 +27,21 @@ public class Principal extends Resource implements Serializable,
 
 	@Column(name = "NAME", nullable = false)
 	private String name;
+
+	@ManyToMany
+	@JoinTable(name = "TR_PRINCIPAL_GROUP_MEMBERS", joinColumns = @JoinColumn(name = "MEMBER_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "GROUP_ID", referencedColumnName = "ID"))
+	private Set<Principal> groups;
+
+	@ManyToMany(mappedBy = "groups")
+	private Set<Principal> members;
+
+	public Set<Principal> getMembers() {
+		return members;
+	}
+
+	public Set<Principal> getGroups() {
+		return groups;
+	}
 
 	public Principal() {
 		super();

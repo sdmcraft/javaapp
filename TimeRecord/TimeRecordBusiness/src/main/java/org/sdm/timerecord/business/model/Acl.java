@@ -13,10 +13,10 @@ import org.sdm.timerecord.business.model.db.Resource;
 
 public class Acl implements java.security.acl.Acl {
 
-	private Collection<AclEntry> aclEntries;
+	private Collection<? extends AclEntry> aclEntries;
 	private Collection<Owner> owners;
 
-	public Acl(Collection<AclEntry> aclEntries) {
+	public Acl(Collection<? extends AclEntry> aclEntries) {
 		this.aclEntries = aclEntries;
 	}
 
