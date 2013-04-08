@@ -34,14 +34,16 @@ import android.widget.Toast;
 
 public class ViewListEntriesActivity extends ListActivity {
 
-	private static final int EDIT = 0;
-	private static final int DELETE = 1;
 
 	private static final int ACTIVITY_EDIT_LIST_ENTRY = 0;
 
-	private static final int VIEW_LINE_GRAPH_ID = Menu.FIRST;
-	private static final int VIEW_BAR_GRAPH_ID = Menu.NONE;
+	/*Menu items*/
+	private static final int VIEW_LINE_GRAPH_ID = 0;
+	private static final int VIEW_BAR_GRAPH_ID = 1;
+	private static final int EDIT = 2;
+	private static final int DELETE = 3;
 
+	
 	private long mListId;
 	private List<ListEntry> entries = new ArrayList<ListEntry>();
 

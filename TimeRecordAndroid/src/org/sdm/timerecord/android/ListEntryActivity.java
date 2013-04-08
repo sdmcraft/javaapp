@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 public class ListEntryActivity extends Activity {
 	private Long mListId;
+	private Long mListEntryId;
 	private String mListName;
 	private TextView mListTitleTextView;
 
@@ -41,8 +42,13 @@ public class ListEntryActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			mListId = extras.getLong("ListId");
-			mListName = List.query(Globals.getInstance().getDb(), mListId)
-					.getString(1);
+			mListEntryId = extras.getLong("ListEntryId");
+			
+			if (mListId != null) {
+				mListName = List.query(Globals.getInstance().getDb(), mListId)
+						.getString(1);
+			}
+			
 		}
 		render();
 	}
