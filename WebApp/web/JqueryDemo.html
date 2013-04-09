@@ -1,18 +1,31 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-    
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <title>Insert title here</title>
-        <script type="text/javascript" src="./scripts/3rdparty/jquery-min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#myDiv').html('hi!!');
-            });
-        </script>
-    </head>    
-    <body>
-        <div id='myDiv' />
-    </body>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript" src="./scripts/3rdparty/jquery-min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#myDiv').html('hi!!');
+
+		$("button").click(function() {
+			var key = $('#inputKey').val();
+			var value = $('#inputValue').val();
+			$.get("/WebApp/DataStoreServlet?key="+key+"&value="+value, function(data, status) {
+				$('#myDiv').append('<p>'+JSON.stringify(data)+'</p>');
+			});
+		});
+
+	});
+</script>
+</head>
+<body>
+	<div id='myDiv'></div>
+	<label>Key:</label>
+	<input id='inputKey' type="text" />
+	<label>Value:</label>
+	<input id='inputValue' type="text" />
+	<button id='Submit'>Submit</button>
+</body>
 
 </html>
