@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.jcr.Credentials;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginException;
@@ -28,8 +29,12 @@ public class AnotherLoginModulePlugin implements LoginModulePlugin {
 	}
 
 	@Override
-	public boolean canHandle(Credentials arg0) {
-		// TODO Auto-generated method stub
+	public boolean canHandle(Credentials credentials) {
+		System.out.println("AnotherLoginModulePlugin ------> canHandle is called");
+//		if (credentials instanceof SimpleCredentials) {
+//			SimpleCredentials creds = (SimpleCredentials) credentials;
+//			return "demo".equals(creds.getAttribute("demo"));
+//		}
 		return false;
 	}
 
@@ -43,8 +48,21 @@ public class AnotherLoginModulePlugin implements LoginModulePlugin {
 	@Override
 	public AuthenticationPlugin getAuthentication(Principal arg0,
 			Credentials arg1) throws RepositoryException {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("AnotherLoginModulePlugin ------> getAuthentication is called");
+		return new AuthenticationPlugin() {			
+			public boolean authenticate(Credentials credentials)
+					throws RepositoryException {
+				System.out.println("AnotherLoginModulePlugin ------> AuthenticationPlugin.authenticate is called");
+				if (credentials instanceof SimpleCredentials) {
+					String user = ((SimpleCredentials) credentials).getUserID();
+					return true;
+				}
+				throw new RepositoryException(
+						"Can't authenticate credentials of type: "
+								+ credentials.getClass());
+			}
+
+		};
 	}
 
 	@Override
