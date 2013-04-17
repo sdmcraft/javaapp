@@ -14,6 +14,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.packtpub.felix</groupId>
+			<artifactId>com.packtpub.felix.bookshelf-service</artifactId>
+			<version>1.7.0</version>		
+		</dependency>
 	</dependencies>
 	<distributionManagement>
 		<!-- releases repo -->
