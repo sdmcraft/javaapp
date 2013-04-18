@@ -1,8 +1,10 @@
 package org.sdm.timerecord.android;
 
 import org.sdm.timerecord.android.model.List;
+import org.sdm.timerecord.android.model.ListEntry;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,6 +17,7 @@ public class ListEditActivity extends Activity {
 	private String listName;
 	private String listDescription;
 	private Long listId;
+	private Long listEntryId;
 	private EditText listNameEditText;
 	private EditText listDescriptionEditText;
 
@@ -23,7 +26,7 @@ public class ListEditActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			listId = extras.getLong(List.COL_ID);
+			listId = extras.getLong("ListId");
 			listName = List.query(Globals.getInstance().getDb(), listId)
 					.getString(1);
 			listDescription = List.query(Globals.getInstance().getDb(), listId)

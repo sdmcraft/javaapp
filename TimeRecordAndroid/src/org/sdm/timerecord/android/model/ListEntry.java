@@ -58,9 +58,11 @@ public class ListEntry {
 
 	public static Cursor query(SQLiteDatabase db, long rowId) {
 
-		return db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID,
+		Cursor cursor =  db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID,
 				COL_ENTRY_TIME, COL_VALUE }, COL_ID + "=" + rowId, null, null,
 				null, null);
+		cursor.moveToFirst();
+		return cursor;
 	}
 
 	public static Cursor queryByListId(SQLiteDatabase db, long listId) {

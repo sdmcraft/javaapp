@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,8 @@ public class ListEntryActivity extends Activity {
 				mListName = List.query(Globals.getInstance().getDb(), mListId)
 						.getString(1);
 			}
+			Cursor cursor = ListEntry.query(Globals.getInstance().getDb(), mListEntryId);
+
 			
 		}
 		render();
