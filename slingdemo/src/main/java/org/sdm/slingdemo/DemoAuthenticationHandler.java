@@ -45,9 +45,8 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 
 	public AuthenticationInfo extractCredentials(HttpServletRequest req,
 			HttpServletResponse resp) {
-		
-		if(req.getParameter("name") == null || req.getParameter("pwd") == null)
-		{
+
+		if (req.getParameter("name") == null || req.getParameter("pwd") == null) {
 			return AuthenticationInfo.FAIL_AUTH;
 		}
 		AuthenticationInfo authInfo = new AuthenticationInfo("demo",
@@ -56,9 +55,10 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 		return authInfo;
 	}
 
-	public boolean requestCredentials(HttpServletRequest arg0,
-			HttpServletResponse arg1) throws IOException {
-		return false;
+	public boolean requestCredentials(HttpServletRequest req,
+			HttpServletResponse resp) throws IOException {
+		sendRedirect(req, resp, "http://google.com", null);
+		return true;
 	}
 
 	@Activate
@@ -90,6 +90,13 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 			t.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void authenticationFailed(HttpServletRequest request,
+			HttpServletResponse response, AuthenticationInfo authInfo) {
+		// TODO Auto-generated method stub
+		super.authenticationFailed(request, response, authInfo);
 	}
 
 	@Deactivate
