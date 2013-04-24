@@ -1,6 +1,8 @@
 package demo;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
@@ -35,8 +37,8 @@ public class Main {
 
 		Iterator<Node<String>> itr = graph.getNodes().iterator();
 		itr.next();
-		Node<String> node1 = itr.next();
-		GraphUtils.getDistances(graph, node1);
+		Node<String> node1 = itr.next();		
+		GraphUtils.getDistances(graph, node1, new HashMap<Node<String>, List<Node<String>>>());
 
 	}
 }

@@ -2,7 +2,6 @@ package dataStructuresV2.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,12 +10,36 @@ import java.util.Set;
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
+import dataStructuresV2.exception.InvalidDataException;
 
 public class GraphUtils {
 
+	/* A class to keep the minimum cost of reaching a node */
+	public static class NodeDistance<T> implements Comparable<NodeDistance> {
+		private final Node<T> node;
+		private int distance = Integer.MAX_VALUE;
+
+		public NodeDistance(Node<T> node, int distance) {
+			this.node = node;
+			this.distance = distance;
+		}
+
+		@Override
+		public int compareTo(NodeDistance o) {
+			return Integer.valueOf(distance).compareTo(
+					Integer.valueOf(o.distance));
+		}
+
+		@Override
+		public String toString() {
+			return node + "[" + distance + "]";
+		}
+
+	}
+
 	//TODO:Needs UT
-	public static final <T> List<Node<T>> getDistances(Graph<T> graph,
-			Node<T> startNode) throws Exception {
+	public static final <T> void getDistances(Graph<T> graph,
+			Node<T> startNode, Map<Node<T>, List<Node<T>>> pathMap) throws InvalidDataException {
 		/*
 		 * Set of nodes which have been processed and should be skipped while
 		 * processing
@@ -27,33 +50,11 @@ public class GraphUtils {
 		 * A map of a target node to the path from the source node to this
 		 * target node
 		 */
-		Map<Node<T>, List<Node<T>>> pathMap = new HashMap<Node<T>, List<Node<T>>>();
+		 pathMap.clear();
 
-		/* A class to keep the minimum cost of reaching a node */
-		class NodeDistance implements Comparable<NodeDistance> {
-			private final Node<T> node;
-			private int distance = Integer.MAX_VALUE;
-
-			private NodeDistance(Node<T> node, int distance) {
-				this.node = node;
-				this.distance = distance;
-			}
-
-			@Override
-			public int compareTo(NodeDistance o) {
-				return Integer.valueOf(distance).compareTo(
-						Integer.valueOf(o.distance));
-			}
-
-			@Override
-			public String toString() {
-				return node + "[" + distance + "]";
-			}
-
-		}
 
 		/* The node processing queue */
-		List<NodeDistance> nodeList = new ArrayList<NodeDistance>();
+		List<NodeDistance<T>> nodeList = new ArrayList<NodeDistance<T>>();
 
 		/* The start node is trivially at 0 cost to itself */
 		NodeDistance nodeDistance = new NodeDistance(startNode, 0);
@@ -155,6 +156,5 @@ public class GraphUtils {
 		}
 		System.out.println(nodeList);
 		System.out.println(pathMap);
-		return null;
 	}
 }
