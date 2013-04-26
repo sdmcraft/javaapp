@@ -6,6 +6,27 @@
 		<param-name>jndi-provider</param-name>
 		<param-value>jnp://127.0.0.1:1099</param-value>
 	</context-param>
+
+	<security-constraint>  
+		<web-resource-collection>                       
+			<web-resource-name>Secure Resource</web-resource-name>  
+			<url-pattern>/secure/*</url-pattern>             
+		</web-resource-collection>  
+		<auth-constraint>                                 
+			<role-name>root</role-name>    
+		</auth-constraint>                                
+	</security-constraint>                         
+	<login-config>  
+		<auth-method>BASIC</auth-method>  
+	</login-config>  
+	<security-role>                                    
+		<role-name>root</role-name>  
+	</security-role>  
+	<resource-ref>  
+		<res-ref-name>jdbc/mysql</res-ref-name>  
+		<res-type>javax.sql.DataSource</res-type>  
+		<res-auth>Container</res-auth>  
+	</resource-ref>  
 	<servlet>
 		<servlet-name>ActionServlet</servlet-name>
 		<servlet-class>org.sdm.timerecord.web.process.ActionServlet</servlet-class>
@@ -13,6 +34,6 @@
 
 	<servlet-mapping>
 		<servlet-name>ActionServlet</servlet-name>
-		<url-pattern>/service</url-pattern>
+		<url-pattern>/secure/service</url-pattern>
 	</servlet-mapping>
 </web-app>
