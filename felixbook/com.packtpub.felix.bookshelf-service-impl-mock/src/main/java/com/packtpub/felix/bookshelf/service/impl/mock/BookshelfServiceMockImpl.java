@@ -1,6 +1,8 @@
 package com.packtpub.felix.bookshelf.service.impl.mock;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -11,6 +13,8 @@ import com.packtpub.felix.bookshelf.inventory.api.BookAlreadyExistsException;
 import com.packtpub.felix.bookshelf.inventory.api.BookInventory;
 import com.packtpub.felix.bookshelf.inventory.api.BookNotFoundException;
 import com.packtpub.felix.bookshelf.inventory.api.InvalidBookException;
+import com.packtpub.felix.bookshelf.inventory.api.MutableBook;
+import com.packtpub.felix.bookshelf.inventory.api.BookInventory.SearchCriteria;
 import com.packtpub.felix.bookshelf.service.api.BookInventoryNotRegisteredRuntimeException;
 import com.packtpub.felix.bookshelf.service.api.BookshelfService;
 import com.packtpub.felix.bookshelf.service.api.InvalidCredentialsException;
@@ -58,26 +62,37 @@ public class BookshelfServiceMockImpl implements BookshelfService {
 	public void addBook(String session, String isbn, String title,
 			String author, String category, int rating)
 			throws BookAlreadyExistsException, InvalidBookException {
-		// TODO Auto-generated method stub
-
+		checkSession(sessionId);
+		BookInventory bookInventory = lookupBookInventory();
+		MutableBook mutableBook = bookInventory.createBook(isbn);
+		mutableBook.setAuthor(author);
+		mutableBook.setTitle(title);
+		mutableBook.setCategory(category);
+		mutableBook.setRating(rating);
+		bookInventory.storeBook(mutableBook);
 	}
 
 	public void modifyBookCategory(String session, String isbn, String category)
 			throws BookNotFoundException, InvalidBookException {
-		// TODO Auto-generated method stub
-
+		checkSession(sessionId);
+		BookInventory bookInventory = lookupBookInventory();
+		MutableBook mutableBook = bookInventory.loadBookForEdit(isbn);
+		mutableBook.setCategory(category);
 	}
 
 	public void modifyBookRating(String session, String isbn, int rating)
 			throws BookNotFoundException, InvalidBookException {
-		// TODO Auto-generated method stub
-
+		checkSession(sessionId);
+		BookInventory bookInventory = lookupBookInventory();
+		MutableBook mutableBook = bookInventory.loadBookForEdit(isbn);
+		mutableBook.setRating(rating);
 	}
 
 	public void removeBook(String session, String isbn)
 			throws BookNotFoundException {
-		// TODO Auto-generated method stub
-
+		checkSession(sessionId);
+		BookInventory bookInventory = lookupBookInventory();
+		bookInventory.removeBook(isbn);
 	}
 
 	public Book getBook(String sessionId, String isbn)
@@ -97,24 +112,37 @@ public class BookshelfServiceMockImpl implements BookshelfService {
 	}
 
 	public Set<String> searchBooksByCategory(String session, String categoryLike) {
-		// TODO Auto-generated method stub
-		return null;
+		checkSession(sessionId);
+		BookInventory inventory = lookupBookInventory();
+		Map<SearchCriteria, String> criteria = new HashMap<BookInventory.SearchCriteria, String>();
+		criteria.put(SearchCriteria.CATEGORY_LIKE, categoryLike);
+		return inventory.searchBooks(criteria);
 	}
 
 	public Set<String> searchBooksByAuthor(String session, String authorLike) {
-		// TODO Auto-generated method stub
-		return null;
+		checkSession(sessionId);
+		BookInventory inventory = lookupBookInventory();
+		Map<SearchCriteria, String> criteria = new HashMap<BookInventory.SearchCriteria, String>();
+		criteria.put(SearchCriteria.AUTHOR_LIKE, authorLike);
+		return inventory.searchBooks(criteria);
 	}
 
 	public Set<String> searchBooksByTitle(String session, String titleLike) {
-		// TODO Auto-generated method stub
-		return null;
+		checkSession(sessionId);
+		BookInventory inventory = lookupBookInventory();
+		Map<SearchCriteria, String> criteria = new HashMap<BookInventory.SearchCriteria, String>();
+		criteria.put(SearchCriteria.TITLE_LIKE, titleLike);
+		return inventory.searchBooks(criteria);
 	}
 
 	public Set<String> searchBooksByRating(String session, int ratingLower,
 			int ratingUpper) {
-		// TODO Auto-generated method stub
-		return null;
+		checkSession(sessionId);
+		BookInventory inventory = lookupBookInventory();
+		Map<SearchCriteria, String> criteria = new HashMap<BookInventory.SearchCriteria, String>();
+		criteria.put(SearchCriteria.RATING_GT, Integer.toString(ratingLower));
+		criteria.put(SearchCriteria.RATING_LT, Integer.toString(ratingUpper));
+		return inventory.searchBooks(criteria);
 	}
 
 }
