@@ -19,9 +19,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class ListEntryActivity extends Activity {
-	private Long mListId;
-	private Long mListEntryId;
-	private String mListName;
+	
+	private ListEntry model;
+	
 	private TextView mListTitleTextView;
 
 	private TextView mDateDisplay;
@@ -39,19 +39,29 @@ public class ListEntryActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_entry);
+		init();
+		
 		Bundle extras = getIntent().getExtras();
+		
 		if (extras != null) {
+			model = (ListEntry)extras.get("model");
+			if(model == null)
+			{
+				model = new ListEntry();
+			}
 			mListId = extras.getLong("ListId");
 			mListEntryId = extras.getLong("ListEntryId");
-			
+
 			if (mListId != null) {
 				mListName = List.query(Globals.getInstance().getDb(), mListId)
 						.getString(1);
 			}
-			Cursor cursor = ListEntry.query(Globals.getInstance().getDb(), mListEntryId);
+			Cursor cursor = ListEntry.query(Globals.getInstance().getDb(),
+					mListEntryId);
+			String entryTime = cursor.getString(2);
+			mDateDisplay.setText(entryTime);
+			String value = cursor.getString(3);
 
-			
 		}
 		render();
 	}
@@ -63,12 +73,9 @@ public class ListEntryActivity extends Activity {
 		mDateDisplay.setText(sdf.format(c.getTime()));
 	}
 
-	private void render() {
-		if (mListName != null) {
-			mListTitleTextView = (TextView) findViewById(R.id.listTitle);
-			mListTitleTextView.setText(mListName);
-		}
-
+	private void init() {
+		setContentView(R.layout.list_entry);
+		
 		hoursEntry = (EditText) findViewById(R.id.hoursEntry);
 		minutesEntry = (EditText) findViewById(R.id.minutesEntry);
 		secondsEntry = (EditText) findViewById(R.id.secondsEntry);
@@ -83,6 +90,14 @@ public class ListEntryActivity extends Activity {
 				showDialog(DATE_DIALOG_ID);
 			}
 		});
+
+	}
+
+	private void render() {
+		if (mListName != null) {
+			mListTitleTextView = (TextView) findViewById(R.id.listTitle);
+			mListTitleTextView.setText(mListName);
+		}
 
 		// get the current date
 		final Calendar c = Calendar.getInstance();

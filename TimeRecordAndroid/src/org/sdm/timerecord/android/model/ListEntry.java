@@ -11,8 +11,8 @@ public class ListEntry {
 	public static final String COL_ENTRY_TIME = "entry_time";
 	public static final String COL_LIST_ID = "list_id";
 	public static final String COL_VALUE = "value";
-	
-	private long id;
+
+	private Long id;
 	private String entryTime;
 	private long listId;
 	private long value;
@@ -23,6 +23,27 @@ public class ListEntry {
 		this.entryTime = entryTime;
 		this.listId = listId;
 		this.value = value;
+	}
+
+	public ListEntry(String entryTime, long listId, long value) {
+		super();
+		this.entryTime = entryTime;
+		this.listId = listId;
+		this.value = value;
+	}
+
+	public void update(SQLiteDatabase db) {
+		ContentValues initialValues = new ContentValues();
+		initialValues.put(COL_LIST_ID, listId);
+		initialValues.put(COL_ENTRY_TIME, entryTime);
+		initialValues.put(COL_VALUE, value);
+
+		if (id == null) {
+			db.insert(TABLE_NAME, null, initialValues);
+		} else {
+			db.update(TABLE_NAME, initialValues, COL_ID + "= ?",
+					new String[] { Long.toString(id) });
+		}
 	}
 
 	public static void create(SQLiteDatabase db) {
@@ -37,15 +58,6 @@ public class ListEntry {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 	}
 
-	public static long insert(SQLiteDatabase db, long listId, String entryTime,
-			long value) {
-		ContentValues initialValues = new ContentValues();
-		initialValues.put(COL_LIST_ID, listId);
-		initialValues.put(COL_ENTRY_TIME, entryTime);
-		initialValues.put(COL_VALUE, value);
-		return db.insert(TABLE_NAME, null, initialValues);
-	}
-
 	public static boolean delete(SQLiteDatabase db, long rowId) {
 		return db.delete(TABLE_NAME, COL_ID + "=" + rowId, null) > 0;
 	}
@@ -58,9 +70,9 @@ public class ListEntry {
 
 	public static Cursor query(SQLiteDatabase db, long rowId) {
 
-		Cursor cursor =  db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID,
-				COL_ENTRY_TIME, COL_VALUE }, COL_ID + "=" + rowId, null, null,
-				null, null);
+		Cursor cursor = db.query(TABLE_NAME, new String[] { COL_ID,
+				COL_LIST_ID, COL_ENTRY_TIME, COL_VALUE }, COL_ID + "=" + rowId,
+				null, null, null, null);
 		cursor.moveToFirst();
 		return cursor;
 	}
