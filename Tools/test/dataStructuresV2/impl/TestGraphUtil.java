@@ -26,7 +26,7 @@ public class TestGraphUtil
      * NodeDistance comparison must compare the distances.
      */
     @Test
-    public void testGetDistances()
+    public void testGetDistances_undirected()
     {
         int[][] adj2 = new int[][]
             {
@@ -64,6 +64,7 @@ public class TestGraphUtil
         String string3 = "c";
         String string4 = "d";
         String string5 = "e";
+        String string6 = "f";
 
         Set<String> strings = new HashSet<String>();
         strings.add(string1);
@@ -77,6 +78,7 @@ public class TestGraphUtil
         Node node3 = NodeFactory.getNode(string3);
         Node node4 = NodeFactory.getNode(string4);
         Node node5 = NodeFactory.getNode(string5);
+        Node node6 = NodeFactory.getNode(string6);
 
         Map<Node<String>, List<Node<String>>> expectedPathMap = new HashMap<Node<String>, List<Node<String>>>();
         List<Node<String>> expectedPath1 = new ArrayList<Node<String>>();
@@ -84,6 +86,7 @@ public class TestGraphUtil
         List<Node<String>> expectedPath3 = new ArrayList<Node<String>>();
         List<Node<String>> expectedPath4 = new ArrayList<Node<String>>();
         List<Node<String>> expectedPath5 = new ArrayList<Node<String>>();
+        List<Node<String>> expectedPath6 = new ArrayList<Node<String>>();
         Map<Node<String>, List<Node<String>>> pathMap = new HashMap<Node<String>, List<Node<String>>>();
 
         try
@@ -111,7 +114,83 @@ public class TestGraphUtil
             Assert.assertEquals(expectedPathMap, pathMap);
             
             //adj4
+            expectedPathMap.clear();
+            expectedPath1.clear();
+            expectedPathMap.put(node1, expectedPath1);
             
+            expectedPath2.clear();
+            expectedPath2.add(node2);
+            expectedPathMap.put(node2, expectedPath2);
+
+            graph = GraphFactory.getGraph(adj4, new String[] { string1, string2 }, false);
+            GraphUtils.getDistances(graph, node1, pathMap);
+            Assert.assertEquals(expectedPathMap, pathMap);
+
+            //adj5
+            expectedPathMap.clear();
+            expectedPath1.clear();
+            expectedPathMap.put(node1, expectedPath1);
+            
+            expectedPath2.clear();
+            expectedPath2.add(node2);
+            expectedPathMap.put(node2, expectedPath2);
+
+            expectedPath3.clear();
+            expectedPath3.add(node2);
+            expectedPath3.add(node3);
+            expectedPathMap.put(node3, expectedPath3);
+
+            graph = GraphFactory.getGraph(adj5, new String[] { string1, string2, string3 }, false);
+            GraphUtils.getDistances(graph, node1, pathMap);
+            Assert.assertEquals(expectedPathMap, pathMap);
+
+            expectedPathMap.clear();
+            expectedPath1.clear();
+            expectedPath1.add(node1);
+            expectedPathMap.put(node1, expectedPath1);
+            
+            expectedPath2.clear();            
+            expectedPathMap.put(node2, expectedPath2);
+
+            expectedPath3.clear();            
+            expectedPath3.add(node3);
+            expectedPathMap.put(node3, expectedPath3);
+
+            graph = GraphFactory.getGraph(adj5, new String[] { string1, string2, string3 }, false);
+            GraphUtils.getDistances(graph, node2, pathMap);
+            Assert.assertEquals(expectedPathMap, pathMap);
+
+            //adj6
+            expectedPathMap.clear();
+            expectedPath1.clear();
+            expectedPathMap.put(node1, expectedPath1);
+            
+            expectedPath2.clear();
+            expectedPath2.add(node2);
+            expectedPathMap.put(node2, expectedPath2);
+
+            expectedPath3.clear();
+            expectedPath3.add(node2);
+            expectedPath3.add(node3);
+            expectedPathMap.put(node3, expectedPath3);
+
+            expectedPath4.clear();
+            expectedPath4.add(node4);
+            expectedPathMap.put(node4, expectedPath4);
+
+            expectedPath5.clear();
+            expectedPath5.add(node2);
+            expectedPath5.add(node5);
+            expectedPathMap.put(node5, expectedPath5);
+
+			expectedPath6.clear();
+            expectedPath6.add(node6);
+            expectedPathMap.put(node6, expectedPath6);
+
+            graph = GraphFactory.getGraph(adj6, new String[] { string1, string2, string3, string4, string5, string6 }, false);            
+            GraphUtils.getDistances(graph, node1, pathMap);
+            Assert.assertEquals(expectedPathMap, pathMap);
+
         }
         catch (InvalidDataException e)
         {
@@ -120,4 +199,8 @@ public class TestGraphUtil
             Assert.fail();
         }
     }
+    
+    @Test
+    public void testGetDistances_directed()
+    {}
 }
