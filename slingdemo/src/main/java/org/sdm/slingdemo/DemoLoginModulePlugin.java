@@ -52,12 +52,12 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 	}
 
 	public void addPrincipals(Set arg0) {
-		System.out.println("addPrincipals is called");
+		//System.out.println("addPrincipals is called");
 
 	}
 
 	public boolean canHandle(Credentials credentials) {
-		System.out.println("canHandle is called");
+		//System.out.println("canHandle is called");
 		if (credentials instanceof SimpleCredentials) {
 			SimpleCredentials creds = (SimpleCredentials) credentials;
 			return "demo".equals(creds.getAttribute("demo"));
@@ -67,7 +67,7 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 
 	public void doInit(CallbackHandler arg0, Session arg1, Map arg2)
 			throws LoginException {
-		System.out.println("doInit is called");
+		//System.out.println("doInit is called");
 
 	}
 
@@ -93,7 +93,7 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 	}
 
 	public Principal getPrincipal(Credentials arg0) {
-		System.out.println("getPrincipal is called");
+		//System.out.println("getPrincipal is called");
 		return null;
 	}
 

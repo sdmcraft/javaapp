@@ -30,7 +30,7 @@ public class AnotherLoginModulePlugin implements LoginModulePlugin {
 
 	@Override
 	public boolean canHandle(Credentials credentials) {
-		System.out.println("AnotherLoginModulePlugin ------> canHandle is called");
+		//System.out.println("AnotherLoginModulePlugin ------> canHandle is called");
 //		if (credentials instanceof SimpleCredentials) {
 //			SimpleCredentials creds = (SimpleCredentials) credentials;
 //			return "demo".equals(creds.getAttribute("demo"));
@@ -41,14 +41,14 @@ public class AnotherLoginModulePlugin implements LoginModulePlugin {
 	@Override
 	public void doInit(CallbackHandler arg0, Session arg1, Map arg2)
 			throws LoginException {
-		System.out.println("AnotherLoginModulePlugin ------> doInit is called");
+		//System.out.println("AnotherLoginModulePlugin ------> doInit is called");
 
 	}
 
 	@Override
 	public AuthenticationPlugin getAuthentication(Principal arg0,
 			Credentials arg1) throws RepositoryException {
-		System.out.println("AnotherLoginModulePlugin ------> getAuthentication is called");
+		//System.out.println("AnotherLoginModulePlugin ------> getAuthentication is called");
 		return new AuthenticationPlugin() {			
 			public boolean authenticate(Credentials credentials)
 					throws RepositoryException {
