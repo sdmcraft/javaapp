@@ -13,7 +13,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.DropboxAPI.DropboxInputStream;
 import com.dropbox.client2.DropboxAPI.Entry;
+import com.dropbox.client2.DropboxAPI.ThumbFormat;
+import com.dropbox.client2.DropboxAPI.ThumbSize;
 import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.jsonextract.JsonExtractionException;
 import com.dropbox.client2.jsonextract.JsonList;
@@ -28,6 +31,9 @@ public class DropboxDemo {
 	public static final String STATE_FILE = "DropboxDemo.json";
 
 	public static void main(String[] args) throws DropboxException {
+		doFileListHacked();
+		if(1!=2)
+			return;
 		if (args.length == 0) {
 			printUsage(System.out);
 			throw die();
@@ -56,11 +62,7 @@ public class DropboxDemo {
 	// Reset state
 
 	private static void doReset(String[] args) throws DropboxException {
-		if (args.length != 3) {
-			throw die("ERROR: \"reset\" takes exactly two arguments.");
-		}
-
-		AppKeyPair appKeyPair = new AppKeyPair(args[1], args[2]);
+		AppKeyPair appKeyPair = new AppKeyPair("2hv8zb2liw7l2xo", "8a75nirc8qac2lb");
 
 		// Save state
 		State state = new State(appKeyPair);
@@ -328,6 +330,23 @@ public class DropboxDemo {
 				throw die("ERROR: State file has incorrect structure: "
 						+ ex.getMessage());
 			}
+		}
+	}
+
+	private static void doFileListHacked() throws DropboxException {    
+		AppKeyPair appKeyPair = new AppKeyPair("2hv8zb2liw7l2xo", "8a75nirc8qac2lb");
+		AccessTokenPair access = new AccessTokenPair("gmbo9ihwxp9fwfb", "wbuq4qw1lzx32m6");
+		WebAuthSession session = new WebAuthSession(appKeyPair,
+				Session.AccessType.APP_FOLDER);
+		session.setAccessTokenPair(access);
+		DropboxAPI<?> client = new DropboxAPI<WebAuthSession>(session);
+		DropboxAPI.Entry metadata = client.metadata("/abc",
+				-1, null, true, null);
+		for (Entry entry : metadata.contents) {
+			System.out.println(entry.fileName());
+			System.out.println(entry.mimeType);
+			System.out.println(entry.size);
+			System.out.println(entry.icon);			 
 		}
 	}
 
