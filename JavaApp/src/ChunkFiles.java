@@ -42,6 +42,7 @@ public class ChunkFiles {
 		if (args.length != 3) {
 			System.out
 					.println("Usage:ChunkFiles <source-root-folder> <target-folder> <size (in MB) to be copied>");
+			return;
 		}
 		File rootFolder = new File(args[0]);
 		String targetFolder = args[1];
