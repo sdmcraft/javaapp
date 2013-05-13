@@ -36,6 +36,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -168,18 +169,38 @@ public class WatchDir {
 				Path name = ev.context();
 				Path child = dir.resolve(name);
 
+				if (child
+						.toString()
+						.substring(child.toString().lastIndexOf(File.separator))
+						.startsWith("New ")) {
+					System.out.println("Skipping default new name:"
+							+ child.toString());
+					continue;
+				}
+
 				// print out event
 				for (String ext : filters.split(",")) {
-					if (child.toString().endsWith(ext)) {
+					if (child.toString().endsWith(ext)
+							|| child.toFile().isDirectory()) {
 						System.out.format("Processing %s: %s\n", event.kind()
 								.name(), child);
 						try {
 							String s = child.toString().substring(
 									child.toString().indexOf("jcr_root") + 8);
 							s = s.replace('\\', '/');
-							String command = "cmd /C " + curl + " -u " + cqUser
-									+ ":" + cqPwd + " -T " + child.toString()
-									+ " " + cqHost + ":" + cqPort + s;
+
+							String command = "";
+							if (child.toFile().isDirectory()) {
+								command = "cmd /C " + curl + " -X MKCOL -u "
+										+ cqUser + ":" + cqPwd + " " + cqHost
+										+ ":" + cqPort + s;
+
+							} else {
+								command = "cmd /C " + curl + " -u " + cqUser
+										+ ":" + cqPwd + " -T "
+										+ child.toString() + " " + cqHost + ":"
+										+ cqPort + s;
+							}
 							System.out.println(command);
 							Process p = Runtime.getRuntime().exec(command);
 							BufferedReader in = new BufferedReader(
