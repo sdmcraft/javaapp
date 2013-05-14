@@ -4,15 +4,9 @@
  */
 package misc;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -20,9 +14,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
-import javax.mail.Header;
 import javax.mail.Message;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -58,6 +50,7 @@ public class HTMLMailDemo {
 	}
 
 	public static void main(String[] args) throws Exception {
+		//System.out.println(System.getProperty("user.dir"));
 		sendHtmlEmail();
 	}
 
@@ -67,14 +60,14 @@ public class HTMLMailDemo {
 		List<MimeBodyPart> imageBodyParts = new ArrayList<MimeBodyPart>();
 
 		Document doc = Jsoup.parse(new File(
-				"c:\\temp\\html-email-page\\test.html"), "UTF-8");
+				"misc" + File.separator + "test.html"), "UTF-8");
 		Elements images = doc.getElementsByTag("img");
 		
 		for (Element image : images) {
 			String src = image.attr("src");
 			image.attr("src", "cid:" + cid);
 
-			File imageFile = new File("c:\\temp\\html-email-page\\" + src);
+			File imageFile = new File("misc" + File.separator + "html-email-page" + File.separator + src);
 			
 			DataSource source = new FileDataSource(imageFile);
 
@@ -92,17 +85,17 @@ public class HTMLMailDemo {
 		Properties props = new Properties();
 
 		
-		 props.put("mail.smtp.host", "smtp.gmail.com");
-		 props.put("mail.smtp.starttls.enable", "true");
-		 props.put("mail.smtp.auth", "true"); Session session =
-		 Session.getDefaultInstance(props, new PasswordAuthenticator("m.satyadeep@gmail.com","xxx"));
+//		 props.put("mail.smtp.host", "smtp.gmail.com");
+//		 props.put("mail.smtp.starttls.enable", "true");
+//		 props.put("mail.smtp.auth", "true"); Session session =
+//		 Session.getDefaultInstance(props, new PasswordAuthenticator("m.satyadeep@gmail.com","xxx"));
 		 
 
-		/*props.put("mail.smtp.host", "inner-relay-1.corp.adobe.com");
+		props.put("mail.smtp.host", "inner-relay-1.corp.adobe.com");
 		props.put("mail.smtp.from", "satyam@adobe.com");
 		props.put("mail.smtp.auth", "true");
 		Session session = Session.getInstance(props, new PasswordAuthenticator(
-				"spuri@adobe.com", "breeze"));*/
+				"spuri@adobe.com", "breeze"));
 
 		/*props.put("mail.smtp.host", "localhost");
 		props.put("mail.smtp.from", "satyam@adobe.com");
