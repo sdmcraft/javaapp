@@ -22,7 +22,7 @@ import org.osgi.framework.ServiceRegistration;
 
 public class DemoLoginModulePlugin implements LoginModulePlugin {
 
-	private static final Map<String, String> map = new HashMap<String, String>();
+	private static final Map map = new HashMap();
 	static {
 		map.put("aa", "11");
 		map.put("bb", "22");
@@ -36,7 +36,7 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 			final BundleContext bundleContext) {
 		DemoLoginModulePlugin plugin = new DemoLoginModulePlugin(authHandler);
 
-		Hashtable<String, Object> properties = new Hashtable<String, Object>();
+		Hashtable properties = new Hashtable();
 
 		// properties.put(Constants.SERVICE_DESCRIPTION,
 		// "LoginModulePlugin Support for DemoAuthenticationHandler");

@@ -57,7 +57,8 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 
 	public boolean requestCredentials(HttpServletRequest req,
 			HttpServletResponse resp) throws IOException {
-		sendRedirect(req, resp, "/content/login.html", null);
+		
+		resp.sendRedirect("/content/login.html?resource=" + req.getPathInfo());
 		return true;
 	}
 
