@@ -31,8 +31,7 @@ public class BasicGraph<T> implements Graph<T> {
 		if (nodes.contains(node)) {
 			Set<Edge<T>> nodeEdges = new HashSet<Edge<T>>();
 			for (Edge<T> edge : edges) {
-				if (edge.getEndpoints()[0].equals(node)
-						|| edge.getEndpoints()[1].equals(node)) {
+				if (edge.isOrigin(node)) {
 					nodeEdges.add(edge);
 				}
 			}

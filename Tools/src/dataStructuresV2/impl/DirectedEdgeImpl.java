@@ -54,4 +54,9 @@ public class DirectedEdgeImpl<T> extends EdgeImpl<T> implements DirectedEdge<T> 
 		return true;
 	}
 
+	@Override
+	public boolean isOrigin(Node<T> node) {
+		return this.endPoints[0].equals(node);
+	}
+
 }

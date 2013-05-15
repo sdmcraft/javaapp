@@ -82,5 +82,11 @@ public class EdgeImpl<T> implements Edge<T> {
 		return endPoints[0] + "--" + weight + "-->" + endPoints[1];
 
 	}
+	
+	@Override
+	public boolean isOrigin(Node<T> node) {
+		//For an undirected edge, both end points are origins
+		return this.endPoints[0].equals(node) || this.endPoints[1].equals(node);
+	}
 
 }
