@@ -27,6 +27,7 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 		map.put("aa", "11");
 		map.put("bb", "22");
 		map.put("cc", "33");
+		map.put("dd", "44");
 	}
 
 	private final DemoAuthenticationHandler authHandler;
@@ -57,7 +58,7 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 	}
 
 	public boolean canHandle(Credentials credentials) {
-		//System.out.println("canHandle is called");
+		System.out.println("canHandle is called");
 		if (credentials instanceof SimpleCredentials) {
 			SimpleCredentials creds = (SimpleCredentials) credentials;
 			return "demo".equals(creds.getAttribute("demo"));

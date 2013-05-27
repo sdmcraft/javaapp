@@ -30,6 +30,7 @@ public class AnotherLoginModulePlugin implements LoginModulePlugin {
 
 	@Override
 	public boolean canHandle(Credentials credentials) {
+		
 		//System.out.println("AnotherLoginModulePlugin ------> canHandle is called");
 //		if (credentials instanceof SimpleCredentials) {
 //			SimpleCredentials creds = (SimpleCredentials) credentials;

@@ -45,7 +45,7 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 
 	public AuthenticationInfo extractCredentials(HttpServletRequest req,
 			HttpServletResponse resp) {
-
+		System.out.println("extractCredentials is called");
 		if (req.getParameter("name") == null || req.getParameter("pwd") == null) {
 			return AuthenticationInfo.FAIL_AUTH;
 		}
@@ -96,9 +96,16 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 	@Override
 	public void authenticationFailed(HttpServletRequest request,
 			HttpServletResponse response, AuthenticationInfo authInfo) {
-		// TODO Auto-generated method stub
+		System.out.println("Authentication failed");
 		super.authenticationFailed(request, response, authInfo);
 	}
+	
+	@Override
+	public boolean authenticationSucceeded(HttpServletRequest request, HttpServletResponse response, AuthenticationInfo authInfo) 
+	{
+		System.out.println("Authentication Succeeded");
+		return super.authenticationSucceeded(request, response, authInfo);
+	};
 
 	@Deactivate
 	protected void deactivate(ComponentContext componentContext) {
