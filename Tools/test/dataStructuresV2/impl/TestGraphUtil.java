@@ -326,9 +326,6 @@ public class TestGraphUtil
             Assert.assertEquals(expectedPathMap, pathMap);
 
             expectedPathMap.clear();
-            expectedPath1.clear();
-            expectedPath1.add(node1);
-            expectedPathMap.put(node1, expectedPath1);
 
             expectedPath2.clear();
             expectedPathMap.put(node2, expectedPath2);

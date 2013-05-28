@@ -37,7 +37,7 @@ public class GraphUtils {
 
 	}
 
-	//TODO:Needs UT
+	// UT:TestGraphUtil.testGetDistances_undirected & TestGraphUtil.testGetDistances_directed 
 	public static final <T> void getDistances(Graph<T> graph,
 			Node<T> startNode, Map<Node<T>, List<Node<T>>> pathMap) throws InvalidDataException {
 		/*
