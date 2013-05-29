@@ -93,9 +93,9 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 		};
 	}
 
-	public Principal getPrincipal(Credentials arg0) {
+	public Principal getPrincipal(Credentials credentials) {
 		//System.out.println("getPrincipal is called");
-		return null;
+		return new MyPrincipal(((SimpleCredentials)credentials).getUserID());
 	}
 
 	public int impersonate(Principal arg0, Credentials arg1)
