@@ -14,6 +14,7 @@
 	<property name="build.web.dir" value="${build.dir}/web" />
 
 	<property name="temp.dir" value="temp" />
+	<property name="deploy.dir" value="${env.TOMCAT_HOME}/webapps" />
 
 	<property name="javac.debug" value="on" />
 
@@ -82,7 +83,7 @@
 	</target>
 
 	<target name="deploy" depends="cleanall,build">
-		<copy todir="${deploy}">
+		<copy todir="${deploy.dir}">
 			<fileset dir="${dist.dir}" includes="WebApp.war" />
 		</copy>
 	</target>
