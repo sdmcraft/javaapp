@@ -21,12 +21,8 @@ import org.sdm.timerecord.business.Utils;
 @Entity
 @Table(name = "TR_USERS", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"NAME", "PASSWORD" }) })
-public class User implements Serializable {
+public class User extends Resource implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name = "ID", nullable = false)
-	private Integer id;
 
 	@Column(name = "IMAGE", nullable = true)
 	private Blob image;
@@ -50,10 +46,6 @@ public class User implements Serializable {
 		this.name = name;
 		this.password = Utils.encrypt(password, Constants.ENCRYPTION_ALGORITHM,
 				Constants.ENCRYPTION_ENCODING);
-	}
-
-	public Integer getId() {
-		return id;
 	}
 
 	public String getName() {
