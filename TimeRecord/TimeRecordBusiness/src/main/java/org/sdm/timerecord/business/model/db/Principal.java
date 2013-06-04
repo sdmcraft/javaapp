@@ -47,7 +47,7 @@ public class Principal extends Resource implements Serializable,
 		super();
 	}
 
-	public Principal(String name, Principal parent) throws Exception {
+	public Principal(String name, Resource parent) throws Exception {
 		super();
 		this.name = name;
 		this.resourceType = ResourceType.PRINCIPAL;

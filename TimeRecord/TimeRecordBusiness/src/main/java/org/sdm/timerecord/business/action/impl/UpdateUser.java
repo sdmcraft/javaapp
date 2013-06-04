@@ -8,7 +8,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.sdm.timerecord.business.Queries;
 import org.sdm.timerecord.business.action.UpdateUserRemote;
+import org.sdm.timerecord.business.model.db.Resource;
 import org.sdm.timerecord.business.model.db.User;
 
 @Stateless
@@ -33,7 +35,8 @@ public class UpdateUser implements UpdateUserRemote {
 				throw new Exception("Unable to find user with id:"
 						+ params.get("id")[0]);
 		} else {
-			user = new User(params.get("name")[0], params.get("password")[0]);
+			user = new User(params.get("name")[0], params.get("password")[0], (Resource)Queries.getRootPrincipal());
+			
 		}
 		em.persist(user);
 	}

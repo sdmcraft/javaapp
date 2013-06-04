@@ -35,7 +35,7 @@ public abstract class Resource implements Serializable {
 	@Column(name = "RESOURCE_TYPE", nullable = false)
 	protected ResourceType resourceType;
 
-	@ManyToOne(optional = true)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "PARENT_ID", referencedColumnName = "ID")
 	protected Resource parent;
 

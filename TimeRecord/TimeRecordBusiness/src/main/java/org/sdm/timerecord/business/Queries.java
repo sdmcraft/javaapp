@@ -4,10 +4,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Properties;
 
-import javax.naming.Binding;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -43,9 +41,14 @@ public class Queries {
 	}
 
 	public static List<Principal> getPrincipalList() throws Exception {
-
 		Query query = em.createNamedQuery("Principal.listAll");
 		List<Principal> results = query.getResultList();
 		return results;
+	}
+
+	public static Principal getRootPrincipal() {
+		Query query = em.createNamedQuery("Principal.getRoot");
+		Principal root = (Principal) query.getSingleResult();
+		return root;
 	}
 }
