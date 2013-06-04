@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	function alterAt(n, c, originalstring) {
 		return originalstring.substr(0, n) + c
-				+ originalstring.substr(n + 1, originalstring.length - n);
+				+ originalstring.substr(n + 1, originalstring.length - n -1);
 	}
 	$(document).ready(function() {
 		$('#result').html(alterAt(2,'x','abcdef'));
