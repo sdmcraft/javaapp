@@ -36,7 +36,7 @@ public class ListEntryActivity extends Activity {
 
 	static final int DATE_DIALOG_ID = 0;
 
-	@Override
+	/*@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		init();
@@ -64,7 +64,7 @@ public class ListEntryActivity extends Activity {
 
 		}
 		render();
-	}
+	}*/
 
 	private void resetEntryDate() {
 		Calendar c = Calendar.getInstance();
@@ -93,7 +93,7 @@ public class ListEntryActivity extends Activity {
 
 	}
 
-	private void render() {
+	/*private void render() {
 		if (mListName != null) {
 			mListTitleTextView = (TextView) findViewById(R.id.listTitle);
 			mListTitleTextView.setText(mListName);
@@ -107,7 +107,7 @@ public class ListEntryActivity extends Activity {
 
 		// display the current date (this method is below)
 		resetEntryDate();
-	}
+	}*/
 
 	// the callback received when the user "sets" the date in the dialog
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -147,9 +147,9 @@ public class ListEntryActivity extends Activity {
 			seconds = Integer.parseInt(secondsEntry.getText().toString());
 		}
 
-		ListEntry.insert(Globals.getInstance().getDb(), mListId.longValue(),
+		/*ListEntry.insert(Globals.getInstance().getDb(), mListId.longValue(),
 				mDateDisplay.getText().toString(), hours * 60 * 60 * 1000
-						+ minutes * 60 * 1000 + seconds * 1000);
+						+ minutes * 60 * 1000 + seconds * 1000);*/
 		exitActivity();
 	}
 

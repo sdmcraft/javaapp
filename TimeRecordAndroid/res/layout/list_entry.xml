@@ -12,7 +12,6 @@
         android:textStyle="bold" />
 
     <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stretchColumns="1" >
@@ -40,7 +39,6 @@
     </TableLayout>
 
     <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stretchColumns="1" >

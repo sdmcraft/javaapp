@@ -5,15 +5,13 @@
     android:orientation="horizontal"
     android:weightSum="1.0" >
 
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView        
         android:id="@+id/entryTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".5" />
 
-    <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView        
         android:id="@+id/entryValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
