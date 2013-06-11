@@ -1,186 +1,249 @@
 package dataStructures;
 
+import tools.AlgoUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import tools.AlgoUtils;
 
-public class BinaryTree extends Tree implements Cloneable {
-	protected BinaryTree left;
-	protected BinaryTree right;
-	protected BinaryTree parent;
-	protected int nodeCount = 0;
+public class BinaryTree extends Tree implements Cloneable
+{
+    protected BinaryTree left;
+    protected BinaryTree parent;
+    protected BinaryTree right;
+    protected int nodeCount = 0;
 
-	public BinaryTree() {
-		incrementNodeCount();
-		value = "1";
-	}
+    public BinaryTree()
+    {
+        incrementNodeCount();
+        value = "1";
+    }
 
-	public BinaryTree(String value) {
-		super(value);
-		incrementNodeCount();
-	}
+    public BinaryTree(String value)
+    {
+        super(value);
+        incrementNodeCount();
+    }
 
-	public BinaryTree(BinaryTree parent) {
-		this.parent = parent;
-		this.depth = parent.depth + 1;
-		incrementNodeCount();
-		value = getRootNodeCount(parent) + "";
-	}
+    public BinaryTree(BinaryTree parent)
+    {
+        this.parent = parent;
+        this.depth = parent.depth + 1;
+        incrementNodeCount();
+        value = getRootNodeCount(parent) + "";
+    }
 
-	private void incrementNodeCount() {
-		nodeCount++;
-		if (parent != null)
-			parent.incrementNodeCount();
-	}
+    private void incrementNodeCount()
+    {
+        nodeCount++;
 
-	private static int getRootNodeCount(BinaryTree node) {
-		if (node.parent == null)
-			return node.nodeCount;
-		else
-			return getRootNodeCount(node.parent);
-	}
+        if (parent != null)
+        {
+            parent.incrementNodeCount();
+        }
+    }
 
-	public void build() {
-		build(this, 6);
-	}
+    private static int getRootNodeCount(BinaryTree node)
+    {
+        if (node.parent == null)
+        {
+            return node.nodeCount;
+        }
+        else
+        {
+            return getRootNodeCount(node.parent);
+        }
+    }
 
-	private static void build(BinaryTree root, int maxDepth) {
+    public void build()
+    {
+        build(this, 6);
+    }
 
-		if (root.depth >= maxDepth)
-			return;
+    private static void build(BinaryTree root, int maxDepth)
+    {
+        if (root.depth >= maxDepth)
+        {
+            return;
+        }
 
-		int randLeft = (int) (Math.random() * 100);
-		int randRight = (int) (Math.random() * 100);
+        int randLeft = (int) (Math.random() * 100);
+        int randRight = (int) (Math.random() * 100);
 
-		if (randLeft > 50) {
-			root.left = new BinaryTree(root);
-		}
-		if (randRight > 50) {
-			root.right = new BinaryTree(root);
-		}
+        if (randLeft > 50)
+        {
+            root.left = new BinaryTree(root);
+        }
 
-		if (root.left != null)
-			root.children.add(root.left);
-		if (root.right != null)
-			root.children.add(root.right);
+        if (randRight > 50)
+        {
+            root.right = new BinaryTree(root);
+        }
 
-		if (root.left != null)
-			build(root.left, maxDepth);
-		if (root.right != null)
-			build(root.right, maxDepth);
+        if (root.left != null)
+        {
+            root.children.add(root.left);
+        }
 
-	}
+        if (root.right != null)
+        {
+            root.children.add(root.right);
+        }
 
-	private List<String> inorder() {
-		return inorder(this);
-	}
+        if (root.left != null)
+        {
+            build(root.left, maxDepth);
+        }
 
-	private static List<String> inorder(BinaryTree root) {
-		List<String> result = new ArrayList<String>();
-		if (root != null) {
-			result.addAll(inorder(root.left));
-			result.add(root.value);
-			result.addAll(inorder(root.right));
-		}
-		return result;
-	}
+        if (root.right != null)
+        {
+            build(root.right, maxDepth);
+        }
+    }
 
-	private static int inorderSubstitution(BinaryTree root, List<String> items,
-			int index) {
-		if (root != null) {
-			index = inorderSubstitution(root.left, items, index);
+    private List<String> inorder()
+    {
+        return inorder(this);
+    }
 
-			root.value = items.get(index);
-			index++;
+    private static List<String> inorder(BinaryTree root)
+    {
+        List<String> result = new ArrayList<String>();
 
-			index = inorderSubstitution(root.right, items, index);
-		}
-		return index;
-	}
+        if (root != null)
+        {
+            result.addAll(inorder(root.left));
+            result.add(root.value);
+            result.addAll(inorder(root.right));
+        }
 
-	private void sameShapeBinaryTree() {
-		List<String> inorderTraversal = inorder();
-		System.out.println(inorderTraversal);
-		AlgoUtils.sort(inorderTraversal, "quicksort");
-		System.out.println(inorderTraversal);
-		inorderSubstitution(this, inorderTraversal, 0);
-	}
+        return result;
+    }
 
-	public static void main(String[] args) throws Exception {
-		BinaryTree bt = new BinaryTree();
-		bt.build();
-		System.out.println(bt.getDiagram());
-	}
+    private static int inorderSubstitution(BinaryTree root, List<String> items, int index)
+    {
+        if (root != null)
+        {
+            index = inorderSubstitution(root.left, items, index);
 
-	public BinaryTree getLeft() {
-		return left;
-	}
+            root.value = items.get(index);
+            index++;
 
-	public BinaryTree getRight() {
-		return right;
-	}
+            index = inorderSubstitution(root.right, items, index);
+        }
 
-	public boolean isBalanced() throws Exception {
-		return gapNoMoreThanOne();
-	}
+        return index;
+    }
 
-	public void setLeft(BinaryTree left) {
-		if (left == null)
-			return;
-		this.left = left;
-		if (children.size() > 0)
-			children.remove(0);
-		children.add(0, left);
-		left.parent = this;
-	}
+    private void sameShapeBinaryTree()
+    {
+        List<String> inorderTraversal = inorder();
+        System.out.println(inorderTraversal);
+        AlgoUtils.sort(inorderTraversal, "quicksort");
+        System.out.println(inorderTraversal);
+        inorderSubstitution(this, inorderTraversal, 0);
+    }
 
-	public void setRight(BinaryTree right) {
-		if (right == null)
-			return;
+    public static void main(String[] args) throws Exception
+    {
+        BinaryTree bt = new BinaryTree();
+        bt.build();
+        System.out.println(bt.getDiagram());
+    }
 
-		this.right = right;
-		if (children.size() > 1)
-			children.remove(1);
-		children.add(1, right);
-		right.parent = this;
-	}
-	
-	@Override
-	public String getDiagram() throws Exception {
-		clearDiagram(this);
-		setLevels();
-		preDiagram();
-		getDiagram(this);
-		diagram += "}";
-		return diagram;
-	}
+    public BinaryTree getLeft()
+    {
+        return left;
+    }
 
-	private String getDiagram(BinaryTree root) {		
-		String color = null;
-		BinaryTree leftChild = root.getLeft();
-		BinaryTree rightChild = root.getRight();
-		if (leftChild == null) {
-			diagram += "null" + terminalCount + " [shape=point];\n";
-			diagram += "\"" + root.nodeID + "\"" + "->" + "\"" + "null"
-					+ terminalCount + "\" [color=green];\n";
-			terminalCount--;
-		} else {
-			diagram += "\"" + root.nodeID + "\"" + "->" + "\""
-					+ leftChild.nodeID + "\"[color=green]\n";
-			getDiagram(leftChild);
-		}
-		if (rightChild == null) {
-			diagram += "null" + terminalCount + " [shape=point];\n";
-			diagram += "\"" + root.nodeID + "\"" + "->" + "\"" + "null"
-					+ terminalCount + "\" [color=red];\n";
-			terminalCount--;
-		} else {
-			diagram += "\"" + root.nodeID + "\"" + "->" + "\""
-					+ rightChild.nodeID + "\"[color=red]\n";
-			getDiagram(rightChild);
-		}
-		return diagram;
-	}
+    public BinaryTree getRight()
+    {
+        return right;
+    }
 
+    public boolean isBalanced() throws Exception
+    {
+        return gapNoMoreThanOne();
+    }
+
+    public void setLeft(BinaryTree left)
+    {
+        if (left == null)
+        {
+            return;
+        }
+
+        this.left = left;
+
+        if (children.size() > 0)
+        {
+            children.remove(0);
+        }
+
+        children.add(0, left);
+        left.parent = this;
+    }
+
+    public void setRight(BinaryTree right)
+    {
+        if (right == null)
+        {
+            return;
+        }
+
+        this.right = right;
+
+        if (children.size() > 1)
+        {
+            children.remove(1);
+        }
+
+        children.add(1, right);
+        right.parent = this;
+    }
+
+    @Override
+    public String getDiagram() throws Exception
+    {
+        clearDiagram(this);
+        setLevels();
+        preDiagram();
+        getDiagram(this);
+        diagram += "}";
+
+        return diagram;
+    }
+
+    private String getDiagram(BinaryTree root)
+    {
+        String color = null;
+        BinaryTree leftChild = root.getLeft();
+        BinaryTree rightChild = root.getRight();
+
+        if (leftChild == null)
+        {
+            diagram += ("null" + terminalCount + " [shape=point];\n");
+            diagram += ("\"" + root.nodeID + "\"" + "->" + "\"" + "null" + terminalCount + "\" [color=green];\n");
+            terminalCount--;
+        }
+        else
+        {
+            diagram += ("\"" + root.nodeID + "\"" + "->" + "\"" + leftChild.nodeID + "\"[color=green]\n");
+            getDiagram(leftChild);
+        }
+
+        if (rightChild == null)
+        {
+            diagram += ("null" + terminalCount + " [shape=point];\n");
+            diagram += ("\"" + root.nodeID + "\"" + "->" + "\"" + "null" + terminalCount + "\" [color=red];\n");
+            terminalCount--;
+        }
+        else
+        {
+            diagram += ("\"" + root.nodeID + "\"" + "->" + "\"" + rightChild.nodeID + "\"[color=red]\n");
+            getDiagram(rightChild);
+        }
+
+        return diagram;
+    }
 }

@@ -230,16 +230,16 @@ public class TestGraphUtil
                 { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
                 { 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE }
             };
-        
+
         int[][] adj7 = new int[][]
-                {
-                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
-                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
-                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
-                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
-                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
-                    { 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE }
-                };
+            {
+                { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+                { 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE }
+            };
 
         String string1 = "a";
         String string2 = "b";
@@ -368,7 +368,7 @@ public class TestGraphUtil
             graph = GraphFactory.getGraph(adj6, new String[] { string1, string2, string3, string4, string5, string6 }, true);
             GraphUtils.getDistances(graph, node1, pathMap);
             Assert.assertEquals(expectedPathMap, pathMap);
-            
+
             //adj7
             expectedPathMap.clear();
             expectedPath1.clear();
@@ -404,11 +404,10 @@ public class TestGraphUtil
             expectedPath6.add(node6);
             expectedPathMap.put(node6, expectedPath6);
 
-            graph = GraphFactory.getGraph(adj7, new String[] { string1, string2, string3, string4, string5, string6 }, true);            
+            graph = GraphFactory.getGraph(adj7, new String[] { string1, string2, string3, string4, string5, string6 }, true);
             GraphUtils.getDistances(graph, node1, pathMap);
             System.out.println(graph.getDiagram());
             Assert.assertEquals(expectedPathMap, pathMap);
-
         }
         catch (InvalidDataException e)
         {

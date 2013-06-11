@@ -1,79 +1,104 @@
 package dataStructures;
 
-public class DoublyLinkedList {
-	private String value;
-	private DoublyLinkedList next;
-	private DoublyLinkedList previous;
+public class DoublyLinkedList
+{
+    private DoublyLinkedList next;
+    private DoublyLinkedList previous;
+    private String value;
 
-	public DoublyLinkedList(String value) {
-		this.value = value;
-	}
+    public DoublyLinkedList(String value)
+    {
+        this.value = value;
+    }
 
-	public void insertAtEnd(String value) {
-		DoublyLinkedList node = new DoublyLinkedList(value);
-		DoublyLinkedList lastNode = getLastNode();
-		lastNode.next = node;
-		node.previous = lastNode;
-	}
+    public void insertAtEnd(String value)
+    {
+        DoublyLinkedList node = new DoublyLinkedList(value);
+        DoublyLinkedList lastNode = getLastNode();
+        lastNode.next = node;
+        node.previous = lastNode;
+    }
 
-	public DoublyLinkedList getFirstNode() {
-		DoublyLinkedList currentNode = this;
-		while (currentNode.previous != null)
-			currentNode = currentNode.previous;
-		return currentNode;
-	}
+    public DoublyLinkedList getFirstNode()
+    {
+        DoublyLinkedList currentNode = this;
 
-	public DoublyLinkedList getLastNode() {
-		DoublyLinkedList currentNode = this;
-		while (currentNode.next != null)
-			currentNode = currentNode.next;
-		return currentNode;
-	}
+        while (currentNode.previous != null)
+        {
+            currentNode = currentNode.previous;
+        }
 
-	public String getValue() {
-		return value;
-	}
+        return currentNode;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public DoublyLinkedList getLastNode()
+    {
+        DoublyLinkedList currentNode = this;
 
-	public DoublyLinkedList getNext() {
-		return next;
-	}
+        while (currentNode.next != null)
+        {
+            currentNode = currentNode.next;
+        }
 
-	public void setNext(DoublyLinkedList next) {
-		this.next = next;
-	}
+        return currentNode;
+    }
 
-	public DoublyLinkedList getPrevious() {
-		return previous;
-	}
+    public String getValue()
+    {
+        return value;
+    }
 
-	public void setPrevious(DoublyLinkedList previous) {
-		this.previous = previous;
-	}
+    public void setValue(String value)
+    {
+        this.value = value;
+    }
 
-	@Override
-	public String toString() {
-		DoublyLinkedList currentNode = this.getFirstNode();
+    public DoublyLinkedList getNext()
+    {
+        return next;
+    }
 
-		StringBuilder sb = new StringBuilder();
-		sb.append(currentNode.value);
+    public void setNext(DoublyLinkedList next)
+    {
+        this.next = next;
+    }
 
-		while (currentNode.next != null) {
-			currentNode = currentNode.next;
-			sb.append("<->").append(currentNode.value);
-		}
+    public DoublyLinkedList getPrevious()
+    {
+        return previous;
+    }
 
-		return sb.toString();
-	}
+    public void setPrevious(DoublyLinkedList previous)
+    {
+        this.previous = previous;
+    }
 
-	public static void main(String[] args) {
-		DoublyLinkedList doublyLinkedList = new DoublyLinkedList("0");
-		for (int i = 1; i < 10; i++)
-			doublyLinkedList.insertAtEnd(Integer.toString(i));
-		System.out.println(doublyLinkedList);
-	}
+    @Override
+    public String toString()
+    {
+        DoublyLinkedList currentNode = this.getFirstNode();
 
+        StringBuilder sb = new StringBuilder();
+        sb.append(currentNode.value);
+
+        while (currentNode.next != null)
+        {
+            currentNode = currentNode.next;
+            sb.append("<->").append(currentNode.value);
+        }
+
+        return sb.toString();
+    }
+
+    public static void main(String[] args)
+    {
+        DoublyLinkedList doublyLinkedList = new DoublyLinkedList("0");
+
+        for (int i = 1; i < 10; i++)
+        {
+            doublyLinkedList.insertAtEnd(Integer.toString(i));
+        }
+
+        System.out.println(doublyLinkedList);
+    }
 }

@@ -1,117 +1,163 @@
 package dataStructures;
 
-public class LinkedList implements Cloneable {
-	private String value;
-	private LinkedList next;
+public class LinkedList implements Cloneable
+{
+    private LinkedList next;
+    private String value;
 
-	public LinkedList() {
-	}
+    public LinkedList() {}
 
-	public LinkedList(String string, boolean split) {
-		if (split) {
-			this.value = string.charAt(0) + "";
-			this.next = stringToLinkedList(string, 1);
-		} else {
-			this.value = string;
-			this.next = null;
-		}
-	}
+    public LinkedList(String string, boolean split)
+    {
+        if (split)
+        {
+            this.value = string.charAt(0) + "";
+            this.next = stringToLinkedList(string, 1);
+        }
+        else
+        {
+            this.value = string;
+            this.next = null;
+        }
+    }
 
-	public LinkedList(String[] strings, int index) {
-		if (index >= strings.length)
-			return;
-		this.value = strings[index];
-		if (index < strings.length - 1)
-			this.next = new LinkedList(strings, index + 1);
-	}
+    public LinkedList(String[] strings, int index)
+    {
+        if (index >= strings.length)
+        {
+            return;
+        }
 
-	public boolean hasNext() {
-		return next != null;
-	}
+        this.value = strings[index];
 
-	private static LinkedList stringToLinkedList(String string, int index) {
-		if (index >= string.length())
-			return null;
-		LinkedList linkedList = new LinkedList();
-		linkedList.value = string.charAt(index) + "";
-		linkedList.next = stringToLinkedList(string, ++index);
-		return linkedList;
-	}
+        if (index < (strings.length - 1))
+        {
+            this.next = new LinkedList(strings, index + 1);
+        }
+    }
 
-	@Override
-	public String toString() {
-		return toString(this);
-	}
+    public boolean hasNext()
+    {
+        return next != null;
+    }
 
-	private static String toString(LinkedList linkedList) {
-		if (linkedList == null) {
-			return "null";
-		} else {
-			return linkedList.value + "-->" + toString(linkedList.next);
-		}
-	}
+    private static LinkedList stringToLinkedList(String string, int index)
+    {
+        if (index >= string.length())
+        {
+            return null;
+        }
 
-	@Override
-	public Object clone() {
-		return clone(this);
+        LinkedList linkedList = new LinkedList();
+        linkedList.value = string.charAt(index) + "";
+        linkedList.next = stringToLinkedList(string, ++index);
 
-	}
+        return linkedList;
+    }
 
-	private static LinkedList clone(LinkedList linkedList) {
-		if (linkedList == null)
-			return null;
-		LinkedList clonedLinkedList = new LinkedList();
-		clonedLinkedList.value = linkedList.value;
-		clonedLinkedList.next = clone(linkedList.next);
-		return clonedLinkedList;
-	}
+    @Override
+    public String toString()
+    {
+        return toString(this);
+    }
 
-	private static LinkedList reverse(LinkedList linkedList, LinkedList parent) {
-		if (linkedList == null)
-			return parent;
-		LinkedList start = reverse(linkedList.next, linkedList);
-		linkedList.next = parent;
-		return start;
-	}
+    private static String toString(LinkedList linkedList)
+    {
+        if (linkedList == null)
+        {
+            return "null";
+        }
+        else
+        {
+            return linkedList.value + "-->" + toString(linkedList.next);
+        }
+    }
 
-	public LinkedList reverse() {
-		LinkedList linkedList = clone(this);
-		return reverse(linkedList, null);
-	}
+    @Override
+    public Object clone()
+    {
+        return clone(this);
+    }
 
-	public static void main(String[] args) {
-		LinkedList linkedList = new LinkedList("12345", true);
-		System.out.println(linkedList.reverse());
-		System.out.println(linkedList);
-	}
+    private static LinkedList clone(LinkedList linkedList)
+    {
+        if (linkedList == null)
+        {
+            return null;
+        }
 
-	public String getValue() {
-		return value;
-	}
+        LinkedList clonedLinkedList = new LinkedList();
+        clonedLinkedList.value = linkedList.value;
+        clonedLinkedList.next = clone(linkedList.next);
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+        return clonedLinkedList;
+    }
 
-	public LinkedList getNext() {
-		return next;
-	}
+    private static LinkedList reverse(LinkedList linkedList, LinkedList parent)
+    {
+        if (linkedList == null)
+        {
+            return parent;
+        }
 
-	public void setNext(LinkedList next) {
-		this.next = next;
-	}
+        LinkedList start = reverse(linkedList.next, linkedList);
+        linkedList.next = parent;
 
-	/* To be tested */
-	public Long sum() {
-		Long sum = Long.parseLong(this.value);
-		if (this.next != null)
-			sum += this.next.sum();
-		return sum;
-	}
+        return start;
+    }
 
-	/* To be tested */
-	public LinkedList prefix(LinkedList prefixList) {
-		prefixList.next = this;
-		return prefixList;
-	}
+    public LinkedList reverse()
+    {
+        LinkedList linkedList = clone(this);
+
+        return reverse(linkedList, null);
+    }
+
+    public static void main(String[] args)
+    {
+        LinkedList linkedList = new LinkedList("12345", true);
+        System.out.println(linkedList.reverse());
+        System.out.println(linkedList);
+    }
+
+    public String getValue()
+    {
+        return value;
+    }
+
+    public void setValue(String value)
+    {
+        this.value = value;
+    }
+
+    public LinkedList getNext()
+    {
+        return next;
+    }
+
+    public void setNext(LinkedList next)
+    {
+        this.next = next;
+    }
+
+    /* To be tested */
+    public Long sum()
+    {
+        Long sum = Long.parseLong(this.value);
+
+        if (this.next != null)
+        {
+            sum += this.next.sum();
+        }
+
+        return sum;
+    }
+
+    /* To be tested */
+    public LinkedList prefix(LinkedList prefixList)
+    {
+        prefixList.next = this;
+
+        return prefixList;
+    }
 }

@@ -1,7 +1,8 @@
 package dataStructuresV2;
 
-public interface Node<T> {
+public interface Node<T>
+{
+    public T getValue();
 
-	public T getValue();
-	public String getDiagramFragment();
+    public String getDiagramFragment();
 }
