@@ -1,4 +1,4 @@
-package com.packtpub.felix;
+package com.packtpub.felix.bookshelf.service.tui;
 
 /**
  * Hello world!

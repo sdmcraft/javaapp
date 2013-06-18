@@ -1,9 +1,11 @@
-package com.packtpub.felix;
+package com.packtpub.felix.bookshelf.service.tui.activator;
 
 import java.util.Hashtable;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+
+import com.packtpub.felix.bookshelf.service.tui.BookshelfServiceProxy;
 
 public class BookshelfTuiActivator implements BundleActivator {
 	public void start(BundleContext bc) {
