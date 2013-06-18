@@ -2,22 +2,19 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-	<!--
-		<resource-ref> <description>DB Connection</description>
-		<res-ref-name>jdbc/breeze</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth> </resource-ref>
-	-->
+	<!-- <resource-ref> <description>DB Connection</description> <res-ref-name>jdbc/breeze</res-ref-name> 
+		<res-type>javax.sql.DataSource</res-type> <res-auth>Container</res-auth> 
+		</resource-ref> -->
 
 	<context-param>
 		<param-name>ctxParam</param-name>
 		<param-value>"I am a ctx param"</param-value>
 	</context-param>
-	
+
 	<listener>
-      <listener-class>listeners.MySessionListener</listener-class>
-   	</listener>
-   	
+		<listener-class>listeners.MySessionListener</listener-class>
+	</listener>
+
 	<servlet>
 		<servlet-name>JMSservlet</servlet-name>
 		<servlet-class>servlets.JMSservlet</servlet-class>
@@ -62,7 +59,7 @@
 		<servlet-name>ImageUploadPG</servlet-name>
 		<url-pattern>/ImageUploadPG</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>SecureServlet</servlet-name>
 		<servlet-class>servlets.SecureServlet</servlet-class>
@@ -197,7 +194,7 @@
 		<servlet-name>ImageDisplay</servlet-name>
 		<url-pattern>/ImageDisplay</url-pattern>
 	</servlet-mapping>
-	
+
 	<login-config>
 		<auth-method>BASIC</auth-method>
 	</login-config>
@@ -270,7 +267,7 @@
 		<servlet-name>UploadStatusServlet</servlet-name>
 		<url-pattern>/UploadStatusServlet</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ServerSentEventDemoServlet</servlet-name>
 		<servlet-class>servlets.ServerSentEventDemoServlet</servlet-class>
@@ -297,8 +294,17 @@
 		<servlet-name>DataStoreServlet</servlet-name>
 		<url-pattern>/DataStoreServlet</url-pattern>
 	</servlet-mapping>
-	
+
+	<servlet>
+		<servlet-name>LinkedInServlet</servlet-name>
+		<servlet-class>servlets.LinkedInServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LinkedInServlet</servlet-name>
+		<url-pattern>/LinkedInServlet</url-pattern>
+	</servlet-mapping>
+
 	<session-config>
-      <session-timeout>1</session-timeout> 
-    </session-config>
+		<session-timeout>1</session-timeout>
+	</session-config>
 </web-app>
