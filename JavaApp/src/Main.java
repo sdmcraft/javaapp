@@ -3,8 +3,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeSet;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -92,10 +95,28 @@ class Main {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main2(String[] args) {
 		for (String s : TimeZone.getAvailableIDs()) {
 			//System.out.println(s);
 			System.out.println(TimeZone.getTimeZone(s));
+		}
+	}
+	
+	public static void main(String[] args) {
+		Set<Integer> set = new TreeSet<Integer>();
+		set.add(1);
+		set.add(2);
+		set.add(3);
+		Iterator<Integer> itr = set.iterator();
+		while(itr.hasNext())
+		{			
+			System.out.println(itr.next());
+		}
+		
+		itr = set.iterator();
+		while(itr.hasNext())
+		{			
+			System.out.println(itr.next());
 		}
 	}
 }
