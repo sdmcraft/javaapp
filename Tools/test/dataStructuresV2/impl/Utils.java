@@ -75,6 +75,10 @@ public class Utils
     {
         Edge edge = EasyMock.createMock(Edge.class);
         EasyMock.expect(edge.getEndpoints()).andReturn(new Node[] { node1, node2 }).anyTimes();
+        
+        EasyMock.expect(edge.isOrigin(node1)).andReturn(true).anyTimes();
+        EasyMock.expect(edge.isOrigin(node2)).andReturn(true).anyTimes();
+        EasyMock.expect(edge.isOrigin(EasyMock.isA(Node.class))).andReturn(false).anyTimes();
         EasyMock.replay(edge);
 
         return edge;

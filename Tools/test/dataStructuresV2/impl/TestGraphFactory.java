@@ -68,7 +68,7 @@ public class TestGraphFactory
 
         try
         {
-            GraphFactory.getGraph(adjMatrix, values, directed);
+            GraphFactory.getGraph(adjMatrix, values, directed, BasicGraph.class);
             Assert.fail();
         }
         catch (Exception ex)
@@ -80,7 +80,7 @@ public class TestGraphFactory
 
         try
         {
-            GraphFactory.getGraph(adjMatrix, values, directed);
+            GraphFactory.getGraph(adjMatrix, values, directed, BasicGraph.class);
             Assert.fail();
         }
         catch (Exception ex)
@@ -92,7 +92,7 @@ public class TestGraphFactory
 
         try
         {
-            GraphFactory.getGraph(adjMatrix, values, directed);
+            GraphFactory.getGraph(adjMatrix, values, directed, BasicGraph.class);
             Assert.fail();
         }
         catch (Exception ex)
@@ -112,7 +112,7 @@ public class TestGraphFactory
 
         try
         {
-            Graph graph = GraphFactory.getGraph(adjMatrix, values, directed);
+            Graph graph = GraphFactory.getGraph(adjMatrix, values, directed, BasicGraph.class);
             Assert.assertEquals(3, graph.getEdges().size());
             Assert.assertEquals(expected, graph.getNodes());
         }
@@ -131,7 +131,7 @@ public class TestGraphFactory
 
         try
         {
-            GraphFactory.getGraph(adjMatrix, values, directed);
+            GraphFactory.getGraph(adjMatrix, values, directed, BasicGraph.class);
             Assert.fail();
         }
         catch (Exception ex)
@@ -148,7 +148,7 @@ public class TestGraphFactory
 
         try
         {
-            GraphFactory.getGraph(adjMatrix, values, directed);
+            GraphFactory.getGraph(adjMatrix, values, directed, BasicGraph.class);
             Assert.fail();
         }
         catch (Exception ex)
@@ -166,7 +166,7 @@ public class TestGraphFactory
 
         try
         {
-            Graph graph = GraphFactory.getGraph(adjMatrix, values, directed);
+            Graph graph = GraphFactory.getGraph(adjMatrix, values, directed, BasicGraph.class);
             Assert.assertEquals(3, graph.getEdges().size());
 
             Edge edge1 = Utils.createEdge("1", "2", 1, true);
@@ -188,7 +188,7 @@ public class TestGraphFactory
 
         try
         {
-            Graph graph = GraphFactory.getGraph(adjMatrix, values, directed);
+            Graph graph = GraphFactory.getGraph(adjMatrix, values, directed, BasicGraph.class);
         }
         catch (Exception ex)
         {

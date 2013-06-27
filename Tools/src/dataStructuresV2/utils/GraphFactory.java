@@ -57,9 +57,17 @@ public class GraphFactory
     }
 
     // UT:TestGraphFactory.testGetGraphWithAdjMatrix
-    public static <T> Graph<T> getGraph(int[][] adjMatrix, T[] values, boolean directed) throws InvalidDataException
+    public static <T> Graph<T> getGraph(int[][] adjMatrix, T[] values, boolean directed, Class graphClass) throws InvalidDataException
     {
-        BasicGraph<T> basicGraph = new BasicGraph<T>();
+    	Graph<T> graph = null;
+    	if(BasicGraph.class.equals(graphClass))
+    	{
+    		graph = new BasicGraph<T>();
+    	}
+    	else if(SimpleGraph.class.equals(graphClass))
+    	{
+    		graph = new SimpleGraph<T>();
+    	}
 
         if ((adjMatrix.length < 1) || (adjMatrix.length != values.length))
         {
@@ -94,7 +102,7 @@ public class GraphFactory
         {
             Node<T> node = NodeFactory.getNode(value);
             nodeList.add(node);
-            basicGraph.addNode(node);
+            graph.addNode(node);
         }
 
         for (int i = 0; i < adjMatrix.length; i++)
@@ -116,7 +124,10 @@ public class GraphFactory
 
                     try
                     {
-                        basicGraph.addEdge(edge);
+                    	if(!graph.getEdges().contains(edge))
+                    	{
+                    		graph.addEdge(edge);
+                    	}
                     }
                     catch (InvalidDataException ex)
                     {
@@ -129,7 +140,7 @@ public class GraphFactory
             }
         }
 
-        return basicGraph;
+        return graph;
     }
 
     // UT:TestGraphFactory.testGetSimpleGraph

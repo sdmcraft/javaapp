@@ -1,13 +1,14 @@
 package demo;
 
-import dataStructuresV2.Graph;
-import dataStructuresV2.Node;
-import dataStructuresV2.utils.GraphFactory;
-import dataStructuresV2.utils.GraphUtils;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import dataStructuresV2.Graph;
+import dataStructuresV2.Node;
+import dataStructuresV2.impl.BasicGraph;
+import dataStructuresV2.utils.GraphFactory;
+import dataStructuresV2.utils.GraphUtils;
 
 
 public class Main
@@ -34,7 +35,7 @@ public class Main
                     { Integer.MAX_VALUE, 1, 3 },
                     { 1, Integer.MAX_VALUE, 1 },
                     { 3, 1, Integer.MAX_VALUE }
-                }, new String[] { "a", "b", "c", }, false);
+                }, new String[] { "a", "b", "c", }, false, BasicGraph.class);
 
         System.out.println(graph.getDiagram());
 

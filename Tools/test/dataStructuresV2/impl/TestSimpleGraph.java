@@ -1,4 +1,21 @@
+/*
+ * Copyright (c) 2002, Marco Hunsicker. All rights reserved.
+ *
+ * The contents of this file are subject to the Common Public License
+ * Version 1.0 (the "License"). You may not use this file except in
+ * compliance with the License. A copy of the License is available at
+ * http://jalopy.sf.net/license-cpl.html
+ *
+ * Copyright (c) 2001-2002 Marco Hunsicker
+ */
 package dataStructuresV2.impl;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import junit.framework.Assert;
+
+import org.junit.Test;
 
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
@@ -8,16 +25,20 @@ import dataStructuresV2.utils.EdgeFactory;
 import dataStructuresV2.utils.GraphFactory;
 import dataStructuresV2.utils.NodeFactory;
 
-import junit.framework.Assert;
 
-import org.junit.Test;
-
-import java.util.HashSet;
-import java.util.Set;
-
-
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Revision: 1.3 $
+  */
 public class TestSimpleGraph
 {
+    //~ Methods --------------------------------------------------------------------------
+
+    /**
+     * DOCUMENT ME!
+     */
     @Test
     public void testCanAdd_undirected()
     {
@@ -59,6 +80,21 @@ public class TestSimpleGraph
             {
                 Assert.assertEquals(InvalidDataException.Code.INVALID, ex.code);
             }
+
+            // Success case
+            int[][] adjMatrix =
+                new int[][]
+                {
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { 1, Integer.MAX_VALUE, 1 },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
+                };
+            String[] values = new String[] { "a", "b", "c", };
+            simpleGraph = GraphFactory.getGraph(adjMatrix, values, false, SimpleGraph.class);
+            Edge edge = EdgeFactory.getEdge(new Node[] { node1, node3 }, 2);
+            simpleGraph.addEdge(edge);
+
+            
         }
         catch (InvalidDataException e)
         {
