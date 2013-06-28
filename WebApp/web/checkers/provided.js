@@ -127,26 +127,31 @@ $('document')
 														.prevAll().length);
 
 												// YOUR CODE
-												handleCapturedPieces($this);
+												var captureDone = handleCapturedPieces($this);
 
 												// YOUR CODE LAST WEEK
 												// increment the move counter
 												incrementMoveCount();
 
+
+												// YOUR CODE
+												// reset the new legal moves
+												resetMovables();
+												
+												var $movableSquares = getMovableSquares($selectedPiece);
 												// un-select the piece
 												$selectedPiece
 														.removeClass('selected');
-
-												if (window.turn === 'light') {
-													window.turn = 'dark';
-												} else {
-													window.turn = 'light';
-												}
-
-												changeTurnDiplay();
 												
-												// YOUR CODE
-												// reset the new legal moves
+												if (!captureDone) {
+													if (window.turn === 'light') {
+														window.turn = 'dark';
+													} else {
+														window.turn = 'light';
+													}
+												}
+												changeTurnDiplay();
+
 												resetMovables();
 											}
 
