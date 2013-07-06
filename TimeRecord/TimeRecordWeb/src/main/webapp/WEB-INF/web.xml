@@ -7,28 +7,45 @@
 		<param-value>jnp://127.0.0.1:1099</param-value>
 	</context-param>
 
-	<security-constraint>  
+	<!-- <security-constraint>
 		<web-resource-collection>                       
-			<web-resource-name>Secure Resource</web-resource-name>  
-			<url-pattern>/secure/*</url-pattern>             
+			<web-resource-name>Root Resource</web-resource-name>  
+			<url-pattern>/root/*</url-pattern>             
 		</web-resource-collection>  
-		<auth-constraint>                                 
+		<auth-constraint>                            
 			<role-name>root</role-name>    
 		</auth-constraint>                                
 	</security-constraint>
 	<security-constraint>  
 		<web-resource-collection>                       
+			<web-resource-name>Admin Resource</web-resource-name>  
+			<url-pattern>/admin/*</url-pattern>             
+		</web-resource-collection>  
+		<auth-constraint>                            
+			<role-name>root</role-name>    
+		</auth-constraint>                                
+	</security-constraint>-->
+	
+	<security-constraint>  
+		<web-resource-collection>                       
 			<web-resource-name>Any Resource</web-resource-name>  
 			<url-pattern>/*</url-pattern>             
-		</web-resource-collection>  
+		</web-resource-collection>
+		<auth-constraint>                            
+			<role-name>members</role-name>    
+		</auth-constraint>		  
 	</security-constraint>                         
 	
 	<login-config>  
 		<auth-method>BASIC</auth-method>  
 	</login-config>  
-	<security-role>                                    
+	<security-role>                          
+		<role-name>members</role-name>  
+	</security-role>
+	<!-- <security-role>                          
 		<role-name>root</role-name>  
-	</security-role>  
+	</security-role> -->  
+	  
 	<resource-ref>  
 		<res-ref-name>jdbc/mysql</res-ref-name>  
 		<res-type>javax.sql.DataSource</res-type>  
@@ -52,6 +69,6 @@
 
 	<servlet-mapping>
 		<servlet-name>ActionServlet</servlet-name>
-		<url-pattern>/secure/service</url-pattern>
+		<url-pattern>/service</url-pattern>
 	</servlet-mapping>
 </web-app>
