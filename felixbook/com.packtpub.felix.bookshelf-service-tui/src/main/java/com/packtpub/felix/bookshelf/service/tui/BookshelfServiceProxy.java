@@ -8,13 +8,15 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import com.packtpub.felix.bookshelf.inventory.api.Book;
+import com.packtpub.felix.bookshelf.inventory.api.BookAlreadyExistsException;
 import com.packtpub.felix.bookshelf.inventory.api.BookNotFoundException;
+import com.packtpub.felix.bookshelf.inventory.api.InvalidBookException;
 import com.packtpub.felix.bookshelf.service.api.BookshelfService;
 import com.packtpub.felix.bookshelf.service.api.InvalidCredentialsException;
 
 public class BookshelfServiceProxy {
 	public static final String SCOPE = "book";
-	public static final String[] FUNCTIONS = new String[] { "search" };
+	public static final String[] FUNCTIONS = new String[] { "search", "add" };
 	private BundleContext context;
 
 	public BookshelfServiceProxy(BundleContext context) {
@@ -96,5 +98,19 @@ public class BookshelfServiceProxy {
 		Set<String> results = service.searchBooksByRating(sessionId, lower,
 				upper);
 		return getBooks(sessionId, service, results);
+	}
+
+	public String add(@Descriptor("username") String username,
+			@Descriptor("password") String password,
+			@Descriptor("ISBN") String isbn, @Descriptor("Title") String title,
+			@Descriptor("Author") String author,
+			@Descriptor("Category") String category,
+			@Descriptor("Rating (0..10)") int rating)
+			throws InvalidCredentialsException, BookAlreadyExistsException,
+			InvalidBookException {
+		BookshelfService service = lookupService();
+		String sessionId = service.login(username, password.toCharArray());
+		service.addBook(sessionId, isbn, title, author, category, rating);
+		return isbn;
 	}
 }

@@ -20,7 +20,7 @@ public class BookshelfServiceMockImplActivator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {
 		this.reg = context.registerService(BookshelfService.class.getName(),
 				new BookshelfServiceMockImpl(context), null);
-		testService(context);
+		//testService(context);
 	}
 
 	public void stop(BundleContext context) throws Exception {
