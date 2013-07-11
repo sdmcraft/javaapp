@@ -25,6 +25,8 @@ public class DemoLoginModulePlugin implements LoginModulePlugin {
 	private static final Map map = new HashMap();
 	static {
 		map.put("aa", "11");
+		map.put("aaa", "123");
+		map.put("bbb", "456");
 		map.put("bb", "22");
 		map.put("cc", "33");
 		map.put("dd", "44");

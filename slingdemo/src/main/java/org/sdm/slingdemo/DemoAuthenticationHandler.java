@@ -90,6 +90,19 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
+		try {
+			createUser("aaa", "111");
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			createUser("bbb", "222");
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -104,11 +117,25 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 	public boolean authenticationSucceeded(HttpServletRequest request, HttpServletResponse response, AuthenticationInfo authInfo) 
 	{
 		System.out.println("Authentication Succeeded");
+		
 		return super.authenticationSucceeded(request, response, authInfo);
 	};
 
 	@Deactivate
-	protected void deactivate(ComponentContext componentContext) {
+	protected void deactivate(ComponentContext componentContext) throws RepositoryException {
+		
+		JackrabbitSession session = (JackrabbitSession) repository.loginAdministrative(null);
+		UserManager userManager = session.getUserManager();
+		userManager.getAuthorizable("aa").remove();
+		System.out.println("Deleted aa");
+		userManager.getAuthorizable("bb").remove();
+		System.out.println("Deleted bb");
+		userManager.getAuthorizable("cc").remove();
+		System.out.println("Deleted cc");
+		userManager.getAuthorizable("aaa").remove();
+		System.out.println("Deleted aaa");
+		userManager.getAuthorizable("bbb").remove();
+		System.out.println("Deleted bbb");
 		if (loginModule != null) {
 			loginModule.unregister();
 			loginModule = null;
@@ -119,7 +146,7 @@ public class DemoAuthenticationHandler extends AbstractAuthenticationHandler {
 		JackrabbitSession session = (JackrabbitSession) repository
 				.loginAdministrative(null);
 		UserManager userManager = session.getUserManager();
-		userManager.createUser(uid, pwd);
+		userManager.createUser(uid, pwd);			
 		session.save();
 		session.logout();
 	}
