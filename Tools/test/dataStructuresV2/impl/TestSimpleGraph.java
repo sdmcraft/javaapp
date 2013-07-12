@@ -10,13 +10,6 @@
  */
 package dataStructuresV2.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import junit.framework.Assert;
-
-import org.junit.Test;
-
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
@@ -24,6 +17,13 @@ import dataStructuresV2.exception.InvalidDataException;
 import dataStructuresV2.utils.EdgeFactory;
 import dataStructuresV2.utils.GraphFactory;
 import dataStructuresV2.utils.NodeFactory;
+
+import junit.framework.Assert;
+
+import org.junit.Test;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -34,13 +34,11 @@ import dataStructuresV2.utils.NodeFactory;
   */
 public class TestSimpleGraph
 {
-    //~ Methods --------------------------------------------------------------------------
-
     /**
      * DOCUMENT ME!
      */
     @Test
-    public void testCanAdd_undirected()
+    public void testCanAdd()
     {
         try
         {
@@ -82,8 +80,7 @@ public class TestSimpleGraph
             }
 
             // Success case
-            int[][] adjMatrix =
-                new int[][]
+            int[][] adjMatrix = new int[][]
                 {
                     { Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
                     { 1, Integer.MAX_VALUE, 1 },
@@ -91,12 +88,53 @@ public class TestSimpleGraph
                 };
             String[] values = new String[] { "a", "b", "c", };
             simpleGraph = GraphFactory.getGraph(adjMatrix, values, false, SimpleGraph.class);
+
             Edge edge = EdgeFactory.getEdge(new Node[] { node1, node3 }, 2);
             simpleGraph.addEdge(edge);
 
-            
+            //Failure case for directed graph
+            adjMatrix = new int[][]
+                {
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, Integer.MAX_VALUE }
+                };
+
+            try
+            {
+                simpleGraph = GraphFactory.getGraph(adjMatrix, values, true, SimpleGraph.class);
+                Assert.fail();
+            }
+            catch (InvalidDataException e)
+            {
+                Assert.assertEquals(InvalidDataException.Code.INVALID, e.code);
+            }
         }
         catch (InvalidDataException e)
+        {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void testCanAdd_directed()
+    {
+        String string1 = "a";
+        String string2 = "b";
+        String string3 = "c";
+
+        Set<String> strings = new HashSet<String>();
+        strings.add(string1);
+        strings.add(string2);
+        strings.add(string3);
+
+        Node<String> node1 = NodeFactory.getNode(string1);
+        Node<String> node2 = NodeFactory.getNode(string2);
+        Node<String> node3 = NodeFactory.getNode(string3);
+
+        try {}
+        catch (Exception e)
         {
             e.printStackTrace();
             Assert.fail();

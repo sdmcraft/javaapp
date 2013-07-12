@@ -66,6 +66,10 @@ public class GraphFactory
     	}
     	else if(SimpleGraph.class.equals(graphClass))
     	{
+    		if(directed)
+    		{
+    			throw new InvalidDataException(InvalidDataException.Code.INVALID, "Directed edges not allowed in simple graph!!");	
+    		}
     		graph = new SimpleGraph<T>();
     	}
 
