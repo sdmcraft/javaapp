@@ -3,7 +3,7 @@
 //and insert them into the div with id 'board'
 function buildBoard() {
 	for ( var i = 0; i < 64; i++) {
-		$("div#board").append("<div class='square'></div>");
+		$("div#board").append("<div id='square-" + i + "' class='square'></div>");
 	}
 }
 
@@ -12,7 +12,7 @@ function buildBoard() {
 // insert them into the div with id 'pieces'
 function addPieces() {
 	for ( var i = 0; i < 24; i++) {
-		$("div#pieces").append("<div class='piece'></div>");
+		$("div#pieces").append("<div id='piece-" + i + "' class='piece'></div>");
 	}
 }
 

@@ -118,7 +118,10 @@ $('document')
 												// actually do the moving
 												movePieceTo($selectedPiece,
 														pixels.top, pixels.left);
+                                                var position = $($selectedPiece).position();
+                                                var coords = getCoords(position.top, position.left);
 
+                                                alert("New piece coordinates:" + coords.x + "," + coords.y);
 												// YOUR CODE
 												// .prevAll().length is a trick
 												// to get the index
