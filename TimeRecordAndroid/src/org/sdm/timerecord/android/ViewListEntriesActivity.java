@@ -52,7 +52,7 @@ public class ViewListEntriesActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		// setContentView(R.layout.entries_list);
 		mListId = getIntent().getExtras().getLong(
-				org.sdm.timerecord.android.model.List.COL_ID);
+				org.sdm.timerecord.android.model.ListDAO.COL_ID);
 		fillData();
 		registerForContextMenu(getListView());
 	}

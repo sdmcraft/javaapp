@@ -3,7 +3,7 @@ package org.sdm.timerecord.android;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.sdm.timerecord.android.model.List;
+import org.sdm.timerecord.android.model.ListDAO;
 import org.sdm.timerecord.android.model.ListEntry;
 
 import android.app.Activity;

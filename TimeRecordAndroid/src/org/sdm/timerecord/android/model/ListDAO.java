@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class List {
+public class ListDAO {
 	public static final String TABLE_NAME = "ts_lists";
 	public static final String COL_ID = "_id";
 	public static final String COL_NAME = "name";
@@ -14,7 +14,7 @@ public class List {
 	private String name;
 	private String description;
 
-	public List(long id, String name) {
+	public ListDAO(long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,6 +40,10 @@ public class List {
 
 	public static boolean delete(SQLiteDatabase db, long rowId) {
 		return db.delete(TABLE_NAME, COL_ID + "=" + rowId, null) > 0;
+	}
+
+	public static boolean delete(SQLiteDatabase db) {
+		return db.delete(TABLE_NAME, null, null) > 0;
 	}
 
 	public static Cursor query(SQLiteDatabase db) {

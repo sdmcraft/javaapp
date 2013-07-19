@@ -1,6 +1,6 @@
 package org.sdm.timerecord.android;
 
-import org.sdm.timerecord.android.model.List;
+import org.sdm.timerecord.android.model.ListDAO;
 import org.sdm.timerecord.android.model.ListEntry;
 
 import android.app.Activity;
@@ -27,9 +27,9 @@ public class ListEditActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			listId = extras.getLong("ListId");
-			listName = List.query(Globals.getInstance().getDb(), listId)
+			listName = ListDAO.query(Globals.getInstance().getDb(), listId)
 					.getString(1);
-			listDescription = List.query(Globals.getInstance().getDb(), listId)
+			listDescription = ListDAO.query(Globals.getInstance().getDb(), listId)
 					.getString(2);
 		}
 		render();
@@ -64,11 +64,11 @@ public class ListEditActivity extends Activity {
 
 	private void save() {
 		if (listId == null || listId == -1) {
-			List.insert(Globals.getInstance().getDb(), listNameEditText
+			ListDAO.insert(Globals.getInstance().getDb(), listNameEditText
 					.getText().toString(), listDescriptionEditText.getText()
 					.toString());
 		} else {
-			List.update(Globals.getInstance().getDb(), listId, listNameEditText
+			ListDAO.update(Globals.getInstance().getDb(), listId, listNameEditText
 					.getText().toString(), listDescriptionEditText.getText()
 					.toString());
 		}

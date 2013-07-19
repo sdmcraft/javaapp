@@ -1,6 +1,6 @@
 package org.sdm.timerecord.android;
 
-import org.sdm.timerecord.android.model.List;
+import org.sdm.timerecord.android.model.ListDAO;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -50,24 +50,24 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 	public void editList(Long listId) {
 		Intent i = new Intent(this, ListEditActivity.class);
-		i.putExtra(List.COL_ID, listId);
+		i.putExtra(ListDAO.COL_ID, listId);
 		startActivityForResult(i, ACTIVITY_ADD_OR_EDIT_LIST);
 	}
 
 	public void listEntry(Long listId) {
 		Intent i = new Intent(this, ListEntryActivity.class);
-		i.putExtra(List.COL_ID, listId);
+		i.putExtra(ListDAO.COL_ID, listId);
 		startActivityForResult(i, ACTIVITY_LIST_ENTRY);
 	}
 
 	public void viewEntries(Long listId) {
 		Intent i = new Intent(this, ViewListEntriesActivity.class);
-		i.putExtra(List.COL_ID, listId);
+		i.putExtra(ListDAO.COL_ID, listId);
 		startActivityForResult(i, ACTIVITY_VIEW_LIST_ENTRIES);
 	}
 
 	public void deleteList(Long listId) {
-		List.delete(Globals.getInstance().getDb(), listId);
+		ListDAO.delete(Globals.getInstance().getDb(), listId);
 		removeDialog(DELETE_LIST);
 		fillData();
 	}
@@ -183,12 +183,12 @@ public class TimeRecordAndroidActivity extends ListActivity {
 
 	private void fillData() {
 		// Get all of the rows from the database and create the item list
-		mListsCursor = List.query(Globals.getInstance().getDb());
+		mListsCursor = ListDAO.query(Globals.getInstance().getDb());
 		startManagingCursor(mListsCursor);
 
 		// Create an array to specify the fields we want to display in the list
 		// (only TITLE)
-		String[] from = new String[] { List.COL_NAME };
+		String[] from = new String[] { ListDAO.COL_NAME };
 
 		// and an array of the fields we want to bind those fields to (in this
 		// case just text1)
