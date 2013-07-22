@@ -21,6 +21,8 @@ public interface Graph<T>
     public void addNode(Node<T> node) throws InvalidDataException;
 
     public void addEdge(Edge<T> edge) throws InvalidDataException;
+    
+    public boolean isConnected();
 
     public String getDiagram();
 }
