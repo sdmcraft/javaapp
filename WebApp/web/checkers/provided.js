@@ -141,7 +141,14 @@ $('document')
 												// reset the new legal moves
 												resetMovables();
 												
-												var $movableSquares = getMovableSquares($selectedPiece);
+												var $movableSquares = getMovableSquares($selectedPiece, true);
+                                                if($movableSquares)
+                                                {
+                                                    $movableSquares.each(function( index ) {
+                                                        console.log( index + ": " + this.id );
+                                                        console.log("Jumped Pieces:" + $(this).data('jumpedPieces').length);
+                                                    });
+                                                }
 												// un-select the piece
 												$selectedPiece
 														.removeClass('selected');
@@ -278,7 +285,7 @@ function getCoords(top, left) {
 // the set of legal moves given a piece
 // SIDE EFFECT: stores jumped pieces in a data element
 // of each square that can be moved to
-function getMovableSquares($piece) {
+function getMovableSquares($piece, jumpsOnly) {
 
 	// select all of the squares
 	var $squares = $('div.square');
