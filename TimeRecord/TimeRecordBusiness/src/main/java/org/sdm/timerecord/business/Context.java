@@ -1,12 +1,12 @@
 package org.sdm.timerecord.business;
 
+import org.sdm.timerecord.business.exception.PermissionDeniedException;
+
 import java.security.acl.Acl;
 import java.security.acl.Permission;
 
-import org.sdm.timerecord.business.exception.PermissionDeniedException;
 
-
-public interface Context {
-	public void checkPermission(Acl acl, Permission permission) throws PermissionDeniedException; 
-	
+public interface Context
+{
+    public void checkPermission(Acl acl, Permission permission) throws PermissionDeniedException;
 }

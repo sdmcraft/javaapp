@@ -1,6 +1,10 @@
 package org.sdm.timerecord.business.model.db;
 
+import org.sdm.timerecord.business.exception.BusinessException;
+import org.sdm.timerecord.business.exception.FailureCode;
+
 import java.security.acl.Permission;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -17,143 +21,171 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.sdm.timerecord.business.exception.BusinessException;
-import org.sdm.timerecord.business.exception.FailureCode;
 
 @Entity
 @Table(name = "TR_ACL")
-public class AclEntry implements java.security.acl.AclEntry {
+public class AclEntry implements java.security.acl.AclEntry
+{
+    @ManyToOne
+    @JoinColumn(name = "PRINCIPAL_ID", referencedColumnName = "ID")
+    private final Principal principal;
+    @ManyToOne
+    @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "ID")
+    private final Resource resource;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", nullable = false)
+    private Integer id;
+    @Column(name = "PERMISSIONS", nullable = false)
+    private long permissionValue;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ID", nullable = false)
-	private Integer id;
+    public AclEntry(Principal principal, Resource resource, Set<Permission> permissions)
+    {
+        super();
+        this.principal = principal;
+        this.resource = resource;
+        this.permissionValue = permissionsToLong(permissions);
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "PRINCIPAL_ID", referencedColumnName = "ID")
-	private final Principal principal;
+    // This method has a unit test
+    @Override
+    public boolean addPermission(Permission permission)
+    {
+        try
+        {
+            Enumeration<Permission> currentPermissions = longToPermissions(permissionValue);
 
-	@ManyToOne
-	@JoinColumn(name = "RESOURCE_ID", referencedColumnName = "ID")
-	private final Resource resource;
+            while (currentPermissions.hasMoreElements())
+            {
+                if (currentPermissions.nextElement().equals(permission))
+                {
+                    return false;
+                }
+            }
+        }
+        catch (BusinessException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	@Column(name = "PERMISSIONS", nullable = false)
-	private long permissionValue;
+        Set<Permission> permissionSet = new HashSet<Permission>();
+        permissionSet.add(permission);
+        permissionValue += permissionsToLong(permissionSet);
 
-	public AclEntry(Principal principal, Resource resource,
-			Set<Permission> permissions) {
-		super();
-		this.principal = principal;
-		this.resource = resource;
-		this.permissionValue = permissionsToLong(permissions);
-	}
+        return true;
+    }
 
-	// This method has a unit test
-	@Override
-	public boolean addPermission(Permission permission) {
-		try {
-			Enumeration<Permission> currentPermissions = longToPermissions(permissionValue);
-			while (currentPermissions.hasMoreElements()) {
-				if (currentPermissions.nextElement().equals(permission)) {
-					return false;
-				}
-			}
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public boolean checkPermission(Permission arg0)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-		Set<Permission> permissionSet = new HashSet<Permission>();
-		permissionSet.add(permission);
-		permissionValue += permissionsToLong(permissionSet);
-		return true;
-	}
+    public Principal getPrincipal()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public boolean checkPermission(Permission arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public boolean isNegative()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	public Principal getPrincipal() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Enumeration<Permission> permissions()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public boolean isNegative() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public boolean removePermission(Permission arg0)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	public Enumeration<Permission> permissions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void setNegativePermissions()
+    {
+        // TODO Auto-generated method stub
+    }
 
-	public boolean removePermission(Permission arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public boolean setPrincipal(Principal arg0)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	public void setNegativePermissions() {
-		// TODO Auto-generated method stub
+    public Enumeration<Permission> getPermissions() throws BusinessException
+    {
+        return longToPermissions(permissionValue);
+    }
 
-	}
+    @Override
+    public Object clone()
+    {
+        try
+        {
+            return super.clone();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
 
-	public boolean setPrincipal(Principal arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        return null;
+    }
 
-	public Enumeration<Permission> getPermissions() throws BusinessException {
-		return longToPermissions(permissionValue);
-	}
+    public boolean setPrincipal(java.security.Principal arg0)
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	@Override
-	public Object clone() {
-		try {
-			return super.clone();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return null;
-	}
+    // This method has a unit test
+    private static final long permissionsToLong(Set<Permission> permissions)
+    {
+        long result = 0;
 
-	public boolean setPrincipal(java.security.Principal arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        for (Permission permission : permissions)
+        {
+            result += ((org.sdm.timerecord.business.model.Permission) permission).getLong();
+        }
 
-	// This method has a unit test
-	private static final long permissionsToLong(Set<Permission> permissions) {
-		long result = 0;
-		for (Permission permission : permissions) {
-			result += ((org.sdm.timerecord.business.model.Permission) permission)
-					.getLong();
-		}
-		return result;
-	}
+        return result;
+    }
 
-	// This method has a unit test
-	private static final Enumeration<Permission> longToPermissions(long value)
-			throws BusinessException {
-		Long mask = 1L;
-		List<Permission> permissions = new ArrayList<Permission>();
+    // This method has a unit test
+    private static final Enumeration<Permission> longToPermissions(long value) throws BusinessException
+    {
+        Long mask = 1L;
+        List<Permission> permissions = new ArrayList<Permission>();
 
-		for (int i = 0; i < Long.toBinaryString(value).length(); i++) {
-			Permission permission = null;
-			try {
-				permission = new org.sdm.timerecord.business.model.Permission(
-						value & mask);
-			} catch (BusinessException ex) {
-				if (ex.getCode() != FailureCode.INVALID_DATA)
-					throw ex;
-			}
-			if (permission != null)
-				permissions.add(permission);
+        for (int i = 0; i < Long.toBinaryString(value).length(); i++)
+        {
+            Permission permission = null;
 
-			mask = mask << 1;
-		}
-		return Collections.enumeration(permissions);
-	}
+            try
+            {
+                permission = org.sdm.timerecord.business.model.Permission.getPermission(value & mask);
+            }
+            catch (BusinessException ex)
+            {
+                if (ex.getCode() != FailureCode.INVALID_DATA)
+                {
+                    throw ex;
+                }
+            }
 
+            if (permission != null)
+            {
+                permissions.add(permission);
+            }
+
+            mask = mask << 1;
+        }
+
+        return Collections.enumeration(permissions);
+    }
 }
