@@ -24,7 +24,7 @@
 			<artifactId>org.apache.felix.scr.annotations</artifactId>
 			<version>1.9.4</version>
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -38,14 +38,23 @@
 						<Import-Package>*;resolution:=optional</Import-Package>
 						<Export-Package>org.sdm.osgi.demo</Export-Package>
 						<Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
-						<Include-Resource>{maven-resources},{maven-dependencies}</Include-Resource>					
+						<Include-Resource>{maven-resources},{maven-dependencies}</Include-Resource>
 					</instructions>
 				</configuration>
 			</plugin>
-			<plugin>				
-					<groupId>org.apache.felix</groupId>
-					<artifactId>maven-scr-plugin</artifactId>
-					<version>1.13.0</version>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-scr-plugin</artifactId>
+				<version>1.13.0</version>
+				<executions>
+					<execution>
+						<id>generate-scr-scrdescriptor</id>
+						<goals>
+							<goal>scr</goal>
+						</goals>
+					</execution>
+				</executions>
+
 			</plugin>
 		</plugins>
 	</build>

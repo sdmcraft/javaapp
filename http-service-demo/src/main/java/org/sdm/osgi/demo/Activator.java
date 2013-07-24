@@ -5,12 +5,14 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.HttpService;
 
 public class Activator implements BundleActivator, ServiceListener {
 
 	private ServiceReference httpServiceRef = null;
 	private BundleContext bundleCtx = null;
+	ServiceRegistration demoServiceReg;
 
 	public void start(BundleContext context) throws Exception {
 		System.out.println("Starting the bundle YODA1 YODA2!!");
@@ -24,6 +26,9 @@ public class Activator implements BundleActivator, ServiceListener {
 					null, null);
 			System.out
 					.println("Registered servlet with path /hello");
+			
+			//demoServiceReg = bundleCtx.registerService(DemoService.class.getName(), new DemoServiceImpl2(), null);
+			//System.out.println("Registered Demo service");
 		} else {
 			System.out.println("No http service!!");
 		}
@@ -35,6 +40,11 @@ public class Activator implements BundleActivator, ServiceListener {
 
 	public void stop(BundleContext context) throws Exception {
 		context.removeServiceListener(this);
+		if(demoServiceReg != null)
+		{
+			demoServiceReg.unregister();
+			System.out.println("Un-Registered Demo service");
+		}
 
 	}
 
