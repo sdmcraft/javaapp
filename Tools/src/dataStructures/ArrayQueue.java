@@ -5,6 +5,7 @@ package dataStructures;
  *
  * @author sdmahesh
  */
+@Deprecated
 public class ArrayQueue
 {
     protected Object[] elements;

@@ -1,12 +1,17 @@
 package dataStructuresV2.impl;
 
+import dataStructures.ArrayQueue;
+
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
 import dataStructuresV2.exception.InvalidDataException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 
@@ -151,5 +156,48 @@ public class BasicGraph<T> implements Graph<T>
     protected boolean canAdd(Edge<T> edge)
     {
         return nodes.contains(edge.getEndpoints()[0]) && nodes.contains(edge.getEndpoints()[1]);
+    }
+
+    @Override
+    public boolean isConnected()
+    {
+        return nodes.equals(breadthFirstTraversal());
+    }
+
+    //TODO Needs UT
+    private Set<Node<T>> breadthFirstTraversal()
+    {
+        Node<T> startNode = nodes.iterator().hasNext() ? nodes.iterator().next() : null;
+        Set<Node<T>> bftSet = new HashSet<Node<T>>();
+
+        try
+        {
+        	//TODO Fix Deprecated api use
+            ArrayQueue queue = new ArrayQueue(nodes.size());
+            queue.insert(startNode);
+
+            while (!queue.empty())
+            {
+                Node<T> node = (Node<T>) queue.remove();
+                Set<Node<T>> neighbours = this.getNeighbours(node);
+
+                for (Node<T> neighbour : neighbours)
+                {
+                    if (!bftSet.contains(neighbour))
+                    {
+                        queue.insert(neighbour);
+                    }
+                }
+
+                bftSet.add(node);
+            }
+        }
+        catch (Exception e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return bftSet;
     }
 }

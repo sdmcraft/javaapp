@@ -1,8 +1,11 @@
 package dataStructuresV2.impl;
 
 import dataStructuresV2.Edge;
+import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
 import dataStructuresV2.exception.InvalidDataException;
+import dataStructuresV2.utils.GraphFactory;
+import dataStructuresV2.utils.NodeFactory;
 
 import junit.framework.Assert;
 
@@ -326,5 +329,47 @@ public class TestBasicGraph
         }
 
         Assert.assertEquals(true, basicGraph.canAdd(mockEdge1));
+    }
+
+    @Test
+    public void testBreadthFirstTraversal()
+    {
+        try
+        {
+            String string1 = "a";
+            String string2 = "b";
+            String string3 = "c";
+            String string4 = "d";
+            String string5 = "e";
+
+            Set<String> strings = new HashSet<String>();
+            strings.add(string1);
+            strings.add(string2);
+            strings.add(string3);
+            strings.add(string4);
+            strings.add(string5);
+
+            Node node1 = NodeFactory.getNode(string1);
+            Node node2 = NodeFactory.getNode(string2);
+            Node node3 = NodeFactory.getNode(string3);
+            Node node4 = NodeFactory.getNode(string4);
+            Node node5 = NodeFactory.getNode(string5);
+
+            Set<Node> expected = new HashSet<Node>();
+            expected.add(node1);
+            expected.add(node2);
+            expected.add(node3);
+            expected.add(node4);
+            expected.add(node5);
+
+            Graph<String> graph = GraphFactory.getGraph(strings, 5);
+            Set<Node> actual = (Set<Node>)Utils.invoke(graph, "breadthFirstTraversal");
+            Assert.assertEquals(expected, actual);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Assert.fail();
+        }
     }
 }
