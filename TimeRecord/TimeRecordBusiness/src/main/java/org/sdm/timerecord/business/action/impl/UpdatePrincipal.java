@@ -61,10 +61,10 @@ public class UpdatePrincipal implements UpdatePrincipalRemote
                 parent = (Principal) rootPrincipalQuery.getSingleResult();
             }
 
-            /*
-            if (ctx.checkPermission(parent,PermissionType.MODIFY);
-            }*/
+            
+            ctx.checkPermission(parent.getAcl(), Permission.MODIFY);            		
             principal = new Principal(params.get("name")[0], parent);
+            		
         }
 
         em.persist(principal);

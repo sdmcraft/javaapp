@@ -83,7 +83,9 @@ public class Permission implements java.security.acl.Permission
         return true;
     }
     private enum PermissionType
-    {private final long value;
+    {
+    	MODIFY(1L << 1), READ(1L << 0);
+    	private final long value;
 
         private PermissionType(long value)
         {
@@ -94,6 +96,6 @@ public class Permission implements java.security.acl.Permission
         {
             return value;
         }
-        MODIFY(1L << 1), READ(1L << 0);
+        
     }
 }

@@ -28,10 +28,10 @@ public class AclEntry implements java.security.acl.AclEntry
 {
     @ManyToOne
     @JoinColumn(name = "PRINCIPAL_ID", referencedColumnName = "ID")
-    private final Principal principal;
+    private Principal principal;
     @ManyToOne
     @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "ID")
-    private final Resource resource;
+    private Resource resource;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
@@ -39,6 +39,11 @@ public class AclEntry implements java.security.acl.AclEntry
     @Column(name = "PERMISSIONS", nullable = false)
     private long permissionValue;
 
+    public AclEntry()
+    {
+        super();
+    }
+    
     public AclEntry(Principal principal, Resource resource, Set<Permission> permissions)
     {
         super();
@@ -84,8 +89,7 @@ public class AclEntry implements java.security.acl.AclEntry
 
     public Principal getPrincipal()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return principal;
     }
 
     public boolean isNegative()

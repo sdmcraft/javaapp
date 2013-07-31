@@ -19,9 +19,12 @@ public class ContextImpl implements Context, Serializable
      *
      */
     private static final long serialVersionUID = 1L;
-    private final List<Principal> principals = new ArrayList<Principal>();
+    private List<Principal> principals = new ArrayList<Principal>();
 
-    public ContextImpl(List<Principal> principals) {}
+    public ContextImpl(List<Principal> principals) 
+    {
+    	this.principals = principals;
+    }
 
     @Override
     public void checkPermission(Acl acl, Permission permission) throws PermissionDeniedException

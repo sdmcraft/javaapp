@@ -51,6 +51,7 @@ public class Acl implements java.security.acl.Acl
         {
             if (aclEntry.getPrincipal().equals(principal))
             {
+            	//TODO: This work must be done in Acl#checkPermission
                 while (aclEntry.permissions().hasMoreElements())
                 {
                     if (aclEntry.permissions().nextElement().equals(permission))
