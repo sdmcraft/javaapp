@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.naming.Context;
+
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.sdm.timerecord.business.Context;
 import org.sdm.timerecord.business.action.Action;
 
 public class ActionServlet extends HttpServlet {
@@ -31,9 +32,9 @@ public class ActionServlet extends HttpServlet {
 			jndiProvider = getServletContext()
 					.getInitParameter("jndi-provider");
 			Properties properties = new Properties();
-			properties.put(Context.INITIAL_CONTEXT_FACTORY,
+			properties.put(javax.naming.Context.INITIAL_CONTEXT_FACTORY,
 					"org.jnp.interfaces.NamingContextFactory");
-			properties.put(Context.PROVIDER_URL, jndiProvider);
+			properties.put(javax.naming.Context.PROVIDER_URL, jndiProvider);
 			initialContext = new InitialContext(properties);
 		} catch (Exception ex) {
 			throw new ServletException(ex);
@@ -48,7 +49,7 @@ public class ActionServlet extends HttpServlet {
 			Action action = (Action) initialContext.lookup(actionMap
 					.get(request.getParameter("action")));
 			if (action != null) {
-				action.execute(request.getParameterMap());
+				action.execute(request.getParameterMap(), (Context)request.getSession().getAttribute("Context"));
 			}
 		} catch (Exception ex) {
 			throw new ServletException(ex);

@@ -33,7 +33,7 @@ public class BaseFilter implements Filter {
 		Principal principal = ((HttpServletRequest) req).getUserPrincipal();
 		try {
 			ContextFactory contextFactory = (ContextFactory) initialContext
-					.lookup("TimeRecordEnterprise-1.0/ContextFactory/remote");
+					.lookup("TimeRecordEnterprise-1.0/ContextFactoryImpl/remote");
 			List<Principal> principalList = new ArrayList<Principal>();
 			principalList.add(principal);
 			Context context = contextFactory.getContext(principalList);
