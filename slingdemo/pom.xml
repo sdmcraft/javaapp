@@ -101,7 +101,8 @@
 						<!-- <Import-Package>*;resolution:=optional</Import-Package> -->
 						<!-- <Export-Package>org.sdm.osgi.demo</Export-Package> -->
 						<Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
-						<Include-Resource>{maven-resources},{maven-dependencies}</Include-Resource>					
+						<Include-Resource>{maven-resources},{maven-dependencies}</Include-Resource>	
+						<Sling-Initial-Content>SLING-INF/content/sling-demo;overwrite:=true;path:=/content/sling-demo</Sling-Initial-Content>				
 					</instructions>
 				</configuration>
 			</plugin>

@@ -1,0 +1,46 @@
+<node>
+	<!--
+	optional on top level, defaults to XML file name without .xml extension
+	required for child nodes
+	-->
+	<name>xyz</name>
+
+	<!--
+	optional, defaults to nt:unstructured
+	-->
+	<primaryNodeType>nt:unstructured</primaryNodeType>
+
+	<!--
+	optional mixin node type
+	may be repeated for multiple mixin node types
+	-->
+	<mixinNodeType>mix:versionable</mixinNodeType>
+	<mixinNodeType>mix:lockable</mixinNodeType>
+
+	<!--
+	Optional properties for the node. Each <property> element defines
+	a single property of the node. The element may be repeated.
+	-->
+	<property>
+		<!--
+		required property name
+		-->
+		<name>prop</name>
+
+		<!--
+		value of the property.
+		For multi-value properties, the values are defined by multiple
+		<value> elements nested inside a <values> element instead of a
+		single <value> element
+		-->
+		<value>property value as string</value>
+
+		<!--
+		Optional type of the property value, defaults to String.
+		This must be one of the property type strings defined in the
+		JCR PropertyType interface.
+		-->
+		<type>String</type>
+	</property>
+
+</node>
