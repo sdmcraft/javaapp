@@ -1,10 +1,12 @@
-package org.sdm.timerecord.android;
+package org.sdm.timerecord.android.controllers;
 
+import org.sdm.timerecord.android.Globals;
+import org.sdm.timerecord.android.R;
 import org.sdm.timerecord.android.model.ListDAO;
-import org.sdm.timerecord.android.model.ListEntry;
+import org.sdm.timerecord.android.model.ListModel;
+import org.sdm.timerecord.android.views.ListEditView;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,28 +16,31 @@ import android.widget.Spinner;
 
 public class ListEditActivity extends Activity {
 
-	private String listName;
-	private String listDescription;
-	private Long listId;
-	private Long listEntryId;
-	private EditText listNameEditText;
-	private EditText listDescriptionEditText;
+//	private String listName;
+//	private String listDescription;
+//	private Long listId;
+//	private Long listEntryId;
+//	private EditText listNameEditText;
+//	private EditText listDescriptionEditText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle extras = getIntent().getExtras();
+		ListModel listModel = null;
 		if (extras != null) {
-			listId = extras.getLong("ListId");
-			listName = ListDAO.query(Globals.getInstance().getDb(), listId)
-					.getString(1);
-			listDescription = ListDAO.query(Globals.getInstance().getDb(), listId)
-					.getString(2);
+			Long listId = extras.getLong("ListId");
+			listModel = ListDAO.query(Globals.getInstance().getDb(), listId);
 		}
-		render();
+		else
+		{
+			listModel = new ListModel();
+		}
+		ListEditView listEditView = (ListEditView)View.inflate(this, R.layout.list_edit, null);
+		listEditView.setListModel(listModel);
 	}
 
-	private void render() {
+	/*private void render() {
 		setContentView(R.layout.list_edit);
 		Spinner spinner = (Spinner) findViewById(R.id.spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -82,6 +87,6 @@ public class ListEditActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		exitActivity();
-	}
+	}*/
 
 }

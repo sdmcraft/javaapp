@@ -5,9 +5,11 @@ import org.sdm.timerecord.android.R;
 import org.sdm.timerecord.android.TimeRecordDbAdapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 
@@ -35,4 +37,22 @@ public class ListLineupActivity extends Activity
         inflater.inflate(R.menu.listlineup_menu, menu);
         return true;
     }
+    
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.add_list:
+			addList();
+			return true;
+		}
+
+		return false;
+	}
+	
+	private void addList() {
+		Intent i = new Intent(this, ListEditActivity.class);
+		startActivity(i);		
+	}
+
+
 }
