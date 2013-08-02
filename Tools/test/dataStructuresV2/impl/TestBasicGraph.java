@@ -336,11 +336,52 @@ public class TestBasicGraph
     {
         try
         {
+            int[][] adj1 = new int[][]
+                {
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
+                };
+
+            int[][] adj2 = new int[][]
+                {
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
+                };
+
+            int[][] adj3 = new int[][]
+                    {
+                        { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,  Integer.MAX_VALUE},
+                        { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
+                    };
+
+            int[][] adj4 = new int[][]
+                    {
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,  Integer.MAX_VALUE},
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
+                    };
+
             String string1 = "a";
             String string2 = "b";
             String string3 = "c";
             String string4 = "d";
             String string5 = "e";
+            String string6 = "f";
 
             Set<String> strings = new HashSet<String>();
             strings.add(string1);
@@ -348,23 +389,46 @@ public class TestBasicGraph
             strings.add(string3);
             strings.add(string4);
             strings.add(string5);
+            strings.add(string6);
 
             Node node1 = NodeFactory.getNode(string1);
             Node node2 = NodeFactory.getNode(string2);
             Node node3 = NodeFactory.getNode(string3);
             Node node4 = NodeFactory.getNode(string4);
             Node node5 = NodeFactory.getNode(string5);
+            Node node6 = NodeFactory.getNode(string6);
 
-            Set<Node> expected = new HashSet<Node>();
+            Set<Node<String>> expected = new HashSet<Node<String>>();
             expected.add(node1);
             expected.add(node2);
             expected.add(node3);
             expected.add(node4);
             expected.add(node5);
+            expected.add(node6);
 
-            Graph<String> graph = GraphFactory.getGraph(strings, 5);
-            Set<Node> actual = (Set<Node>)Utils.invoke(graph, "breadthFirstTraversal");
+            //----------Success cases----------//
+            Graph<String> graph = GraphFactory.getGraph(adj1, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
+            
+            Set<Node> actual = (Set<Node>) Utils.invoke(graph, "breadthFirstTraversal");
             Assert.assertEquals(expected, actual);
+
+            graph = GraphFactory.getGraph(adj2, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
+            
+            actual = (Set<Node>) Utils.invoke(graph, "breadthFirstTraversal");
+            Assert.assertEquals(expected, actual);
+            
+            graph = GraphFactory.getGraph(adj3, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
+            
+            actual = (Set<Node>) Utils.invoke(graph, "breadthFirstTraversal");
+            Assert.assertEquals(expected, actual);
+            //----------Failure cases----------//
+
+            graph = GraphFactory.getGraph(adj4, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
+            
+            actual = (Set<Node>) Utils.invoke(graph, "breadthFirstTraversal");
+            Assert.assertNotSame(expected, actual);
+
+            
         }
         catch (Exception e)
         {
