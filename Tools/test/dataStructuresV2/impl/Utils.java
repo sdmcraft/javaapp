@@ -119,7 +119,7 @@ public class Utils
     public static Object invoke(Object object, String methodName, Object... args)
         throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
-        Method method = object.getClass().getDeclaredMethod(methodName);
+        Method method = object.getClass().getDeclaredMethod(methodName, Node.class);
         method.setAccessible(true);
 
         return method.invoke(object, args);

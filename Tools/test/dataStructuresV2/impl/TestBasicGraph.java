@@ -1,11 +1,9 @@
 package dataStructuresV2.impl;
 
-import dataStructuresV2.Edge;
-import dataStructuresV2.Graph;
-import dataStructuresV2.Node;
-import dataStructuresV2.exception.InvalidDataException;
-import dataStructuresV2.utils.GraphFactory;
-import dataStructuresV2.utils.NodeFactory;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import junit.framework.Assert;
 
@@ -14,8 +12,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.HashSet;
-import java.util.Set;
+import dataStructuresV2.Edge;
+import dataStructuresV2.Graph;
+import dataStructuresV2.Node;
+import dataStructuresV2.exception.InvalidDataException;
+import dataStructuresV2.utils.GraphFactory;
+import dataStructuresV2.utils.NodeFactory;
 
 
 @RunWith(PowerMockRunner.class)
@@ -336,6 +338,8 @@ public class TestBasicGraph
     {
         try
         {
+        	
+            //----------Undirected Graphs---------//
             int[][] adj1 = new int[][]
                 {
                     { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
@@ -376,6 +380,48 @@ public class TestBasicGraph
                         { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
                     };
 
+            //----------Directed Graphs---------//
+            
+            int[][] dir_adj1 = new int[][]
+                    {
+                        { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                        { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                        { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                        { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
+                    };
+
+                int[][] dir_adj2 = new int[][]
+                    {
+                        { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+                        { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                        { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                        { 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
+                    };
+
+                int[][] dir_adj3 = new int[][]
+                        {
+                            { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,  Integer.MAX_VALUE},
+                            { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                            { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                            { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                            { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                            { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
+                        };
+
+                int[][] dir_adj4 = new int[][]
+                        {
+                            { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,  Integer.MAX_VALUE},
+                            { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                            { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                            { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                            { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                            { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
+                        };
+
             String string1 = "a";
             String string2 = "b";
             String string3 = "c";
@@ -398,7 +444,7 @@ public class TestBasicGraph
             Node node5 = NodeFactory.getNode(string5);
             Node node6 = NodeFactory.getNode(string6);
 
-            Set<Node<String>> expected = new HashSet<Node<String>>();
+            List<Node<String>> expected = new ArrayList<Node<String>>();
             expected.add(node1);
             expected.add(node2);
             expected.add(node3);
@@ -406,26 +452,48 @@ public class TestBasicGraph
             expected.add(node5);
             expected.add(node6);
 
-            //----------Success cases----------//
+            //----------Undirected Graph - Success cases----------//
             Graph<String> graph = GraphFactory.getGraph(adj1, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
             
-            Set<Node> actual = (Set<Node>) Utils.invoke(graph, "breadthFirstTraversal");
+            List<Node> actual = (List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next());
             Assert.assertEquals(expected, actual);
 
             graph = GraphFactory.getGraph(adj2, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
             
-            actual = (Set<Node>) Utils.invoke(graph, "breadthFirstTraversal");
+            actual = (List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next());
             Assert.assertEquals(expected, actual);
             
             graph = GraphFactory.getGraph(adj3, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
             
-            actual = (Set<Node>) Utils.invoke(graph, "breadthFirstTraversal");
+            actual = (List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next());
             Assert.assertEquals(expected, actual);
-            //----------Failure cases----------//
+            //----------Undirected Graph - Failure cases----------//
 
             graph = GraphFactory.getGraph(adj4, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
             
-            actual = (Set<Node>) Utils.invoke(graph, "breadthFirstTraversal");
+            actual = (List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next());
+            Assert.assertNotSame(expected, actual);
+
+            //----------Directed Graph - Success cases----------//
+            graph = GraphFactory.getGraph(adj1, new String[] { string1, string2, string3, string4, string5, string6 }, true, BasicGraph.class);
+            
+            actual = (List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next());
+            Assert.assertEquals(expected, actual);
+
+            graph = GraphFactory.getGraph(adj2, new String[] { string1, string2, string3, string4, string5, string6 }, true, BasicGraph.class);
+            
+            actual = (List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next());
+            Assert.assertEquals(expected, actual);
+            
+            graph = GraphFactory.getGraph(adj3, new String[] { string1, string2, string3, string4, string5, string6 }, true, BasicGraph.class);
+            
+            actual = (List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next());
+            Assert.assertEquals(expected, actual);
+            //----------Directed Graph - Failure cases----------//
+
+            graph = GraphFactory.getGraph(adj4, new String[] { string1, string2, string3, string4, string5, string6 }, true, BasicGraph.class);
+            
+            actual = (List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next());
             Assert.assertNotSame(expected, actual);
 
             

@@ -6,6 +6,7 @@ import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
 import dataStructuresV2.exception.InvalidDataException;
+import dataStructuresV2.exception.InvalidDataException.Code;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -161,14 +162,17 @@ public class BasicGraph<T> implements Graph<T>
     @Override
     public boolean isConnected()
     {
-        return nodes.equals(breadthFirstTraversal());
+        return false;//nodes.equals(breadthFirstTraversal());
     }
 
     //TODO Needs UT
-    private Set<Node<T>> breadthFirstTraversal()
+    private List<Node<T>> breadthFirstTraversal(Node<T> startNode) throws InvalidDataException
     {
-        Node<T> startNode = nodes.iterator().hasNext() ? nodes.iterator().next() : null;
-        Set<Node<T>> bftSet = new HashSet<Node<T>>();
+    	if(!nodes.contains(startNode))
+    	{
+    		throw new InvalidDataException(Code.INVALID, startNode + " does not exist in the graph");
+    	}
+        List<Node<T>> bftList = new ArrayList<Node<T>>();
 
         try
         {
@@ -183,13 +187,13 @@ public class BasicGraph<T> implements Graph<T>
 
                 for (Node<T> neighbour : neighbours)
                 {
-                    if (!bftSet.contains(neighbour))
+                    if (!bftList.contains(neighbour))
                     {
                         queue.insert(neighbour);
                     }
                 }
 
-                bftSet.add(node);
+                bftList.add(node);
             }
         }
         catch (Exception e)
@@ -198,6 +202,6 @@ public class BasicGraph<T> implements Graph<T>
             e.printStackTrace();
         }
 
-        return bftSet;
+        return bftList;
     }
 }
