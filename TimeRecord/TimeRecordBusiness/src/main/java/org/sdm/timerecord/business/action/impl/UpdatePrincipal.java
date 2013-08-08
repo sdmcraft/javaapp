@@ -1,21 +1,22 @@
 package org.sdm.timerecord.business.action.impl;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.sdm.timerecord.business.Context;
 import org.sdm.timerecord.business.Queries;
 import org.sdm.timerecord.business.action.UpdatePrincipalRemote;
 import org.sdm.timerecord.business.model.Permission;
 import org.sdm.timerecord.business.model.db.Principal;
-
-import java.util.List;
-import java.util.Map;
-
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 
 @Stateless
@@ -67,8 +68,6 @@ public class UpdatePrincipal implements UpdatePrincipalRemote
             		
         }
 
-        em.persist(principal);
-
-        List<java.security.Principal> list = Queries.getPrincipalList();
+        em.persist(principal);        
     }
 }

@@ -26,16 +26,16 @@ import javax.persistence.Table;
 @Table(name = "TR_ACL")
 public class AclEntry implements java.security.acl.AclEntry
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", nullable = false)
+    private Integer id;
     @ManyToOne
     @JoinColumn(name = "PRINCIPAL_ID", referencedColumnName = "ID")
     private Principal principal;
     @ManyToOne
     @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "ID")
     private Resource resource;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", nullable = false)
-    private Integer id;
     @Column(name = "PERMISSIONS", nullable = false)
     private long permissionValue;
 
@@ -43,7 +43,7 @@ public class AclEntry implements java.security.acl.AclEntry
     {
         super();
     }
-    
+
     public AclEntry(Principal principal, Resource resource, Set<Permission> permissions)
     {
         super();
@@ -100,8 +100,14 @@ public class AclEntry implements java.security.acl.AclEntry
 
     public Enumeration<Permission> permissions()
     {
-        // TODO Auto-generated method stub
-        return null;
+        try
+        {
+            return longToPermissions(permissionValue);
+        }
+        catch (BusinessException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean removePermission(Permission arg0)
@@ -119,11 +125,6 @@ public class AclEntry implements java.security.acl.AclEntry
     {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    public Enumeration<Permission> getPermissions() throws BusinessException
-    {
-        return longToPermissions(permissionValue);
     }
 
     @Override

@@ -29,6 +29,7 @@ import javax.persistence.UniqueConstraint;
 )
 @NamedQueries({@NamedQuery(name = "Principal.listAll", query = "SELECT p FROM Principal p")
     , @NamedQuery(name = "Principal.getRoot", query = "SELECT p FROM Principal p WHERE p.name='root'")
+	, @NamedQuery(name = "Principal.getMembersGroup", query = "SELECT p FROM Principal p WHERE p.name='member'")
 })
 public class Principal extends Resource implements Serializable, java.security.Principal
 {
@@ -64,6 +65,10 @@ public class Principal extends Resource implements Serializable, java.security.P
     public Set<Principal> getGroups()
     {
         return groups;
+    }
+    public void setGroups(Set<Principal> groups)
+    {
+        this.groups = groups;
     }
 
     public String getName()

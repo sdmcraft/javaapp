@@ -49,12 +49,13 @@ public class Acl implements java.security.acl.Acl
     {
         for (AclEntry aclEntry : aclEntries)
         {
-            if (aclEntry.getPrincipal().equals(principal))
+            if (aclEntry.getPrincipal().getName().equals(principal.getName()))
             {
             	//TODO: This work must be done in Acl#checkPermission
-                while (aclEntry.permissions().hasMoreElements())
+            	Enumeration<Permission> permissions = aclEntry.permissions();
+                while (permissions.hasMoreElements())
                 {
-                    if (aclEntry.permissions().nextElement().equals(permission))
+                    if (permissions.nextElement().equals(permission))
                     {
                         return true;
                     }
