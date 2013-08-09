@@ -26,6 +26,18 @@ public class ArrayQueue
         rear = -1;
         front = -1;
     }
+    
+    public boolean contains(Object item)
+    {
+    	for(Object element : elements)
+    	{
+    		if(element != null && element.equals(item))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
     /**
      * Creates a queue from the passes object array.The rear and front are
