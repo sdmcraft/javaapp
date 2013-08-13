@@ -27,7 +27,7 @@ public class UpdateUser implements UpdateUserRemote
     EntityManager em;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void execute(Map<String, String[]> params, Context ctx) throws Exception
+    public Map<String, String[]> execute(Map<String, String[]> params, Context ctx) throws Exception
     {
         User user = null;
 
@@ -55,5 +55,7 @@ public class UpdateUser implements UpdateUserRemote
         user.setGroups(groups);
 
         em.persist(user);
+        //TODO:SDM
+        return null;
     }
 }
