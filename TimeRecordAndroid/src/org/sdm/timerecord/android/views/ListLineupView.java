@@ -1,12 +1,19 @@
 package org.sdm.timerecord.android.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
+import org.sdm.timerecord.android.R;
 import org.sdm.timerecord.android.model.ListLineupModel;
 
 
@@ -14,6 +21,7 @@ public class ListLineupView extends LinearLayout
 {
     private Context context;
     private ListLineupModel listLineupModel;
+    private ActionMode mActionMode;
 
     public ListLineupView(Context context, AttributeSet attributeSet)
     {
@@ -37,15 +45,58 @@ public class ListLineupView extends LinearLayout
     private OnLongClickListener listItemLongClickListener = new OnLongClickListener() {
 		
 		@Override
-		public boolean onLongClick(View v) {
-			CharSequence text = "Hello toast!";
-			int duration = Toast.LENGTH_SHORT;
+		public boolean onLongClick(View view) {
+			if (mActionMode != null) {
+	            return false;
+	        }
 
-			Toast toast = Toast.makeText(context, text, duration);
-			toast.show();
+	        // Start the CAB using the ActionMode.Callback defined above
+	        mActionMode = ((Activity)view.getContext()).startActionMode(mActionModeCallback);
+	        view.setSelected(true);
+	        
 			return true;
 		}
 	};
     
+	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+	    // Called when the action mode is created; startActionMode() was called
+	    @Override
+	    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+	        // Inflate a menu resource providing context menu items
+	        MenuInflater inflater = mode.getMenuInflater();
+	        inflater.inflate(R.menu.listlineup_context_menu, menu);
+	        
+	        return true;
+	    }
+
+	    // Called each time the action mode is shown. Always called after onCreateActionMode, but
+	    // may be called multiple times if the mode is invalidated.
+	    @Override
+	    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+	        return false; // Return false if nothing is done
+	    }
+
+	    // Called when the user selects a contextual menu item
+	    @Override
+	    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+	        switch (item.getItemId()) {
+	            case R.id.edit_list:	  	            	
+	                mode.finish(); // Action picked, so close the CAB
+	        		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+	        				.getMenuInfo();
+	        		info.targetView.setSelected(false);
+	                return true;
+	            default:
+	                return false;
+	        }
+	    }
+
+	    // Called when the user exits the action mode
+	    @Override
+	    public void onDestroyActionMode(ActionMode mode) {
+	        //mActionMode = null;
+	    }
+	};
 
 }
