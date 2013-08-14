@@ -13,9 +13,7 @@ package dataStructuresV2.impl;
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
-
 import dataStructuresV2.exception.InvalidDataException;
-
 import dataStructuresV2.utils.GraphFactory;
 import dataStructuresV2.utils.NodeFactory;
 
@@ -23,9 +21,7 @@ import junit.framework.Assert;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
-
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
@@ -43,16 +39,11 @@ import java.util.Set;
 @RunWith(PowerMockRunner.class)
 public class TestBasicGraph
 {
-    //~ Methods --------------------------------------------------------------------------
-
     /**
      * DOCUMENT ME!
      */
     @BeforeClass
-    public static void setup()
-    {
-    }
-
+    public static void setup() {}
 
     /**
      * DOCUMENT ME!
@@ -104,7 +95,6 @@ public class TestBasicGraph
         }
     }
 
-
     /**
      * DOCUMENT ME!
      */
@@ -140,7 +130,6 @@ public class TestBasicGraph
         }
     }
 
-
     /**
      * DOCUMENT ME!
      */
@@ -150,8 +139,7 @@ public class TestBasicGraph
         try
         {
             //----------Undirected Graphs---------//
-            int[][] adj1 =
-                new int[][]
+            int[][] adj1 = new int[][]
                 {
                     { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
                     { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
@@ -161,96 +149,38 @@ public class TestBasicGraph
                     { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
                 };
 
-            int[][] adj2 =
-                new int[][]
+            int[][] adj2 = new int[][]
                 {
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, 1
-                    },
-                    {
-                        1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE, 1
-                    },
-                    {
-                        1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE
-                    }
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
                 };
 
-            int[][] adj3 =
-                new int[][]
+            int[][] adj3 = new int[][]
                 {
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, Integer.MAX_VALUE
-                    },
-                    {
-                        1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE, 1
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE
-                    }
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
                 };
 
-            int[][] adj4 =
-                new int[][]
+            int[][] adj4 = new int[][]
                 {
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE, 1
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE
-                    }
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
                 };
 
             //----------Directed Graphs---------//
-            int[][] dir_adj1 =
-                new int[][]
+            int[][] dir_adj1 = new int[][]
                 {
                     { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
                     { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
@@ -260,91 +190,34 @@ public class TestBasicGraph
                     { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
                 };
 
-            int[][] dir_adj2 =
-                new int[][]
+            int[][] dir_adj2 = new int[][]
                 {
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, 1
-                    },
-                    {
-                        1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE, 1
-                    },
-                    {
-                        1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE
-                    }
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
                 };
 
-            int[][] dir_adj3 =
-                new int[][]
+            int[][] dir_adj3 = new int[][]
                 {
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, Integer.MAX_VALUE
-                    },
-                    {
-                        1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE, 1
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE
-                    }
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
                 };
 
-            int[][] dir_adj4 =
-                new int[][]
+            int[][] dir_adj4 = new int[][]
                 {
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1,
-                        Integer.MAX_VALUE, 1
-                    },
-                    {
-                        Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,
-                        Integer.MAX_VALUE, 1, Integer.MAX_VALUE
-                    }
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1 },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE }
                 };
 
             String string1 = "a";
@@ -378,93 +251,52 @@ public class TestBasicGraph
             expected.add(node6);
 
             //----------Undirected Graph - Success cases----------//
-            Graph<String> graph =
-                GraphFactory.getGraph(
-                    adj1,
-                    new String[] { string1, string2, string3, string4, string5, string6 },
-                    false, BasicGraph.class);
+            Graph<String> graph = GraphFactory.getGraph(adj1, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
 
             Set<Node> actual = new HashSet<Node>();
-            actual.addAll(
-                (List<Node>) Utils.invoke(
-                    graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
+            actual.addAll((List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
             Assert.assertEquals(expected, actual);
 
-            graph = GraphFactory.getGraph(
-                    adj2,
-                    new String[] { string1, string2, string3, string4, string5, string6 },
-                    false, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj2, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
             actual.clear();
-            actual.addAll(
-                (List<Node>) Utils.invoke(
-                    graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
+            actual.addAll((List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
             Assert.assertEquals(expected, actual);
 
-            graph = GraphFactory.getGraph(
-                    adj3,
-                    new String[] { string1, string2, string3, string4, string5, string6 },
-                    false, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj3, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
 
             actual.clear();
-            actual.addAll(
-                (List<Node>) Utils.invoke(
-                    graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
+            actual.addAll((List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
             Assert.assertEquals(expected, actual);
             //----------Undirected Graph - Failure cases----------//
-            graph = GraphFactory.getGraph(
-                    adj4,
-                    new String[] { string1, string2, string3, string4, string5, string6 },
-                    false, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj4, new String[] { string1, string2, string3, string4, string5, string6 }, false, BasicGraph.class);
 
             actual.clear();
-            actual.addAll(
-                (List<Node>) Utils.invoke(
-                    graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
+            actual.addAll((List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
             Assert.assertNotSame(expected, actual);
 
             //----------Directed Graph - Success cases----------//
-            graph = GraphFactory.getGraph(
-                    adj1,
-                    new String[] { string1, string2, string3, string4, string5, string6 },
-                    true, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj1, new String[] { string1, string2, string3, string4, string5, string6 }, true, BasicGraph.class);
 
             actual.clear();
-            actual.addAll(
-                (List<Node>) Utils.invoke(
-                    graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
+            actual.addAll((List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
             Assert.assertEquals(expected, actual);
 
-            graph = GraphFactory.getGraph(
-                    adj2,
-                    new String[] { string1, string2, string3, string4, string5, string6 },
-                    true, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj2, new String[] { string1, string2, string3, string4, string5, string6 }, true, BasicGraph.class);
 
             actual.clear();
-            actual.addAll(
-                (List<Node>) Utils.invoke(
-                    graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
+            actual.addAll((List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
             Assert.assertEquals(expected, actual);
 
-            graph = GraphFactory.getGraph(
-                    adj3,
-                    new String[] { string1, string2, string3, string4, string5, string6 },
-                    true, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj3, new String[] { string1, string2, string3, string4, string5, string6 }, true, BasicGraph.class);
 
             actual.clear();
-            actual.addAll(
-                (List<Node>) Utils.invoke(
-                    graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
+            actual.addAll((List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
             Assert.assertEquals(expected, actual);
             //----------Directed Graph - Failure cases----------//
-            graph = GraphFactory.getGraph(
-                    adj4,
-                    new String[] { string1, string2, string3, string4, string5, string6 },
-                    true, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj4, new String[] { string1, string2, string3, string4, string5, string6 }, true, BasicGraph.class);
 
             actual.clear();
-            actual.addAll(
-                (List<Node>) Utils.invoke(
-                    graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
+            actual.addAll((List<Node>) Utils.invoke(graph, "breadthFirstTraversal", graph.getNodes().iterator().next()));
             Assert.assertNotSame(expected, actual);
         }
         catch (Exception e)
@@ -473,7 +305,6 @@ public class TestBasicGraph
             Assert.fail();
         }
     }
-
 
     /**
      * DOCUMENT ME!
@@ -505,7 +336,6 @@ public class TestBasicGraph
         Assert.assertEquals(true, basicGraph.canAdd(mockEdge1));
     }
 
-
     /**
      * DOCUMENT ME!
      */
@@ -535,9 +365,7 @@ public class TestBasicGraph
         {
             Utils.setField(basicGraph, BasicGraph.class, "nodes", mockNodes);
 
-            Set<Edge<String>> edges =
-                basicGraph.getEdges(
-                    mockNodes.iterator().next(), mockNodes.iterator().next());
+            Set<Edge<String>> edges = basicGraph.getEdges(mockNodes.iterator().next(), mockNodes.iterator().next());
             Assert.assertEquals(0, edges.size());
         }
         catch (Exception e)
@@ -585,7 +413,6 @@ public class TestBasicGraph
 
         // ////////////////////////////////////////////
     }
-
 
     /**
      * DOCUMENT ME!
@@ -663,7 +490,6 @@ public class TestBasicGraph
         // ////////////////////////////////////////////
     }
 
-
     /**
      * DOCUMENT ME!
      */
@@ -720,7 +546,6 @@ public class TestBasicGraph
         // ////////////////////////////////////////////
     }
 
-
     /**
      * DOCUMENT ME!
      */
@@ -739,8 +564,7 @@ public class TestBasicGraph
                     { Integer.MAX_VALUE },
                 };
 
-            int[][] adj3 =
-                new int[][]
+            int[][] adj3 = new int[][]
                 {
                     { Integer.MAX_VALUE, 1 },
                     { 1, Integer.MAX_VALUE }
@@ -756,30 +580,26 @@ public class TestBasicGraph
                     { 1, 1 },
                     { 1, 1 }
                 };
-            int[][] adj6 =
-                new int[][]
+            int[][] adj6 = new int[][]
                 {
                     { Integer.MAX_VALUE, 1, 1 },
                     { 1, Integer.MAX_VALUE, 1 },
                     { 1, 1, Integer.MAX_VALUE },
                 };
-            int[][] adj7 =
-                new int[][]
+            int[][] adj7 = new int[][]
                 {
                     { Integer.MAX_VALUE, 1, 1 },
                     { 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
                     { 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
                 };
 
-            int[][] adj8 =
-                new int[][]
+            int[][] adj8 = new int[][]
                 {
                     { Integer.MAX_VALUE, Integer.MAX_VALUE },
                     { Integer.MAX_VALUE, Integer.MAX_VALUE }
                 };
 
-            int[][] adj9 =
-                new int[][]
+            int[][] adj9 = new int[][]
                 {
                     { 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
                     { Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
@@ -809,62 +629,139 @@ public class TestBasicGraph
             Node node6 = NodeFactory.getNode(string6);
 
             //-------Undirected graph - success cases -------//
-            Graph<String> graph =
-                GraphFactory.getGraph(
-                    adj1, new String[] { string1 }, false, BasicGraph.class);
+            Graph<String> graph = GraphFactory.getGraph(adj1, new String[] { string1 }, false, BasicGraph.class);
 
             boolean expected = true;
             Assert.assertEquals(expected, graph.isConnected());
 
-            graph = GraphFactory.getGraph(
-                    adj2, new String[] { string1 }, false, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj2, new String[] { string1 }, false, BasicGraph.class);
 
             expected = true;
             Assert.assertEquals(expected, graph.isConnected());
 
-            graph = GraphFactory.getGraph(
-                    adj3, new String[] { string1, string2 }, false, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj3, new String[] { string1, string2 }, false, BasicGraph.class);
 
             expected = true;
             Assert.assertEquals(expected, graph.isConnected());
 
-            graph = GraphFactory.getGraph(
-                    adj4, new String[] { string1, string2 }, false, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj4, new String[] { string1, string2 }, false, BasicGraph.class);
 
             expected = true;
             Assert.assertEquals(expected, graph.isConnected());
 
-            graph = GraphFactory.getGraph(
-                    adj5, new String[] { string1, string2 }, false, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj5, new String[] { string1, string2 }, false, BasicGraph.class);
 
             expected = true;
             Assert.assertEquals(expected, graph.isConnected());
 
-            graph = GraphFactory.getGraph(
-                    adj6, new String[] { string1, string2, string3 }, false,
-                    BasicGraph.class);
+            graph = GraphFactory.getGraph(adj6, new String[] { string1, string2, string3 }, false, BasicGraph.class);
 
             expected = true;
             Assert.assertEquals(expected, graph.isConnected());
 
-            graph = GraphFactory.getGraph(
-                    adj7, new String[] { string1, string2, string3 }, false,
-                    BasicGraph.class);
+            graph = GraphFactory.getGraph(adj7, new String[] { string1, string2, string3 }, false, BasicGraph.class);
 
             expected = true;
             Assert.assertEquals(expected, graph.isConnected());
 
             //-------Undirected graph - failure cases -------//
-            graph = GraphFactory.getGraph(
-                    adj8, new String[] { string1, string2 }, false, BasicGraph.class);
+            graph = GraphFactory.getGraph(adj8, new String[] { string1, string2 }, false, BasicGraph.class);
 
             expected = false;
             Assert.assertEquals(expected, graph.isConnected());
 
-            graph = GraphFactory.getGraph(
-                    adj9, new String[] { string1, string2, string3 }, false,
-                    BasicGraph.class);
+            graph = GraphFactory.getGraph(adj9, new String[] { string1, string2, string3 }, false, BasicGraph.class);
 
+            expected = false;
+            Assert.assertEquals(expected, graph.isConnected());
+
+            int[][] dir_adj1 = new int[][]
+                {
+                    { Integer.MAX_VALUE },
+                };
+
+            int[][] dir_adj2 = new int[][]
+                {
+                    { Integer.MAX_VALUE, 1 },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE }
+                };
+
+            int[][] dir_adj3 = new int[][]
+                {
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { 1, Integer.MAX_VALUE }
+                };
+
+            int[][] dir_adj4 = new int[][]
+                {
+                    { 1, 1 },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE }
+                };
+            int[][] dir_adj5 = new int[][]
+                {
+                    { 1, 1 },
+                    { 1, 1 }
+                };
+            int[][] dir_adj6 = new int[][]
+                {
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+                    { 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                };
+            int[][] dir_adj7 = new int[][]
+                {
+                    { Integer.MAX_VALUE, 1, 1 },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                };
+
+            int[][] dir_adj8 = new int[][]
+                {
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE }
+                };
+
+            int[][] dir_adj9 = new int[][]
+                {
+                    { 1, Integer.MAX_VALUE, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, 1, Integer.MAX_VALUE },
+                    { Integer.MAX_VALUE, Integer.MAX_VALUE, 1 },
+                };
+
+            //-------Directed graph -------//
+            graph = GraphFactory.getGraph(dir_adj1, new String[] { string1 }, true, BasicGraph.class);
+            expected = true;
+            Assert.assertEquals(expected, graph.isConnected());
+
+            graph = GraphFactory.getGraph(dir_adj2, new String[] { string1, string2 }, true, BasicGraph.class);
+            expected = false;
+            Assert.assertEquals(expected, graph.isConnected());
+
+            graph = GraphFactory.getGraph(dir_adj3, new String[] { string1, string2 }, true, BasicGraph.class);
+            expected = false;
+            Assert.assertEquals(expected, graph.isConnected());
+
+            graph = GraphFactory.getGraph(dir_adj4, new String[] { string1, string2 }, true, BasicGraph.class);
+            expected = false;
+            Assert.assertEquals(expected, graph.isConnected());
+
+            graph = GraphFactory.getGraph(dir_adj5, new String[] { string1, string2 }, true, BasicGraph.class);
+            expected = true;
+            Assert.assertEquals(expected, graph.isConnected());
+
+            graph = GraphFactory.getGraph(dir_adj6, new String[] { string1, string2, string3 }, true, BasicGraph.class);
+            expected = true;
+            Assert.assertEquals(expected, graph.isConnected());
+
+            graph = GraphFactory.getGraph(dir_adj7, new String[] { string1, string2, string3 }, true, BasicGraph.class);
+            expected = false;
+            Assert.assertEquals(expected, graph.isConnected());
+
+            graph = GraphFactory.getGraph(dir_adj8, new String[] { string1, string2 }, true, BasicGraph.class);
+            expected = false;
+            Assert.assertEquals(expected, graph.isConnected());
+
+            graph = GraphFactory.getGraph(dir_adj9, new String[] { string1, string2, string3 }, true, BasicGraph.class);
             expected = false;
             Assert.assertEquals(expected, graph.isConnected());
         }
