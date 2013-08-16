@@ -1,5 +1,7 @@
 package org.sdm.timerecord.android.views;
 
+import javax.xml.datatype.Duration;
+
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -52,6 +54,7 @@ public class ListLineupView extends LinearLayout
 
 	        // Start the CAB using the ActionMode.Callback defined above
 	        mActionMode = ((Activity)view.getContext()).startActionMode(mActionModeCallback);
+	        mActionMode.setTag(view);
 	        view.setSelected(true);
 	        
 			return true;
@@ -80,12 +83,14 @@ public class ListLineupView extends LinearLayout
 	    // Called when the user selects a contextual menu item
 	    @Override
 	    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+	    	TextView targetView = (TextView)(mode.getTag());
+	    	
 	        switch (item.getItemId()) {
 	            case R.id.edit_list:	  	            	
-	                mode.finish(); // Action picked, so close the CAB
-	        		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-	        				.getMenuInfo();
-	        		info.targetView.setSelected(false);
+	                mode.finish();
+	                mActionMode = null;
+	        		targetView.setSelected(false);
+	        		Toast.makeText(context, (String)targetView.getText(), Toast.LENGTH_SHORT).show();
 	                return true;
 	            default:
 	                return false;
