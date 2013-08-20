@@ -1,11 +1,9 @@
 package org.sdm.timerecord.business.model.db;
 
-import org.sdm.timerecord.business.model.Acl;
-import org.sdm.timerecord.business.model.ResourceType;
-
 import java.io.Serializable;
-
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +19,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.sdm.timerecord.business.model.Acl;
+import org.sdm.timerecord.business.model.ResourceType;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -31,6 +32,7 @@ public abstract class Resource implements Serializable
     @ManyToOne(optional = false)
     @JoinColumn(name = "PARENT_ID", referencedColumnName = "ID")
     protected Resource parent;
+   
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "RESOURCE_TYPE", nullable = false)
     protected ResourceType resourceType;

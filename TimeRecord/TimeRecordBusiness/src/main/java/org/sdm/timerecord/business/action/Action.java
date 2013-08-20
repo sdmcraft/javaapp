@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface Action
 {
-    public Map<String, String[]> execute(Map<String, String[]> params, Context ctx) throws Exception;
+    public Map<String, Object> execute(Map<String, String[]> params, Context ctx) throws Exception;
 }
