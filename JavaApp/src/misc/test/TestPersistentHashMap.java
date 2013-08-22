@@ -3,8 +3,8 @@ package misc.test;
 import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import junit.framework.Assert;
 import misc.PersistentHashMap;

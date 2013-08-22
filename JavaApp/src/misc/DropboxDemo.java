@@ -13,10 +13,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.dropbox.client2.DropboxAPI;
-import com.dropbox.client2.DropboxAPI.DropboxInputStream;
 import com.dropbox.client2.DropboxAPI.Entry;
-import com.dropbox.client2.DropboxAPI.ThumbFormat;
-import com.dropbox.client2.DropboxAPI.ThumbSize;
 import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.jsonextract.JsonExtractionException;
 import com.dropbox.client2.jsonextract.JsonList;

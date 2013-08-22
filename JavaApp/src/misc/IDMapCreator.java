@@ -8,9 +8,9 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
-import java.util.Map.Entry;
 
 public class IDMapCreator {
 

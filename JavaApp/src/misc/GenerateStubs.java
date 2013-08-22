@@ -1,10 +1,12 @@
 package misc;
 
 
-import java.lang.reflect.*;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 /**
  * JStubGen - creates empty *.java files according to the signatures found

@@ -6,9 +6,6 @@ package misc;
 
 import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.Multipart;

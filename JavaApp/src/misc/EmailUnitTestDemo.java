@@ -1,7 +1,5 @@
 package misc;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Iterator;
 
 import org.junit.Test;

@@ -23,10 +23,13 @@ public class Main {
 		// writeLoginCsv();
 		// printSQL();
 		//writeUserList("event53", 1500);
-		writeGuestList("event1", 10);
+		//writeGuestList("event1", 10);
 		// appendToFile("C:\\temp\\text.txt", "Hello");
 		// appendToFile("C:\\temp\\text.txt", "World");
 		// Class.forName("misc.Main");
+		String name = "xxx";
+		String id = "yyy";
+		System.out.println("{\"name\" : " + name + " \"id\" : " + id + "}");
 	}
 
 	private static String readFileAsString(String filePath)

@@ -4,12 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import tools.AlgoUtils;
-import tools.DSUtils;
-import tools.IOUtils;
-import tools.MathUtils;
-import dataStructures.ValueWithId;
-
 public class StocksAnalysis {
 	public static void main(String[] args) throws Exception {
 		String[] input = IOUtils.fileToArray("misc" + File.separator

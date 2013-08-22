@@ -1,6 +1,5 @@
 package network;
 
-import java.net.InetAddress;
 
 //import org.xbill.DNS.Address;
 
