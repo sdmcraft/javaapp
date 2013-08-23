@@ -9,10 +9,6 @@ import org.sdm.timerecord.android.views.ListEditView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 public class ListEditActivity extends Activity {
 
@@ -29,8 +25,8 @@ public class ListEditActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		ListModel listModel = null;
 		if (extras != null) {
-			Long listId = extras.getLong("ListId");
-			listModel = ListDAO.query(Globals.getInstance().getDb(), listId);
+			String listId = extras.getString(ListDAO.COL_ID);
+			listModel = ListDAO.query(Globals.getInstance().getDb(), Integer.parseInt(listId));
 		}
 		else
 		{
@@ -38,6 +34,7 @@ public class ListEditActivity extends Activity {
 		}
 		ListEditView listEditView = (ListEditView)View.inflate(this, R.layout.list_edit, null);
 		listEditView.setListModel(listModel);
+		setContentView(listEditView);
 	}
 
 	/*private void render() {

@@ -1,9 +1,13 @@
 package org.sdm.timerecord.android.views;
 
-import javax.xml.datatype.Duration;
+import org.sdm.timerecord.android.R;
+import org.sdm.timerecord.android.controllers.ListEditActivity;
+import org.sdm.timerecord.android.model.ListDAO;
+import org.sdm.timerecord.android.model.ListLineupModel;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -13,10 +17,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-
-import org.sdm.timerecord.android.R;
-import org.sdm.timerecord.android.model.ListLineupModel;
 
 
 public class ListLineupView extends LinearLayout
@@ -35,10 +35,11 @@ public class ListLineupView extends LinearLayout
 
     public void render()
     {
-        for (String listName : listLineupModel.getItems())
+        for (String[] listItem : listLineupModel.getItems())
         {
             TextView textView = new TextView(context);
-            textView.setText(listName);
+            textView.setText(listItem[1]);
+            textView.setTag(listItem[0]);
             textView.setOnLongClickListener(listItemLongClickListener);
             this.addView(textView);
         }
@@ -90,7 +91,9 @@ public class ListLineupView extends LinearLayout
 	                mode.finish();
 	                mActionMode = null;
 	        		targetView.setSelected(false);
-	        		Toast.makeText(context, (String)targetView.getText(), Toast.LENGTH_SHORT).show();
+	        		Intent i = new Intent(context, ListEditActivity.class);
+	        		i.putExtra(ListDAO.COL_ID, (String)targetView.getTag());
+	        		context.startActivity(i);
 	                return true;
 	            default:
 	                return false;
