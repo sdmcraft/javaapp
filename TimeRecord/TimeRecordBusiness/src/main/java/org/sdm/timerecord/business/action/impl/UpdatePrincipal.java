@@ -27,7 +27,7 @@ public class UpdatePrincipal implements UpdatePrincipalRemote
     EntityManager em;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Map<String, String[]> execute(Map<String, String[]> params, Context ctx) throws Exception
+    public Map<String, Object> execute(Map<String, String[]> params, Context ctx) throws Exception
     {
         Principal principal = null;
         Principal parent = null;
@@ -71,7 +71,7 @@ public class UpdatePrincipal implements UpdatePrincipalRemote
 
         em.persist(principal);        
         //TODO:SDM
-        Map<String, String[]> response = new HashMap<String, String[]>();
+        Map<String, Object> response = new HashMap<String, Object>();
         return  response;
     }
 }

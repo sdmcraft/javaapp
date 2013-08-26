@@ -58,6 +58,7 @@ public class UpdateUser implements UpdateUserRemote
         Map<String, Object> reponseMap = new HashMap<String, Object>();
         reponseMap.put("status", "ok");
         reponseMap.put("id", user.getId());
+        reponseMap.put("name", user.getName());
         return reponseMap;
     }
 }
