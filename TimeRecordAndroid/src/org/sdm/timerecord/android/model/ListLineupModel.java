@@ -20,9 +20,9 @@ public class ListLineupModel
             instance = new ListLineupModel();
 
             /*TODO: Test code*/
-            ListDAO.delete(Globals.getInstance().getDb());
-            ListDAO.insert(Globals.getInstance().getDb(), "List1", "List1 descripton");
-            ListDAO.insert(Globals.getInstance().getDb(), "List2", "List2 descripton");
+            //ListDAO.delete(Globals.getInstance().getDb());
+            //ListDAO.insert(Globals.getInstance().getDb(), "List1", "List1 descripton");
+            //ListDAO.insert(Globals.getInstance().getDb(), "List2", "List2 descripton");
         }
 
         return instance;

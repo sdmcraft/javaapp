@@ -37,6 +37,15 @@ public class ListEditActivity extends Activity {
 		setContentView(listEditView);
 	}
 
+	public void save(ListModel listModel) {
+		long listId = listModel.getId();
+		if (listId == 0) {
+			ListDAO.insert(Globals.getInstance().getDb(), listModel);
+		} else {
+			ListDAO.update(Globals.getInstance().getDb(), listModel);
+		}
+	}
+
 	/*private void render() {
 		setContentView(R.layout.list_edit);
 		Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -64,17 +73,6 @@ public class ListEditActivity extends Activity {
 		});
 	}
 
-	private void save() {
-		if (listId == null || listId == -1) {
-			ListDAO.insert(Globals.getInstance().getDb(), listNameEditText
-					.getText().toString(), listDescriptionEditText.getText()
-					.toString());
-		} else {
-			ListDAO.update(Globals.getInstance().getDb(), listId, listNameEditText
-					.getText().toString(), listDescriptionEditText.getText()
-					.toString());
-		}
-	}
 
 	private void exitActivity() {
 		setResult(RESULT_OK);

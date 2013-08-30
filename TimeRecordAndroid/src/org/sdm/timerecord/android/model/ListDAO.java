@@ -23,10 +23,10 @@ public class ListDAO {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 	}
 
-	public static long insert(SQLiteDatabase db, String name, String description) {
+	public static long insert(SQLiteDatabase db, ListModel listModel) {
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(COL_NAME, name);
-		initialValues.put(COL_DESCRIPTION, description);
+		initialValues.put(COL_NAME, listModel.getName());
+		initialValues.put(COL_DESCRIPTION, listModel.getDescription());
 		return db.insert(TABLE_NAME, null, initialValues);
 	}
 
@@ -55,12 +55,11 @@ public class ListDAO {
 		return listModel;
 	}
 
-	public static boolean update(SQLiteDatabase db, long rowId, String name,
-			String description) {
+	public static boolean update(SQLiteDatabase db, ListModel listModel) {
 		ContentValues args = new ContentValues();
-		args.put(COL_NAME, name);
-		args.put(COL_DESCRIPTION, description);
-		return db.update(TABLE_NAME, args, COL_ID + "=" + rowId, null) > 0;
+		args.put(COL_NAME, listModel.getName());
+		args.put(COL_DESCRIPTION, listModel.getDescription());
+		return db.update(TABLE_NAME, args, COL_ID + "=" + listModel.getId(), null) > 0;
 	}
 
 

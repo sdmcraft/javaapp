@@ -2,6 +2,7 @@ package org.sdm.timerecord.android.views;
 
 import org.sdm.timerecord.android.R;
 import org.sdm.timerecord.android.controllers.ListEditActivity;
+import org.sdm.timerecord.android.controllers.ListLineupActivity;
 import org.sdm.timerecord.android.model.ListDAO;
 import org.sdm.timerecord.android.model.ListLineupModel;
 
@@ -16,12 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class ListLineupView extends LinearLayout
 {
-    private Context context;
+    private ListLineupActivity context;
     private ListLineupModel listLineupModel;
     private ActionMode mActionMode;
 
@@ -29,11 +29,11 @@ public class ListLineupView extends LinearLayout
     {
         super(context, attributeSet);
         this.listLineupModel = ListLineupModel.getInstance();
-        this.context = context;
+        this.context = (ListLineupActivity)context;
         render();
     }
 
-    public void render()
+    private void render()
     {
         for (String[] listItem : listLineupModel.getItems())
         {
