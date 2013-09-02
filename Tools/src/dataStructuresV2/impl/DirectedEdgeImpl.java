@@ -85,4 +85,12 @@ public class DirectedEdgeImpl<T> extends EdgeImpl<T> implements DirectedEdge<T>
     {
         return this.endPoints[0].equals(node);
     }
+
+    @Override
+    public void reverse()
+    {
+        Node<T> temp = this.endPoints[0];
+        this.endPoints[0] = this.endPoints[1];
+        this.endPoints[1] = temp;
+    }
 }

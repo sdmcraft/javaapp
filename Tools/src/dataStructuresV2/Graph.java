@@ -25,4 +25,5 @@ public interface Graph<T>
     public boolean isConnected();
 
     public String getDiagram();
+        
 }
