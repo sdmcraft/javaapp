@@ -34,6 +34,7 @@ public class ListEditActivity extends Activity {
 		}
 		ListEditView listEditView = (ListEditView)View.inflate(this, R.layout.list_edit, null);
 		listEditView.setListModel(listModel);
+		listEditView.setListeners();
 		setContentView(listEditView);
 	}
 

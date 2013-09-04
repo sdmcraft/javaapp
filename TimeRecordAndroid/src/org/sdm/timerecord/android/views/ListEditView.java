@@ -29,7 +29,6 @@ public class ListEditView extends LinearLayout
     {
         super(context, attributeSet);
         this.context = (ListEditActivity) context;
-        render();
     }
 
     public void setListModel(ListModel listModel)
@@ -40,9 +39,9 @@ public class ListEditView extends LinearLayout
         listName.setText(listModel.getName());
     }
 
-    private void render()
+    public void setListeners()
     {
-        Button saveButton = (Button) findViewById(R.id.save);
+        Button saveButton = (Button) findViewById(R.id.save1);
         saveButton.setOnClickListener(saveButtonClickListener);
     }
 }
