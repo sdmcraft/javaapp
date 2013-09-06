@@ -1,18 +1,19 @@
 package dataStructuresV2.utils;
 
-import dataStructuresV2.DirectedEdge;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import dataStructuresV2.DirectedGraph;
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
 import dataStructuresV2.exception.InvalidDataException;
 import dataStructuresV2.exception.InvalidDataException.Code;
+import dataStructuresV2.impl.BasicDirectedGraph;
 import dataStructuresV2.impl.BasicGraph;
 import dataStructuresV2.impl.SimpleGraph;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 
 public class GraphFactory
@@ -59,19 +60,26 @@ public class GraphFactory
     // UT:TestGraphFactory.testGetGraphWithAdjMatrix
     public static <T> Graph<T> getGraph(int[][] adjMatrix, T[] values, boolean directed, Class graphClass) throws InvalidDataException
     {
-    	Graph<T> graph = null;
-    	if(BasicGraph.class.equals(graphClass))
-    	{
-    		graph = new BasicGraph<T>();
-    	}
-    	else if(SimpleGraph.class.equals(graphClass))
-    	{
-    		if(directed)
-    		{
-    			throw new InvalidDataException(InvalidDataException.Code.INVALID, "Directed edges not allowed in simple graph!!");	
-    		}
-    		graph = new SimpleGraph<T>();
-    	}
+        Graph<T> graph = null;
+
+        if (BasicGraph.class.equals(graphClass))
+        {
+            graph = new BasicGraph<T>();
+        }
+        else if (BasicDirectedGraph.class.equals(graphClass))
+        {
+            graph = new BasicDirectedGraph<T>();
+        }
+
+        else if (SimpleGraph.class.equals(graphClass))
+        {
+            if (directed)
+            {
+                throw new InvalidDataException(InvalidDataException.Code.INVALID, "Directed edges not allowed in simple graph!!");
+            }
+
+            graph = new SimpleGraph<T>();
+        }
 
         if ((adjMatrix.length < 1) || (adjMatrix.length != values.length))
         {
@@ -128,10 +136,10 @@ public class GraphFactory
 
                     try
                     {
-                    	if(!graph.getEdges().contains(edge))
-                    	{
-                    		graph.addEdge(edge);
-                    	}
+                        if (!graph.getEdges().contains(edge))
+                        {
+                            graph.addEdge(edge);
+                        }
                     }
                     catch (InvalidDataException ex)
                     {
@@ -145,6 +153,30 @@ public class GraphFactory
         }
 
         return graph;
+    }
+
+    //TODO:Needs UT
+    public static <T> DirectedGraph<T> getDirectedGraph(int[][] adjMatrix, T[] values, Class graphClass) throws InvalidDataException
+    {
+        Class[] implementedInterfaces = graphClass.getInterfaces();
+        boolean isDirected = false;
+
+        for (Class interfaze : implementedInterfaces)
+        {
+            if (DirectedGraph.class.equals(interfaze))
+            {
+                isDirected = true;
+
+                break;
+            }
+        }
+
+        if (!isDirected)
+        {
+            throw new InvalidDataException(Code.INVALID, "Only a class which implements directed graph can be passed!!");
+        }
+
+        return (DirectedGraph<T>) getGraph(adjMatrix, values, true, graphClass);
     }
 
     // UT:TestGraphFactory.testGetSimpleGraph
