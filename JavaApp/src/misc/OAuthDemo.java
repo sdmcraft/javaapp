@@ -17,21 +17,37 @@ public class OAuthDemo
     public static void main(String[] args)
     {
     	
-    	String host = "http://abc.com";    
-    	String endpoint = "/social_properties.json";
-    	String key = "xxx";
-    	String secret = "yyy";
+//    	String host = "http://api.linkedin.com";    
+//    	String endpoint = "/v1/people/~/group-memberships";
+//    	String key = "y0nzebl6oe7a";
+//    	String secret = "7NSSBlqg8GxXc0GK";
+//    	String accesToken = "13cf7525-9bae-4169-b82b-2f2301cce6c4";
+//    	String accesSecret = "0ad89328-dc73-4320-a680-107ef7956d3c";
+    	
+//    	Map<String,String[]> queryParams = new HashMap<String,String[]>();
+//    	queryParams.put("proxy_company", new String[]{"jjesquire"});
+
+    	String host = "http://co-nightly.dev.omniture.com";    
+    	//String endpoint = "/linkedin/surfaces";
+    	String endpoint = "/linkedin/surfaces";
+    	String key = "XOMqd0Gyfr82RAF1AptoZg";
+    	String secret = "mCRIvEGG1SuI9GNmtCSxkblIsKxYaggiYzo5QtoGaE";
+    	String accesToken = "";
+    	String accesSecret = "";
+
     	Map<String,String[]> queryParams = new HashMap<String,String[]>();
     	queryParams.put("proxy_company", new String[]{"jjesquire"});
-
+    	queryParams.put("proxy_user", new String[]{"jimmy"});
+    	//queryParams.put("permission", new String[]{"moderate"});
+    	
         OAuthService service = new ServiceBuilder().provider(MyApi.class).apiKey(key).apiSecret(secret).build();
-        Token accessToken = new Token("", "");
+        Token accessToken = new Token(accesToken, accesSecret);
         OAuthRequest request = new OAuthRequest(Verb.GET, host + endpoint);
         buildQuery(request, queryParams);
         service.signRequest(accessToken, request);
         Response response = request.send();        
         System.out.println("Status Code:" + response.getCode());
-        System.out.println("Status Code:" + response.getBody());
+        System.out.println("Body:" + response.getBody());
     }
     
     private static void buildQuery(OAuthRequest request, Map<String,String[]> queryParams)
