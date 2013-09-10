@@ -21,6 +21,12 @@ public class ListEditView extends LinearLayout
             @Override
             public void onClick(View v)
             {
+            	EditText listName = (EditText) findViewById(R.id.list_name);
+            	listModel.setName(listName.getText().toString());
+            	
+            	EditText listDescription = (EditText) findViewById(R.id.description);
+            	listModel.setDescription(listDescription.getText().toString());
+
                 context.save(listModel);
             }
         };

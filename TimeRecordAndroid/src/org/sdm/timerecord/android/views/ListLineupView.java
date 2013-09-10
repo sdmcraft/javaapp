@@ -33,7 +33,7 @@ public class ListLineupView extends LinearLayout
         render();
     }
 
-    private void render()
+    public void render()
     {
         for (String[] listItem : listLineupModel.getItems())
         {
@@ -93,7 +93,7 @@ public class ListLineupView extends LinearLayout
 	        		targetView.setSelected(false);
 	        		Intent i = new Intent(context, ListEditActivity.class);
 	        		i.putExtra(ListDAO.COL_ID, (String)targetView.getTag());
-	        		context.startActivity(i);
+	        		context.startActivityForResult(i,context.ACTIVITY_ADD_OR_EDIT_LIST);
 	                return true;
 	            default:
 	                return false;

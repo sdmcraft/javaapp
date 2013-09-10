@@ -45,6 +45,7 @@ public class ListEditActivity extends Activity {
 		} else {
 			ListDAO.update(Globals.getInstance().getDb(), listModel);
 		}
+		exitActivity();
 	}
 
 	/*private void render() {
@@ -72,7 +73,7 @@ public class ListEditActivity extends Activity {
 				exitActivity();
 			}
 		});
-	}
+	}*/
 
 
 	private void exitActivity() {
@@ -83,6 +84,6 @@ public class ListEditActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		exitActivity();
-	}*/
+	}
 
 }
