@@ -24,7 +24,7 @@ public class BasicDirectedGraph<T> extends BasicGraph<T> implements DirectedGrap
     }
 
     
-    //TODO:Needs UT
+    //UT:TestBasicDirectedGraph.testReverseEdges
     @Override
     public void reverseEdges()
     {

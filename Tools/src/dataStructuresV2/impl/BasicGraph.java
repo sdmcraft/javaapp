@@ -15,9 +15,7 @@ import dataStructures.ArrayQueue;
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
-
 import dataStructuresV2.exception.InvalidDataException;
-
 import dataStructuresV2.exception.InvalidDataException.Code;
 
 import java.util.ArrayList;
@@ -36,18 +34,13 @@ import java.util.Set;
   *
  * @param <T> DOCUMENT ME!
  */
-public class BasicGraph<T>
-    implements Graph<T>
+public class BasicGraph<T> implements Graph<T>
 {
-    //~ Instance variables ---------------------------------------------------------------
-
     /** DOCUMENT ME! */
     protected final Set<Edge<T>> edges = new HashSet<Edge<T>>();
 
     /** DOCUMENT ME! */
     protected final Set<Node<T>> nodes = new HashSet<Node<T>>();
-
-    //~ Methods --------------------------------------------------------------------------
 
     /**
      * DOCUMENT ME!
@@ -57,22 +50,18 @@ public class BasicGraph<T>
      * @throws InvalidDataException DOCUMENT ME!
      */
     @Override
-    public final void addEdge(Edge<T> edge)
-      throws InvalidDataException
+    public final void addEdge(Edge<T> edge) throws InvalidDataException
     {
         if (!canAdd(edge))
         {
-            throw new InvalidDataException(
-                InvalidDataException.Code.INVALID, "Not allowed to add this edge!!");
+            throw new InvalidDataException(InvalidDataException.Code.INVALID, "Not allowed to add this edge!!");
         }
 
         if (!edges.add(edge))
         {
-            throw new InvalidDataException(
-                InvalidDataException.Code.DUPLICATE, "This graph already has this edge!!");
+            throw new InvalidDataException(InvalidDataException.Code.DUPLICATE, "This graph already has this edge!!");
         }
     }
-
 
     // UT:TestBasicGraph.testAddNode
     /**
@@ -83,16 +72,13 @@ public class BasicGraph<T>
      * @throws InvalidDataException DOCUMENT ME!
      */
     @Override
-    public final void addNode(Node<T> node)
-      throws InvalidDataException
+    public final void addNode(Node<T> node) throws InvalidDataException
     {
         if (!nodes.add(node))
         {
-            throw new InvalidDataException(
-                InvalidDataException.Code.DUPLICATE, "This graph already has this node!!");
+            throw new InvalidDataException(InvalidDataException.Code.DUPLICATE, "This graph already has this node!!");
         }
     }
-
 
     /**
      * DOCUMENT ME!
@@ -120,7 +106,6 @@ public class BasicGraph<T>
         return diagram.toString();
     }
 
-
     /**
      * DOCUMENT ME!
      *
@@ -131,7 +116,6 @@ public class BasicGraph<T>
     {
         return Collections.unmodifiableSet(edges);
     }
-
 
     // UT:TestBasicGraph.testGetEdgesSingleNode
     /**
@@ -144,8 +128,7 @@ public class BasicGraph<T>
      * @throws InvalidDataException DOCUMENT ME!
      */
     @Override
-    public Set<Edge<T>> getEdges(Node<T> node)
-      throws InvalidDataException
+    public Set<Edge<T>> getEdges(Node<T> node) throws InvalidDataException
     {
         if (nodes.contains(node))
         {
@@ -163,12 +146,9 @@ public class BasicGraph<T>
         }
         else
         {
-            throw new InvalidDataException(
-                InvalidDataException.Code.INVALID,
-                "Specified node does not belong to this graph:" + node);
+            throw new InvalidDataException(InvalidDataException.Code.INVALID, "Specified node does not belong to this graph:" + node);
         }
     }
-
 
     // UT:TestBasicGraph.testGetEdgesDoubleNode
     /**
@@ -182,23 +162,16 @@ public class BasicGraph<T>
      * @throws InvalidDataException DOCUMENT ME!
      */
     @Override
-    public Set<Edge<T>> getEdges(
-        Node<T> node1,
-        Node<T> node2)
-      throws InvalidDataException
+    public Set<Edge<T>> getEdges(Node<T> node1, Node<T> node2) throws InvalidDataException
     {
         if (!nodes.contains(node1))
         {
-            throw new InvalidDataException(
-                InvalidDataException.Code.INVALID,
-                "Specified node does not belong to this graph:" + node1);
+            throw new InvalidDataException(InvalidDataException.Code.INVALID, "Specified node does not belong to this graph:" + node1);
         }
 
         if (!nodes.contains(node2))
         {
-            throw new InvalidDataException(
-                InvalidDataException.Code.INVALID,
-                "Specified node does not belong to this graph:" + node2);
+            throw new InvalidDataException(InvalidDataException.Code.INVALID, "Specified node does not belong to this graph:" + node2);
         }
 
         Set<Edge<T>> node1Edges = getEdges(node1);
@@ -206,9 +179,7 @@ public class BasicGraph<T>
 
         for (Edge<T> edge : node1Edges)
         {
-            if (
-                edge.getEndpoints()[0].equals(node2)
-                || edge.getEndpoints()[1].equals(node2))
+            if (edge.getEndpoints()[0].equals(node2) || edge.getEndpoints()[1].equals(node2))
             {
                 edges.add(edge);
             }
@@ -216,7 +187,6 @@ public class BasicGraph<T>
 
         return Collections.unmodifiableSet(edges);
     }
-
 
     // UT:TestBasicGraph.testGetNeighbours
     /**
@@ -229,8 +199,7 @@ public class BasicGraph<T>
      * @throws InvalidDataException DOCUMENT ME!
      */
     @Override
-    public Set<Node<T>> getNeighbours(Node<T> node)
-      throws InvalidDataException
+    public Set<Node<T>> getNeighbours(Node<T> node) throws InvalidDataException
     {
         Set<Edge<T>> nodeEdges = getEdges(node);
         Set<Node<T>> neighbours = new HashSet<Node<T>>();
@@ -250,7 +219,6 @@ public class BasicGraph<T>
         return neighbours;
     }
 
-
     /**
      * DOCUMENT ME!
      *
@@ -261,7 +229,6 @@ public class BasicGraph<T>
     {
         return Collections.unmodifiableSet(nodes);
     }
-
 
     //TODO:Needs UT
     /**
@@ -297,7 +264,6 @@ public class BasicGraph<T>
         return true;
     }
 
-
     // UT:TestBasicGraph.testCanAdd
     /**
      * DOCUMENT ME!
@@ -308,19 +274,15 @@ public class BasicGraph<T>
      */
     protected boolean canAdd(Edge<T> edge)
     {
-        return nodes.contains(edge.getEndpoints()[0])
-        && nodes.contains(edge.getEndpoints()[1]);
+        return nodes.contains(edge.getEndpoints()[0]) && nodes.contains(edge.getEndpoints()[1]);
     }
 
-
     // UT:TestBasicGraph.testBreadthFirstTraversal
-    private List<Node<T>> breadthFirstTraversal(Node<T> startNode)
-      throws InvalidDataException
+    private List<Node<T>> breadthFirstTraversal(Node<T> startNode) throws InvalidDataException
     {
         if (!nodes.contains(startNode))
         {
-            throw new InvalidDataException(
-                Code.INVALID, startNode + " does not exist in the graph");
+            throw new InvalidDataException(Code.INVALID, startNode + " does not exist in the graph");
         }
 
         List<Node<T>> bftList = new ArrayList<Node<T>>();
@@ -356,4 +318,63 @@ public class BasicGraph<T>
         return bftList;
     }
 
+    //TODO:Needs UT
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((edges == null) ? 0 : edges.hashCode());
+        result = (prime * result) + ((nodes == null) ? 0 : nodes.hashCode());
+
+        return result;
+    }
+
+    //TODO:Needs UT
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+
+        if (obj == null)
+        {
+            return false;
+        }
+
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+
+        BasicGraph other = (BasicGraph) obj;
+
+        if (edges == null)
+        {
+            if (other.edges != null)
+            {
+                return false;
+            }
+        }
+        else if (!edges.equals(other.edges))
+        {
+            return false;
+        }
+
+        if (nodes == null)
+        {
+            if (other.nodes != null)
+            {
+                return false;
+            }
+        }
+        else if (!nodes.equals(other.nodes))
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
