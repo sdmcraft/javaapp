@@ -1,8 +1,11 @@
-package org.sdm.timerecord.android;
+package org.sdm.timerecord.android.controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.sdm.timerecord.android.R;
+import org.sdm.timerecord.android.R.id;
+import org.sdm.timerecord.android.R.layout;
 import org.sdm.timerecord.android.model.ListDAO;
 import org.sdm.timerecord.android.model.ListEntry;
 

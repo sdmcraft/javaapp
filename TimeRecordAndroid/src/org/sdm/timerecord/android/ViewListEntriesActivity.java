@@ -15,6 +15,7 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+import org.sdm.timerecord.android.controllers.ListEntryActivity;
 import org.sdm.timerecord.android.model.ListEntry;
 
 import android.app.ListActivity;

@@ -1,6 +1,7 @@
 package org.sdm.timerecord.android;
 
 import org.sdm.timerecord.android.controllers.ListEditActivity;
+import org.sdm.timerecord.android.controllers.ListEntryActivity;
 import org.sdm.timerecord.android.model.ListDAO;
 
 import android.app.AlertDialog;

@@ -20,7 +20,7 @@
         </activity>
         <activity android:name="org.sdm.timerecord.android.controllers.ListEditActivity" >
         </activity>
-        <activity android:name=".ListEntryActivity" >
+        <activity android:name="org.sdm.timerecord.android.controllers.ListEntryActivity" >
         </activity>
         <activity android:name=".ViewListEntriesActivity" >
         </activity>

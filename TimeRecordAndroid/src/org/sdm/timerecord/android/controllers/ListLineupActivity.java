@@ -53,7 +53,7 @@ public class ListLineupActivity extends Activity
 	
 	private void addList() {
 		Intent i = new Intent(this, ListEditActivity.class);
-		startActivity(i);		
+		startActivityForResult(i, ACTIVITY_ADD_OR_EDIT_LIST);		
 	}
 
 	@Override

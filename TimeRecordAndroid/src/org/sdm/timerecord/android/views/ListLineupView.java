@@ -35,6 +35,7 @@ public class ListLineupView extends LinearLayout
 
     public void render()
     {
+    	this.removeAllViews();
         for (String[] listItem : listLineupModel.getItems())
         {
             TextView textView = new TextView(context);
@@ -85,16 +86,25 @@ public class ListLineupView extends LinearLayout
 	    @Override
 	    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 	    	TextView targetView = (TextView)(mode.getTag());
-	    	
+	    	Intent targetIntent;
 	        switch (item.getItemId()) {
 	            case R.id.edit_list:	  	            	
 	                mode.finish();
 	                mActionMode = null;
 	        		targetView.setSelected(false);
-	        		Intent i = new Intent(context, ListEditActivity.class);
-	        		i.putExtra(ListDAO.COL_ID, (String)targetView.getTag());
-	        		context.startActivityForResult(i,context.ACTIVITY_ADD_OR_EDIT_LIST);
+	        		targetIntent = new Intent(context, ListEditActivity.class);
+	        		targetIntent.putExtra(ListDAO.COL_ID, (String)targetView.getTag());
+	        		context.startActivityForResult(targetIntent,context.ACTIVITY_ADD_OR_EDIT_LIST);
 	                return true;
+	            case R.id.add_entry:	  	            	
+	                mode.finish();
+	                mActionMode = null;
+	        		targetView.setSelected(false);
+	        		targetIntent = new Intent(context, ListEditActivity.class);
+	        		targetIntent.putExtra(ListDAO.COL_ID, (String)targetView.getTag());
+	        		context.startActivityForResult(targetIntent,context.ACTIVITY_ADD_OR_EDIT_LIST);
+	                return true;
+     
 	            default:
 	                return false;
 	        }
