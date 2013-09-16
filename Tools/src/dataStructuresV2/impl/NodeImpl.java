@@ -2,9 +2,13 @@ package dataStructuresV2.impl;
 
 import dataStructuresV2.Node;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class NodeImpl<T> implements Node<T>
 {
+    private final Map<String, Object> propertyMap = new HashMap<String, Object>();
     private final T value;
 
     public NodeImpl(T value)
@@ -17,6 +21,7 @@ public class NodeImpl<T> implements Node<T>
     {
         final int prime = 31;
         int result = 1;
+        result = (prime * result) + ((propertyMap == null) ? 0 : propertyMap.hashCode());
         result = (prime * result) + ((value == null) ? 0 : value.hashCode());
 
         return result;
@@ -35,12 +40,24 @@ public class NodeImpl<T> implements Node<T>
             return false;
         }
 
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof NodeImpl))
         {
             return false;
         }
 
         NodeImpl other = (NodeImpl) obj;
+
+        if (propertyMap == null)
+        {
+            if (other.propertyMap != null)
+            {
+                return false;
+            }
+        }
+        else if (!propertyMap.equals(other.propertyMap))
+        {
+            return false;
+        }
 
         if (value == null)
         {
@@ -73,5 +90,17 @@ public class NodeImpl<T> implements Node<T>
     public String getDiagramFragment()
     {
         return "\"" + value.toString() + "\"";
+    }
+
+    @Override
+    public Object getProperty(String property)
+    {
+        return propertyMap.get(property);
+    }
+
+    @Override
+    public void setProperty(String property, Object value)
+    {
+        propertyMap.put(property, value);
     }
 }
