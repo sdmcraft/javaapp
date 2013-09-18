@@ -6,8 +6,8 @@ import java.util.Calendar;
 import org.sdm.timerecord.android.R;
 import org.sdm.timerecord.android.R.id;
 import org.sdm.timerecord.android.R.layout;
-import org.sdm.timerecord.android.model.ListDAO;
-import org.sdm.timerecord.android.model.ListEntry;
+import org.sdm.timerecord.android.daos.ListDAO;
+import org.sdm.timerecord.android.daos.ListEntryDAO;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 public class ListEntryActivity extends Activity {
 	
-	private ListEntry model;
+	private ListEntryDAO model;
 	
 	private TextView mListTitleTextView;
 
@@ -47,10 +47,10 @@ public class ListEntryActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		
 		if (extras != null) {
-			model = (ListEntry)extras.get("model");
+			model = (ListEntryDAO)extras.get("model");
 			if(model == null)
 			{
-				model = new ListEntry();
+				model = new ListEntryDAO();
 			}
 			mListId = extras.getLong("ListId");
 			mListEntryId = extras.getLong("ListEntryId");
@@ -59,7 +59,7 @@ public class ListEntryActivity extends Activity {
 				mListName = List.query(Globals.getInstance().getDb(), mListId)
 						.getString(1);
 			}
-			Cursor cursor = ListEntry.query(Globals.getInstance().getDb(),
+			Cursor cursor = ListEntryDAO.query(Globals.getInstance().getDb(),
 					mListEntryId);
 			String entryTime = cursor.getString(2);
 			mDateDisplay.setText(entryTime);
@@ -150,7 +150,7 @@ public class ListEntryActivity extends Activity {
 			seconds = Integer.parseInt(secondsEntry.getText().toString());
 		}
 
-		/*ListEntry.insert(Globals.getInstance().getDb(), mListId.longValue(),
+		/*ListEntryDAO.insert(Globals.getInstance().getDb(), mListId.longValue(),
 				mDateDisplay.getText().toString(), hours * 60 * 60 * 1000
 						+ minutes * 60 * 1000 + seconds * 1000);*/
 		exitActivity();

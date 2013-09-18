@@ -2,7 +2,7 @@ package org.sdm.timerecord.android;
 
 import org.sdm.timerecord.android.controllers.ListEditActivity;
 import org.sdm.timerecord.android.controllers.ListEntryActivity;
-import org.sdm.timerecord.android.model.ListDAO;
+import org.sdm.timerecord.android.daos.ListDAO;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -172,11 +172,11 @@ public class TimeRecordAndroidActivity extends ListActivity {
 			break;
 		case ACTIVITY_LIST_ENTRY:
 			/*
-			 * String entryTime = extras.getString(ListEntry.COL_ENTRY_TIME);
-			 * Long entryListId = extras.getLong(ListEntry.COL_LIST_ID); String
-			 * value = extras.getString(ListEntry.COL_VALUE); if (entryTime !=
+			 * String entryTime = extras.getString(ListEntryDAO.COL_ENTRY_TIME);
+			 * Long entryListId = extras.getLong(ListEntryDAO.COL_LIST_ID); String
+			 * value = extras.getString(ListEntryDAO.COL_VALUE); if (entryTime !=
 			 * null && value != null && entryListId >= 0)
-			 * ListEntry.insert(mDbHelper.getDB(), entryListId, entryTime,
+			 * ListEntryDAO.insert(mDbHelper.getDB(), entryListId, entryTime,
 			 * value);
 			 */
 			break;

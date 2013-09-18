@@ -16,8 +16,8 @@
 
 package org.sdm.timerecord.android;
 
-import org.sdm.timerecord.android.model.ListDAO;
-import org.sdm.timerecord.android.model.ListEntry;
+import org.sdm.timerecord.android.daos.ListDAO;
+import org.sdm.timerecord.android.daos.ListEntryDAO;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -51,14 +51,14 @@ public class TimeRecordDbAdapter {
 		public void onCreate(SQLiteDatabase db) {
 
 			ListDAO.create(db);
-			ListEntry.create(db);
+			ListEntryDAO.create(db);
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
 					+ newVersion + ", which will destroy all old data");
-			ListEntry.drop(db);
+			ListEntryDAO.drop(db);
 			ListDAO.drop(db);
 			onCreate(db);
 		}

@@ -1,7 +1,7 @@
 package org.sdm.timerecord.android.views;
 
 import org.sdm.timerecord.android.controllers.ListEntryActivity;
-import org.sdm.timerecord.android.model.ListEntry;
+import org.sdm.timerecord.android.daos.ListEntryDAO;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 public class ListEntryView extends LinearLayout {
 
 	private ListEntryActivity context;
-    private ListEntry listEntryModel;
+    private ListEntryDAO listEntryModel;
     private ActionMode mActionMode;
 
     

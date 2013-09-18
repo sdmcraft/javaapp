@@ -3,7 +3,7 @@ package org.sdm.timerecord.android.views;
 import org.sdm.timerecord.android.R;
 import org.sdm.timerecord.android.controllers.ListEditActivity;
 import org.sdm.timerecord.android.controllers.ListLineupActivity;
-import org.sdm.timerecord.android.model.ListDAO;
+import org.sdm.timerecord.android.daos.ListDAO;
 import org.sdm.timerecord.android.model.ListLineupModel;
 
 import android.app.Activity;

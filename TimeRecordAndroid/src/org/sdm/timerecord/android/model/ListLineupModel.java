@@ -3,6 +3,7 @@ package org.sdm.timerecord.android.model;
 import android.database.Cursor;
 
 import org.sdm.timerecord.android.Globals;
+import org.sdm.timerecord.android.daos.ListDAO;
 
 import java.util.ArrayList;
 
@@ -18,11 +19,6 @@ public class ListLineupModel
         if (instance == null)
         {
             instance = new ListLineupModel();
-
-            /*TODO: Test code*/
-            //ListDAO.delete(Globals.getInstance().getDb());
-            //ListDAO.insert(Globals.getInstance().getDb(), "List1", "List1 descripton");
-            //ListDAO.insert(Globals.getInstance().getDb(), "List2", "List2 descripton");
         }
 
         return instance;

@@ -2,7 +2,7 @@ package org.sdm.timerecord.android.controllers;
 
 import org.sdm.timerecord.android.Globals;
 import org.sdm.timerecord.android.R;
-import org.sdm.timerecord.android.model.ListDAO;
+import org.sdm.timerecord.android.daos.ListDAO;
 import org.sdm.timerecord.android.model.ListModel;
 import org.sdm.timerecord.android.views.ListEditView;
 

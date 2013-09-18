@@ -1,4 +1,6 @@
-package org.sdm.timerecord.android.model;
+package org.sdm.timerecord.android.daos;
+
+import org.sdm.timerecord.android.model.ListModel;
 
 import android.content.ContentValues;
 import android.database.Cursor;
