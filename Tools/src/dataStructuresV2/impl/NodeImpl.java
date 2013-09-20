@@ -31,7 +31,7 @@ public class NodeImpl<T> implements Node<T>
     @Override
     public String getDiagramFragment()
     {
-        return "\"" + value.toString() + propertyMap.toString() + "\"";
+        return "\"" + value.toString() + "\"";
     }
 
     @Override
