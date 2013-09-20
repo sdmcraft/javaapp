@@ -17,16 +17,51 @@ public class NodeImpl<T> implements Node<T>
     }
 
     @Override
+    public T getValue()
+    {
+        return value;
+    }
+
+    @Override
+    public String toString()
+    {
+        return value.toString();
+    }
+
+    @Override
+    public String getDiagramFragment()
+    {
+        return "\"" + value.toString() + propertyMap.toString() + "\"";
+    }
+
+    @Override
+    public Object getProperty(String property)
+    {
+        return propertyMap.get(property);
+    }
+
+    @Override
+    public void setProperty(String property, Object value)
+    {
+        propertyMap.put(property, value);
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
     public int hashCode()
     {
         final int prime = 31;
         int result = 1;
-        result = (prime * result) + ((propertyMap == null) ? 0 : propertyMap.hashCode());
         result = (prime * result) + ((value == null) ? 0 : value.hashCode());
 
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -47,18 +82,6 @@ public class NodeImpl<T> implements Node<T>
 
         NodeImpl other = (NodeImpl) obj;
 
-        if (propertyMap == null)
-        {
-            if (other.propertyMap != null)
-            {
-                return false;
-            }
-        }
-        else if (!propertyMap.equals(other.propertyMap))
-        {
-            return false;
-        }
-
         if (value == null)
         {
             if (other.value != null)
@@ -72,35 +95,5 @@ public class NodeImpl<T> implements Node<T>
         }
 
         return true;
-    }
-
-    @Override
-    public T getValue()
-    {
-        return value;
-    }
-
-    @Override
-    public String toString()
-    {
-        return value.toString();
-    }
-
-    @Override
-    public String getDiagramFragment()
-    {
-        return "\"" + value.toString() + "\"";
-    }
-
-    @Override
-    public Object getProperty(String property)
-    {
-        return propertyMap.get(property);
-    }
-
-    @Override
-    public void setProperty(String property, Object value)
-    {
-        propertyMap.put(property, value);
     }
 }

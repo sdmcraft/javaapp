@@ -37,7 +37,7 @@ public class BasicDirectedGraph<T> extends BasicGraph<T> implements DirectedGrap
         }
     }
 
-    private void dfsLoop() throws InvalidDataException
+    public void dfsLoop() throws InvalidDataException
     {
         Node<T> leaderNode = null;
 
@@ -54,7 +54,7 @@ public class BasicDirectedGraph<T> extends BasicGraph<T> implements DirectedGrap
     private void dfs(Node<T> node, Node<T> leaderNode) throws InvalidDataException
     {
         node.setProperty("processed", true);
-        node.setProperty("leader", leaderNode);
+        node.setProperty("leader", leaderNode.getValue());
 
         for (Node<T> neighbour : getNeighbours(node))
         {
