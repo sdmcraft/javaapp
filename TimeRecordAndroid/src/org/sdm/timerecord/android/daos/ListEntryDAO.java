@@ -1,10 +1,13 @@
 package org.sdm.timerecord.android.daos;
 
-import org.sdm.timerecord.android.model.ListEntryModel;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import org.sdm.timerecord.android.model.ListEntryModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ListEntryDAO
@@ -48,21 +51,69 @@ public class ListEntryDAO
         return db.delete(TABLE_NAME, COL_ID + "=" + listEntryModel.getId(), null) > 0;
     }
 
-    public static Cursor query(SQLiteDatabase db)
+    public static List<ListEntryModel> query(SQLiteDatabase db)
     {
-        return db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID, COL_ENTRY_TIME, COL_VALUE }, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID, COL_ENTRY_TIME, COL_VALUE }, null, null, null, null, null);
+        List<ListEntryModel> list = new ArrayList<ListEntryModel>();
+
+        for (int i = 0; i < cursor.getCount(); i++)
+        {
+            cursor.moveToPosition(i);
+
+            int id = cursor.getInt(cursor.getColumnIndex(COL_ID));
+            int listId = cursor.getInt(cursor.getColumnIndex(COL_LIST_ID));
+            String entryTime = cursor.getString(cursor.getColumnIndex(COL_ENTRY_TIME));
+            long value = cursor.getLong(cursor.getColumnIndex(COL_VALUE));
+
+            ListEntryModel listEntryModel = new ListEntryModel();
+            listEntryModel.setId(id);
+            listEntryModel.setListId(listId);
+            listEntryModel.setEntryTime(entryTime);
+            listEntryModel.setValue(value);
+
+            list.add(listEntryModel);
+        }
+
+        return list;
     }
 
-    public static Cursor query(SQLiteDatabase db, ListEntryModel listEntryModel)
+    public static ListEntryModel query(SQLiteDatabase db, int id)
     {
-        Cursor cursor = db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID, COL_ENTRY_TIME, COL_VALUE }, COL_ID + "=" + listEntryModel.getId(), null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID, COL_ENTRY_TIME, COL_VALUE }, COL_ID + "=" + id, null, null, null, null);
+        cursor.moveToFirst();
+        id = cursor.getInt(cursor.getColumnIndex(COL_ID));
+
+        int listId = cursor.getInt(cursor.getColumnIndex(COL_LIST_ID));
+        String entryTime = cursor.getString(cursor.getColumnIndex(COL_ENTRY_TIME));
+        long value = cursor.getLong(cursor.getColumnIndex(COL_VALUE));
+
+        ListEntryModel listEntryModel = new ListEntryModel();
+        listEntryModel.setId(id);
+        listEntryModel.setListId(listId);
+        listEntryModel.setEntryTime(entryTime);
+        listEntryModel.setValue(value);
+
+        return listEntryModel;
+    }
+
+    public static ListEntryModel queryByListId(SQLiteDatabase db, int listId)
+    {
+        Cursor cursor = db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID, COL_ENTRY_TIME, COL_VALUE }, COL_LIST_ID + "=" + listId, null, null, null, null);
         cursor.moveToFirst();
 
-        return cursor;
-    }
+        int id = cursor.getInt(cursor.getColumnIndex(COL_ID));
 
-    public static Cursor queryByListId(SQLiteDatabase db, long listId)
-    {
-        return db.query(TABLE_NAME, new String[] { COL_ID, COL_LIST_ID, COL_ENTRY_TIME, COL_VALUE }, COL_LIST_ID + "=" + listId, null, null, null, null);
+        listId = cursor.getInt(cursor.getColumnIndex(COL_LIST_ID));
+
+        String entryTime = cursor.getString(cursor.getColumnIndex(COL_ENTRY_TIME));
+        long value = cursor.getLong(cursor.getColumnIndex(COL_VALUE));
+
+        ListEntryModel listEntryModel = new ListEntryModel();
+        listEntryModel.setId(id);
+        listEntryModel.setListId(listId);
+        listEntryModel.setEntryTime(entryTime);
+        listEntryModel.setValue(value);
+
+        return listEntryModel;
     }
 }
