@@ -3,7 +3,10 @@ package demo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
@@ -47,7 +50,14 @@ public class Main
     	List<Node<String>> nodeList = new ArrayList<Node<String>>();
     	nodeList.addAll(graph.getNodes());
     	Collections.sort(nodeList, new FinishTimeComparator<String>());
-    	System.out.println(nodeList);
+    	((BasicDirectedGraph<String>)graph).dfsLoop();
+
+    	Map<String, Set<Node>> nodesByLeader = new HashMap<String, Set<Node>>(); 
+    	for(Node<String> node : graph.getNodes())
+    	{    		
+    		//Add nodes by leader
+    	}
+
     }
 }
 

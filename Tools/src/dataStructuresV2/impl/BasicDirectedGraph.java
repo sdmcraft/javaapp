@@ -1,13 +1,16 @@
 package dataStructuresV2.impl;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import dataStructuresV2.DirectedEdge;
 import dataStructuresV2.DirectedGraph;
 import dataStructuresV2.Edge;
 import dataStructuresV2.Graph;
 import dataStructuresV2.Node;
 import dataStructuresV2.exception.InvalidDataException;
-
-import java.util.Set;
+import dataStructuresV2.exception.InvalidDataException.Code;
 
 
 public class BasicDirectedGraph<T> extends BasicGraph<T> implements DirectedGraph<T>
@@ -39,6 +42,26 @@ public class BasicDirectedGraph<T> extends BasicGraph<T> implements DirectedGrap
 
     public void dfsLoop() throws InvalidDataException
     {
+        Node<T> leaderNode = null;
+
+        for (Node<T> node : nodes)
+        {
+            if ((node.getProperty("processed") == null) || !(Boolean) node.getProperty("processed"))
+            {
+                leaderNode = node;
+                dfs(node, leaderNode);
+            }
+        }
+    }
+
+    public void dfsLoop(List<Node<T>> nodes) throws InvalidDataException
+    {
+    	Set<Node<T>> nodeSet = new HashSet<Node<T>>(nodes);
+    	if(!nodeSet.equals(this.nodes))
+    	{
+    		throw new InvalidDataException(Code.INVALID, "Passed nodes do not match actual graph nodes");
+    	}
+    	
         Node<T> leaderNode = null;
 
         for (Node<T> node : nodes)
