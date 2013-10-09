@@ -2,6 +2,7 @@ package org.sdm.timerecord.android;
 
 import org.sdm.timerecord.android.controllers.ListEditActivity;
 import org.sdm.timerecord.android.controllers.ListEntryActivity;
+import org.sdm.timerecord.android.controllers.ListEntriesActivity;
 import org.sdm.timerecord.android.daos.ListDAO;
 
 import android.app.AlertDialog;
@@ -63,7 +64,7 @@ public class TimeRecordAndroidActivity extends ListActivity {
 	}
 
 	public void viewEntries(Long listId) {
-		Intent i = new Intent(this, ViewListEntriesActivity.class);
+		Intent i = new Intent(this, ListEntriesActivity.class);
 		i.putExtra(ListDAO.COL_ID, listId);
 		startActivityForResult(i, ACTIVITY_VIEW_LIST_ENTRIES);
 	}

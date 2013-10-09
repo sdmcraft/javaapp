@@ -1,4 +1,4 @@
-package org.sdm.timerecord.android;
+package org.sdm.timerecord.android.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +15,11 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
-import org.sdm.timerecord.android.controllers.ListEntryActivity;
+import org.sdm.timerecord.android.EntriesListAdapter;
+import org.sdm.timerecord.android.Globals;
+import org.sdm.timerecord.android.R;
+import org.sdm.timerecord.android.R.id;
+import org.sdm.timerecord.android.R.layout;
 import org.sdm.timerecord.android.daos.ListEntryDAO;
 
 import android.app.ListActivity;
@@ -33,7 +37,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class ViewListEntriesActivity extends ListActivity {
+public class ListEntriesActivity extends ListActivity {
 
 
 	private static final int ACTIVITY_EDIT_LIST_ENTRY = 0;
@@ -45,16 +49,15 @@ public class ViewListEntriesActivity extends ListActivity {
 	private static final int DELETE = 3;
 
 	
-	private long mListId;
 	private List<ListEntryDAO> entries = new ArrayList<ListEntryDAO>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// setContentView(R.layout.entries_list);
-		mListId = getIntent().getExtras().getLong(
+		int listId = getIntent().getExtras().getInt(
 				org.sdm.timerecord.android.daos.ListDAO.COL_ID);
-		fillData();
+		fillData(listId);
 		registerForContextMenu(getListView());
 	}
 
@@ -68,10 +71,10 @@ public class ViewListEntriesActivity extends ListActivity {
 		// super.onBackPressed();
 	}
 
-	private void fillData() {
+	private void fillData(int listId) {
 		// Get all of the rows from the database and create the item list
 		Cursor listsCursor = ListEntryDAO.queryByListId(Globals.getInstance()
-				.getDb(), mListId);
+				.getDb(), listId);
 		while (listsCursor.moveToNext()) {
 			Long id = listsCursor.getLong(listsCursor
 					.getColumnIndex(ListEntryDAO.COL_ID));
@@ -118,7 +121,7 @@ public class ViewListEntriesActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		Log.d("TimeRecordAndroid",
-				"Enter ViewListEntriesActivity --> onCreateOptionsMenu");
+				"Enter ListEntriesActivity --> onCreateOptionsMenu");
 		menu.add(0, VIEW_LINE_GRAPH_ID, 0, "View Line Graph");
 		menu.add(0, VIEW_BAR_GRAPH_ID, 1, "View Bar Graph");
 		return super.onCreateOptionsMenu(menu);
@@ -127,7 +130,7 @@ public class ViewListEntriesActivity extends ListActivity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		Log.d("TimeRecordAndroid",
-				"Enter ViewListEntriesActivity --> onMenuItemSelected");
+				"Enter ListEntriesActivity --> onMenuItemSelected");
 		switch (item.getItemId()) {
 		case VIEW_LINE_GRAPH_ID:
 			viewGraph("line");
@@ -144,7 +147,7 @@ public class ViewListEntriesActivity extends ListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		Log.d("TimeRecordAndroid",
-				"Enter ViewListEntriesActivity --> onCreateContextMenu");
+				"Enter ListEntriesActivity --> onCreateContextMenu");
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, EDIT, 0, "Edit");
 		menu.add(0, DELETE, 1, "Delete");
@@ -153,7 +156,7 @@ public class ViewListEntriesActivity extends ListActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		Log.d("TimeRecordAndroid",
-				"Enter ViewListEntriesActivity --> onContextItemSelected");
+				"Enter ListEntriesActivity --> onContextItemSelected");
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		switch (item.getItemId()) {
@@ -169,7 +172,7 @@ public class ViewListEntriesActivity extends ListActivity {
 
 	public void editEntry(Long listEntryId) {
 		Log.d("TimeRecordAndroid",
-				"Enter ViewListEntriesActivity --> editEntry Args:"
+				"Enter ListEntriesActivity --> editEntry Args:"
 						+ listEntryId);
 		Intent i = new Intent(this, ListEntryActivity.class);
 		i.putExtra("ListId", mListId);
