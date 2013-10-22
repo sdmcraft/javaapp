@@ -25,15 +25,10 @@ import java.util.Map;
   *
  * @param <T> DOCUMENT ME!
  */
-public class NodeImpl<T>
-    implements Node<T>
+public class NodeImpl<T> implements Node<T>
 {
-    //~ Instance variables ---------------------------------------------------------------
-
     private final Map<String, Object> propertyMap = new HashMap<String, Object>();
     private final T value;
-
-    //~ Constructors ---------------------------------------------------------------------
 
     /**
      * Creates a new NodeImpl object.
@@ -44,8 +39,6 @@ public class NodeImpl<T>
     {
         this.value = value;
     }
-
-    //~ Methods --------------------------------------------------------------------------
 
     /**
      * DOCUMENT ME!
@@ -89,7 +82,6 @@ public class NodeImpl<T>
         return true;
     }
 
-
     /**
      * DOCUMENT ME!
      *
@@ -101,7 +93,6 @@ public class NodeImpl<T>
         return "\"" + value.toString() + "\"";
     }
 
-
     /**
      * DOCUMENT ME!
      *
@@ -112,7 +103,6 @@ public class NodeImpl<T>
     {
         return Collections.unmodifiableMap(propertyMap);
     }
-
 
     /**
      * DOCUMENT ME!
@@ -127,7 +117,6 @@ public class NodeImpl<T>
         return propertyMap.get(property);
     }
 
-
     /**
      * DOCUMENT ME!
      *
@@ -139,10 +128,10 @@ public class NodeImpl<T>
         return value;
     }
 
-
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
+
     /**
      * DOCUMENT ME!
      *
@@ -153,13 +142,10 @@ public class NodeImpl<T>
     {
         final int prime = 31;
         int result = 1;
-        result =
-            (prime * result) + ((value == null) ? 0
-                                                : value.hashCode());
+        result = (prime * result) + ((value == null) ? 0 : value.hashCode());
 
         return result;
     }
-
 
     /**
      * DOCUMENT ME!
@@ -168,13 +154,10 @@ public class NodeImpl<T>
      * @param value DOCUMENT ME!
      */
     @Override
-    public void setProperty(
-        String property,
-        Object value)
+    public void setProperty(String property, Object value)
     {
         propertyMap.put(property, value);
     }
-
 
     /**
      * DOCUMENT ME!
@@ -185,5 +168,11 @@ public class NodeImpl<T>
     public String toString()
     {
         return value.toString();
+    }
+
+    @Override
+    public void clearProperties()
+    {
+        propertyMap.clear();
     }
 }

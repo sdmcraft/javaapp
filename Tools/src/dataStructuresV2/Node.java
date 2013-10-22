@@ -12,5 +12,7 @@ public interface Node<T>
 
     public void setProperty(String property, Object value);
     
+    public void clearProperties();
+    
     public Map<String,Object> getProperties();
 }
