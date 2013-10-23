@@ -18,9 +18,10 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import org.sdm.timerecord.android.EntriesListAdapter;
 import org.sdm.timerecord.android.Globals;
 import org.sdm.timerecord.android.R;
-import org.sdm.timerecord.android.R.id;
-import org.sdm.timerecord.android.R.layout;
 import org.sdm.timerecord.android.daos.ListEntryDAO;
+import org.sdm.timerecord.android.model.ListEntriesModel;
+import org.sdm.timerecord.android.views.ListEntriesView;
+import org.sdm.timerecord.android.views.ListLineupView;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -50,15 +51,17 @@ public class ListEntriesActivity extends ListActivity {
 
 	
 	private List<ListEntryDAO> entries = new ArrayList<ListEntryDAO>();
+	public ListEntriesView view;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.entries_list);
+		view = (ListEntriesView)View.inflate(this, R.layout.list_entries, null);
 		int listId = getIntent().getExtras().getInt(
 				org.sdm.timerecord.android.daos.ListDAO.COL_ID);
-		fillData(listId);
-		registerForContextMenu(getListView());
+		view.setModel(ListEntriesModel.getInstance(listId));
+		view.render();
+		setContentView(view);
 	}
 
 	@Override
@@ -69,41 +72,6 @@ public class ListEntriesActivity extends ListActivity {
 		setResult(RESULT_OK, mIntent);
 		finish();
 		// super.onBackPressed();
-	}
-
-	private void fillData(int listId) {
-		// Get all of the rows from the database and create the item list
-		Cursor listsCursor = ListEntryDAO.queryByListId(Globals.getInstance()
-				.getDb(), listId);
-		while (listsCursor.moveToNext()) {
-			Long id = listsCursor.getLong(listsCursor
-					.getColumnIndex(ListEntryDAO.COL_ID));
-			String entryTime = listsCursor.getString(listsCursor
-					.getColumnIndex(ListEntryDAO.COL_ENTRY_TIME));
-			Long listId = listsCursor.getLong(listsCursor
-					.getColumnIndex(ListEntryDAO.COL_LIST_ID));
-			long value = listsCursor.getLong(listsCursor
-					.getColumnIndex(ListEntryDAO.COL_VALUE));
-
-			entries.add(new ListEntryDAO(id, entryTime, listId, value));
-		}
-		listsCursor.moveToFirst();
-		startManagingCursor(listsCursor);
-
-		// Create an array to specify the fields we want to display in the list
-		// (only TITLE)
-		String[] from = new String[] { ListEntryDAO.COL_ENTRY_TIME,
-				ListEntryDAO.COL_VALUE };
-
-		// and an array of the fields we want to bind those fields to (in this
-		// case just text1)
-		int[] to = new int[] { R.id.entryTime, R.id.entryValue };
-
-		// Now create a simple cursor adapter and set it to display
-		EntriesListAdapter entries = new EntriesListAdapter(this,
-				R.layout.entry_row, listsCursor, from, to);
-		setListAdapter(entries);
-
 	}
 
 	public void deleteEntryButtonClickHandler(View view) {
