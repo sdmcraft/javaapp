@@ -30,6 +30,7 @@ public class Main {
 		String name = "xxx";
 		String id = "yyy";
 		System.out.println("{\"name\" : " + name + " \"id\" : " + id + "}");
+		System.out.println(System.getProperty("os.name"));
 	}
 
 	private static String readFileAsString(String filePath)

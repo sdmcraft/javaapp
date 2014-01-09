@@ -1,3 +1,11 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+
 /*
  * Copyright (c) 2008, 2010, Oracle and/or its affiliates. All rights reserved.
  *
@@ -28,208 +36,255 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.FileSystems;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * Example to watch a directory (or tree) for changes to files.
  */
+public class WatchDir
+{
+    private static String cqHost;
+    private static String cqPort;
+    private static String cqUser;
+    private static String cqPwd;
+    private static String curl;
+    private static String workDir;
+    private final Map<WatchKey, Path> keys;
+    private final WatchService watcher;
+    private final boolean recursive;
+    private boolean trace = false;
 
-public class WatchDir {
+    /**
+     * Creates a WatchService and registers the given directory
+     */
+    WatchDir(Path dir, boolean recursive) throws IOException
+    {
+        this.watcher = FileSystems.getDefault().newWatchService();
+        this.keys = new HashMap<WatchKey, Path>();
+        this.recursive = recursive;
 
-	private final WatchService watcher;
-	private final Map<WatchKey, Path> keys;
-	private final boolean recursive;
-	private boolean trace = false;
-	private static String cqHost;
-	private static String cqPort;
-	private static String cqUser;
-	private static String cqPwd;
-	private static String curl;
-	private static String workDir;
+        if (recursive)
+        {
+            System.out.format("Scanning %s ...\n", dir);
+            registerAll(dir);
+            System.out.println("Done.");
+        }
+        else
+        {
+            register(dir);
+        }
 
-	@SuppressWarnings("unchecked")
-	static <T> WatchEvent<T> cast(WatchEvent<?> event) {
-		return (WatchEvent<T>) event;
-	}
+        // enable trace after initial registration
+        this.trace = true;
+    }
 
-	/**
-	 * Register the given directory with the WatchService
-	 */
-	private void register(Path dir) throws IOException {
-		WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE,
-				ENTRY_MODIFY);
-		if (trace) {
-			Path prev = keys.get(key);
-			if (prev == null) {
-				System.out.format("register: %s\n", dir);
-			} else {
-				if (!dir.equals(prev)) {
-					System.out.format("update: %s -> %s\n", prev, dir);
-				}
-			}
-		}
-		keys.put(key, dir);
-	}
+    @SuppressWarnings("unchecked")
+    static <T> WatchEvent<T> cast(WatchEvent<?> event)
+    {
+        return (WatchEvent<T>) event;
+    }
 
-	/**
-	 * Register the given directory, and all its sub-directories, with the
-	 * WatchService.
-	 */
-	private void registerAll(final Path start) throws IOException {
-		// register directory and sub-directories
-		Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
-			@Override
-			public FileVisitResult preVisitDirectory(Path dir,
-					BasicFileAttributes attrs) throws IOException {
-				register(dir);
-				return FileVisitResult.CONTINUE;
-			}
-		});
-	}
+    /**
+     * Register the given directory with the WatchService
+     */
+    private void register(Path dir) throws IOException
+    {
+        WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
 
-	/**
-	 * Creates a WatchService and registers the given directory
-	 */
-	WatchDir(Path dir, boolean recursive) throws IOException {
-		this.watcher = FileSystems.getDefault().newWatchService();
-		this.keys = new HashMap<WatchKey, Path>();
-		this.recursive = recursive;
+        if (trace)
+        {
+            Path prev = keys.get(key);
 
-		if (recursive) {
-			System.out.format("Scanning %s ...\n", dir);
-			registerAll(dir);
-			System.out.println("Done.");
-		} else {
-			register(dir);
-		}
+            if (prev == null)
+            {
+                System.out.format("register: %s\n", dir);
+            }
+            else
+            {
+                if (!dir.equals(prev))
+                {
+                    System.out.format("update: %s -> %s\n", prev, dir);
+                }
+            }
+        }
 
-		// enable trace after initial registration
-		this.trace = true;
-	}
+        keys.put(key, dir);
+    }
 
-	/**
-	 * Process all events for keys queued to the watcher
-	 */
-	void processEvents() {
-		for (;;) {
+    /**
+     * Register the given directory, and all its sub-directories, with the
+     * WatchService.
+     */
+    private void registerAll(final Path start) throws IOException
+    {
+        // register directory and sub-directories
+        Files.walkFileTree(start,
+            new SimpleFileVisitor<Path>()
+            {
+                @Override
+                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException
+                {
+                    register(dir);
 
-			// wait for key to be signalled
-			WatchKey key;
-			try {
-				key = watcher.take();
-			} catch (InterruptedException x) {
-				return;
-			}
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+    }
 
-			Path dir = keys.get(key);
-			if (dir == null) {
-				System.err.println("WatchKey not recognized!!");
-				continue;
-			}
+    /**
+     * Process all events for keys queued to the watcher
+     */
+    void processEvents()
+    {
+        for (;;)
+        {
+            // wait for key to be signalled
+            WatchKey key;
 
-			for (WatchEvent<?> event : key.pollEvents()) {
-				WatchEvent.Kind kind = event.kind();
+            try
+            {
+                key = watcher.take();
+            }
+            catch (InterruptedException x)
+            {
+                return;
+            }
 
-				// TBD - provide example of how OVERFLOW event is handled
-				if (kind == OVERFLOW) {
-					continue;
-				}
+            Path dir = keys.get(key);
 
-				// Context for directory entry event is the file name of entry
-				WatchEvent<Path> ev = cast(event);
-				Path name = ev.context();
-				Path child = dir.resolve(name);
+            if (dir == null)
+            {
+                System.err.println("WatchKey not recognized!!");
 
-				// print out event
-				System.out.format("%s: %s\n", event.kind().name(), child);
+                continue;
+            }
 
-				try {
-					String s = child.toString().substring(
-							child.toString().indexOf("jcr_root") + 8);
-					s = s.replace('\\', '/');
-					String command = "cmd /C " + curl + " -u " + cqUser + ":"
-							+ cqPwd + " -T " + child.toString() + " " + cqHost
-							+ ":" + cqPort + s;
-					System.out.println(command);
-					Process p = Runtime.getRuntime().exec(command);
-					BufferedReader in = new BufferedReader(
-							new InputStreamReader(p.getInputStream()));
-					String line = null;
-					while ((line = in.readLine()) != null) {
-						System.out.println(line);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+            for (WatchEvent<?> event : key.pollEvents())
+            {
+                WatchEvent.Kind kind = event.kind();
 
-				// if directory is created, and watching recursively, then
-				// register it and its sub-directories
-				if (recursive && (kind == ENTRY_CREATE)) {
-					try {
-						if (Files.isDirectory(child, NOFOLLOW_LINKS)) {
-							registerAll(child);
-						}
-					} catch (IOException x) {
-						// ignore to keep sample readbale
-					}
-				}
-			}
+                // TBD - provide example of how OVERFLOW event is handled
+                if (kind == OVERFLOW)
+                {
+                    continue;
+                }
 
-			// reset key and remove from set if directory no longer accessible
-			boolean valid = key.reset();
-			if (!valid) {
-				keys.remove(key);
+                // Context for directory entry event is the file name of entry
+                WatchEvent<Path> ev = cast(event);
+                Path name = ev.context();
+                Path child = dir.resolve(name);
 
-				// all directories are inaccessible
-				if (keys.isEmpty()) {
-					break;
-				}
-			}
-		}
-	}
+                // print out event
+                System.out.format("%s: %s\n", event.kind().name(), child);
 
-	static void usage() {
-		System.err
-				.println("usage: java WatchDir dir curl-path cq-host cq-port cq-user cq-pwd ");
-		System.exit(-1);
-	}
+                try
+                {
+                    String s = child.toString().substring(child.toString().indexOf("jcr_root") + 8);
+                    s = s.replace('\\', '/');
 
-	public static void main(String[] args) throws IOException {
-		// parse arguments
-		if (args.length == 0 || args.length > 6)
-			usage();
-		boolean recursive = true;
+                    String os = System.getProperty("os.name");
+                    String command = curl + " -u " + cqUser + ":" + cqPwd + " -T " + child.toString() + " " + cqHost + ":" + cqPort + s;
 
-		workDir = args[0];
-		curl = args[1];
-		cqHost = args[2];
-		cqPort = args[3];
-		cqUser = args[4];
-		cqPwd = args[5];
+                    if (os.contains("Windows"))
+                    {
+                        command = "cmd /C " + command;
+                    }
 
-		// register directory and process its events
-		Path dir = Paths.get(workDir);
-		new WatchDir(dir, recursive).processEvents();
-	}
+                    System.out.println(command);
+
+                    Process p = Runtime.getRuntime().exec(command);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                    String line = null;
+
+                    while ((line = in.readLine()) != null)
+                    {
+                        System.out.println(line);
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                // if directory is created, and watching recursively, then
+                // register it and its sub-directories
+                if (recursive && (kind == ENTRY_CREATE))
+                {
+                    try
+                    {
+                        if (Files.isDirectory(child, NOFOLLOW_LINKS))
+                        {
+                            registerAll(child);
+                        }
+                    }
+                    catch (IOException x)
+                    {
+                        // ignore to keep sample readbale
+                    }
+                }
+            }
+
+            // reset key and remove from set if directory no longer accessible
+            boolean valid = key.reset();
+
+            if (!valid)
+            {
+                keys.remove(key);
+
+                // all directories are inaccessible
+                if (keys.isEmpty())
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    static void usage()
+    {
+        System.err.println("usage: java WatchDir dir curl-path cq-host cq-port cq-user cq-pwd ");
+        System.exit(-1);
+    }
+
+    public static void main(String[] args) throws IOException
+    {
+        for (int i = 0; i < args.length; i++)
+        {
+            System.out.println("args[" + i + "]=" + args[i]);
+        }
+
+        // parse arguments
+        if ((args.length == 0) || (args.length > 6))
+        {
+            usage();
+        }
+
+        boolean recursive = true;
+
+        workDir = args[0];
+        curl = args[1];
+        cqHost = args[2];
+        cqPort = args[3];
+        cqUser = args[4];
+        cqPwd = args[5];
+
+        // register directory and process its events
+        Path dir = Paths.get(workDir);
+        new WatchDir(dir, recursive).processEvents();
+    }
 }

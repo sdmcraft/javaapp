@@ -1,5 +1,6 @@
 <project name="JavaApp" default="build" basedir=".">
 
+    <property environment="env" />
 	<property name="src.dir" value="src" />
 	<property name="dist.dir" value="dist" />
 	<property name="conf.dir" value="conf" />
@@ -35,6 +36,7 @@
 	</target>
 
 	<target name="prepare">
+	    <echo message="Tomcat Home===========${env.TOMCAT_HOME}"/>
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.classes}" />
 		<mkdir dir="${temp.dir}" />
