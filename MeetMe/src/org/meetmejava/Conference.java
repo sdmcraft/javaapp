@@ -147,14 +147,14 @@ public class Conference extends Observable {
 		return null;
 	}
 
-	public String requestDialOut(String phoneNumber) throws Exception {
+	public String requestDialOut(Extension extn) throws Exception {
 
-		logger.info("Requesting dial out for phone: " + phoneNumber);
+		logger.info("Requesting dial out for phone: " + extn.getNumber());
 		OriginateAction dialoutAction = new OriginateAction();
-		dialoutAction.setChannel(phoneNumber);
-
-		/* TODO Remove these hardcodings */
-		dialoutAction.setContext("local");
+		dialoutAction.setChannel(extn.getNumber());
+		dialoutAction.setContext(extn.getContext());
+		
+		/* TODO Remove these hardcodings */		
 		dialoutAction.setPriority(new Integer(1));
 		dialoutAction.setTimeout(new Long(30000));
 
@@ -163,8 +163,8 @@ public class Conference extends Observable {
 		context.getConnection().getManagerConnection()
 				.sendAction(dialoutAction, new DialoutActionCallback());
 
-		logger.info("Dial out was answered by " + phoneNumber);
-		return phoneNumber + "@" + meetMeRoom.getRoomNumber();
+		logger.info("Dial out was answered by " + extn.getNumber());
+		return extn.getNumber() + "@" + meetMeRoom.getRoomNumber();
 	}
 
 	/**

@@ -10,6 +10,7 @@ import org.asteriskjava.manager.AuthenticationFailedException;
 import org.asteriskjava.manager.TimeoutException;
 import org.meetmejava.Conference;
 import org.meetmejava.Context;
+import org.meetmejava.Extension;
 import org.meetmejava.User;
 import org.meetmejava.event.Event;
 
@@ -91,16 +92,16 @@ public class Client implements Observer {
 	 *             the interrupted exception
 	 */
 	public void demo(String ip, String admin, String pwd,
-			String conferenceNumber, String[] phoneNumbers, String extensionUrl)
+			String conferenceNumber, Extension[] extensions, String extensionUrl)
 			throws Exception {
 		Context context = Context.getInstance(ip, admin, pwd, extensionUrl);
 		Conference conference = Conference.getInstance(conferenceNumber,
 				context);
 		conference.addObserver(this);
 		Thread.sleep(2000);
-		for (String phoneNumber : phoneNumbers) {
+		for (Extension extn : extensions) {
 			System.out.println("User Number:"
-					+ conference.requestDialOut(phoneNumber) + " dialled out");
+					+ conference.requestDialOut(extn) + " dialled out");
 			Thread.sleep(30000);
 		}
 		if (users.containsKey("SIP/6000")) {
@@ -142,8 +143,8 @@ public class Client implements Observer {
 	 *             the interrupted exception
 	 */
 	public static void main(String[] args) throws Exception {
-		new Client().demo("192.168.1.102", "admin", "P@$$w0rd", "6300",
-				new String[] { "SIP/6000" },
-				"http://10.40.79.106:8080/AsteriskExtension/service");
+		new Client().demo("10.40.63.202", "admin", "amp111", "6300",
+				new Extension[] { new Extension("from-internal", "SIP/1000") },
+				"http://10.40.63.202:8080/AsteriskExtension/service");
 	}
 }
