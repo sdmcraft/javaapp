@@ -1,8 +1,15 @@
 import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -13,6 +20,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 class Main {
 	public static void main1(String[] args) throws Exception {
@@ -99,8 +109,59 @@ class Main {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main3(String[] args) {
 		TimeZone timeZone = TimeZone.getTimeZone("America/Los_Angeles");
 		System.out.println(timeZone.getDisplayName(true, 1));
+	}
+	
+	public static void main(String[] args) throws IOException {
+		Map<String, String> map = new HashMap<String, String>();
+		String s = readFile("C:\\temp\\result.json");
+		System.out.println();
+		JSONArray jsonArray = new JSONArray(s);
+		System.out.println("Total number of master posts:" + jsonArray.length());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
+		sdf.setTimeZone(TimeZone.getTimeZone("IST"));
+		PrintWriter writer = new PrintWriter("C:\\temp\\result-ist.csv");
+
+		for(int i = 0; i < jsonArray.length(); i++)
+		{
+			JSONObject masterPost = jsonArray.getJSONObject(i);
+			JSONObject template = masterPost.getJSONObject("template");
+			String campaign = "";
+			if(template.has("campaign"))
+			{
+				campaign = template.getJSONObject("campaign").getString("name");
+			}
+			JSONArray childPosts = masterPost.getJSONArray("posts");
+			for(int j = 0; j < childPosts.length(); j++)
+			{
+				JSONObject childPost = childPosts.getJSONObject(j);
+				Date scheduledDate = new Date(childPost.getJSONObject("to").getJSONObject("scheduled_time").getLong("utc")*1000L);
+				String formattedDate = sdf.format(scheduledDate);
+				
+				String postType = childPost.getString("type");	
+				writer.println(postType + "," + campaign + "," + formattedDate);
+			}			
+		}
+		writer.close();
+	}
+	
+	
+	public static String readFile(String fileName) throws IOException {
+	    BufferedReader br = new BufferedReader(new FileReader(fileName));
+	    try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append("\n");
+	            line = br.readLine();
+	        }
+	        return sb.toString();
+	    } finally {
+	        br.close();
+	    }
 	}
 }
