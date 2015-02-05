@@ -10,6 +10,7 @@ import org.asteriskjava.live.AsteriskQueue;
 import org.asteriskjava.live.AsteriskQueueEntry;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.live.AsteriskServerListener;
+import org.asteriskjava.live.ChannelState;
 import org.asteriskjava.live.MeetMeRoom;
 import org.asteriskjava.live.MeetMeUser;
 import org.asteriskjava.live.internal.AsteriskAgentImpl;
@@ -17,6 +18,9 @@ import org.asteriskjava.manager.ManagerEventListener;
 import org.asteriskjava.manager.event.HangupEvent;
 import org.asteriskjava.manager.event.ManagerEvent;
 import org.asteriskjava.manager.event.MeetMeEndEvent;
+import org.asteriskjava.manager.event.NewCallerIdEvent;
+import org.asteriskjava.manager.event.NewExtenEvent;
+import org.asteriskjava.manager.event.NewStateEvent;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -51,12 +55,12 @@ public class LiveEventHandler implements AsteriskServerListener,
 		context.getConnection().addManagerEventListener(this);
 
 		for (AsteriskChannel asteriskChannel : asteriskServer.getChannels()) {
-			logger.fine(asteriskChannel.toString());
+			logger.info(asteriskChannel.toString());
 			asteriskChannel.addPropertyChangeListener(this);
 		}
 
 		for (AsteriskQueue asteriskQueue : asteriskServer.getQueues()) {
-			logger.fine(asteriskQueue.toString());
+			logger.info(asteriskQueue.toString());
 			for (AsteriskQueueEntry asteriskQueueEntry : asteriskQueue
 					.getEntries()) {
 				asteriskQueueEntry.getChannel().addPropertyChangeListener(this);
@@ -64,13 +68,13 @@ public class LiveEventHandler implements AsteriskServerListener,
 		}
 
 		for (MeetMeRoom meetMeRoom : asteriskServer.getMeetMeRooms()) {
-			logger.fine(meetMeRoom.toString());
+			logger.info(meetMeRoom.toString());
 			for (MeetMeUser user : meetMeRoom.getUsers()) {
 				user.addPropertyChangeListener(this);
 			}
 		}
 
-		logger.fine("LiveEventHandler registered to receive events..");
+		logger.info("LiveEventHandler registered to receive events..");
 	}
 
 	/**
@@ -82,12 +86,12 @@ public class LiveEventHandler implements AsteriskServerListener,
 		context.getConnection().removeManagerEventListener(this);
 
 		for (AsteriskChannel asteriskChannel : asteriskServer.getChannels()) {
-			logger.fine(asteriskChannel.toString());
+			logger.info(asteriskChannel.toString());
 			asteriskChannel.removePropertyChangeListener(this);
 		}
 
 		for (AsteriskQueue asteriskQueue : asteriskServer.getQueues()) {
-			logger.fine(asteriskQueue.toString());
+			logger.info(asteriskQueue.toString());
 			for (AsteriskQueueEntry asteriskQueueEntry : asteriskQueue
 					.getEntries()) {
 				asteriskQueueEntry.getChannel().removePropertyChangeListener(
@@ -96,7 +100,7 @@ public class LiveEventHandler implements AsteriskServerListener,
 		}
 
 		for (MeetMeRoom meetMeRoom : asteriskServer.getMeetMeRooms()) {
-			logger.fine(meetMeRoom.toString());
+			logger.info(meetMeRoom.toString());
 			for (MeetMeUser user : meetMeRoom.getUsers()) {
 				user.removePropertyChangeListener(this);
 			}
@@ -113,7 +117,7 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 */
 	@Override
 	public void onNewAgent(AsteriskAgentImpl agent) {
-		logger.fine(agent.toString());
+		logger.info(agent.toString());
 		agent.addPropertyChangeListener(this);
 	}
 
@@ -126,8 +130,9 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 */
 	@Override
 	public void onNewAsteriskChannel(AsteriskChannel channel) {
-		logger.fine("A new channel joined:" + channel.toString());
+		logger.info("A new channel joined:" + channel.toString());
 		channel.addPropertyChangeListener(this);
+		context.getChannels().put(channel.getId(), channel);
 	}
 
 	/*
@@ -139,10 +144,10 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 */
 	@Override
 	public void onNewMeetMeUser(MeetMeUser user) {
-		logger.fine("A new user joined " + user.toString());
+		logger.info("A new user joined " + user.toString());
 		try {
 			// String phoneNumber = AsteriskUtils.getUserPhoneNumber(user);
-			// logger.fine("Phone Number:" + phoneNumber);
+			// logger.info("Phone Number:" + phoneNumber);
 			// Map<String, String> dialOutLock = context.getDialOutLocks().get(
 			// phoneNumber);
 			// if (dialOutLock != null) {
@@ -175,7 +180,7 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 */
 	@Override
 	public void onNewQueueEntry(AsteriskQueueEntry queueEntry) {
-		logger.fine(queueEntry.toString());
+		logger.info(queueEntry.toString());
 		queueEntry.addPropertyChangeListener(this);
 	}
 
@@ -187,7 +192,18 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-		logger.fine(propertyChangeEvent.toString());
+		logger.info(propertyChangeEvent.toString());
+		logger.info(propertyChangeEvent.getPropertyName());
+		if(propertyChangeEvent.getPropertyName().equals("state") && propertyChangeEvent.getOldValue().toString().equals("RINGING") &&
+				propertyChangeEvent.getNewValue().toString().equals("UP"))
+		{
+			AsteriskChannel source = (AsteriskChannel)propertyChangeEvent.getSource();	
+			source.getCallerId();
+		}
+		/*
+INFO: java.beans.PropertyChangeEvent[propertyName=state; oldValue=RINGING; newValue=UP; propagationId=null; source=AsteriskChannel[id='1406094200.6',name='SIP/callcentric-00000002',callerId='"SIP/callcentric/011919971647800"',state='UP',account='null',dateOfCreation=Wed Jul 23 11:13:29 IST 2014,dialedChannel=null,dialingChannel=null,linkedChannel=null]]
+INFO: java.beans.PropertyChangeEvent[propertyName=state; oldValue=RINGING; newValue=UP; propagationId=null; source=AsteriskChannel[id='1406092463.0',name='SIP/1001-00000000',callerId='"1001" <1001>',state='UP',account='null',dateOfCreation=Wed Jul 23 10:44:30 IST 2014,dialedChannel=null,dialingChannel=null,linkedChannel=null]]
+		 */
 	}
 
 	/*
@@ -199,7 +215,7 @@ public class LiveEventHandler implements AsteriskServerListener,
 	 */
 	@Override
 	public void onManagerEvent(ManagerEvent managerEvent) {
-		logger.fine("Received manager event: " + managerEvent);
+		logger.info("Received manager event: " + managerEvent);
 		if (managerEvent instanceof MeetMeEndEvent) {
 			MeetMeEndEvent endEvent = (MeetMeEndEvent) managerEvent;
 			Conference conference = context.getConferences().get(
@@ -209,6 +225,22 @@ public class LiveEventHandler implements AsteriskServerListener,
 		} else if (managerEvent instanceof HangupEvent) {
 			HangupEvent hangupEvent = (HangupEvent) managerEvent;
 			context.handleChannelHangup(hangupEvent.getUniqueId());
+		} else if (managerEvent instanceof NewStateEvent) {
+			NewStateEvent stateEvent = (NewStateEvent)managerEvent;
+			if(ChannelState.UP.equals(stateEvent.getChannelState()))
+			{
+				for(Conference conference : context.getConferences().values())
+				{
+					for(String pendingDialout : conference.getPendingDialOuts())
+					{
+						if(stateEvent.getCallerIdNum().equals(pendingDialout))
+						{
+							//conference.handleAddConferenceUser(user)
+						}
+					}
+				}
+			}
+			int a = 1;
 		}
 	}
 

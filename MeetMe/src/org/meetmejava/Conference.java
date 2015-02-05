@@ -2,8 +2,10 @@ package org.meetmejava;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 import org.asteriskjava.live.MeetMeRoom;
@@ -36,6 +38,8 @@ public class Conference extends Observable {
 
 	/** The recording. */
 	private boolean recording;
+	
+	private List<String> pendingDialOuts = new CopyOnWriteArrayList<String>(); 
 
 	private final static Logger logger = Logger.getLogger(Conference.class
 			.getName());
@@ -53,7 +57,7 @@ public class Conference extends Observable {
 	 */
 	private Conference(String conferenceNumber, Context context) {
 
-		logger.fine("Creating a new conference " + conferenceNumber);
+		logger.info("Creating a new conference " + conferenceNumber);
 		meetMeRoom = context.getAsteriskServer()
 				.getMeetMeRoom(conferenceNumber);
 		this.context = context;
@@ -67,7 +71,7 @@ public class Conference extends Observable {
 	 * events for this conference.
 	 */
 	private void init() {
-		logger.fine("Adding conference " + conferenceNumber + " to context");
+		logger.info("Adding conference " + conferenceNumber + " to context");
 		context.getConferences().put(conferenceNumber, this);
 	}
 
@@ -153,6 +157,8 @@ public class Conference extends Observable {
 		OriginateAction dialoutAction = new OriginateAction();
 		dialoutAction.setChannel(extn.getNumber());
 		dialoutAction.setContext(extn.getContext());
+		dialoutAction.setCallerId(extn.getCallerId());
+		dialoutAction.setActionId("myUniqueeId");		
 		
 		/* TODO Remove these hardcodings */		
 		dialoutAction.setPriority(new Integer(1));
@@ -162,8 +168,10 @@ public class Conference extends Observable {
 		
 		context.getConnection().getManagerConnection()
 				.sendAction(dialoutAction, new DialoutActionCallback());
+		
+		pendingDialOuts.add(extn.getNumber());
 
-		logger.info("Dial out was answered by " + extn.getNumber());
+		logger.info("Dial out was requested for " + extn.getNumber());
 		return extn.getNumber() + "@" + meetMeRoom.getRoomNumber();
 	}
 
@@ -174,7 +182,7 @@ public class Conference extends Observable {
 	 *             the exception
 	 */
 	public void requestEndConference() throws Exception {
-		logger.fine("Request received to end conference. Hanging up all users..");
+		logger.info("Request received to end conference. Hanging up all users..");
 
 		/*
 		 * Lock conferenceUserMap to avoid user left events modifying it while
@@ -199,13 +207,13 @@ public class Conference extends Observable {
 	 *             the exception
 	 */
 	public void handleAddConferenceUser(MeetMeUser user) throws Exception {
-		logger.fine("Handling user join event");
+		logger.info("Handling user join event");
 		User conferenceUser = new User(user);
 		conferenceUserMap.put(conferenceUser.getUserId(), conferenceUser);
 
 		setChanged();
 
-		logger.fine("Dispatching user-joined");
+		logger.info("Dispatching user-joined");
 		notifyObservers(new Event(EventType.USER_JOINED, conferenceUser));
 
 	}
@@ -224,7 +232,7 @@ public class Conference extends Observable {
 	 * Destroys this conference instance.
 	 */
 	public void destroy() {
-		logger.fine("Destroying the conference " + conferenceNumber);
+		logger.info("Destroying the conference " + conferenceNumber);
 		for (User user : conferenceUserMap.values()) {
 			if (user.isAlive())
 				user.requestHangUp();
@@ -274,5 +282,12 @@ public class Conference extends Observable {
 		if (meetMeRoom == null)
 			return null;
 		return meetMeRoom.getRoomNumber();
+	}
+
+	/**
+	 * @return the pendingDialOuts
+	 */
+	public List<String> getPendingDialOuts() {
+		return pendingDialOuts;
 	}
 }

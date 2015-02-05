@@ -4,10 +4,13 @@ public class Extension {
 	
 	private final String context;
 	private final String number;
-	public Extension(String context, String number) {
+	private final String callerId;
+	
+	public Extension(String context, String number, String callerId) {
 		super();
 		this.context = context;
 		this.number = number;
+		this.callerId = callerId;
 	}
 	/**
 	 * @return the context
@@ -20,6 +23,9 @@ public class Extension {
 	 */
 	public String getNumber() {
 		return number;
+	}
+	public String getCallerId() {
+		return callerId;
 	}
 
 }

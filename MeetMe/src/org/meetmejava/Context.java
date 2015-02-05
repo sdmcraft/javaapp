@@ -7,15 +7,13 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
+import org.asteriskjava.live.AsteriskChannel;
 import org.asteriskjava.live.AsteriskServer;
 import org.asteriskjava.live.DefaultAsteriskServer;
 import org.asteriskjava.manager.AuthenticationFailedException;
 import org.asteriskjava.manager.TimeoutException;
-import org.asteriskjava.manager.action.OriginateAction;
-import org.asteriskjava.manager.response.ManagerResponse;
 import org.jdom.Document;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
@@ -55,6 +53,9 @@ public class Context extends Observable {
 
 	/** The started conferences. */
 	private final Map<String, Conference> conferences = new HashMap<String, Conference>();
+	
+	/** Live channels*/
+	private final Map<String, AsteriskChannel> channels = new HashMap<String, AsteriskChannel>();
 
 	private final XMLOutputter xmlOutputter = new XMLOutputter(
 			Format.getPrettyFormat());
@@ -81,7 +82,7 @@ public class Context extends Observable {
 	private Context(String asteriskIp, String asteriskAdmin,
 			String asteriskPassword, String extensionURL) throws Exception {
 		try {
-			logger.fine("Creating a new context for " + asteriskIp + ","
+			logger.info("Creating a new context for " + asteriskIp + ","
 					+ extensionURL);
 			this.asteriskIp = asteriskIp;
 			this.asteriskAdmin = asteriskAdmin;
@@ -216,6 +217,13 @@ public class Context extends Observable {
 	 */
 	Map<String, Conference> getConferences() {
 		return conferences;
+	}
+
+	/**
+	 * @return the channels
+	 */
+	public Map<String, AsteriskChannel> getChannels() {
+		return channels;
 	}
 
 }

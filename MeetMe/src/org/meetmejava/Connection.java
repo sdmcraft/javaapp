@@ -33,7 +33,7 @@ public class Connection {
 	 *            the pwd
 	 */
 	public Connection(String address, String uname, String pwd) {
-		logger.fine("Creating a manager connection for " + address + ","
+		logger.info("Creating a manager connection for " + address + ","
 				+ uname);
 		ManagerConnectionFactory factory = new ManagerConnectionFactory(
 				address, uname, pwd);
