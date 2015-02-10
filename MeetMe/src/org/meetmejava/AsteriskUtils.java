@@ -53,6 +53,39 @@ public class AsteriskUtils {
 		return validRoom;
 	}
 
+
+	/**
+	 * Gets the user phone number.
+	 * 
+	 * @param user
+	 *            the user
+	 * @return the user phone number
+	 */
+	public static final String getUserPhoneNumber(MeetMeUser user) {
+//		String channel = user.getChannel().getName();
+//		return getPhoneNumberFromChannel(channel);
+		return user.getChannel().getCallerId().getNumber();
+	}
+
+	/**
+	 * The main method.
+	 * 
+	 * @param args
+	 *            the arguments
+	 * @throws Exception
+	 *             the exception
+	 */
+	public static void main(String[] args) throws Exception {
+		ManagerConnectionFactory factory = new ManagerConnectionFactory(
+				"192.168.1.103", "admin", "P@$$w0rd");
+
+		ManagerConnection managerConnection = factory.createManagerConnection();
+		managerConnection.login();
+		verifyMeetMeRoom("6300", "6000", managerConnection);
+		managerConnection.logoff();
+	}
+	
+	//***********DEPRECATED-DO NOT USE*************//
 	/**
 	 * Gets the phone number from channel.
 	 * 
@@ -75,34 +108,6 @@ public class AsteriskUtils {
 		}
 		return phoneNumber;
 	}
+	//***********DEPRECATED-DO NOT USE*************//
 
-	/**
-	 * Gets the user phone number.
-	 * 
-	 * @param user
-	 *            the user
-	 * @return the user phone number
-	 */
-	public static final String getUserPhoneNumber(MeetMeUser user) {
-		String channel = user.getChannel().getName();
-		return getPhoneNumberFromChannel(channel);
-	}
-
-	/**
-	 * The main method.
-	 * 
-	 * @param args
-	 *            the arguments
-	 * @throws Exception
-	 *             the exception
-	 */
-	public static void main(String[] args) throws Exception {
-		ManagerConnectionFactory factory = new ManagerConnectionFactory(
-				"192.168.1.103", "admin", "P@$$w0rd");
-
-		ManagerConnection managerConnection = factory.createManagerConnection();
-		managerConnection.login();
-		verifyMeetMeRoom("6300", "6000", managerConnection);
-		managerConnection.logoff();
-	}
 }

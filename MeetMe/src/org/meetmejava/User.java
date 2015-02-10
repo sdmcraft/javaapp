@@ -151,8 +151,10 @@ public class User extends Observable implements PropertyChangeListener {
 	 * @return the phone number
 	 */
 	public String getPhoneNumber() {
-		return AsteriskUtils.getPhoneNumberFromChannel(meetMeUser.getChannel()
-				.getName());
+//		return AsteriskUtils.getPhoneNumberFromChannel(meetMeUser.getChannel()
+//				.getName());
+		return AsteriskUtils.getUserPhoneNumber(meetMeUser);
+
 	}
 
 	/**

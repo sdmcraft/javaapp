@@ -143,6 +143,7 @@ public class Client implements Observer {
 	 *             the interrupted exception
 	 */
 	public static void main(String[] args) throws Exception {
+
 		new Client().demo("54.82.100.31", "admin", "amp111", "2663",
 				new Extension[] { new Extension("from-internal", "SIP/callcentric/011919971647800", "SIP/callcentric/011919971647800") },
 				"http://10.40.63.202:8080/AsteriskExtension/service");
