@@ -98,7 +98,7 @@ public class Client implements Observer {
 		Conference conference = Conference.getInstance(conferenceNumber,
 				context);
 		conference.addObserver(this);
-		Thread.sleep(2000);
+		Thread.sleep(2*1000);
 		for (Extension extn : extensions) {
 			System.out.println("User Number:"
 					+ conference.requestDialOut(extn) + " dialled out");
@@ -144,9 +144,10 @@ public class Client implements Observer {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		new Client().demo("54.82.100.31", "admin", "amp111", "2663",
-				new Extension[] { new Extension("from-internal", "SIP/callcentric/011919971647800", "SIP/callcentric/011919971647800") },
-				"http://10.40.63.202:8080/AsteriskExtension/service");
+		new Client().demo("192.168.1.104", "admin", "amp111", "600", new Extension[] {new Extension("LocalSets", "SIP/callcentric/011919971647800", "+17772941415")}, null);
+//		new Client().demo("192.168.1.104", "admin", "amp111", "600", 
+//				new Extension[] { new Extension("from-internal", "SIP/callcentric/011919971647800", "SIP/callcentric/011919971647800") },
+//				"http://10.40.63.202:8080/AsteriskExtension/service");
 		
 //		new Client().demo("10.40.63.202", "admin", "amp111", "6300",
 //				new Extension[] { new Extension("from-internal", "SIP/1001", "SIP/1001") },
