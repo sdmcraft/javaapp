@@ -1,0 +1,94 @@
+<project name="WebApp" default="all" basedir=".">
+
+	<property environment="env" />
+
+	<property name="src.dir" value="src" />	
+	<property name="dist.dir" value="dist" />
+	<property name="conf.dir" value="conf" />
+	<property name="web.dir" value="web" />
+	<property name="lib.dir" value="lib" />
+	<property name="lib-noship.dir" value="lib-noship" />
+
+	<property name="build.dir" value="build" />
+	<property name="build.classes" value="${build.dir}/WEB-INF/classes" />
+	<property name="build.web.dir" value="${build.dir}/web" />
+
+	<property name="temp.dir" value="temp" />
+	<property name="deploy.dir" value="${env.TOMCAT_HOME}/webapps" />
+
+	<property name="javac.debug" value="on" />
+
+	<property name="build.compiler" value="modern" />
+
+	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
+
+	<path id="mylibs">
+		<fileset dir="${lib.dir}">
+			<patternset refid="java.libs" />
+		</fileset>
+		<fileset dir="${lib-noship.dir}">
+			<patternset refid="java.libs" />
+		</fileset>
+	</path>
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${build.web.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="build" depends="prepare">
+		<javac classpathref="mylibs" destdir="${build.classes}" debug="on" debuglevel="lines,vars,source" deprecation="on">
+			<src path="${src.dir}" />			
+		</javac>
+
+		<jar destfile="${build.web.dir}/applets.jar" basedir="${build.classes}" includes="applets/**" />
+
+		<copy todir="${build.dir}/WEB-INF">
+			<fileset dir="${conf.dir}" includes="web.xml,jboss-web.xml" />
+		</copy>
+
+		<copy todir="${build.dir}/META-INF">
+			<fileset dir="${conf.dir}" includes="context.xml" />
+		</copy>
+
+		<copy todir="${build.classes}">
+			<fileset dir="${conf.dir}" includes="**/*.properties" />
+		</copy>
+
+		<copy todir="${build.dir}/WEB-INF/lib">
+			<fileset dir="${lib.dir}" includes="*.jar" excludes="servlet-api.jar" />
+		</copy>
+
+		<copy todir="${build.web.dir}">
+			<fileset dir="${web.dir}" includes="**/*" />
+		</copy>
+
+		<jar jarfile="${dist.dir}/WebApp.war" manifest="manifest.mf" basedir="${build.dir}" />
+	</target>
+
+	<target name="all" depends="deploy" />
+
+	<target name="clean" >
+		<delete quiet="true">
+			<fileset dir="${build.classes}" includes="**/*" />
+			<fileset dir="${temp.dir}" includes="**/*" />
+			<fileset dir="${dist.dir}" includes="**/*" />
+		</delete>
+	</target>
+
+	<target name="cleanall" depends="clean">
+		<delete dir="${build.dir}" quiet="true"/>
+		<delete dir="${temp.dir}" quiet="true"/>
+		<delete dir="${dist.dir}" quiet="true"/>
+	</target>
+
+	<target name="deploy" depends="cleanall,build">
+		<copy todir="${deploy.dir}">
+			<fileset dir="${dist.dir}" includes="WebApp.war" />
+		</copy>
+	</target>
+
+</project>

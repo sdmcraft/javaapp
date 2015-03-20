@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+<ModulePrefs title="Adobe Connect Events Catalog" height="350" width="300" scrolling="true"/>
+<Content type="html">
+<![CDATA[
+<script type="text/javascript">
+var debug = false;
+function getEventCatalog() {
+   var params = {};
+   params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.DOM;
+   var url = document.getElementById("service_url").value;
+   gadgets.io.makeRequest(url, response, params );
+};
+function response(obj) {
+   if (debug) {
+     alert("Got response from service");
+   }
+   var domdata = obj.data
+   var html = "<table>";
+   var eventList = domdata.getElementsByTagName("event");
+   for (i = 0; i < eventList.length; i++) {
+     var eventName = eventList[i].getElementsByTagName("name")[0];
+     var description = eventList[i].getElementsByTagName("description")[0];
+     var path = eventList[i].getElementsByTagName("path")[0];
+     var begin = eventList[i].getElementsByTagName("date-begin")[0];
+     var end = eventList[i].getElementsByTagName("date-end")[0];
+     var duration = eventList[i].getElementsByTagName("duration")[0];
+     var eventInfo = eventList[i].getElementsByTagName("event-info")[0];
+     html += "<tr>";
+     html += "<td>";
+ 	 //html += "<a href='http://www.carahsoft.com/event-detail/961/adobe/'  target='_blank'>";
+ 	 html += "<a href='http://connectdev1:4503/content/connect_events/microsites/c1/11781/en/event/shared/event_template1/event_landing.html?sco-id=11849'  target='_blank'>";
+	 html += "<u><b>";
+	 html += "<font color='blue'>";
+	 html += eventName.childNodes[0].nodeValue;
+	 html += "</font>";
+	 html += "</u></b>";
+     html += "</td>";
+     html += "</tr>";
+     html += "<td>";
+     html += "<b>";
+
+     html += "<font color='green'>";
+     html += begin.childNodes[0].nodeValue.substring(0,9) + "&nbsp; TO &nbsp;" +
+end.childNodes[0].nodeValue.substring(0,9);
+     html += "</font>";
+     html += "</b>";
+     html += "</td>";
+     html += "<tr>";
+     html += "</tr>";
+     html += "<tr>";
+     html += "<td>";
+     html += "<i>";
+     html += description.childNodes[0].nodeValue;
+     html += "</i>";
+     html += "</td>";
+     html += "<td>";
+     html += "<image src='http://ec2-50-18-128-218.us-west-1.compute.amazonaws.com/flash-training/event/event_listing.gif' />";
+     html += "</td>";
+     html += "</tr>";
+     html += "<tr>";
+     html += "<td>";
+     html += "</td>";
+     html += "</tr>";
+     html += "<tr>";
+     html += "<td>";
+     html += "</td>";
+     html += "</tr>";
+   }
+   html += "</table>";
+   document.getElementById('content_div').innerHTML = html;
+};
+</script>
+<body onload="getEventCatalog()">
+<input type="hidden" id="service_url"
+   value="http://ec2-50-18-128-218.us-west-1.compute.amazonaws.com/api/xml?action=event-list" />
+<div id='content_div'></div>
+</body>
+]]>
+</Content>
+</Module>

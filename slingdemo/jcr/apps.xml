@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<slingdemo jcr:primaryType="sling:Folder"
+    jcr:created="2013-07-19T18:12:40.465+05:30" jcr:createdBy="admin"
+    xmlns:ocm="http://jackrabbit.apache.org/ocm"
+    xmlns:fn="http://www.w3.org/2005/xpath-functions"
+    xmlns:fn_old="http://www.w3.org/2004/10/xpath-functions"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:slingevent="http://sling.apache.org/jcr/event/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    xmlns:sv="http://www.jcp.org/jcr/sv/1.0"
+    xmlns:mix="http://www.jcp.org/jcr/mix/1.0"
+    xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:rep="internal"
+    xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    xmlns:ocm="http://jackrabbit.apache.org/ocm"
+    xmlns:fn="http://www.w3.org/2005/xpath-functions"
+    xmlns:fn_old="http://www.w3.org/2004/10/xpath-functions"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:slingevent="http://sling.apache.org/jcr/event/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    xmlns:sv="http://www.jcp.org/jcr/sv/1.0"
+    xmlns:mix="http://www.jcp.org/jcr/mix/1.0"
+    xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:rep="internal"
+    xmlns:nt="http://www.jcp.org/jcr/nt/1.0">
+    <createuser jcr:primaryType="nt:folder"
+        jcr:created="2013-07-19T18:14:04.956+05:30" jcr:createdBy="admin">
+        <createuser.jsp jcr:primaryType="nt:file"
+            jcr:created="2013-07-19T18:34:32.121+05:30" jcr:createdBy="admin">
+            <jcr:content jcr:primaryType="nt:resource"
+                jcr:uuid="adac97e9-c40e-437c-b85a-4aede333ada3"
+                jcr:data="PGgxPkhlbGxvPC9oMT4="
+                jcr:lastModified="2013-07-19T13:19:41.259Z"
+                jcr:lastModifiedBy="admin"
+                jcr:mimeType="application/octet-stream">
+            </jcr:content>
+        </createuser.jsp>
+    </createuser>
+</slingdemo>

@@ -1,0 +1,67 @@
+<project name="AsteriskExtension" default="all" basedir=".">
+
+	<property environment="env" />
+
+	<property name="src.dir" value="src" />
+	<property name="dist.dir" value="dist" />
+	<property name="conf.dir" value="conf" />
+	<property name="lib.dir" value="lib" />
+	<property name="lib-noship.dir" value="lib-noship" />
+
+	<property name="build.dir" value="build" />
+	<property name="build.classes" value="${build.dir}/WEB-INF/classes" />
+
+	<property name="temp.dir" value="temp" />
+
+	<property name="javac.debug" value="on" />
+
+	<property name="build.compiler" value="modern" />
+
+	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
+
+	<path id="mylibs">
+		<fileset dir="${lib.dir}">
+			<patternset refid="java.libs" />
+		</fileset>
+		<fileset dir="${lib-noship.dir}">
+			<patternset refid="java.libs" />
+		</fileset>
+	</path>
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${temp.dir}" />
+	</target>
+
+	<target name="build" depends="cleanall,prepare">
+		<javac classpathref="mylibs" destdir="${build.classes}" debug="on" debuglevel="lines,vars,source" deprecation="on">
+			<src path="${src.dir}" />
+		</javac>
+
+		<copy todir="${build.dir}/WEB-INF">
+			<fileset dir="${conf.dir}" includes="web.xml" />
+		</copy>
+
+		<copy todir="${build.dir}/WEB-INF/classes">
+			<fileset dir="${conf.dir}" includes="logging.properties" />
+		</copy>
+
+		<jar jarfile="${dist.dir}/AsteriskExtension.war" basedir="${build.dir}" />
+	</target>
+
+	<target name="all" depends="build" />
+
+	<target name="clean" >
+		<delete quiet="true">
+			<fileset dir="${build.classes}" includes="**/*" />
+			<fileset dir="${temp.dir}" includes="**/*" />
+		</delete>
+	</target>
+
+	<target name="cleanall" depends="clean">
+		<delete dir="${build.dir}" quiet="true"/>
+		<delete dir="${temp.dir}" quiet="true"/>
+	</target>
+
+</project>

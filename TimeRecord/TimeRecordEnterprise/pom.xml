@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>TimeRecord</artifactId>
+		<groupId>TimeRecord</groupId>
+		<version>1.0</version>
+	</parent>
+	<groupId>TimeRecord.TimeRecord</groupId>
+	<artifactId>TimeRecordEnterprise</artifactId>
+	<version>1.0</version>
+	<name>TimeRecordEnterprise</name>
+	<packaging>ear</packaging>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>TimeRecord.TimeRecord</groupId>
+			<artifactId>TimeRecordBusiness</artifactId>
+			<version>1.0</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>TimeRecord.TimeRecord</groupId>
+			<artifactId>TimeRecordWeb</artifactId>
+			<version>1.0</version>
+			<type>war</type>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<modules>
+						<ejbModule>
+							<groupId>TimeRecord.TimeRecord</groupId>
+							<artifactId>TimeRecordBusiness</artifactId>
+							<!-- <version>1.0</version> -->
+						</ejbModule>
+						<webModule>
+							<groupId>TimeRecord.TimeRecord</groupId>
+							<artifactId>TimeRecordWeb</artifactId>
+							<!-- <version>1.0</version> -->
+							<!-- 4.5.3.2. Specify the context root if you need different name. -->
+							<!-- Default is: "/${pom.artifactId} -->
+							<!-- contextRoot>iris</contextRoot-->
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jboss-maven-plugin</artifactId>
+				<version>1.5.0</version>
+				<configuration>
+					<fileName>target/TimeRecordEnterprise-1.0.ear</fileName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

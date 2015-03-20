@@ -1,0 +1,125 @@
+<project name="PersistentHashMap" default="build" basedir=".">
+
+	<property name="src.dir" value="src" />
+	<property name="dist.dir" value="dist" />
+	<property name="conf.dir" value="conf" />
+	<property name="lib.dir" value="lib" />
+	<property name="build.dir" value="build" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="temp.dir" value="temp" />
+	<property name="coverage.dir" value="coverage" />
+	<property name="log.dir" value="log" />
+	<property name="doc.dir" value="doc" />
+
+	<property name="javac.debug" value="on" />
+	<property name="build.compiler" value="modern" />
+
+	<patternset id="java.libs" includes="**/*.jar,**/*.zip" />
+
+	<path id="mylibs">
+		<fileset dir="${lib.dir}">
+			<patternset refid="java.libs" />
+		</fileset>
+		<fileset dir="${dist.dir}">
+			<patternset refid="java.libs" />
+		</fileset>
+	</path>
+
+	<path id="emma.lib">
+		<pathelement location="${lib.dir}/emma.jar" />
+		<pathelement location="${lib.dir}/emma_ant.jar" />
+	</path>
+
+	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+
+	<target name="emma"
+		description="turns on EMMA's on-the-fly instrumentation mode">
+		<property name="emma.enabled" value="true" />
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${temp.dir}" />
+	</target>
+
+	<target name="build" depends="prepare">
+		<javac classpathref="mylibs" destdir="${build.classes}"
+			debug="on" debuglevel="lines,vars,source" deprecation="on">
+			<src path="${src.dir}" />
+		</javac>
+
+		<jar jarfile="${dist.dir}/PersistentHashMap.jar"
+			basedir="${build.classes}" />
+
+		<jar jarfile="${dist.dir}/PersistentHashMap.jar"
+			basedir="${conf.dir}" update="true" />
+	</target>
+
+	<target name="clean">
+		<delete quiet="true">
+			<fileset dir="${build.classes}" includes="**/*" />
+			<fileset dir="${temp.dir}" includes="**/*" />
+			<fileset dir="${coverage.dir}" includes="**/*" />
+			<fileset dir="${log.dir}" includes="**/*" />
+		</delete>
+	</target>
+
+	<target name="cleanall" depends="clean">
+		<delete quiet="true" dir="${build.dir}" />
+		<delete quiet="true" dir="${temp.dir}" />
+	</target>
+
+	<target name="run" depends="cleanall,build">
+		<java jar="dist/PersistentHashMap.jar" fork="true">
+			<sysproperty key="logFile" value="${log.dir}/debug.log" />
+		</java>
+	</target>
+
+	<target name="debug" depends="cleanall,build">
+		<java jar="dist/PersistentHashMap.jar" fork="true">
+			<sysproperty key="DEBUG" value="true" />
+			<sysproperty key="logFile" value="${log.dir}/debug.log" />
+			<jvmarg
+				value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000" />
+		</java>
+	</target>
+
+	<target name="debugTest" depends="cleanall,build">
+		<java classname="org.junit.runner.JUnitCore"
+			classpathref="mylibs" fork="true">
+			<jvmarg
+				value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000" />
+			<arg value="com.sdm.product.test.TestPersistentHashMap" />
+		</java>
+	</target>
+
+
+	<target name="test" depends="cleanall,build,emma">
+		<emmajava enabled="${emma.enabled}" libclasspathref="emma.lib"
+			sourcepath="${src.dir}" classpathref="mylibs"
+			classname="org.junit.runner.JUnitCore">
+			<sysproperty key="logFile" value="${log.dir}/debug.log" />
+			<arg value="com.sdm.product.test.TestPersistentHashMap" />
+			<html outfile="${coverage.dir}/coverage.html" />
+			<filter includes="com.sdm.product.*" />
+		</emmajava>
+	</target>
+
+	<target name="doc">
+		<javadoc packagenames="com.sdm.product.*"
+			sourcepath="${src.dir}" excludepackagenames="com.sdm.product.test.*"
+			defaultexcludes="yes" destdir="${doc.dir}" author="true"
+			version="true" use="true" windowtitle="PersistentHashMap API">
+			<doctitle><![CDATA[<h1>PersistentHashMap API</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2000 SDM Corp. All Rights Reserved.</i>]]></bottom>
+		</javadoc>
+	</target>
+	
+	<target name="release" depends="build,doc">
+		<zip destfile="${dist.dir}/src.zip" basedir="${src.dir}" />
+		<zip destfile="${dist.dir}/doc.zip" basedir="${doc.dir}" />
+		<zip destfile="${release}/PersistentHashMap.zip" basedir="${dist.dir}" />
+	</target>
+
+</project>

@@ -1,0 +1,58 @@
+<class-diagram version="0.9.86" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <interface corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.TagData" project="FLVParser1.0" 
+    file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false">    
+    <position x="391" y="46" width="148" height="67"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </interface>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.VideoData" project="FLVParser1.0" 
+    file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/VideoData.java" binary="false">    
+    <position x="103" y="149" width="244" height="195"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.AudioData" project="FLVParser1.0" 
+    file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/AudioData.java" binary="false">    
+    <position x="355" y="163" width="247" height="227"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="com.sdm.FLVParser.datatypes.ScriptData" project="FLVParser1.0" 
+    file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/ScriptData.java" binary="false">    
+    <position x="629" y="165" width="190" height="115"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <realization>    
+    <source project="FLVParser1.0" name="com.sdm.FLVParser.datatypes.ScriptData" 
+      file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/ScriptData.java" binary="false"/>    
+    <target project="FLVParser1.0" name="com.sdm.FLVParser.datatypes.TagData" 
+      file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false"/>  
+  </realization>  
+  <realization>    
+    <source project="FLVParser1.0" name="com.sdm.FLVParser.datatypes.VideoData" 
+      file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/VideoData.java" binary="false"/>    
+    <target project="FLVParser1.0" name="com.sdm.FLVParser.datatypes.TagData" 
+      file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false"/>  
+  </realization>  
+  <realization>    
+    <source project="FLVParser1.0" name="com.sdm.FLVParser.datatypes.AudioData" 
+      file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/AudioData.java" binary="false"/>    
+    <target project="FLVParser1.0" name="com.sdm.FLVParser.datatypes.TagData" 
+      file="/FLVParser1.0/src/com/sdm/FLVParser/datatypes/TagData.java" binary="false"/>  
+  </realization>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

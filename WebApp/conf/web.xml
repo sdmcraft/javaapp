@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<!-- <resource-ref> <description>DB Connection</description> <res-ref-name>jdbc/breeze</res-ref-name> 
+		<res-type>javax.sql.DataSource</res-type> <res-auth>Container</res-auth> 
+		</resource-ref> -->
+
+	<context-param>
+		<param-name>ctxParam</param-name>
+		<param-value>"I am a ctx param"</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>listeners.MySessionListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>JMSservlet</servlet-name>
+		<servlet-class>servlets.JMSservlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>DBServlet</servlet-name>
+		<servlet-class>servlets.DBServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ServletA</servlet-name>
+		<servlet-class>servlets.ServletA</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ServletB</servlet-name>
+		<servlet-class>servlets.ServletB</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ServletC</servlet-name>
+		<servlet-class>servlets.pkg.ServletC</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>BeanDemoPG</servlet-name>
+		<jsp-file>/web/BeanDemoPG.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>BeanDemoPG</servlet-name>
+		<url-pattern>/BeanDemoPG</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ImageUploadPG</servlet-name>
+		<jsp-file>/web/ImageUploadPG.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ImageUploadPG</servlet-name>
+		<url-pattern>/ImageUploadPG</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SecureServlet</servlet-name>
+		<servlet-class>servlets.SecureServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>CtxParamDemoServlet</servlet-name>
+		<servlet-class>servlets.CtxParamDemoServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CtxParamDemoServlet</servlet-name>
+		<url-pattern>/CtxParamDemoServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileUploadDemoServlet</servlet-name>
+		<servlet-class>servlets.FileUploadDemoServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FileUploadDemoServlet</servlet-name>
+		<url-pattern>/FileUploadDemoServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileDownloadServlet</servlet-name>
+		<servlet-class>servlets.FileDownloadServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FileDownloadServlet</servlet-name>
+		<url-pattern>/FileDownloadServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>JMSservlet</servlet-name>
+		<url-pattern>/JMSservlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>DBServlet</servlet-name>
+		<url-pattern>/DBServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ServletA</servlet-name>
+		<url-pattern>/ServletA</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ServletB</servlet-name>
+		<url-pattern>/ServletB</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ServletC</servlet-name>
+		<url-pattern>/ServletC</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SecureServlet</servlet-name>
+		<url-pattern>/SecureServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CookieServlet</servlet-name>
+		<servlet-class>servlets.CookieServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CookieServlet</servlet-name>
+		<url-pattern>/CookieServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TestPG</servlet-name>
+		<jsp-file>/web/TestPG.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>TestPG</servlet-name>
+		<url-pattern>/TestPG</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TestPG2</servlet-name>
+		<jsp-file>/web/TestPG2.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>TestPG2</servlet-name>
+		<url-pattern>/TestPG2</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ELDemoPG</servlet-name>
+		<jsp-file>/web/ELDemo.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ELDemoPG</servlet-name>
+		<url-pattern>/ELDemoPG</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>HelloWorld</servlet-name>
+		<jsp-file>/web/HelloWorld.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HelloWorld</servlet-name>
+		<url-pattern>/HelloWorld</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ImageUpload</servlet-name>
+		<servlet-class>servlets.ImageUploadServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ImageUpload</servlet-name>
+		<url-pattern>/ImageUpload</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ImageDisplay</servlet-name>
+		<servlet-class>servlets.ImageDisplayServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ImageDisplay</servlet-name>
+		<url-pattern>/ImageDisplay</url-pattern>
+	</servlet-mapping>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+	<security-role>
+		<role-name>admin</role-name>
+	</security-role>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>SecureServlet</web-resource-name>
+			<url-pattern>/SecureServlet</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<filter>
+		<filter-name>DemoFilter</filter-name>
+		<filter-class>filters.DemoFilter</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>Filter1</filter-name>
+		<filter-class>filters.Filter1</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>Filter2</filter-name>
+		<filter-class>filters.Filter2</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>Filter1</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>Filter1</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>Filter2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>DemoFilter</filter-name>
+		<servlet-name>FilteredServlet</servlet-name>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>FilteredServlet</servlet-name>
+		<servlet-class>servlets.FilteredServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FilteredServlet</servlet-name>
+		<url-pattern>/FilteredServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UploadStatusServlet</servlet-name>
+		<servlet-class>servlets.UploadStatusServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UploadStatusServlet</servlet-name>
+		<url-pattern>/UploadStatusServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ServerSentEventDemoServlet</servlet-name>
+		<servlet-class>servlets.ServerSentEventDemoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServerSentEventDemoServlet</servlet-name>
+		<url-pattern>/ServerSentEventDemoServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SessionNotificationServlet</servlet-name>
+		<servlet-class>servlets.SessionNotificationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SessionNotificationServlet</servlet-name>
+		<url-pattern>/SessionNotificationServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DataStoreServlet</servlet-name>
+		<servlet-class>servlets.DataStoreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DataStoreServlet</servlet-name>
+		<url-pattern>/DataStoreServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LinkedInServlet</servlet-name>
+		<servlet-class>servlets.LinkedInServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LinkedInServlet</servlet-name>
+		<url-pattern>/LinkedInServlet</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>1</session-timeout>
+	</session-config>
+</web-app>

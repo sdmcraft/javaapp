@@ -1,0 +1,38 @@
+Title:
+Java Library for AMF and its usage for FLV parsing
+
+Overview:
+A Java based library for Action Message Format (AMF) is a means of reading AMF objects and instantiating them as plain java objects. This library provides the capability of creating and modifying AMF objects through Java.
+As an extension of this, the library is used for reading an FLV to a Java object tree. The FLV is read from a file input stream and a complete java object tree is generated for it, starting from the FLV as root node and then moving down to FLV header and body. The FLV body again has a list of Audio, Video or Script Data tags as plain java objects. Moving further down, each tag is made up of AMF data types like boolean, array, number etc. And the basic types like UTF-8, U8, U16 etc. are the building blocks for these. The library ensures that there is a java class for each
+
+What does this solution address:
+1.There are AMF objects bunched together under FLVs which need to be parsed, viewed and modified though a Java program.
+2.A Java based interface is required for creating AMF objects and then assembling them together as FLVs.
+
+Overview of FLV parsing algorithm
+1.An FLV file is provided as an input to the FLV parser
+2,Open a push back input stream for reading the FLV. A pushback stream is required to unread data if necessary, while parsing.
+3.Read the FLV header to create a Header Java object.
+4.Read the FLV body to create a FLV body Java object.
+5 Read the FLV audio/video/data tags that make up the body as java objects.
+6.While reading data tags, read and instantiate it constituent AMF objects.
+7.Once end of stream is reached, the whole FLV has been loaded as a java object tree, constituting of Tags, AMF objects, basic AMF data types as its nodes at various levels.
+
+Overview of FLV creation algorithm
+1.Create basic data type objects like U8, U16, UTF types etc.
+2.Aggregate the basic type objects to form AMF objects like Number, Boolean, Arrays etc.
+3.Aggregate AMF data type objects to form script data tag objects.
+4.Create Audio/Video tag objects.
+5.Aggregate all tag objects to create a FLV body object
+6.Create a FLV header object
+7.Create the FLV object constituting the FLV body and header object.
+8.The FLV java object tree is ready at this stage, write it down to a file output stream as a FLV file.
+
+USPs of this solution:
+1.FLV parsing and creation using pure java based interface has not been addressed before.
+2.With java already having a universal appeal and a huge developer community, there are infinite possibilities of extending this project.
+3.The solution is a pure java based AMF library with the inherent advantage of being object oriented.
+
+Example Usage in FLV Mapping
+The Java AMF library addresses the requirement of replacing certain values in a FLV based upon an available mapping. The library is used to read an FLV into a Java object tree. Once this is done, the tags can be iterated upon and replacements can be carried out by fetching the values from the map. This is made particularly easy because of the ease of having a programatic interface to manipulate the object tree.Once the replacements are complete in the object tree,it is written back to a FLV file. 
+
