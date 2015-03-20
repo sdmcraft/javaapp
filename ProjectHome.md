@@ -1,0 +1,3 @@
+| **Project Name** | **Description** |
+|:-----------------|:----------------|
+| Java Application | This project has been undertaken by me for learning Data Structures and Algorithms in Java. Although Java already has a rich support for this, I have made an effort to 'reinvent the feel'. This project is guided by a desire to learn rather than anything else. Please join me in this project to learn and understand Data Structures and Algorithms in Java. The source code is [here](http://code.google.com/p/javaapp/source/browse/#svn/JavaApplication/src/algorithms) and the Junit test cases are placed [here](http://code.google.com/p/javaapp/source/browse/#svn/JavaApplication/test/algorithms). Your review comments are most welcome. You can mail me at m.satyadeep@gmail.com|
