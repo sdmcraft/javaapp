@@ -1,7 +1,11 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,20 +14,22 @@ import java.util.List;
 
 public class ChunkFiles {
 
+    private static String rootPath;
+
 	private static class FileWithDate implements Comparable {
 
-		public File file;
-		public long lastModifiedDate;
+		public String fileName;
+		public long lastAccessDate;
 
-		public FileWithDate(File file, long lastModifiedDate) {
+		public FileWithDate(String fileName, long lastAccessDate) {
 			super();
-			this.file = file;
-			this.lastModifiedDate = lastModifiedDate;
+			this.fileName = fileName;
+			this.lastAccessDate = lastAccessDate;
 		}
 
 		@Override
 		public int compareTo(Object o) {
-			long diff = lastModifiedDate - ((FileWithDate) o).lastModifiedDate;
+			long diff = lastAccessDate - ((FileWithDate) o).lastAccessDate;
 			if (diff > 0) {
 				return 1;
 			} else if (diff < 0) {
@@ -34,7 +40,7 @@ public class ChunkFiles {
 
 		@Override
 		public String toString() {
-			return file + "-" + new Date(lastModifiedDate);
+			return fileName + "," + new Date(lastAccessDate);
 		}
 	}
 
@@ -44,33 +50,39 @@ public class ChunkFiles {
 					.println("Usage:ChunkFiles <source-root-folder> <target-folder> <size (in MB) to be copied>");
 			return;
 		}
-		File rootFolder = new File(args[0]);
+        rootPath = args[0];
+		File rootFolder = new File(rootPath);
 		String targetFolder = args[1];
 		new File(targetFolder).mkdirs();
 		
 		long copyLimit = Integer.parseInt(args[2]) * 1024 * 1024;
 
-		List<FileWithDate> fileList = new ArrayList<FileWithDate>();
-		listChildren(rootFolder, fileList);
-		Collections.sort(fileList);
+		List<FileWithDate> originalFileList = new ArrayList<FileWithDate>();
+		listChildren(rootFolder, originalFileList);
+
+        List<FileWithDate> archivedFileList = readFromFile(new File(rootFolder.getAbsolutePath() + File.separator + "archive.txt"));
+
+        List<FileWithDate> consolidatedFileList = consolidateLists(originalFileList, archivedFileList);
+
+        Collections.sort(consolidatedFileList);
 		int copyCounter = 0;
-		for (FileWithDate f : fileList) {
-			copyCounter += f.file.length();
+		for (FileWithDate f : consolidatedFileList) {
+            File imageFile = new File(rootPath + File.separator + f.fileName);
+			copyCounter += imageFile.length();
 			if (copyCounter >= copyLimit) {
 				System.out.println("Limit over, exiting");
 				break;
 			}
 			System.out.println("Copying " + f);
-			copyFile(f.file,
-					new File(args[1] + File.separator + f.file.getName()));
-			f.file.setLastModified(new Date().getTime());
+			copyFile(imageFile,
+					new File(args[1] + File.separator + imageFile.getName()));
 			System.out.println("Copied till now:" + copyCounter + " bytes");
 		}
 	}
 
 	private static void listChildren(File root, List<FileWithDate> list) {
 		if (root.isFile()) {
-			list.add(new FileWithDate(root, root.lastModified()));
+            list.add(new FileWithDate(root.getAbsolutePath().replace(rootPath, ""), root.lastModified()));
 		} else {
 			for (File child : root.listFiles()) {
 				listChildren(child, list);
@@ -107,5 +119,41 @@ public class ChunkFiles {
 			}
 		}
 	}
+
+    private static List<FileWithDate> readFromFile(File file) throws IOException {
+        List<FileWithDate> list = new ArrayList<FileWithDate>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        String line;
+        while((line = bufferedReader.readLine()) != null) {
+            list.add(new FileWithDate(line.split(",")[0], Long.parseLong(line.split(",")[1])));
+        }
+        return list;
+    }
+
+    private static List<FileWithDate> consolidateLists(List<FileWithDate> originalList, List<FileWithDate> archivedList) {
+        for(FileWithDate original : originalList) {
+            for(FileWithDate archived : archivedList) {
+                if(archived.fileName.equals(original.fileName)) {
+                    original.lastAccessDate = archived.lastAccessDate;
+                    break;
+                }
+            }
+        }
+        return  originalList;
+    }
+
+    private static void writeToFile(File file, List<FileWithDate> list) throws IOException {
+        if(!file.exists()) {
+            file.mkdirs();
+        } else {
+            copyFile(file, new File(file.getAbsolutePath() + ".bkp"));
+            file.delete();
+            file.createNewFile();
+        }
+        PrintWriter writer = new PrintWriter(new FileWriter(file));
+        for(FileWithDate item : list) {
+            writer.println(item);
+        }
+    }
 
 }
