@@ -67,12 +67,12 @@ public class WatchDir {
 		});
 	}
 
-	WatchDir(String dirs, boolean recursive) throws IOException {
+	WatchDir(boolean recursive) throws IOException {
 		this.watcher = FileSystems.getDefault().newWatchService();
 		this.keys = new HashMap<WatchKey, Path>();
 		this.recursive = recursive;
 
-		for (String dir : dirs.split(",")) {
+		for (String dir : workDirs.split(",")) {
 			Path path = Paths.get(dir, new String[0]);
 			if (recursive) {
 				System.out.format("Scanning %s ...\n", new Object[] { dir });
@@ -198,6 +198,6 @@ public class WatchDir {
 			filters = args[6];
 		}
 
-		new WatchDir(workDirs, recursive).processEvents();
+		new WatchDir(recursive).processEvents();
 	}
 }
