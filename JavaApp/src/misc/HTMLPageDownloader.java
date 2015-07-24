@@ -20,9 +20,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+//import com.google.gson.JsonElement;
+//import com.google.gson.JsonObject;
+//import com.google.gson.JsonParser;
 
 public class HTMLPageDownloader {
 
@@ -121,47 +121,48 @@ public class HTMLPageDownloader {
 		}
 	}
 
-	private static String inlineCSS(String rawHtmlUrl) throws Exception {
-		OutputStreamWriter out = null;
-		BufferedReader reader = null;
-		try {
-			URL cssFixService = new URL(
-					"http://premailer.dialect.ca/api/0.1/documents");
-			URLConnection urlConnection = cssFixService.openConnection();
-			StringBuilder query = new StringBuilder();
-			query.append("url=" + URLEncoder.encode(rawHtmlUrl, "UTF-8"));
-			query.append("&preserve_styles=false");
-			query.append("&remove_classes=true");
-			// query.append("&base_url=" + URLEncoder.encode(rawHtmlUrl,
-			// "UTF-8"));
-			urlConnection.setDoOutput(true);
-			urlConnection.setDoInput(true);
-			out = new OutputStreamWriter(urlConnection.getOutputStream());
-			out.write(query.toString());
-			out.flush();
-			// Get the response
-			reader = new BufferedReader(new InputStreamReader(
-					urlConnection.getInputStream()));
-			StringBuilder jsonResponse = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				jsonResponse.append(line + "\n");
-			}
-			JsonParser jsonParser = new JsonParser();
-			JsonElement jsonElement = jsonParser.parse(jsonResponse.toString());
-			JsonObject jsonObject = jsonElement.getAsJsonObject();
-			JsonElement documentsElement = jsonObject
-					.getAsJsonObject("documents");
-			JsonObject documentsObject = documentsElement.getAsJsonObject();
-			JsonElement htmlElement = documentsObject.get("html");
-			return htmlElement.getAsString();
-		} finally {
-			if (out != null)
-				out.close();
-			if (reader != null)
-				reader.close();
-		}
-	}
+//	private static String inlineCSS(String rawHtmlUrl) throws Exception {
+//		OutputStreamWriter out = null;
+//		BufferedReader reader = null;
+//		try {
+//			URL cssFixService = new URL(
+//					"http://premailer.dialect.ca/api/0.1/documents");
+//			URLConnection urlConnection = cssFixService.openConnection();
+//			StringBuilder query = new StringBuilder();
+//			query.append("url=" + URLEncoder.encode(rawHtmlUrl, "UTF-8"));
+//			query.append("&preserve_styles=false");
+//			query.append("&remove_classes=true");
+//			// query.append("&base_url=" + URLEncoder.encode(rawHtmlUrl,
+//			// "UTF-8"));
+//			urlConnection.setDoOutput(true);
+//			urlConnection.setDoInput(true);
+//			out = new OutputStreamWriter(urlConnection.getOutputStream());
+//			out.write(query.toString());
+//			out.flush();
+//			// Get the response
+//			reader = new BufferedReader(new InputStreamReader(
+//					urlConnection.getInputStream()));
+//			StringBuilder jsonResponse = new StringBuilder();
+//			String line;
+//			while ((line = reader.readLine()) != null) {
+//				jsonResponse.append(line + "\n");
+//			}
+////			JsonParser jsonParser = new JsonParser();
+////			JsonElement jsonElement = jsonParser.parse(jsonResponse.toString());
+////			JsonObject jsonObject = jsonElement.getAsJsonObject();
+////			JsonElement documentsElement = jsonObject
+////					.getAsJsonObject("documents");
+////			JsonObject documentsObject = documentsElement.getAsJsonObject();
+////			JsonElement htmlElement = documentsObject.get("html");
+////			return htmlElement.getAsString();
+////		} finally {
+////			if (out != null)
+////				out.close();
+////			if (reader != null)
+////				reader.close();
+////		}
+//            return null;
+//	}
 
 	public static void stringToFile(String string, String file)
 			throws Exception {
@@ -211,18 +212,18 @@ public class HTMLPageDownloader {
 		return htmlString;
 	}
 
-	public static String downloadEmailTemplate(String templateUrl,
-			String downloadFolder) throws Exception {
-		String fixedHtmlUrl = inlineCSS(templateUrl);
-		String htmlFile = downloadHtmlPageWithImages(fixedHtmlUrl, templateUrl,
-				downloadFolder);
-		return fixHtmlForEmail(htmlFile);
-	}
-
-	public static void main(String[] args) throws Exception {
-		String fixedHtmlUrl = inlineCSS("https://sites.google.com/site/satyadeep1980/");
-		String htmlFile = downloadHtmlPageWithImages(fixedHtmlUrl,
-				"https://sites.google.com/site/satyadeep1980/", "temp");
-		fixHtmlForEmail(htmlFile);
-	}
+//	public static String downloadEmailTemplate(String templateUrl,
+//			String downloadFolder) throws Exception {
+//		String fixedHtmlUrl = inlineCSS(templateUrl);
+//		String htmlFile = downloadHtmlPageWithImages(fixedHtmlUrl, templateUrl,
+//				downloadFolder);
+//		return fixHtmlForEmail(htmlFile);
+//	}
+//
+//	public static void main(String[] args) throws Exception {
+//		String fixedHtmlUrl = inlineCSS("https://sites.google.com/site/satyadeep1980/");
+//		String htmlFile = downloadHtmlPageWithImages(fixedHtmlUrl,
+//				"https://sites.google.com/site/satyadeep1980/", "temp");
+//		fixHtmlForEmail(htmlFile);
+//	}
 }

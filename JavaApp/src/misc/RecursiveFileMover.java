@@ -45,7 +45,7 @@ public class RecursiveFileMover {
 		File srcDir = new File(args[0]);
 		File tgtDir = new File(args[1]);
 
-		List<File> fileList = new ArrayList<>();
+		List<File> fileList = new ArrayList<File>();
 		MyFileFilter fileFilter = new MyFileFilter();
 		if (!srcDir.exists()) {
 			System.out.println("Source directory: " + srcDir

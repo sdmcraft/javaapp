@@ -7,25 +7,25 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import com.dropbox.client2.DropboxAPI;
-import com.dropbox.client2.DropboxAPI.Entry;
-import com.dropbox.client2.exception.DropboxException;
-import com.dropbox.client2.jsonextract.JsonExtractionException;
-import com.dropbox.client2.jsonextract.JsonList;
-import com.dropbox.client2.jsonextract.JsonMap;
-import com.dropbox.client2.jsonextract.JsonThing;
-import com.dropbox.client2.session.AccessTokenPair;
-import com.dropbox.client2.session.AppKeyPair;
-import com.dropbox.client2.session.Session;
-import com.dropbox.client2.session.WebAuthSession;
+//import org.json.simple.JSONArray;
+//import org.json.simple.JSONObject;
+//import org.json.simple.parser.JSONParser;
+//import org.json.simple.parser.ParseException;
+//
+//import com.dropbox.client2.DropboxAPI;
+//import com.dropbox.client2.DropboxAPI.Entry;
+//import com.dropbox.client2.exception.DropboxException;
+//import com.dropbox.client2.jsonextract.JsonExtractionException;
+//import com.dropbox.client2.jsonextract.JsonList;
+//import com.dropbox.client2.jsonextract.JsonMap;
+//import com.dropbox.client2.jsonextract.JsonThing;
+//import com.dropbox.client2.session.AccessTokenPair;
+//import com.dropbox.client2.session.AppKeyPair;
+//import com.dropbox.client2.session.Session;
+//import com.dropbox.client2.session.WebAuthSession;
 
 public class DropboxDemo {
-	public static final String STATE_FILE = "DropboxDemo.json";
+	/*public static final String STATE_FILE = "DropboxDemo.json";
 
 	public static void main(String[] args) throws DropboxException {
 		doFileListHacked();
@@ -202,7 +202,7 @@ public class DropboxDemo {
 		 * Parse a 'global path' string of the form "[uid]:[path]" into UID and
 		 * path parts.
 		 */
-		public static GlobalPath parse(String s) throws FormatException {
+		/*public static GlobalPath parse(String s) throws FormatException {
 			int colonPos = s.indexOf(':');
 			if (colonPos < 0)
 				throw new FormatException("missing colon");
@@ -346,5 +346,5 @@ public class DropboxDemo {
 			System.out.println(entry.icon);			 
 		}
 	}
-
+*/
 }
